@@ -1,0 +1,165 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Blog.Core</name>
+    </assembly>
+    <members>
+        <member name="M:Blog.Core.AutoMapper.CustomProfile.#ctor">
+            <summary>
+            配置构造函数，用来创建关系映射
+            </summary>
+        </member>
+        <member name="T:Blog.Core.IService.IBlogService">
+            <summary>
+            blog service
+            </summary>
+        </member>
+        <member name="T:Blog.Core.IService.ICategoryService">
+            <summary>
+            categoru service
+            </summary>
+        </member>
+        <member name="T:Blog.Core.MessageModel`1">
+            <summary>
+            通用返回信息类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.MessageModel`1.status">
+            <summary>
+            状态码
+            </summary>
+        </member>
+        <member name="P:Blog.Core.MessageModel`1.success">
+            <summary>
+            操作是否成功
+            </summary>
+        </member>
+        <member name="P:Blog.Core.MessageModel`1.msg">
+            <summary>
+            返回信息
+            </summary>
+        </member>
+        <member name="P:Blog.Core.MessageModel`1.response">
+            <summary>
+            返回数据集合
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.BlogArticle">
+            <summary>
+            blog 类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.PublishDate">
+            <summary>
+            发布日期
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.Author">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.Quote">
+            <summary>
+            引用
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.CategoryId">
+            <summary>
+            分类ID
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.Tags">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogArticle.Category">
+            <summary>
+            分类
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.BlogTag">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogTag.BlogId">
+            <summary>
+            blog id
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.BlogTag.TagId">
+            <summary>
+            tag id
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.Category">
+            <summary>
+            分类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.Name">
+            <summary>
+            分类名
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.SeqNum">
+            <summary>
+            顺序
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.Floor">
+            <summary>
+            层数
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.CategoryId">
+            <summary>
+            parentId
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.SubCategories">
+            <summary>
+            下级分类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.ParentCategory">
+            <summary>
+            父分类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Category.Blogs">
+            <summary>
+            对应blog
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.RootEntityTkey`1">
+            <summary>
+            
+            </summary>
+            <typeparam name="Tkey"></typeparam>
+        </member>
+        <member name="P:Blog.Core.Models.RootEntityTkey`1.Id">
+            <summary>
+            ID
+            泛型主键Tkey
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.Tag">
+            <summary>
+            标签
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Tag.Name">
+            <summary>
+            标签名
+            </summary>
+        </member>
+    </members>
+</doc>

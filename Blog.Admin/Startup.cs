@@ -1,0 +1,136 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Policy;
+using System.Threading.Tasks;
+using AspectCore.Configuration;
+using AspectCore.Extensions.DependencyInjection;
+using AutoMapper;
+using Blog.API.AuthorHelper;
+using Blog.API.Filter;
+using Blog.Common.Extensions.Middlewares;
+using Blog.Common.Extensions.ServiceExtensions;
+using Blog.Core.IService;
+using Blog.Repository.IRepository;
+using Blog.Repository.Repository;
+using Blog.Service;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
+using SqlSugar;
+using StackExchange.Profiling.Storage;
+using Swashbuckle.AspNetCore.Filters;
+
+namespace Blog.API
+{
+    public class Startup
+    {
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+
+        public IConfiguration Configuration { get; }
+
+        // This method gets called by the runtime. Use this method to add services to the container.
+        public void ConfigureServices(IServiceCollection services)
+        {
+
+            //services.ConfigureDynamicProxy(config =>
+            //{
+            //    //TestInterceptor拦截器类
+            //    //拦截代理所有Service结尾的类
+            //    config.Interceptors.AddTyped<LogInterceptor>();
+            //});
+            //services.BuildAspectInjectorProvider();
+            services.AddAspectCore();
+            services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
+            services.AddSingleton(new AppSettingHelper(Configuration));
+            services.AddSqlsugarSetup();
+           
+            
+            services.addService();
+
+
+            services.AddControllers(configure =>
+            {
+                // 全局异常过滤
+                configure.Filters.Add(typeof(GlobalExceptionsFilter));
+            });
+
+           
+
+            services.AddSwaggerSetup();
+
+            services.AddJwtSetup();
+
+            //services.ConfigureDynamicProxy();
+
+            services.AddMiniProfiler(options =>
+            {
+                options.RouteBasePath = "/profiler";//注意这个路径要和下边 index.html 脚本配置中的一致，
+                //(options.Storage as MemoryCacheStorage).CacheDuration = TimeSpan.FromMinutes(10);
+
+            });
+        }
+
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISqlSugarClient sqlSugarClient)
+        {
+            
+
+            if (env.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+           
+
+            app.UseSwagger();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint($"/swagger/v1/swagger.json", $"xjjxmm v1");
+
+                c.RoutePrefix = "";
+
+               
+                var streamHtml = ReflectionExtensions.GetTypeInfo(GetType()).Assembly.GetManifestResourceStream("Blog.API.index.html");
+                
+                c.IndexStream = () => streamHtml;
+            });
+            app.UseStaticFiles();
+
+
+            app.UseRouting();
+
+            //app.UseJwtTokenAuth();
+            //认证
+            app.UseAuthentication();
+
+            //授权
+            app.UseAuthorization();
+
+
+            app.UseSeedDataMildd(sqlSugarClient);
+
+            app.UseMiniProfiler();
+
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
+
+
+
+        }
+    }
+}
