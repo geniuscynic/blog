@@ -10,9 +10,11 @@ using AspectCore.Extensions.DependencyInjection;
 using AutoMapper;
 using Blog.API.AuthorHelper;
 using Blog.API.Filter;
+using Blog.Common.Extensions.AutoMapper;
 using Blog.Common.Extensions.Middlewares;
 using Blog.Common.Extensions.ServiceExtensions;
 using Blog.Core.IService;
+using Blog.Repository;
 using Blog.Repository.IRepository;
 using Blog.Repository.Repository;
 using Blog.Service;
@@ -53,7 +55,8 @@ namespace Blog.API
             //});
             //services.BuildAspectInjectorProvider();
             services.AddAspectCore();
-            services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
+            //services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
+            services.AddAutoMapperSetup();
             services.AddSingleton(new AppSettingHelper(Configuration));
             services.AddSqlsugarSetup();
            
@@ -84,7 +87,7 @@ namespace Blog.API
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ISqlSugarClient sqlSugarClient)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Dbcontext dbcontext)
         {
             
 
@@ -119,7 +122,7 @@ namespace Blog.API
             app.UseAuthorization();
 
 
-            app.UseSeedDataMildd(sqlSugarClient);
+            app.UseSeedDataMildd(dbcontext);
 
             app.UseMiniProfiler();
 

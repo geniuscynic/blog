@@ -32,7 +32,7 @@ namespace Blog.Core.Models
         /// <summary>
         /// parentId
         /// </summary>
-        public int CategoryId { get; set; }
+        public int ParentId { get; set; }
 
         /// <summary>
         /// 下级分类

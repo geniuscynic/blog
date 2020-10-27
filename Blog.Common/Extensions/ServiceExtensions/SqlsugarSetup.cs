@@ -9,6 +9,7 @@ namespace Blog.Common.Extensions.ServiceExtensions
 {
     public static class SqlsugarSetup
     {
+        public static int i = 1;
         public static void AddSqlsugarSetup(this IServiceCollection services)
         {
             services.AddScoped<ISqlSugarClient>(o =>
@@ -36,6 +37,7 @@ namespace Blog.Common.Extensions.ServiceExtensions
                 //添加Sql打印事件，开发中可以删掉这个代码
                 db.Aop.OnLogExecuting = (sql, pars) =>
                 {
+                    Console.WriteLine($"生成的sql {++i}:\r\n");
                     Console.WriteLine(sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
                     Console.WriteLine();
                 };

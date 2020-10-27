@@ -9,15 +9,13 @@ namespace Blog.Service
 {
     public class CategoryService : BaseServices<Category>, ICategoryService
     {
-        private readonly IBaseRepository<Category> repository;
+        protected override IBaseRepository<Category> baseRepository { get; set; }
 
         public CategoryService(IBaseRepository<Category> repository)
         {
-            this.repository = repository;
+            this.baseRepository = repository;
         }
 
-        
-
-       
+         
     }
 }

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using AutoMapper;
+using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -53,13 +55,20 @@ namespace Blog.API.Controllers
         //[Authorize(Policy = "IA")]
         #endregion
 
+        /// <summary>
+        /// 获取 blog
+        /// </summary>
+        /// <returns></returns>
         [HttpGet]
-        public IEnumerable<String> Get()
+        public async Task<MessageModel<IEnumerable<BlogArticle>>> Get()
         {
-            
-            return new string[] { "value1", "value2" };
+            var blogs = await service.QueryPage();
+            return new MessageModel<IEnumerable<BlogArticle>>
+            {
+                response = blogs
+            };
         }
-    
+
 
         /// <summary>
         /// 根据id 返回 帖子内容
@@ -68,9 +77,13 @@ namespace Blog.API.Controllers
         /// <returns></returns>
         // GET api/<BlogController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<MessageModel<BlogArticle>> Get(int id)
         {
-            return "value";
+            var blog = await service.QueryById(id);
+            return new MessageModel<BlogArticle>
+            {
+                response = blog
+            };
         }
 
         /// <summary>
@@ -78,10 +91,13 @@ namespace Blog.API.Controllers
         /// </summary>
         /// <param name="value"></param>
         [HttpPost]
-        public async Task<int> Post([FromBody] BlogArticle value)
+        public async Task<MessageModel<int>> Post([FromBody] PostBlogViewModel value)
         {
-            return await service.Add(value);
+            return new MessageModel<int>
+            {
+                response = await service.Add(value)
 
+            };
 
         }
 
@@ -91,10 +107,19 @@ namespace Blog.API.Controllers
         {
         }
 
-        // DELETE api/<BlogController>/5
+        /// <summary>
+        ///  DELETE api/<BlogController>/5
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public async Task<MessageModel<bool>> Delete(int id)
         {
+            var result = await service.DeleteById(id);
+            return new MessageModel<bool>
+            {
+                response = result
+            };
         }
     }
 }

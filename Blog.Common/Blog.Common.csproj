@@ -7,6 +7,7 @@
   <ItemGroup>
     <PackageReference Include="AspectCore.Abstractions" Version="2.1.0" />
     <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.1.0" />
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
     <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="3.1.9" />
@@ -20,6 +21,10 @@
 
   <ItemGroup>
     <Folder Include="Extensions\Middlewares\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Blog.Model\Blog.Core.csproj" />
   </ItemGroup>
 
 </Project>

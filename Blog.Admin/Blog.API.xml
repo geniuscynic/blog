@@ -36,7 +36,7 @@
             <param name="id"></param>
             <returns></returns>
         </member>
-        <member name="M:Blog.API.Controllers.BlogController.Post(Blog.Core.Models.BlogArticle)">
+        <member name="M:Blog.API.Controllers.BlogController.Post(Blog.Core.Models.PostBlogViewModel)">
             <summary>
             新增一个 blog
             </summary>

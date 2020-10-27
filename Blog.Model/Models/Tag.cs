@@ -17,6 +17,9 @@ namespace Blog.Core.Models
         /// </summary>
         public string Name { get; set; }
 
+        /// <summary>
+        /// 多对多
+        /// </summary>
         [SugarColumn(IsIgnore = true)]
         public List<BlogArticle> Blogs { get; set; }
     }

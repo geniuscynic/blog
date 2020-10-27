@@ -4,15 +4,76 @@
         <name>Blog.Core</name>
     </assembly>
     <members>
+        <member name="T:Blog.Core.AutoMapper.CustomProfile">
+            <summary>
+            auto map  配置类
+            </summary>
+        </member>
         <member name="M:Blog.Core.AutoMapper.CustomProfile.#ctor">
             <summary>
             配置构造函数，用来创建关系映射
             </summary>
         </member>
+        <member name="T:Blog.Core.IService.IBaseService`1">
+            <summary>
+            通用service，实现单个服务的增删改查
+            </summary>
+            <typeparam name="TEntity"></typeparam>
+        </member>
+        <member name="M:Blog.Core.IService.IBaseService`1.Add(`0)">
+            <summary>
+            新增一个entity
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blog.Core.IService.IBaseService`1.DeleteById(System.Object)">
+            <summary>
+            根据主键删除 id
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blog.Core.IService.IBaseService`1.Delete(`0)">
+            <summary>
+            删除entity
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blog.Core.IService.IBaseService`1.DeleteByIds(System.Object[])">
+            <summary>
+            批量删除
+            </summary>
+            <param name="ids"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blog.Core.IService.IBaseService`1.QueryById(System.Object)">
+            <summary>
+            根据主键查询
+            </summary>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
         <member name="T:Blog.Core.IService.IBlogService">
             <summary>
             blog service
             </summary>
+        </member>
+        <member name="M:Blog.Core.IService.IBlogService.Add(Blog.Core.Models.PostBlogViewModel)">
+            <summary>
+            新增blog
+            </summary>
+            <param name="blogViewModel"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Blog.Core.IService.IBlogService.QueryPage(System.Int32,System.Int32)">
+            <summary>
+            分页查询
+            </summary>
+            <param name="pageIndex"></param>
+            <param name="pageSize"></param>
+            <returns></returns>
         </member>
         <member name="T:Blog.Core.IService.ICategoryService">
             <summary>
@@ -119,7 +180,7 @@
             层数
             </summary>
         </member>
-        <member name="P:Blog.Core.Models.Category.CategoryId">
+        <member name="P:Blog.Core.Models.Category.ParentId">
             <summary>
             parentId
             </summary>
@@ -159,6 +220,71 @@
         <member name="P:Blog.Core.Models.Tag.Name">
             <summary>
             标签名
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Tag.Blogs">
+            <summary>
+            多对多
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.PostBlogViewModel">
+            <summary>
+            blog 类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.PostBlogViewModel.Title">
+            <summary>
+            标题
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.PostBlogViewModel.Author">
+            <summary>
+            作者
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.PostBlogViewModel.Quote">
+            <summary>
+            引用
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.PostBlogViewModel.CategoryId">
+            <summary>
+            分类ID
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.PostBlogViewModel.Tags">
+            <summary>
+             分类
+            </summary>
+        </member>
+        <member name="T:Blog.Core.PageModel`1">
+            <summary>
+            通用分页信息类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.PageModel`1.Page">
+            <summary>
+            当前页标
+            </summary>
+        </member>
+        <member name="P:Blog.Core.PageModel`1.PageCount">
+            <summary>
+            总页数
+            </summary>
+        </member>
+        <member name="P:Blog.Core.PageModel`1.DataCount">
+            <summary>
+            数据总数
+            </summary>
+        </member>
+        <member name="P:Blog.Core.PageModel`1.PageSize">
+            <summary>
+            每页大小
+            </summary>
+        </member>
+        <member name="P:Blog.Core.PageModel`1.Data">
+            <summary>
+            返回数据
             </summary>
         </member>
     </members>

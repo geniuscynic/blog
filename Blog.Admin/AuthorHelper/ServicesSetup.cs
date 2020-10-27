@@ -17,9 +17,10 @@ namespace Blog.Common.Extensions.ServiceExtensions
         {
 
             services.AddScoped<Dbcontext>();
-
+            //services.AddScoped(typeof(IBaseService<>), typeof(BaseServices<>));
             services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBlogService, BlogService>();
+            services.AddScoped<ICategoryService, CategoryService>();
 
 
         }

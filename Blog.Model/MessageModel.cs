@@ -16,11 +16,11 @@ namespace Blog.Core
         /// <summary>
         /// 操作是否成功
         /// </summary>
-        public bool success { get; set; } = false;
+        public bool success { get; set; } = true;
         /// <summary>
         /// 返回信息
         /// </summary>
-        public string msg { get; set; } = "服务器异常";
+        public string msg { get; set; } = "成功";
         /// <summary>
         /// 返回数据集合
         /// </summary>

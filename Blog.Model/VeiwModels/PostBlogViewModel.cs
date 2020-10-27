@@ -8,19 +8,13 @@ namespace Blog.Core.Models
     /// <summary>
     /// blog 类
     /// </summary>
-    public class BlogArticle : RootEntityTkey<int>
+    public class PostBlogViewModel
     {
-        
 
         /// <summary>
         /// 标题
         /// </summary>
         public string Title { get; set; }
-
-        /// <summary>
-        /// 发布日期
-        /// </summary>
-        public DateTime PublishDate { get; set; }
 
         /// <summary>
         /// 作者
@@ -38,15 +32,10 @@ namespace Blog.Core.Models
         public int CategoryId { get; set; }
 
         /// <summary>
-        /// 标签
+        ///  分类
         /// </summary>
-        [SugarColumn(IsIgnore = true)]
-        public List<Tag> Tags { get; set; }
+        public HashSet<string> Tags { get; set; }
 
-        /// <summary>
-        /// 分类
-        /// </summary>
-        [SugarColumn(IsIgnore = true)]
-        public Category Category { get; set; }
+
     }
 }
