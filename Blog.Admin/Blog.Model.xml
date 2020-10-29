@@ -200,6 +200,26 @@
             对应blog
             </summary>
         </member>
+        <member name="T:Blog.Core.Models.Role">
+            <summary>
+            角色
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Role.Code">
+            <summary>
+            code
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Role.Name">
+            <summary>
+            名称
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.Role.Description">
+            <summary>
+            描述
+            </summary>
+        </member>
         <member name="T:Blog.Core.Models.RootEntityTkey`1">
             <summary>
             
@@ -225,6 +245,46 @@
         <member name="P:Blog.Core.Models.Tag.Blogs">
             <summary>
             多对多
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.User">
+            <summary>
+            用户类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.User.Account">
+            <summary>
+            账号
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.User.Password">
+            <summary>
+            密码
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.User.NickName">
+            <summary>
+            昵称
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.User.LoginTime">
+            <summary>
+            最后登入时间
+            </summary>
+        </member>
+        <member name="T:Blog.Core.Models.UserRole">
+            <summary>
+            用户,角色关联类
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.UserRole.UserId">
+            <summary>
+            用户id
+            </summary>
+        </member>
+        <member name="P:Blog.Core.Models.UserRole.RoleId">
+            <summary>
+            角色id
             </summary>
         </member>
         <member name="T:Blog.Core.Models.PostBlogViewModel">

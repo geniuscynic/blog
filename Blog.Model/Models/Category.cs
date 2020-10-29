@@ -11,11 +11,12 @@ namespace Blog.Core.Models
     /// </summary>
     public class Category : RootEntityTkey<int>
     {
-       
+
 
         /// <summary>
         /// 分类名
         /// </summary>
+        [SugarColumn(Length = 10)]
         public string Name { get; set; }
 
         /// <summary>

@@ -29,6 +29,12 @@
             blog 的 api
             </summary>
         </member>
+        <member name="M:Blog.API.Controllers.BlogController.Get">
+            <summary>
+            获取 blog
+            </summary>
+            <returns></returns>
+        </member>
         <member name="M:Blog.API.Controllers.BlogController.Get(System.Int32)">
             <summary>
             根据id 返回 帖子内容
@@ -42,6 +48,7 @@
             </summary>
             <param name="value"></param>
         </member>
+        <!-- Badly formed XML comment ignored for member "M:Blog.API.Controllers.BlogController.Delete(System.Int32)" -->
         <member name="M:Blog.API.Controllers.WeatherForecastController.Get">
             <summary>
             获取 weather

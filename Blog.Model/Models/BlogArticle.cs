@@ -10,21 +10,23 @@ namespace Blog.Core.Models
     /// </summary>
     public class BlogArticle : RootEntityTkey<int>
     {
-        
+
 
         /// <summary>
         /// 标题
         /// </summary>
+        [SugarColumn(Length = 20)]
         public string Title { get; set; }
 
         /// <summary>
         /// 发布日期
         /// </summary>
-        public DateTime PublishDate { get; set; }
+        public DateTime PublishDate { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 作者
         /// </summary>
+        [SugarColumn(Length = 10)]
         public string Author { get; set; }
 
         /// <summary>
