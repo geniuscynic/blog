@@ -80,6 +80,11 @@
             categoru service
             </summary>
         </member>
+        <member name="T:Blog.Core.IService.IUserService">
+            <summary>
+            blog service
+            </summary>
+        </member>
         <member name="T:Blog.Core.MessageModel`1">
             <summary>
             通用返回信息类

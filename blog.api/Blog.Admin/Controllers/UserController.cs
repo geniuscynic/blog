@@ -16,9 +16,9 @@ namespace Blog.API.Controllers
 
 
 
-        public async MessageModel<string> Login()
+        public MessageModel<string> Login()
         {
-
+            return null;
         }
 
         // GET: api/<UserController>

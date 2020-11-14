@@ -13,9 +13,9 @@ namespace Blog.API
 {
     public class Program
     {
+
         public static void Main(string[] args)
         {
-            
             CreateHostBuilder(args).Build().Run();
         }
 
@@ -34,8 +34,8 @@ namespace Blog.API
 
                 //ø…≈‰÷√Œƒº˛
                 var path = Path.Combine(Directory.GetCurrentDirectory(), "Log4net.config");
-               
-                
+
+
                 builder.AddLog4Net(path);
             }).
             UseServiceProviderFactory(new DynamicProxyServiceProviderFactory());
