@@ -8,15 +8,14 @@ using System.Threading.Tasks;
 namespace Blog.Core.IService
 {
     /// <summary>
-    /// user service
+    /// menu service
     /// </summary>
-    public interface IUserService  : IBaseService<User>
+    public interface IMenuService  : IBaseService<Menu>
     {
         /// <summary>
-        /// 登入验证
+        /// 或许带有上下级关系的所有menu
         /// </summary>
-        /// <param name="loginViewModel"></param>
         /// <returns></returns>
-        Task<string> Login(LoginViewModel loginViewModel);
+        Task<List<Menu>> Get();
     }
 }

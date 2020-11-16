@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using SqlSugar;
+using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,8 +38,12 @@ namespace Blog.Common.Extensions.ServiceExtensions
                 //添加Sql打印事件，开发中可以删掉这个代码
                 db.Aop.OnLogExecuting = (sql, pars) =>
                 {
-                    Console.WriteLine($"生成的sql {++i}:\r\n");
-                    Console.WriteLine(sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value)));
+                    var res = sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
+                    MiniProfiler.Current.Step($"执行的sql: {++i} \r\n {res}");
+                    //MiniProfiler.Current.Step($"{res}");
+
+                    Console.WriteLine($"生成的sql {i}:\r\n");
+                    Console.WriteLine(res);
                     Console.WriteLine();
                 };
 

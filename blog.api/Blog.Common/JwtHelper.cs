@@ -9,7 +9,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.API
+namespace Blog.Common
 {
     public class JwtHelper
     {

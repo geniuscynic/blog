@@ -25,62 +25,149 @@ namespace Blog.Common.Extensions.Middlewares
                 dbcontext.Db.CodeFirst.InitTables(typeof(User));
                 dbcontext.Db.CodeFirst.InitTables(typeof(Role));
                 dbcontext.Db.CodeFirst.InitTables(typeof(UserRole));
+                dbcontext.Db.CodeFirst.InitTables(typeof(Menu));
 
-
-                dbcontext.GetSimpleClient<Category>().Insert(new Category
+                if (dbcontext.GetSimpleClient<Category>().GetList().Count() == 0)
                 {
-                    Name = "笑话",
-                    SeqNum = 1,
+                    dbcontext.GetSimpleClient<Category>().Insert(new Category
+                    {
+                        Name = "笑话",
+                        SeqNum = 1,
 
-                    Floor = 1,
-                    ParentId = 0
-                });
+                        Floor = 1,
+                        ParentId = 0
+                    });
+                }
 
-                dbcontext.GetSimpleClient<Role>().Insert(new Role
+                if (dbcontext.GetSimpleClient<Role>().GetList().Count() == 0)
                 {
-                     Code = "superAdmin",
-                      Name = "超级管理员"
-                });
+                    dbcontext.GetSimpleClient<Role>().Insert(new Role
+                    {
+                        Code = "superAdmin",
+                        Name = "超级管理员"
+                    });
 
-                dbcontext.GetSimpleClient<Role>().Insert(new Role
-                {
-                    Code = "admin",
-                    Name = "管理员"
-                });
+                    dbcontext.GetSimpleClient<Role>().Insert(new Role
+                    {
+                        Code = "admin",
+                        Name = "管理员"
+                    });
 
-                dbcontext.GetSimpleClient<Role>().Insert(new Role
-                {
-                    Code = "nomal",
-                    Name = "普通用户"
-                });
 
-                dbcontext.GetSimpleClient<User>().Insert(new User
-                {
-                     Account = "su",
-                     Password = "su",
-                      LoginTime = DateTime.Now,
-                       NickName = "su11"
-                });
+                    dbcontext.GetSimpleClient<Role>().Insert(new Role
+                    {
+                        Code = "nomal",
+                        Name = "普通用户"
+                    });
 
-                dbcontext.GetSimpleClient<User>().Insert(new User
-                {
-                    Account = "ad",
-                    Password = "ad",
-                    LoginTime = DateTime.Now,
-                    NickName = "ad11"
-                });
 
-                dbcontext.GetSimpleClient<UserRole>().Insert(new UserRole
-                {
-                     RoleId = 1,
-                     UserId = 1
-                });
+                    dbcontext.GetSimpleClient<User>().Insert(new User
+                    {
+                        Account = "su",
+                        Password = "su",
+                        LoginTime = DateTime.Now,
+                        NickName = "su11"
+                    });
 
-                dbcontext.GetSimpleClient<UserRole>().Insert(new UserRole
+                    dbcontext.GetSimpleClient<User>().Insert(new User
+                    {
+                        Account = "ad",
+                        Password = "ad",
+                        LoginTime = DateTime.Now,
+                        NickName = "ad11"
+                    });
+
+                    dbcontext.GetSimpleClient<UserRole>().Insert(new UserRole
+                    {
+                        RoleId = 1,
+                        UserId = 1
+                    });
+
+                    dbcontext.GetSimpleClient<UserRole>().Insert(new UserRole
+                    {
+                        RoleId = 2,
+                        UserId = 2
+                    });
+                }
+
+                if (dbcontext.GetSimpleClient<Menu>().GetList().Count() == 0)
                 {
-                    RoleId = 2,
-                    UserId = 2
-                });
+                    dbcontext.GetSimpleClient<Menu>().InsertRange(new Menu[] {
+                        new Menu
+                        {
+                            Id=1,
+                            Code="home",
+                            Name="XJJXMM欢迎页",
+                            Icon="icon-home",
+                            ParentId=0,
+                            Route = "",
+                            SeqNum = 1
+                        },
+                        new Menu
+                        {
+                            Id=2,
+                            Code="us",
+                            Name="用户管理",
+                            Icon="icon-home",
+                            ParentId=0,
+                            Route = "",
+                            SeqNum = 1
+                        },
+                        new Menu
+                        {
+                            Id=3,
+                            Code="user",
+                            Name="用户管理",
+                            Icon="icon-home",
+                            ParentId=2,
+                            Route = "/user",
+                            SeqNum = 1
+                        },
+                        new Menu
+                        {
+                            Id=4,
+                            Code="role",
+                            Name="角色管理",
+                            Icon="icon-home",
+                            ParentId=2,
+                            Route = "/role",
+                            SeqNum = 1
+                        },
+                        new Menu
+                        {
+                            Id=5,
+                            Code="mu",
+                            Name="菜单管理",
+                            Icon="icon-home",
+                            ParentId=1,
+                            Route = "",
+                            SeqNum = 1
+                        },
+                        new Menu
+                        {
+                            Id=6,
+                            Code="menu",
+                            Name="菜单管理",
+                            Icon="icon-home",
+                            ParentId=5,
+                            Route = "/menu",
+                            SeqNum = 1
+                        },
+                        new Menu
+                        {
+                            Id=7,
+                            Code="perm",
+                            Name="权限管理",
+                            Icon="icon-home",
+                            ParentId=5,
+                            Route = "/perm",
+                            SeqNum = 1
+                        }
+                    });
+                }
+
+
+
                 //db.GetSimpleClient<Category>().
             }
 

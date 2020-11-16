@@ -59,8 +59,8 @@ namespace Blog.API
             services.AddAutoMapperSetup();
             services.AddSingleton(new AppSettingHelper(Configuration));
             services.AddSqlsugarSetup();
-           
-            
+
+
             services.addService();
 
 
@@ -70,7 +70,7 @@ namespace Blog.API
                 configure.Filters.Add(typeof(GlobalExceptionsFilter));
             });
 
-           
+
 
             services.AddSwaggerSetup();
 
@@ -92,13 +92,13 @@ namespace Blog.API
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, Dbcontext dbcontext)
         {
-            
+
 
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-           
+
 
             app.UseSwagger();
             app.UseSwaggerUI(c =>
@@ -107,19 +107,26 @@ namespace Blog.API
 
                 c.RoutePrefix = "";
 
-               
+
                 var streamHtml = ReflectionExtensions.GetTypeInfo(GetType()).Assembly.GetManifestResourceStream("Blog.API.index.html");
-                
+
                 c.IndexStream = () => streamHtml;
             });
 
-            app.UseCors(builder => builder.WithOrigins("http://localhost:9528"));
 
-
-            app.UseStaticFiles();
+            
 
 
             app.UseRouting();
+
+            app.UseCors(builder =>
+                builder.WithOrigins("http://localhost:8080")
+                        .AllowAnyHeader()//Ensures that the policy allows any header.
+                        .AllowAnyMethod()
+
+            );
+
+            app.UseStaticFiles();
 
             //app.UseJwtTokenAuth();
             //хож╓

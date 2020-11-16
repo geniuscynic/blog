@@ -33,7 +33,10 @@ namespace Blog.Core.Models
         /// </summary>
         public DateTime LoginTime { get; set; }
 
-
-
+        /// <summary>
+        /// 所属角色
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public List<Role> Roles { get; set; }
     }
 }

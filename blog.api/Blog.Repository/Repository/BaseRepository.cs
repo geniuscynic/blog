@@ -81,6 +81,11 @@ namespace Blog.Repository.Repository
             return await Db.Queryable<TEntity>().InSingleAsync(id);
         }
 
+        public async Task<List<TEntity>> GetAll()
+        {
+            return await Db.Queryable<TEntity>().ToListAsync();
+        }
+
         /*public async Task<PageModel<TEntity>> QueryPage<T1, T2, TEntity>(
             Expression<Func<T1, T2, object[]>> joinExpression, 
             int pageIndex = 1, int pageSize = 20)

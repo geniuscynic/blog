@@ -1,0 +1,27 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Blog.Core.VeiwModels
+{
+
+    /// <summary>
+    /// 令牌
+    /// </summary>
+    public class TokenModelJwt
+    {
+        /// <summary>
+        /// Id
+        /// </summary>
+        public long Uid { get; set; }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public List<string> Role { get; set; }
+        /// <summary>
+        /// 姓名
+        /// </summary>
+        public string Name { get; set; }
+
+    }
+}

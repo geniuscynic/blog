@@ -38,7 +38,7 @@ namespace Blog.API.Filter
             if (_env.IsDevelopment())
             {
                 json.DevelopmentMessage = context.Exception.StackTrace;//堆栈信息
-            }
+             }
             context.Result = new InternalServerErrorObjectResult(json);
 
            

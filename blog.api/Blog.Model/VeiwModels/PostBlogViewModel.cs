@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.Models
+namespace Blog.Core.VeiwModels
 {
     /// <summary>
     /// blog 类

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Blog.Core.VeiwModels;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -34,8 +35,8 @@ namespace Blog.API.AuthorHelper
 
                     //授权 Claim 关键
                     var claimList = new List<Claim>();
-                    var claim = new Claim(ClaimTypes.Role, tm.Role);
-                    claimList.Add(claim);
+                    //var claim = new Claim(ClaimTypes.Role, tm.Role);
+                    //claimList.Add(claim);
                     var identity = new ClaimsIdentity(claimList);
                     var principal = new ClaimsPrincipal(identity);
                     httpContext.User = principal;

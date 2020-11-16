@@ -2,6 +2,7 @@
 using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
+using Blog.Core.VeiwModels;
 using Blog.Repository.IRepository;
 using SqlSugar;
 using System;
@@ -23,8 +24,9 @@ namespace Blog.Service
 
 
         public BlogService(IBaseRepository<BlogArticle> blogRepository, IMapper mapper, IBaseRepository<Tag> tagRepository, IBaseRepository<BlogTag> blogTagRepository)
+            : base(blogRepository)
         {
-            baseRepository = blogRepository;
+            //baseRepository = blogRepository;
             this.mapper = mapper;
             this.tagRepository = tagRepository;
             this.blogTagRepository = blogTagRepository;

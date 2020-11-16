@@ -11,9 +11,9 @@ namespace Blog.Service
     {
         protected override IBaseRepository<Category> baseRepository { get; set; }
 
-        public CategoryService(IBaseRepository<Category> repository)
+        public CategoryService(IBaseRepository<Category> repository) : base(repository)
         {
-            this.baseRepository = repository;
+            //this.baseRepository = repository;
         }
 
          

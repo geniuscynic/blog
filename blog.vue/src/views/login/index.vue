@@ -3,14 +3,16 @@
     <el-col :span="8">
       <el-form :model="form" ref="form" :rules="rules" :status-icon="true">
         <h1 class="title">系统登录</h1>
+        <el-alert :title="errorMsg" type="error" v-if="showError" show-icon>
+        </el-alert>
         <el-form-item prop="login">
-          <el-input v-model="form.login" placeholder="请输入内容bbbb">
+          <el-input v-model="form.login" placeholder="请输入账号">
             <i slot="prefix" class="el-input__icon el-icon-s-custom"></i>
           </el-input>
         </el-form-item>
 
         <el-form-item prop="password">
-          <el-input v-model="form.password" placeholder="请输入内容">
+          <el-input v-model="form.password" placeholder="请输入密码">
           </el-input>
         </el-form-item>
 
@@ -21,6 +23,9 @@
 </template>
 
 <script>
+import { mapMutations } from "vuex";
+import { SET_TOKEN } from "@/plugins/mutation-types";
+
 export default {
   data() {
     return {
@@ -32,23 +37,36 @@ export default {
         login: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }],
       },
+      showError: false,
+      errorMsg: "",
     };
   },
   methods: {
     onSubmit() {
-      console.log(this.form);
       this.axios
-        .get("/api.coindesk.com/v1/bpi/currentprice.json")
-        .then((response) => 
-        (console.log(response.data.bpi)))
-        .catch((error) => console.log(error));
+        .post("/api/Account/Login", this.form)
+        .then((response) => {
+          if (response.data.response === "") {
+            this.errorMsg = "账号密码错误";
+            this.showError = true;
+          } else {
+            this[SET_TOKEN](response.data.response);
+
+            this.$router.push({ name: "dashboard" });
+          }
+        })
+        .catch((error) => {
+          this.errorMsg = "服务器异常，请稍后再试";
+          this.showError = true;
+        });
     },
+    ...mapMutations([SET_TOKEN]),
   },
 };
 </script>
 
 <style lang="scss" scoped>
-$bg: #2d3a4b;
+@import "@/styles/global.module.scss";
 $light_gray: #eee;
 $cursor: #fff;
 
@@ -58,6 +76,9 @@ $cursor: #fff;
   width: 100%;
   padding-top: 150px;
 
+  .el-alert {
+    margin-bottom: 20px;
+  }
   .el-form {
     padding: 0 150px;
 
@@ -85,7 +106,6 @@ $cursor: #fff;
 </style>
 
 <style lang="scss">
-$bg: #2d3a4b;
 $light_gray: #eee;
 $cursor: #fff;
 .el-input {

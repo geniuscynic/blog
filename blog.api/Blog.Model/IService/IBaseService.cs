@@ -12,18 +12,18 @@ namespace Blog.Core.IService
     public interface IBaseService<TEntity> where TEntity : class
     {
 
-           /// <summary>
-           /// 新增一个entity
-           /// </summary>
-           /// <param name="model"></param>
-           /// <returns></returns>
+        /// <summary>
+        /// 新增一个entity
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
         Task<int> Add(TEntity model);
 
-/// <summary>
-/// 根据主键删除 id
-/// </summary>
-/// <param name="id"></param>
-/// <returns></returns>
+        /// <summary>
+        /// 根据主键删除 id
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<bool> DeleteById(object id);
 
         /// <summary>
@@ -33,11 +33,11 @@ namespace Blog.Core.IService
         /// <returns></returns>
         Task<bool> Delete(TEntity model);
 
-       /// <summary>
-       /// 批量删除
-       /// </summary>
-       /// <param name="ids"></param>
-       /// <returns></returns>
+        /// <summary>
+        /// 批量删除
+        /// </summary>
+        /// <param name="ids"></param>
+        /// <returns></returns>
         Task<bool> DeleteByIds(object[] ids);
 
         /// <summary>
@@ -46,5 +46,11 @@ namespace Blog.Core.IService
         /// <param name="id"></param>
         /// <returns></returns>
         Task<TEntity> QueryById(object id);
+
+                               /// <summary>
+                               /// 获取所有数据
+                               /// </summary>
+                               /// <returns></returns>
+        Task<List<TEntity>> GetAll();
     }
 }

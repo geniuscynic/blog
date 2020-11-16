@@ -1,3 +1,5 @@
+
+
 body {
     height: 100%;
     -moz-osx-font-smoothing: grayscale;
@@ -10,4 +12,23 @@ body {
   
 #app, html {
     height: 100%;
+  }
+
+
+  .icon {
+    width: 1em;
+    height: 1em;
+    vertical-align: -0.15em;
+    fill: currentColor;
+    overflow: hidden;
+  }
+
+  .el-submenu, .el-menu-item  {
+    .icon {
+        margin-right: 5px;
+        width: 1.5em;
+        height: 1.5em;
+        text-align: center;
+        vertical-align: -0.4em;
+    }
   }

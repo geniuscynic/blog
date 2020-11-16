@@ -8,6 +8,7 @@ using AutoMapper;
 using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
+using Blog.Core.VeiwModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Profiling;
@@ -108,7 +109,7 @@ namespace Blog.API.Controllers
         }
 
         /// <summary>
-        ///  DELETE api/<BlogController>/5
+        /// DELETE api/[BlogController>/5
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>

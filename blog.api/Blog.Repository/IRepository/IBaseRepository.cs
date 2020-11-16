@@ -27,6 +27,8 @@ namespace Blog.Repository.IRepository
 
         Task<bool> DeleteByIds(object[] ids);
 
+        Task<List<TEntity>> GetAll();
+
         Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression);
 
         Task<TEntity> QueryById(object id);

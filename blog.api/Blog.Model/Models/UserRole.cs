@@ -20,7 +20,16 @@ namespace Blog.Core.Models
         /// </summary>
         public int RoleId { get; set; }
 
+        /// <summary>
+        /// 对应的用户
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public User User { get; set; }
 
-
-    }
+        /// <summary>
+        /// 对应的角色
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public Role Role {get;set;}
+}
 }

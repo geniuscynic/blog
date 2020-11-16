@@ -7,8 +7,9 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>..\Blog.Admin\Blog.API.xml</DocumentationFile>
+    <DocumentationFile>..\Blog.Admin\bin\Debug\netcoreapp3.1\Blog.API.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
+    <WarningLevel>5</WarningLevel>
   </PropertyGroup>
 
   <ItemGroup>

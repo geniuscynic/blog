@@ -10,6 +10,12 @@ namespace Blog.Service
 {
     public abstract class BaseServices<TEntity> : IBaseService<TEntity> where TEntity : class, new()
     {
+        public BaseServices(IBaseRepository<TEntity> baseRepository)
+        {
+            this.baseRepository = baseRepository;
+        }
+
+
         protected abstract IBaseRepository<TEntity> baseRepository { get; set; }//通过在子类的构造函数中注入，这里是基类，不用构造函数
 
         
@@ -37,6 +43,11 @@ namespace Blog.Service
         public async Task<bool> DeleteByIds(object[] ids)
         {
             return await baseRepository.DeleteById(ids);
+        }
+
+        public async Task<List<TEntity>> GetAll()
+        {
+            return await baseRepository.GetAll();
         }
 
         public async Task<TEntity> QueryById(object id)
