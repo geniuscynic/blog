@@ -9,37 +9,19 @@
       active-text-color="#ffd04b"
       :collapse="collapse"
     >
-      <el-menu-item index="5">
+      <el-submenu v-for="menu in menus" :key="menu.id"   :index="menu.id.toString()">
         <template slot="title">
           <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-home"></use>
+            <use :xlink:href="`#${menu.icon}`"></use>
           </svg>
-          <span>XJJXMM欢迎页</span>
+          <span>{{ menu.name}}</span>
         </template>
-      </el-menu-item>
-
-      <el-submenu index="2">
-        <template slot="title">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-home"></use>
-          </svg>
-          <span>用户管理</span>
-        </template>
-        <el-menu-item index="1-1">用户管理</el-menu-item>
-        <el-menu-item index="1-2">角色管理</el-menu-item>
+        <el-menu-item v-for="childMenu in menu.childMenus" :key="childMenu.id" :index="childMenu.id.toString()">
+          {{ childMenu.name}}
+        </el-menu-item>
       </el-submenu>
 
-      <el-submenu index="1">
-        <template slot="title">
-          <svg class="icon" aria-hidden="true">
-            <use xlink:href="#icon-home"></use>
-          </svg>
-          <span>菜单管理</span>
-        </template>
-
-        <el-menu-item index="1-1">选项1</el-menu-item>
-        <el-menu-item index="1-2">选项2</el-menu-item>
-      </el-submenu>
+      
     </el-menu>
   </div>
 </template>
