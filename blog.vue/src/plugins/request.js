@@ -1,4 +1,5 @@
 import axios from 'axios'
+import router from '@/router'
 //import store from '@/store'
 
 const service = axios.create({
@@ -35,6 +36,7 @@ service.interceptors.response.use(function (response) {
         // 清除本地token和清空vuex中token对象
         // 跳转登录页面                
         case 403:
+          console.log(error.response.status);
           router.push({ name: 'login'})
             break; 
 
