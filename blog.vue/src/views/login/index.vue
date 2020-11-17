@@ -52,6 +52,8 @@ export default {
           } else {
             this[SET_TOKEN](response.data.response);
 
+            
+
             this.$router.push({ name: "dashboard" });
           }
         })
@@ -76,6 +78,9 @@ $cursor: #fff;
   width: 100%;
   padding-top: 150px;
 
+  .el-col {
+    min-width: 600px;
+  }
   .el-alert {
     margin-bottom: 20px;
   }
@@ -90,6 +95,8 @@ $cursor: #fff;
 
       padding-top: 6px;
       padding-bottom: 6px;
+
+     
     }
 
     .el-button {

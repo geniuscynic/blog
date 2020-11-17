@@ -139,7 +139,7 @@ namespace Blog.Common.Extensions.Middlewares
                             Code="mu",
                             Name="菜单管理",
                             Icon="icon-home",
-                            ParentId=1,
+                            ParentId=0,
                             Route = "",
                             SeqNum = 1
                         },

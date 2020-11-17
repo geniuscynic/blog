@@ -41,8 +41,8 @@ namespace Blog.Common
                 new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                 //这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
                 new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(100)).ToUnixTimeSeconds()}"),
-                new Claim(JwtRegisteredClaimNames.Iss,"Blog.Core"),
-                new Claim(JwtRegisteredClaimNames.Aud,"wr"),
+                new Claim(JwtRegisteredClaimNames.Iss, issue),
+                new Claim(JwtRegisteredClaimNames.Aud, aud),
                 //这个Role是官方UseAuthentication要要验证的Role，我们就不用手动设置Role这个属性了
                 //new Claim(ClaimTypes.Role,tokenModel.Role),
                 new Claim(ClaimTypes.Name, tokenModel.Name),

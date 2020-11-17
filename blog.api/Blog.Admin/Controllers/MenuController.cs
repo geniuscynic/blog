@@ -1,6 +1,7 @@
 ﻿using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ namespace Blog.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "superAdmin")]
     public class MenuController : ControllerBase
     {
         private readonly IMenuService service;
