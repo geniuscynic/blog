@@ -1,7 +1,9 @@
 ﻿using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
+using Blog.Core.VeiwModels;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -18,39 +20,50 @@ namespace Blog.API.Controllers
     public class MenuController : ControllerBase
     {
         private readonly IMenuService service;
+        private readonly IHttpContextAccessor httpContext;
 
-        public MenuController(IMenuService service)
+        public MenuController(IMenuService service, IHttpContextAccessor httpContext)
         {
             this.service = service;
+            this.httpContext = httpContext;
         }
+
         // GET: api/<MenuController>
         [HttpGet]
         public async Task<MessageModel<IEnumerable<Menu>>> Get()
         {
+            var token = httpContext.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
             return new MessageModel<IEnumerable<Menu>>
             {
-                response = await service.Get()
+                response = await service.GetMenus(token)
             };
         }
 
         // GET api/<MenuController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpPut]
+        public async Task<MessageModel<bool>> Put([FromBody] Menu menu)
         {
-            return "value";
+            return new MessageModel<bool>
+            {
+                response = await service.Edit(menu)
+            };
         }
 
         // POST api/<MenuController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<MessageModel<int>> Post([FromBody] AddMenuViewModel value)
         {
+            return new MessageModel<int>
+            {
+                response = await service.AddMenu(value)
+            };
         }
 
         // PUT api/<MenuController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
+        //[HttpPut("{id}")]
+        //public void Put(int id, [FromBody] string value)
+        //{
+        //}
 
         // DELETE api/<MenuController>/5
         [HttpDelete("{id}")]

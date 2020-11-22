@@ -1,4 +1,5 @@
-﻿using Blog.Common.Extensions.AOP;
+﻿using AutoMapper;
+using Blog.Common.Extensions.AOP;
 using Blog.Core.IService;
 using Blog.Repository.IRepository;
 using System;
@@ -10,9 +11,12 @@ namespace Blog.Service
 {
     public abstract class BaseServices<TEntity> : IBaseService<TEntity> where TEntity : class, new()
     {
-        public BaseServices(IBaseRepository<TEntity> baseRepository)
+        protected readonly IMapper mapper;
+
+        public BaseServices(IBaseRepository<TEntity> baseRepository, IMapper mapper)
         {
             this.baseRepository = baseRepository;
+            this.mapper = mapper;
         }
 
 
@@ -28,6 +32,16 @@ namespace Blog.Service
         public async Task<int> Add(TEntity model)
         {
             return await baseRepository.Add(model);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        public async Task<bool> Edit(TEntity model)
+        {
+            return await baseRepository.Edit(model);
         }
 
         public async Task<bool> Delete(TEntity model)

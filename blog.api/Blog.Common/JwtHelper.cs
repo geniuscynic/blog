@@ -40,13 +40,13 @@ namespace Blog.Common
                 new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                 //这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
-                new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(100)).ToUnixTimeSeconds()}"),
+                new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.AddSeconds(10000)).ToUnixTimeSeconds()}"),
                 new Claim(JwtRegisteredClaimNames.Iss, issue),
                 new Claim(JwtRegisteredClaimNames.Aud, aud),
                 //这个Role是官方UseAuthentication要要验证的Role，我们就不用手动设置Role这个属性了
                 //new Claim(ClaimTypes.Role,tokenModel.Role),
                 new Claim(ClaimTypes.Name, tokenModel.Name),
-                new Claim(ClaimTypes.NameIdentifier, tokenModel.Uid.ToString()),
+                new Claim(ClaimTypes.NameIdentifier, tokenModel.Id.ToString()),
                };
 
 
@@ -76,9 +76,11 @@ namespace Blog.Common
             var jwtHandler = new JwtSecurityTokenHandler();
             JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
             object role;
+            object id;
             try
             {
                 jwtToken.Payload.TryGetValue(ClaimTypes.Role, out role);
+                jwtToken.Payload.TryGetValue(ClaimTypes.NameIdentifier, out id);
             }
             catch (Exception e)
             {
@@ -87,7 +89,8 @@ namespace Blog.Common
             }
             var tm = new TokenModelJwt
             {
-                Uid = int.Parse(jwtToken.Id),
+                Id = int.Parse(id.ToString()),
+                 Role = role.ToString().Split(",").ToList(),
                 //Role = role != null ? role.ToString() : "",
             };
             return tm;

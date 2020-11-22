@@ -17,16 +17,16 @@ namespace Blog.Service
     public class UserService : BaseServices<User>, IUserService
     {
         //private readonly IBaseRepository<BlogArticle> blogRepository;
-        private readonly IMapper mapper;
+        //private readonly IMapper mapper;
 
 
         protected override IBaseRepository<User> baseRepository { get; set; }
 
 
-        public UserService(IBaseRepository<User> userRepository, IMapper mapper)    :base(userRepository)
+        public UserService(IBaseRepository<User> userRepository, IMapper mapper)    :base(userRepository, mapper)
         {
             //baseRepository = userRepository;
-            this.mapper = mapper;
+            //this.mapper = mapper;
 
         }
 
@@ -60,7 +60,7 @@ namespace Blog.Service
             
             var tokenModel = mapper.Map<User, TokenModelJwt>(user);
             tokenModel.Role = user.Roles.Select(t => t.Code).ToList();
-
+            
             var token = JwtHelper.IssueJwt(tokenModel);
             return token;
 

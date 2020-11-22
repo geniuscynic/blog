@@ -3,6 +3,7 @@ using Blog.Repository;
 using Blog.Repository.IRepository;
 using Blog.Repository.Repository;
 using Blog.Service;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
@@ -23,6 +24,9 @@ namespace Blog.Common.Extensions.ServiceExtensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMenuService, MenuService>();
+
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
     }
 }

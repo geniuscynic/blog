@@ -1,4 +1,5 @@
-﻿using Blog.Core.VeiwModels;
+﻿using Blog.Common;
+using Blog.Core.VeiwModels;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;

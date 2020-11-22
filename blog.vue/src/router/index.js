@@ -2,15 +2,42 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import store from '@/store'
 
-import dashboard from '@/views/dashboard'
+import home from '@/views/home'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'dashboard',
-    component: dashboard
+    name: 'home',
+    component: home,
+
+    children: [
+      {
+        path: 'menu',
+        name: 'menu',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '@/views/permission/menu')
+      },
+      {
+        path: 'blog/add',
+        name: 'blog-add',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '@/views/blog/add')
+      },
+      {
+        path: '',
+        name: 'dashboard',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '@/views/dashboard')
+      }
+    ]
   },
   {
     path: '/about',
@@ -28,21 +55,22 @@ const routes = [
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '@/views/login')
   }
+
 ]
 
 const router = new VueRouter({
   routes
 })
 
-//console.log(this, Vue)
+// console.log(this, Vue)
 
 router.beforeEach((to, from, next) => {
   const token = store.state.token
-  //console.log("token", token);
+  // console.log("token", token);
 
   if (to.name !== 'login' && token === '') {
     next({ name: 'login' })
-    //next()
+    // next()
   } else { next() }
 })
 

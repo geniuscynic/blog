@@ -21,6 +21,13 @@ namespace Blog.Repository.IRepository
 
         Task<bool> Add(List<TEntity> models);
 
+        /// <summary>
+        /// 修改 model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<bool> Edit(TEntity model);
+
         Task<bool> DeleteById(object id);
 
         Task<bool> Delete(TEntity model);

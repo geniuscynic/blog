@@ -1,7 +1,7 @@
 <template>
   <el-row class="login-container" type="flex" justify="center">
     <el-col :span="8">
-      <el-form :model="form" ref="form" :rules="rules" :status-icon="true">
+      <el-form :model="form" ref="form" :rules="rules" :status-icon="true" @keyup.enter.native="onSubmit">
         <h1 class="title">系统登录</h1>
         <el-alert :title="errorMsg" type="error" v-if="showError" show-icon>
         </el-alert>
@@ -16,55 +16,55 @@
           </el-input>
         </el-form-item>
 
-        <el-button type="primary" @click="onSubmit">登入</el-button>
+        <el-button type="primary" @click="onSubmit" >登入</el-button>
       </el-form>
     </el-col>
   </el-row>
 </template>
 
 <script>
-import { mapMutations } from "vuex";
-import { SET_TOKEN } from "@/plugins/mutation-types";
+import { mapMutations } from 'vuex'
+import { SET_TOKEN, API_LOGIN } from '@/plugins/const'
 
 export default {
-  data() {
+  name: 'login',
+  data () {
     return {
       form: {
-        login: "",
-        password: "",
+        login: '',
+        password: ''
       },
       rules: {
-        login: [{ required: true, message: "请输入账号", trigger: "blur" }],
-        password: [{ required: true, message: "请输入密码", trigger: "blur" }],
+        login: [{ required: true, message: '请输入账号', trigger: 'blur' }],
+        password: [{ required: true, message: '请输入密码', trigger: 'blur' }]
       },
       showError: false,
-      errorMsg: "",
-    };
+      errorMsg: ''
+    }
   },
   methods: {
-    onSubmit() {
+    onSubmit () {
       this.axios
-        .post("/api/Account/Login", this.form)
+        .post(API_LOGIN, this.form)
         .then((response) => {
-          if (response.data.response === "") {
-            this.errorMsg = "账号密码错误";
-            this.showError = true;
+          if (response.data.response === '') {
+            this.errorMsg = '账号密码错误'
+            this.showError = true
           } else {
-            this[SET_TOKEN](response.data.response);
+            this[SET_TOKEN](response.data.response)
 
-            
-
-            this.$router.push({ name: "dashboard" });
+            this.$router.push({ name: 'dashboard' })
           }
         })
         .catch((error) => {
-          this.errorMsg = "服务器异常，请稍后再试";
-          this.showError = true;
-        });
+          console.log(error.response)
+          this.errorMsg = '服务器异常，请稍后再试'
+          this.showError = true
+        })
     },
-    ...mapMutations([SET_TOKEN]),
-  },
-};
+    ...mapMutations([SET_TOKEN])
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -96,7 +96,6 @@ $cursor: #fff;
       padding-top: 6px;
       padding-bottom: 6px;
 
-     
     }
 
     .el-button {
@@ -115,6 +114,7 @@ $cursor: #fff;
 <style lang="scss">
 $light_gray: #eee;
 $cursor: #fff;
+.login-container {
 .el-input {
   background: transparent;
 
@@ -125,5 +125,6 @@ $cursor: #fff;
 
     font-size: 16px;
   }
+}
 }
 </style>

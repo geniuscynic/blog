@@ -15,7 +15,7 @@ namespace Blog.Common.Extensions.Middlewares
         public static void UseSeedDataMildd(this IApplicationBuilder app, Dbcontext dbcontext)
         {
 
-            if (AppSettingHelper.App("SeedDBEnabled").ObjToBool())
+            if (AppSettingHelper.App("SeedDBEnabled:table").ObjToBool())
             {
                 dbcontext.Db.DbMaintenance.CreateDatabase();
                 dbcontext.Db.CodeFirst.InitTables(typeof(BlogArticle));
@@ -26,6 +26,11 @@ namespace Blog.Common.Extensions.Middlewares
                 dbcontext.Db.CodeFirst.InitTables(typeof(Role));
                 dbcontext.Db.CodeFirst.InitTables(typeof(UserRole));
                 dbcontext.Db.CodeFirst.InitTables(typeof(Menu));
+                dbcontext.Db.CodeFirst.InitTables(typeof(MenuPermission));
+            }
+
+            if (AppSettingHelper.App("SeedDBEnabled:data").ObjToBool())
+            {
 
                 if (dbcontext.GetSimpleClient<Category>().GetList().Count() == 0)
                 {
@@ -166,8 +171,31 @@ namespace Blog.Common.Extensions.Middlewares
                     });
                 }
 
+                if(dbcontext.GetSimpleClient<MenuPermission>().GetList().Count() == 0)
+                {
+                    dbcontext.GetSimpleClient<MenuPermission>().InsertRange(new MenuPermission[] {
+                        new MenuPermission
+                        {
+                            Id=1,
+                            MenuId = 1,
+                            RoleId = 1
+                        },
+                        new MenuPermission
+                        {
+                            Id=2,
+                            MenuId = 2,
+                            RoleId = 1
+                        },
+                        new MenuPermission
+                        {
+                            Id=3,
+                            MenuId = 3,
+                            RoleId = 1
+                        },
 
 
+                    });
+                }
                 //db.GetSimpleClient<Category>().
             }
 

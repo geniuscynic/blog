@@ -123,6 +123,7 @@ namespace Blog.API
                 builder.WithOrigins("http://localhost:8080")
                         .AllowAnyHeader()//Ensures that the policy allows any header.
                         .AllowAnyMethod()
+                        
 
             );
 

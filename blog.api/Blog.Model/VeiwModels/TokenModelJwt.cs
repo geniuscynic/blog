@@ -13,7 +13,7 @@ namespace Blog.Core.VeiwModels
         /// <summary>
         /// Id
         /// </summary>
-        public long Uid { get; set; }
+        public int Id { get; set; }
         /// <summary>
         /// 角色
         /// </summary>

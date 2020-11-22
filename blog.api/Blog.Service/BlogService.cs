@@ -16,7 +16,7 @@ namespace Blog.Service
     public class BlogService : BaseServices<BlogArticle>, IBlogService
     {
         //private readonly IBaseRepository<BlogArticle> blogRepository;
-        private readonly IMapper mapper;
+        //private readonly IMapper mapper;
         private readonly IBaseRepository<Tag> tagRepository;
         private readonly IBaseRepository<BlogTag> blogTagRepository;
 
@@ -24,10 +24,10 @@ namespace Blog.Service
 
 
         public BlogService(IBaseRepository<BlogArticle> blogRepository, IMapper mapper, IBaseRepository<Tag> tagRepository, IBaseRepository<BlogTag> blogTagRepository)
-            : base(blogRepository)
+            : base(blogRepository, mapper)
         {
             //baseRepository = blogRepository;
-            this.mapper = mapper;
+            //this.mapper = mapper;
             this.tagRepository = tagRepository;
             this.blogTagRepository = blogTagRepository;
         }

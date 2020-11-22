@@ -13,9 +13,16 @@ namespace Blog.Core.IService
     public interface IMenuService  : IBaseService<Menu>
     {
         /// <summary>
-        /// 或许带有上下级关系的所有menu
+        /// 获取带有上下级关系的所有menu
         /// </summary>
         /// <returns></returns>
-        Task<List<Menu>> Get();
+        Task<List<Menu>> GetMenus(string token);
+
+                                                             /// <summary>
+                                                             /// 添加菜单
+                                                             /// </summary>
+                                                             /// <param name="addMenuViewModel"></param>
+                                                             /// <returns></returns>
+        Task<int> AddMenu(AddMenuViewModel addMenuViewModel);
     }
 }

@@ -15,7 +15,7 @@ namespace Blog.Core.Models
         /// 菜单 code
         /// </summary>
         [SugarColumn(Length = 10)]
-        public string Code { get; set; }
+        public string Code { get; set; } = "";
 
 
         /// <summary>
@@ -29,13 +29,13 @@ namespace Blog.Core.Models
         /// Icon 名
         /// </summary>
         [SugarColumn(Length = 20)]
-        public string Icon { get; set; }
+        public string Icon { get; set; } = "";
 
         /// <summary>
         /// 路由， 导航地址
         /// </summary>
         [SugarColumn(Length = 200)]
-        public string Route { get; set; }
+        public string Route { get; set; } = "";
 
         /// <summary>
         /// 排序

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Blog.Core.AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
+using System;
 
 namespace Blog.Common.Extensions.AutoMapper
 {
@@ -12,7 +13,17 @@ namespace Blog.Common.Extensions.AutoMapper
         public static void AddAutoMapperSetup(this IServiceCollection services)
         {
 
+            //var configuration = new MapperConfiguration(cfg =>
+            //{
+            //    cfg.CreateMap<string, int>().ConvertUsing(s => Convert.ToInt32(s));
+            //    // cfg.CreateMap<string, DateTime>().ConvertUsing(new DateTimeTypeConverter());
+            //    // cfg.CreateMap<string, Type>().ConvertUsing<TypeTypeConverter>();
+            //    // cfg.CreateMap<Source, Destination>();
+            //});
 
+            //configuration.AssertConfigurationIsValid();
+
+            
             //services.AddAutoMapper(typeof(AutoMapperConfig));
             //AutoMapperConfig.RegisterMappings();
 

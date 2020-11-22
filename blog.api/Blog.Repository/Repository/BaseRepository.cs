@@ -51,6 +51,11 @@ namespace Blog.Repository.Repository
             return await Db.Insertable(models.ToArray()).ExecuteCommandIdentityIntoEntityAsync();
         }
 
+        public async Task<bool> Edit(TEntity model)
+        {
+           return await Db.Saveable(model).ExecuteCommandAsync() > 0;
+        }
+
         public async Task<bool> Delete(TEntity model)
         {
             return await Db.Deleteable<TEntity>(model).ExecuteCommandAsync() > 0;

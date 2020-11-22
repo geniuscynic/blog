@@ -19,6 +19,14 @@ namespace Blog.Core.IService
         /// <returns></returns>
         Task<int> Add(TEntity model);
 
+
+        /// <summary>
+        /// 修改 model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <returns></returns>
+        Task<bool> Edit(TEntity model);
+
         /// <summary>
         /// 根据主键删除 id
         /// </summary>

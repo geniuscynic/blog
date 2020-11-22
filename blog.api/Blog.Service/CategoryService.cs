@@ -1,4 +1,5 @@
-﻿using Blog.Core.IService;
+﻿using AutoMapper;
+using Blog.Core.IService;
 using Blog.Core.Models;
 using Blog.Repository.IRepository;
 using System;
@@ -11,7 +12,7 @@ namespace Blog.Service
     {
         protected override IBaseRepository<Category> baseRepository { get; set; }
 
-        public CategoryService(IBaseRepository<Category> repository) : base(repository)
+        public CategoryService(IBaseRepository<Category> repository, IMapper mapper) : base(repository, mapper)
         {
             //this.baseRepository = repository;
         }
