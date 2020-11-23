@@ -40,6 +40,12 @@ namespace Blog.Core.Models
         public int CategoryId { get; set; }
 
         /// <summary>
+        /// 内容
+        /// </summary>
+        [SugarColumn(Length = 4000)]
+        public string Content { get; set; }
+
+        /// <summary>
         /// 标签
         /// </summary>
         [SugarColumn(IsIgnore = true)]

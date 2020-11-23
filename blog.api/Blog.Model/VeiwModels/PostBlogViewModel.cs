@@ -27,6 +27,11 @@ namespace Blog.Core.VeiwModels
         public string Quote { get; set; }
 
         /// <summary>
+        /// 内容
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
         /// 分类ID
         /// </summary>
         public int CategoryId { get; set; }

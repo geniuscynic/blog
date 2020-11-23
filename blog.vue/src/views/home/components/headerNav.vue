@@ -33,7 +33,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this);
+    //console.log(this);
   },
   computed:{
         matchedArr(){
@@ -56,7 +56,7 @@ export default {
                 }
             });
 
-            console.log(temp, temps);
+            //console.log(temp, temps);
             return temps;
         }
 }

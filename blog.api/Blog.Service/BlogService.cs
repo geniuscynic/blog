@@ -76,7 +76,11 @@ namespace Blog.Service
                     newTags.Add(new Tag() { Name = tag.Trim() });
                 }
 
-                await tagRepository.Add(newTags);
+                if (newTags.Count > 0)
+                {
+                    await tagRepository.Add(newTags);
+
+                }
 
                 foreach (var tag in newTags)
                 {
@@ -90,8 +94,10 @@ namespace Blog.Service
                     blogTags.Add(temp);
                 }
 
-
-                await blogTagRepository.Add(blogTags);
+                if (blogTags.Count > 0)
+                {
+                    await blogTagRepository.Add(blogTags);
+                }
 
                 //throw new Exception("dd");
                 baseRepository.Db.Ado.CommitTran();
