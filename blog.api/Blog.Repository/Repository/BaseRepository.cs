@@ -41,6 +41,9 @@ namespace Blog.Repository.Repository
             return await Db.Insertable(model).ExecuteReturnIdentityAsync();
         }
 
+
+       
+
         /// <summary>
         /// 批量插入
         /// </summary>

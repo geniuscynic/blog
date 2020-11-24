@@ -67,20 +67,22 @@ namespace Blog.Service
                     //    blogViewModel.Tags.Remove(tag.Name);
                     //}
 
-                    blogViewModel.Tags.RemoveWhere(c => tag.Name == c);
+                    var res = blogViewModel.Tags.RemoveWhere(c => tag.Name.Trim() == c.Trim());
                 }
 
                 var newTags = new List<Tag>();
                 foreach (var tag in blogViewModel.Tags)
                 {
-                    newTags.Add(new Tag() { Name = tag.Trim() });
+                    var newTag = new Tag() { Name = tag.Trim() };
+                    newTag.Id = await tagRepository.Add(newTag);
+                    newTags.Add(newTag);
                 }
 
-                if (newTags.Count > 0)
-                {
-                    await tagRepository.Add(newTags);
+                //if (newTags.Count > 0)
+                //{
+                //    await tagRepository.Add(newTags);
 
-                }
+                //}
 
                 foreach (var tag in newTags)
                 {

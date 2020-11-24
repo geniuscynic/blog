@@ -6,79 +6,12 @@
 
     <el-table :data="blogs" style="width: 100%">
       <el-table-column prop="id" label="" width="50"> </el-table-column>
-      <el-table-column label="标题" width="180">
-        <template slot-scope="scope">
-          <div v-if="scope.row.mode == 0">
-            <i
-              class="el-icon-arrow-right"
-              v-if="scope.row.childMenus != null"
-            />
-            <i v-else class="el-icon-else" />
-            <svg
-              class="icon icon-menu"
-              aria-hidden="true"
-              v-if="scope.row.icon != ''"
-            >
-              <use :xlink:href="`#${scope.row.icon}`"></use>
-            </svg>
-            <span class="rowitem">{{ scope.row.name }}</span>
-          </div>
-          <div v-else>
-            <el-form :inline="true">
-              <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.editIcon"></el-input>
-              </el-form-item>
-              <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.editName"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="作者" width="180">
-        <template slot-scope="scope">
-          <div v-if="scope.row.mode == 0">
-            {{ scope.row.route }}
-          </div>
-          <div v-else>
-            <el-form :inline="true">
-              <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.route"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="分类" width="180">
-        <template slot-scope="scope">
-          <div v-if="scope.row.mode == 0">
-            {{ scope.row.route }}
-          </div>
-          <div v-else>
-            <el-form :inline="true">
-              <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.route"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="修改时间" width="180">
-        <template slot-scope="scope">
-          <div v-if="scope.row.mode == 0">
-            {{ scope.row.route }}
-          </div>
-          <div v-else>
-            <el-form :inline="true">
-              <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.route"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-        </template>
-      </el-table-column>
+      <el-table-column label="标题" width="180" prop="title"></el-table-column>
+      <el-table-column label="作者" width="180" prop="author"></el-table-column>
+      <el-table-column label="分类" width="180" prop="category"></el-table-column>
+      <el-table-column label="修改时间" width="180" prop="publishTime"></el-table-column>
 
-      <el-table-column prop="seqNum" label="内容"> </el-table-column>
+      <el-table-column label="内容" prop="content"></el-table-column>
     </el-table>
   </div>
 </template>

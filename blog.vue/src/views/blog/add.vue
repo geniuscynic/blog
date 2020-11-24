@@ -14,7 +14,7 @@
         </el-form-item>
 
         <el-form-item label="分类">
-          <el-select v-model="form.category" placeholder="请选择分类">
+          <el-select v-model="form.categoryId" placeholder="请选择分类">
             <el-option v-for="category in categories" :key="category.id" :label="category.name" :value="category.id"></el-option>
           </el-select>
         </el-form-item>
