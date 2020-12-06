@@ -8,7 +8,7 @@ using AutoMapper;
 using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using StackExchange.Profiling;
@@ -61,10 +61,10 @@ namespace Blog.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<MessageModel<IEnumerable<BlogArticle>>> Get()
+        public async Task<MessageModel<PageModel<ListBlogViewModel>>> Get(int pageIndex = 1, int pageSize = 20)
         {
-            var blogs = await service.QueryPage();
-            return new MessageModel<IEnumerable<BlogArticle>>
+            var blogs = await service.GetBlogList(pageIndex, pageSize);
+            return new MessageModel<PageModel<ListBlogViewModel>>
             {
                 response = blogs
             };
@@ -78,10 +78,10 @@ namespace Blog.API.Controllers
         /// <returns></returns>
         // GET api/<BlogController>/5
         [HttpGet("{id}")]
-        public async Task<MessageModel<BlogArticle>> Get(int id)
+        public async Task<MessageModel<PostBlogViewModel>> Get(int id)
         {
-            var blog = await service.QueryById(id);
-            return new MessageModel<BlogArticle>
+            var blog = await service.Get(id);
+            return new MessageModel<PostBlogViewModel>
             {
                 response = blog
             };
@@ -90,22 +90,32 @@ namespace Blog.API.Controllers
         /// <summary>
         /// 新增一个 blog
         /// </summary>
-        /// <param name="value"></param>
+        /// <param name="blog"></param>
         [HttpPost]
-        public async Task<MessageModel<int>> Post([FromBody] PostBlogViewModel value)
+        public async Task<MessageModel<int>> Post([FromBody] PostBlogViewModel blog)
         {
             return new MessageModel<int>
             {
-                response = await service.Add(value)
+                response = await service.Save(blog)
 
             };
 
         }
 
+        /// <summary>
+        /// 修改blog
+        /// </summary>
+        /// <param name="blog"></param>
+        /// <returns></returns>
         // PUT api/<BlogController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        [HttpPut]
+        public async Task<MessageModel<int>> Put([FromBody] PostBlogViewModel blog)
         {
+            return new MessageModel<int>
+            {
+                response = await service.Save(blog)
+
+            };
         }
 
         /// <summary>

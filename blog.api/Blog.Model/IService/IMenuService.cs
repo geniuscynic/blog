@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Models;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;

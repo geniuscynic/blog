@@ -24,6 +24,9 @@ namespace Blog.Common.Extensions.ServiceExtensions
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
             services.AddScoped<IMenuService, MenuService>();
+            services.AddScoped<IButtonService, ButtonService>();
+            services.AddScoped<IRoleService, RoleService>();
+            services.AddScoped<IPermissionService, PermissionService>();
 
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

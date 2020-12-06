@@ -11,10 +11,7 @@ namespace Blog.Core
         /// 当前页标
         /// </summary>
         public int Page { get; set; } = 1;
-        /// <summary>
-        /// 总页数
-        /// </summary>
-        public int PageCount { get; set; } = 6;
+       
         /// <summary>
         /// 数据总数
         /// </summary>
@@ -27,6 +24,18 @@ namespace Blog.Core
         /// 返回数据
         /// </summary>
         public List<T> Data { get; set; }
+
+        /// <summary>
+        /// 总页数
+        /// </summary>
+        public int PageCount
+        {
+            get
+            {
+                return DataCount / PageSize + 1;
+            }
+        }
+        //public int PageCount { get; set; } = 6;
 
     }
 

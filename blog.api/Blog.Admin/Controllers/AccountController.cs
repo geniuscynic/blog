@@ -1,7 +1,7 @@
 ﻿using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -16,11 +16,11 @@ namespace Blog.API.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        private readonly IUserService userService;
+        private readonly IUserService _userService;
 
         public AccountController(IUserService userService)
         {
-            this.userService = userService;
+            this._userService = userService;
         }
         [HttpPost("login")]
         public async Task<MessageModel<string>> Login([FromBody] LoginViewModel loginViewModel)
@@ -28,7 +28,7 @@ namespace Blog.API.Controllers
            
             //JwtHelper.IssueJwt()
             return new MessageModel<string> {
-                response = await userService.Login(loginViewModel)
+                response = await _userService.Login(loginViewModel)
             };
         }
         // GET: api/<AccountController>

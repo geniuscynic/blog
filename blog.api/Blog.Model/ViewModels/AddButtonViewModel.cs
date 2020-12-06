@@ -2,21 +2,27 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.VeiwModels
+namespace Blog.Core.ViewModels
 {
     /// <summary>
     /// 添加menu
     /// </summary>
-    public class AddMenuViewModel
+    public class AddButtonViewModel
     {
         /// <summary>
         /// 父menu id
         /// </summary>
-        public int Pid { get; set; }
+        public int MenuId { get; set; }
 
         /// <summary>
         /// 菜单名
         /// </summary>
-        public string Menu { get; set; }
+        public string Name { get; set; }
+
+
+        /// <summary>
+        /// 菜单名
+        /// </summary>
+        public string Code { get; set; }
     }
 }

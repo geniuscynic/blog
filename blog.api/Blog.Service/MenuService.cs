@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Linq;
 using Blog.Common;
 using SqlSugar;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using AutoMapper;
 
 namespace Blog.Service

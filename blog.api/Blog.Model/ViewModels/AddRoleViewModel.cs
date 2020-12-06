@@ -1,34 +1,23 @@
-﻿using SqlSugar;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Blog.Core.Models
+﻿namespace Blog.Core.ViewModels
 {
     /// <summary>
-    /// 角色
+    /// 添加角色模型
     /// </summary>
-    public class Role : RootEntityTkey<int>
+    public class AddRoleViewModel
     {
         /// <summary>
         /// code
         /// </summary>
-        [SugarColumn(Length = 10, ColumnDataType = "nvarchar")]
         public string Code { get; set; }
 
         /// <summary>
         /// 名称
         /// </summary>
-        [SugarColumn(Length = 10, ColumnDataType = "nvarchar")]
         public string Name { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
-        [SugarColumn(Length = 50, ColumnDataType = "nvarchar")]
         public string Description { get; set; } = "";
-
-
-
     }
 }

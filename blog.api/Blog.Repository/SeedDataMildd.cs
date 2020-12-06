@@ -27,12 +27,13 @@ namespace Blog.Common.Extensions.Middlewares
                 dbcontext.Db.CodeFirst.InitTables(typeof(UserRole));
                 dbcontext.Db.CodeFirst.InitTables(typeof(Menu));
                 dbcontext.Db.CodeFirst.InitTables(typeof(MenuPermission));
+                dbcontext.Db.CodeFirst.InitTables(typeof(Button));
             }
 
             if (AppSettingHelper.App("SeedDBEnabled:data").ObjToBool())
             {
 
-                if (dbcontext.GetSimpleClient<Category>().GetList().Count() == 0)
+                if (!dbcontext.GetSimpleClient<Category>().GetList().Any())
                 {
                     dbcontext.GetSimpleClient<Category>().Insert(new Category
                     {
@@ -44,7 +45,7 @@ namespace Blog.Common.Extensions.Middlewares
                     });
                 }
 
-                if (dbcontext.GetSimpleClient<Role>().GetList().Count() == 0)
+                if (!dbcontext.GetSimpleClient<Role>().GetList().Any())
                 {
                     dbcontext.GetSimpleClient<Role>().Insert(new Role
                     {
@@ -95,7 +96,7 @@ namespace Blog.Common.Extensions.Middlewares
                     });
                 }
 
-                if (dbcontext.GetSimpleClient<Menu>().GetList().Count() == 0)
+                if (!dbcontext.GetSimpleClient<Menu>().GetList().Any())
                 {
                     dbcontext.GetSimpleClient<Menu>().InsertRange(new Menu[] {
                         new Menu
@@ -171,7 +172,7 @@ namespace Blog.Common.Extensions.Middlewares
                     });
                 }
 
-                if(dbcontext.GetSimpleClient<MenuPermission>().GetList().Count() == 0)
+                if(!dbcontext.GetSimpleClient<MenuPermission>().GetList().Any())
                 {
                     dbcontext.GetSimpleClient<MenuPermission>().InsertRange(new MenuPermission[] {
                         new MenuPermission

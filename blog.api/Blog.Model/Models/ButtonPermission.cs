@@ -3,37 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-
 namespace Blog.Core.Models
 {
     /// <summary>
-    /// 标签
+    /// 按钮配置
     /// </summary>
-    public class BlogTag : RootEntityTkey<int>
+    public class ButtonPermission : RootEntityTkey<int>
     {
-       
-
         /// <summary>
-        /// blog id
+        /// 菜单 ID
         /// </summary>
-        public int BlogId { get; set; }
+        public int ButtonId { get; set; }
 
         /// <summary>
-        /// tag id
+        /// 角色Id
         /// </summary>
-        public int TagId { get; set; }
+        public int RoleId { get; set; }
 
         /// <summary>
-        /// 对应的blog
+        /// 对应的菜单
         /// </summary>
         [SugarColumn(IsIgnore = true)]
-        public BlogArticle Blog { get; set; }
-
+        public List<Menu> Buttons { get; set; }
 
         /// <summary>
-        /// 对应的 tag
+        /// 对应的角色
         /// </summary>
         [SugarColumn(IsIgnore = true)]
-        public Tag Tag { get; set; }
+        public List<Role> Roles { get; set; }
     }
 }

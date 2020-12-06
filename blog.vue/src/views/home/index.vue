@@ -38,6 +38,9 @@ export default {
       }
     }
   },
+  mounted() {
+    console.log("routeHome", this.$router.params);
+  },
   components: {
     LeftMenu,
     HeaderNav

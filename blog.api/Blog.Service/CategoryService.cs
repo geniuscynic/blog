@@ -5,6 +5,7 @@ using Blog.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Blog.Service
 {
@@ -17,6 +18,21 @@ namespace Blog.Service
             //this.baseRepository = repository;
         }
 
-         
+        public async Task<Category> Save(Category category)
+        {
+            if (category.Id == 0)
+            {
+                var id = await Add(category);
+                category.Id = id;
+
+                return category;
+            }
+
+            await Edit(category);
+            //category.Id = id;
+
+            return category;
+
+        }
     }
 }

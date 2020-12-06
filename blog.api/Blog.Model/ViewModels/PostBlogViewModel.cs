@@ -3,13 +3,17 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.VeiwModels
+namespace Blog.Core.ViewModels
 {
     /// <summary>
     /// blog 类
     /// </summary>
     public class PostBlogViewModel
     {
+        /// <summary>
+        /// 标题
+        /// </summary>
+        public int Id { get; set; }
 
         /// <summary>
         /// 标题
@@ -39,7 +43,7 @@ namespace Blog.Core.VeiwModels
         /// <summary>
         ///  分类
         /// </summary>
-        public HashSet<string> Tags { get; set; }
+        public HashSet<string> Tags { get; set; } = new HashSet<string>();
 
 
     }

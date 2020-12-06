@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Blog.Core.VeiwModels
+namespace Blog.Core.ViewModels
 {
     /// <summary>
     /// 登入viewmodel

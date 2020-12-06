@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Core.Models;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,7 +21,19 @@ namespace Blog.Core.AutoMapper
             CreateMap<PostBlogViewModel, BlogArticle>()
                 .ForMember(desc => desc.Tags, opt => opt.Ignore());
 
+
+            CreateMap<BlogArticle,PostBlogViewModel>()
+                .ForMember(desc => desc.Tags, opt => opt.Ignore());
+
+
+            CreateMap<BlogArticle, ListBlogViewModel>()
+               .ForMember(desc => desc.Category, opt => opt.MapFrom(src=>src.Category.Name));
+
             CreateMap<LoginViewModel, User>();
+            CreateMap<AddUserViewModel, User>()
+                .ForMember(desc=>desc.Roles, opt=>opt.Ignore());
+            CreateMap<User, AddUserViewModel>()
+                .ForMember(desc => desc.Roles, opt => opt.Ignore());
 
             CreateMap<User, TokenModelJwt>()
                 .ForMember(desc => desc.Id, opt => opt.MapFrom(src => src.Id))
@@ -45,7 +57,11 @@ namespace Blog.Core.AutoMapper
             CreateMap<AddMenuViewModel, Menu>()
                 .ForMember(desc => desc.Name, opt => opt.MapFrom(src => src.Menu))
                 .ForMember(desc => desc.ParentId, opt => opt.MapFrom(src => src.Pid));
-                //.ForAllOtherMembers(opt => opt.Ignore());
+
+
+            CreateMap<AddButtonViewModel, Button>();
+              
+            //.ForAllOtherMembers(opt => opt.Ignore());
             //.ForMember(desc => desc.Role, opt => opt.MapFrom(src => src.Roles));
 
             //CreateMap<Role, string>()

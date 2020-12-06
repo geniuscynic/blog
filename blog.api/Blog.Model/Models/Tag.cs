@@ -15,7 +15,7 @@ namespace Blog.Core.Models
         /// <summary>
         /// 标签名
         /// </summary>
-        [SugarColumn(Length = 20)]
+        [SugarColumn(Length = 20, ColumnDataType = "nvarchar")]
         public string Name { get; set; }
 
         /// <summary>

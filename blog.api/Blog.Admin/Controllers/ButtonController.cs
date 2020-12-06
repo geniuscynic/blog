@@ -17,45 +17,45 @@ namespace Blog.API.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "superAdmin")]
-    public class MenuController : ControllerBase
+    public class ButtonController : ControllerBase
     {
-        private readonly IMenuService service;
-        private readonly IHttpContextAccessor httpContext;
+        private readonly IButtonService _service;
+        private readonly IHttpContextAccessor _httpContext;
 
-        public MenuController(IMenuService service, IHttpContextAccessor httpContext)
+        public ButtonController(IButtonService service, IHttpContextAccessor httpContext)
         {
-            this.service = service;
-            this.httpContext = httpContext;
+            this._service = service;
+            this._httpContext = httpContext;
         }
 
         // GET: api/<MenuController>
         [HttpGet]
-        public async Task<MessageModel<IEnumerable<Menu>>> Get()
+        public async Task<MessageModel<IEnumerable<Button>>> Get()
         {
-            var token = httpContext.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
-            return new MessageModel<IEnumerable<Menu>>
+            var token = _httpContext.HttpContext.Request.Headers["Authorization"].ToString().Replace("Bearer ", "");
+            return new MessageModel<IEnumerable<Button>>
             {
-                response = await service.GetMenus(token)
+                response = await _service.GetButtons(token)
             };
         }
 
         // GET api/<MenuController>/5
         [HttpPut]
-        public async Task<MessageModel<bool>> Put([FromBody] Menu menu)
+        public async Task<MessageModel<bool>> Put([FromBody] Button button)
         {
             return new MessageModel<bool>
             {
-                response = await service.Edit(menu)
+                response = await _service.Edit(button)
             };
         }
 
         // POST api/<MenuController>
         [HttpPost]
-        public async Task<MessageModel<int>> Post([FromBody] AddMenuViewModel value)
+        public async Task<MessageModel<int>> Post([FromBody] AddButtonViewModel value)
         {
             return new MessageModel<int>
             {
-                response = await service.AddMenu(value)
+                response = await _service.AddButton(value)
             };
         }
 

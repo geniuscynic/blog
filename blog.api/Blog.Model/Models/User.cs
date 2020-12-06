@@ -13,19 +13,19 @@ namespace Blog.Core.Models
         /// <summary>
         /// 账号
         /// </summary>
-        [SugarColumn(Length = 20)]
+        [SugarColumn(Length = 20, ColumnDataType = "nvarchar")]
         public string Account { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        [SugarColumn(Length = 20)]
+        [SugarColumn(Length = 20, ColumnDataType = "nvarchar")]
         public string Password { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
-        [SugarColumn(Length = 6)]
+        [SugarColumn(Length = 6, ColumnDataType = "nvarchar")]
         public string NickName { get; set; }
 
         /// <summary>
@@ -38,5 +38,8 @@ namespace Blog.Core.Models
         /// </summary>
         [SugarColumn(IsIgnore = true)]
         public List<Role> Roles { get; set; }
+
+
+       
     }
 }

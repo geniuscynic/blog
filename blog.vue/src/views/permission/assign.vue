@@ -1,49 +1,20 @@
 <template>
   <div id="permission-menu-container">
     <el-button type="primary" icon="el-icon-plus" @click="add"
-      >新增菜单</el-button
+      >添加角色</el-button
     >
 
-    <el-table :data="menus" style="width: 100%">
-      <el-table-column prop="id" label="" width="50"> </el-table-column>
-      <el-table-column label="菜单" width="360">
+    <el-table :data="roles" style="width: 100%">
+      <el-table-column prop="id" label="" width="100"> </el-table-column>
+      <el-table-column label="角色" width="360">
         <template slot-scope="scope">
           <div v-if="scope.row.mode == 0">
-            <i
-              class="el-icon-arrow-right"
-              v-if="scope.row.childMenus != null"
-            />
-            <i v-else class="el-icon-else" />
-            <svg
-              class="icon icon-menu"
-              aria-hidden="true"
-              v-if="scope.row.icon != ''"
-            >
-              <use :xlink:href="`#${scope.row.icon}`"></use>
-            </svg>
             <span class="rowitem">{{ scope.row.name }}</span>
           </div>
           <div v-else>
             <el-form :inline="true">
               <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.editIcon"></el-input>
-              </el-form-item>
-              <el-form-item class="icon-input" label="">
                 <el-input v-model="scope.row.editName"></el-input>
-              </el-form-item>
-            </el-form>
-          </div>
-        </template>
-      </el-table-column>
-      <el-table-column label="路由" width="180">
-        <template slot-scope="scope">
-          <div v-if="scope.row.mode == 0">
-            {{ scope.row.route }}
-          </div>
-          <div v-else>
-            <el-form :inline="true">
-              <el-form-item class="icon-input" label="">
-                <el-input v-model="scope.row.editRoute"></el-input>
               </el-form-item>
             </el-form>
           </div>
@@ -63,7 +34,20 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column prop="seqNum" label="排序"> </el-table-column>
+      <el-table-column label="描述" width="180">
+        <template slot-scope="scope">
+          <div v-if="scope.row.mode == 0">
+            {{ scope.row.description }}
+          </div>
+          <div v-else>
+            <el-form :inline="true">
+              <el-form-item class="icon-input" label="">
+                  <el-input v-model="scope.row.editDesc"></el-input>
+              </el-form-item>
+            </el-form>
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
           <div v-if="scope.row.mode == 0">
@@ -86,39 +70,17 @@
       </el-table-column>
     </el-table>
 
-    <el-dialog title="新增菜单" :visible.sync="dialogFormVisible">
+    <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        <el-form-item label="父菜单" :label-width="formLabelWidth">
-          <el-select v-model="form.pid" placeholder="请选择父菜单">
-            <el-option label="默认" :value="0">
-              <i class="el-icon-arrow-right" />
-
-              <svg class="icon icon-menu" aria-hidden="true">
-                <use xlink:href="#icon-home"></use>
-              </svg>
-              <span class="rowitem">默认</span>
-            </el-option>
-            <el-option
-              v-for="menu in menus"
-              :key="menu.id"
-              :label="menu.name"
-              :value="menu.id"
-            >
-              <i class="el-icon-arrow-right" v-if="menu.childMenus != null" />
-              <i v-else class="el-icon-else" />
-              <svg
-                class="icon icon-menu"
-                aria-hidden="true"
-                v-if="menu.icon != ''"
-              >
-                <use :xlink:href="`#${menu.icon}`"></use>
-              </svg>
-              <span class="rowitem">{{ menu.name }}</span>
-            </el-option>
-          </el-select>
+        
+        <el-form-item label="角色名" :label-width="formLabelWidth">
+          <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
-        <el-form-item label="新菜单" :label-width="formLabelWidth">
-          <el-input v-model="form.menu" auto-complete="off"></el-input>
+        <el-form-item label="角色Code" :label-width="formLabelWidth">
+          <el-input v-model="form.code" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="描述" :label-width="formLabelWidth">
+          <el-input v-model="form.desc" auto-complete="off"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -130,68 +92,52 @@
 </template>
 
 <script>
-import { API_REST_MENU, GET_MENU } from "@/plugins/const";
+import { API_REST_ROLE } from "@/plugins/const";
+import { mapActions, mapState } from "vuex";
 
-import { mapActions,mapState  } from 'vuex'
 export default {
   name: "menu-permission",
   data() {
     return {
-      menus: [],
+      roles: [],
       formLabelWidth: "120px",
       dialogFormVisible: false,
       form: {
-        menu: "",
-        pid: 0,
+        name: "",
+        code: "",
+        description: "",
       },
     };
   },
-  computed: {
-    // ...mapState({
-    //   globalMenu: state => state.menus,
-
-    // })
-  },
-
   mounted() {
     this.init();
-    //this[GET_MENU]();
   },
   methods: {
-    // ...mapActions([
-    //   GET_MENU
-    // ]),
     init() {
-
+      //const _this = this;
       this.axios
-        .get(API_REST_MENU)
+        .get(API_REST_ROLE)
         .then((response) => {
-          // console.log(response.data.response);
-          const temp = [];
-          for (const item of response.data.response) {
-            // console.log(item);
-            temp.push(item);
+           //console.log(this.menus);
+          let temps = response.data.response;
 
-            for (const im of item.childMenus) {
-              im.mode = 0;
-              im.editIcon = im.icon;
-              im.editName = im.name;
-              im.editRoute = im.route;
-              im.editCode = im.code;
+          for (let button of temps) {
+            button.mode = 0;
+            button.editName = button.name;
+            button.editCode = button.code;
+            button.editDesc = button.description;
+            //button.editMenuId = button.menuId;
 
-              temp.push(im);
-            }
-            item.childMenus = [];
-            item.mode = 0;
-            item.editIcon = item.icon;
-            item.editName = item.name;
-            item.editRoute = item.route;
-            item.editCode = item.code;
+            //debugger;
+            
+            //console.log(button.menuId, this.menus, buttton.menu);
+            //button.editMenu = button.menu;
           }
-          this.menus = temp;
+
+          this.roles = temps;
         })
         .catch((error) => {
-          console.log(error.response);
+          console.log(error);
           this.errorMsg = "服务器异常，请稍后再试";
           this.showError = true;
         });
@@ -200,23 +146,25 @@ export default {
       this.dialogFormVisible = true;
     },
     handleEdit(row) {
-       console.log(row,this.menus);
+      console.log(row);
       // console.log(this.menus);
       row.mode = 1;
-      row.editIcon = row.icon;
-      row.editName = row.name;
-
-      row.editRoute = row.route;
       row.editCode = row.code;
+      row.editName = row.name;
+      row.editDesc = row.description;
+      //row.editMenuId = row.menuId;
+      //buttton.menu = this.menus.find(s=>s.menuId == button.menuId).name;
     },
     handleSave(row) {
-      row.icon = row.editIcon;
-      row.name = row.editName;
-      row.route = row.editRoute;
       row.code = row.editCode;
+      row.name = row.editName;
+      row.description = row.editDesc;
+      //row.menuId = row.editMenuId;
+      //console.log(row);
+      //row.menu2 = this.menus.find((s) => s.id == row.menuId).name;
 
       this.axios
-        .put(API_REST_MENU, row)
+        .put(API_REST_ROLE, row)
         .then((response) => {
           row.mode = 0;
           this.$message({
@@ -240,7 +188,7 @@ export default {
       this.dialogFormVisible = false;
 
       this.axios
-        .post(API_REST_MENU, this.form)
+        .post(API_REST_ROLE, this.form)
         .then((response) => {
           this.init();
           row.mode = 0;

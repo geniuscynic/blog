@@ -2,7 +2,7 @@
 using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using Blog.Repository.IRepository;
 using SqlSugar;
 using System;
@@ -33,7 +33,7 @@ namespace Blog.Service
         }
 
 
-        public async Task<int> Add(PostBlogViewModel blogViewModel)
+        public async Task<int> Save(PostBlogViewModel blogViewModel)
         {
             //var tags = ;
 
@@ -45,7 +45,17 @@ namespace Blog.Service
 
                 blog.PublishDate = DateTime.Now;
 
-                var id = await Add(blog);
+                var id = blog.Id;
+                if (blog.Id == 0)
+                {
+                    id = await Add(blog);
+                }
+                else
+                {
+                    await Edit(blog);
+
+                    await blogTagRepository.Db.Deleteable<BlogTag>().Where(t => t.BlogId == blog.Id).ExecuteCommandAsync();
+                }
 
 
                 var tags = await tagRepository.Query(t => blogViewModel.Tags.Contains(t.Name));
@@ -115,7 +125,7 @@ namespace Blog.Service
         }
 
 
-        public async Task<List<BlogArticle>> QueryPage(int pageIndex = 1, int pageSize = 20)
+        public async Task<PageModel<ListBlogViewModel>> GetBlogList(int pageIndex = 1, int pageSize = 20)
         {
             /* var result = await baseRepository.Db.Queryable<BlogArticle, Category, BlogTag, Tag>(
                  (b, c, bt, t) =>
@@ -131,53 +141,127 @@ namespace Blog.Service
 
            }).ToListAsync();*/
 
+            //var result = await baseRepository.Db.Queryable<BlogArticle>()
+            //    .Mapper(it => it.Category, it => it.CategoryId)
+            //    .Mapper((b, cache) =>
+            //    {
+            //        var bts = cache.Get(ol =>
+            //        {
+            //            var allOrderIds = ol.Select(x => x.Id).ToList();
+
+            //            return baseRepository.Db.Queryable<Tag, BlogTag>((t, b) =>
+            //                new JoinQueryInfos(
+            //                    JoinType.Inner, t.Id == b.TagId
+            //                )
+            //            ).Select((t, b) => new
+            //            {
+            //                id = b.BlogId,
+            //                tag = t
+            //            }).In(t => t.id, allOrderIds).ToList();
+
+            //           // return baseRepository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
+            //        });
+
+            //        b.Tags = bts.Where(it => it.id == b.Id).Select(t => t.tag).ToList();
+
+
+            //    })
+            //    .ToListAsync();
+
+            RefAsync<int> total = 0;
             var result = await baseRepository.Db.Queryable<BlogArticle>()
-                .Mapper(it => it.Category, it => it.CategoryId)
-                .Mapper((b, cache) =>
+               .Mapper(it => it.Category, it => it.CategoryId)
+               .Mapper((result, cache) =>
+               {
+
+                   //var allOrderIds = ol.Select(x => x.Id).ToList();
+
+                   var allMps = cache.Get<List<BlogTag>>(l =>
+                   {
+                       var blogTags = baseRepository.Db.Queryable<BlogTag>()
+                                             .Mapper(it => it.Tag, it => it.TagId)
+                                             .In(it => it.BlogId, l.Select(it => it.Id).ToArray())
+                                             .ToList();
+
+                       return blogTags;
+
+                   });
+
+                   // return baseRepository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
+
+
+                   result.Tags = allMps.Where(it => it.BlogId == result.Id).Select(it => it.Tag).ToList();
+
+
+               })
+               .ToPageListAsync(pageIndex, pageSize, total);
+            //.ToListAsync();
+
+            //.Mapper((tag, cache) =>
+            //{
+            //    var items = cache.Get(ol =>
+            //    {
+            //        var allOrderIds = ol.Select(x => x.Id).ToList();
+
+            //        return baseRepository.Db.Queryable<BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
+            //         });
+
+            //    items.Where(t=>t.TagId ==tag.)
+            //});
+
+
+            var blogs = mapper.Map<List<BlogArticle>, List<ListBlogViewModel>>(result);
+            //.Select((b, c, bt, t) => {
+            //    b.Category = c,
+            //     b.Tags = t
+
+
+            //}).ToListAsync();
+
+            return new PageModel<ListBlogViewModel>
+            {
+                DataCount = total.Value,
+                Page = pageIndex,
+                PageSize = pageSize,
+                Data = blogs,
+
+            };
+
+        }
+
+        public async Task<PostBlogViewModel> Get(int id)
+        {
+            var result = await baseRepository.Db
+                .Queryable<BlogArticle>()
+                .Mapper((result, cache) =>
                 {
-                    var bts = cache.Get(ol =>
+                    var allMps = cache.Get<List<BlogTag>>(l =>
                     {
-                        var allOrderIds = ol.Select(x => x.Id).ToList();
+                        var blogTags = baseRepository.Db.Queryable<BlogTag>()
+                                              .Mapper(it => it.Tag, it => it.TagId)
+                                              .In(it => it.BlogId, l.Select(it => it.Id).ToArray())
+                                              .ToList();
 
-                        return baseRepository.Db.Queryable<Tag, BlogTag>((t, b) =>
-                            new JoinQueryInfos(
-                                JoinType.Inner, t.Id == b.TagId
-                            )
-                        ).Select((t, b) => new
-                        {
-                            id = b.BlogId,
-                            tag = t
-                        }).In(t => t.id, allOrderIds).ToList();
+                        return blogTags;
 
-                       // return baseRepository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
                     });
 
-                    b.Tags = bts.Where(it => it.id == b.Id).Select(t => t.tag).ToList();
 
-
+                    result.Tags = allMps.Where(it => it.BlogId == result.Id).Select(it => it.Tag).ToList();
                 })
-                .ToListAsync();
-                //.Mapper((tag, cache) =>
-                //{
-                //    var items = cache.Get(ol =>
-                //    {
-                //        var allOrderIds = ol.Select(x => x.Id).ToList();
+                //.Where(t => t.Id == id)
+                //.FirstAsync();
+                //.FirstAsync(t => t.Id == id);
+                .InSingleAsync(id);
 
-                //        return baseRepository.Db.Queryable<BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
-                //         });
-
-                //    items.Where(t=>t.TagId ==tag.)
-                //});
-      
-
-         //.Select((b, c, bt, t) => {
-         //    b.Category = c,
-         //     b.Tags = t
+            var blog = mapper.Map<BlogArticle, PostBlogViewModel>(result);
 
 
-         //}).ToListAsync();
 
-            return result;
+            result.Tags.ForEach(t => blog.Tags.Add(t.Name));
+
+
+            return blog;
 
         }
     }

@@ -1,5 +1,5 @@
 ﻿using Blog.Common.Extensions.ServiceExtensions;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;

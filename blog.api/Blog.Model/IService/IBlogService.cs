@@ -1,5 +1,5 @@
 ﻿using Blog.Core.Models;
-using Blog.Core.VeiwModels;
+using Blog.Core.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +17,7 @@ namespace Blog.Core.IService
         /// </summary>
         /// <param name="blogViewModel"></param>
         /// <returns></returns>
-        Task<int> Add(PostBlogViewModel blogViewModel);
+        Task<int> Save(PostBlogViewModel blogViewModel);
 
         /// <summary>
         /// 分页查询
@@ -25,6 +25,13 @@ namespace Blog.Core.IService
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        Task<List<BlogArticle>> QueryPage(int pageIndex = 1, int pageSize = 20);
+        Task<PageModel<ListBlogViewModel>> GetBlogList(int pageIndex = 1, int pageSize = 20);
+
+        /// <summary>
+        /// 获取blog 详细信息
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<PostBlogViewModel> Get(int id);    
     }
 }

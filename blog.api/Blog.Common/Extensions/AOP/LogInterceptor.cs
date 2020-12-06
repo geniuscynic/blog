@@ -23,7 +23,7 @@ namespace Blog.Common.Extensions.AOP
         //{
         //    this.logger = logger;
         //}
-        public async override Task Invoke(AspectContext context, AspectDelegate next)
+        public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
             try
             {

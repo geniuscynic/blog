@@ -27,7 +27,7 @@ namespace Blog.API.Controllers
         public async Task<MessageModel<IEnumerable<Category>>> Get()
         {
             return new MessageModel<IEnumerable<Category>>()
-            {
+            { 
                 response = await categoryService.GetAll()
             };
         }
@@ -41,8 +41,12 @@ namespace Blog.API.Controllers
 
         // POST api/<CategoryController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<MessageModel<Category>> Post([FromBody] Category category)
         {
+            return new MessageModel<Category>()
+            {
+                response = await categoryService.Save(category)
+            };
         }
 
         // PUT api/<CategoryController>/5
