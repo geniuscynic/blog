@@ -24,5 +24,20 @@ namespace Blog.Core.IService
           /// <returns></returns>
         public Task<bool> AssignButtonPermission(int roleId, List<Button> buttons);
 
+
+          /// <summary>
+          /// 获取role 对应的权限
+          /// </summary>
+          /// <param name="roleId"></param>
+          /// <returns></returns>
+        public Task<List<MenuPermission>> GetMenusByRole(int roleId);
+
+          /// <summary>
+          /// 获取button 对应的权限
+          /// </summary>
+          /// <param name="roleId"></param>
+          /// <returns></returns>
+        public Task<List<ButtonPermission>> GetButtonByRole(int roleId);
+
     }
 }

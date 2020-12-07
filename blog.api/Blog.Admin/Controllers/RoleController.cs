@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Blog.Core;
 using Blog.Core.IService;
 using Blog.Core.Models;
+using log4net.Appender;
 using Microsoft.AspNetCore.Http;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -68,6 +69,24 @@ namespace Blog.API.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
+        }
+
+        [HttpGet("{id}/menu")]
+        public async Task<MessageModel<List<MenuPermission>>> GetMenusByRole(int id)
+        {
+            return new MessageModel<List<MenuPermission>>
+            {
+                response = await _service.GetMenusByRole(id)
+            };
+        }
+
+        [HttpGet("{id}/button")]
+        public async Task<MessageModel<List<ButtonPermission>>> GetButtonsByRole(int id)
+        {
+            return new MessageModel<List<ButtonPermission>>
+            {
+                response = await _service.GetButtonByRole(id)
+            };
         }
     }
 }

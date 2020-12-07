@@ -30,6 +30,22 @@ namespace Blog.Service
 
         }
 
+        public async Task<List<MenuPermission>> GetMenusByRole(int roleId)
+        {
+
+            return await baseRepository.Db.Queryable<MenuPermission>()
+                .Where(t => t.RoleId == roleId)
+                .ToListAsync();
+        }
+
+        public async Task<List<ButtonPermission>> GetButtonByRole(int roleId)
+        {
+
+            return await baseRepository.Db.Queryable<ButtonPermission>()
+                .Where(t => t.RoleId == roleId)
+                .ToListAsync();
+        }
+
 
         public Task<bool> AssignMenuPermission(int roleId, List<Menu> menus)
         {

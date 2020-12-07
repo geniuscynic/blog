@@ -42,7 +42,7 @@
           <div v-else>
             <el-form :inline="true">
               <el-form-item class="icon-input" label="">
-                  <el-input v-model="scope.row.editDesc"></el-input>
+                <el-input v-model="scope.row.editDesc"></el-input>
               </el-form-item>
             </el-form>
           </div>
@@ -54,9 +54,11 @@
             <el-button size="mini" @click="handleEdit(scope.row)"
               >编辑</el-button
             >
-            <el-button size="mini" type="danger" @click="handleDelete"
+            <el-button size="mini" type="danger" @click="handleDelete(scope.row)"
               >删除</el-button
             >
+
+            <el-button size="mini" type="primary" @click="handleAssign(scope.row)">权限分配</el-button>
           </div>
           <div v-else>
             <el-button size="mini" @click="handleSave(scope.row)"
@@ -72,7 +74,6 @@
 
     <el-dialog title="新增角色" :visible.sync="dialogFormVisible">
       <el-form :model="form">
-        
         <el-form-item label="角色名" :label-width="formLabelWidth">
           <el-input v-model="form.name" auto-complete="off"></el-input>
         </el-form-item>
@@ -118,7 +119,7 @@ export default {
       this.axios
         .get(API_REST_ROLE)
         .then((response) => {
-           //console.log(this.menus);
+          //console.log(this.menus);
           let temps = response.data.response;
 
           for (let button of temps) {
@@ -129,7 +130,7 @@ export default {
             //button.editMenuId = button.menuId;
 
             //debugger;
-            
+
             //console.log(button.menuId, this.menus, buttton.menu);
             //button.editMenu = button.menu;
           }
@@ -177,6 +178,14 @@ export default {
           this.errorMsg = "服务器异常，请稍后再试";
           this.showError = true;
         });
+    },
+    handleAssign(row) {
+      this.$router.push({
+        name: "assign",
+        params: {
+          id: row.id,
+        },
+      });
     },
     handleCancel(row) {
       row.mode = 0;
