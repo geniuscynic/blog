@@ -22,9 +22,6 @@ namespace Blog.Service
             //this.baseRepository = repository;
         }
 
-
-       
-
         public async Task<List<Button>> GetButtons(string token)
         {
             var jwt = JwtHelper.SerializeJwt(token);

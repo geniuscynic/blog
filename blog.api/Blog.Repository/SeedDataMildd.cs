@@ -28,6 +28,7 @@ namespace Blog.Common.Extensions.Middlewares
                 dbcontext.Db.CodeFirst.InitTables(typeof(Menu));
                 dbcontext.Db.CodeFirst.InitTables(typeof(MenuPermission));
                 dbcontext.Db.CodeFirst.InitTables(typeof(Button));
+                dbcontext.Db.CodeFirst.InitTables(typeof(ButtonPermission));
             }
 
             if (AppSettingHelper.App("SeedDBEnabled:data").ObjToBool())

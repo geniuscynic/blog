@@ -83,9 +83,29 @@ namespace Blog.API.Controllers
         [HttpGet("{id}/button")]
         public async Task<MessageModel<List<ButtonPermission>>> GetButtonsByRole(int id)
         {
+            var a = await _service.GetButtonByRole(id);
             return new MessageModel<List<ButtonPermission>>
             {
                 response = await _service.GetButtonByRole(id)
+            };
+        }
+
+        [HttpPost("{id}/menu")]
+        public async Task<MessageModel<bool>> AssignMenuPermission(int id, [FromBody] List<int> menus)
+        {
+            return new MessageModel<bool>
+            {
+                response = await _service.AssignMenuPermission(id, menus)
+            };
+        }
+
+
+        [HttpPost("{id}/button")]
+        public async Task<MessageModel<bool>> AssignButtonPermission(int id, [FromBody] List<int> buttons)
+        {
+            return new MessageModel<bool>
+            {
+                response = await _service.AssignButtonPermission(id, buttons)
             };
         }
     }

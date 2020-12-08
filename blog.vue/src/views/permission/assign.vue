@@ -6,20 +6,33 @@
           :data="menus"
           show-checkbox
           node-key="id"
+          ref="menuTree"
           :default-expand-all="true"
           :default-checked-keys="checkMenuId"
           :props="defaultProps"
         >
         </el-tree>
-         <el-button type="primary" @click="saveMenuPermission">保存</el-button>
+        <el-button type="primary" @click="saveMenuPermission">保存</el-button>
       </el-col>
-      <el-col :span="12"></el-col>
+      <el-col :span="12">
+        <el-tree
+          :data="menus"
+          show-checkbox
+          node-key="id"
+          ref="buttonTree"
+          :default-expand-all="true"
+          :default-checked-keys="checkButtonId"
+          :props="defaultProps2"
+        >
+        </el-tree>
+        <el-button type="primary" @click="saveButtonPermission">保存</el-button>
+      </el-col>
     </el-row>
   </div>
 </template>
 
 <script>
-import { API_REST_ROLE, API_REST_MENU } from "@/plugins/const";
+import { API_REST_ROLE, API_REST_MENU, API_REST_BUTTON } from "@/plugins/const";
 import { mapActions, mapState } from "vuex";
 
 export default {
@@ -27,12 +40,20 @@ export default {
   data() {
     return {
       roles: [],
+
+      buttons: [],
+      checkButtonId: [],
+
       roleId: 0,
       checkMenuId: [],
       // menus: [],
       formLabelWidth: "120px",
       defaultProps: {
         children: "childMenus",
+        label: "name",
+      },
+      defaultProps2: {
+        children: "buttons",
         label: "name",
       },
     };
@@ -43,6 +64,7 @@ export default {
     this.roleId = this.$route.params.id;
 
     this.initRole();
+
     this.init();
   },
   computed: {
@@ -64,6 +86,8 @@ export default {
           this.errorMsg = "服务器异常，请稍后再试";
           this.showError = true;
         });
+
+      
     },
 
     init() {
@@ -78,7 +102,25 @@ export default {
           }
 
           this.checkMenuId = temp;
-          console.log(this.checkMenuId);
+          //console.log(this.checkMenuId);
+        })
+        .catch((error) => {
+          this.errorMsg = "服务器异常，请稍后再试";
+          this.showError = true;
+        });
+
+      this.axios
+        .get(`${API_REST_ROLE}/${this.roleId}/button`)
+        .then((response) => {
+          const temp = [];
+
+          //console.log(response.data);
+          for (const data of response.data.response) {
+            temp.push(data.buttonId);
+          }
+
+          this.checkButtonId = temp;
+          //console.log(this.checkMenuId);
         })
         .catch((error) => {
           this.errorMsg = "服务器异常，请稍后再试";
@@ -86,16 +128,19 @@ export default {
         });
     },
 
-    handleSave(row) {
-      row.code = row.editCode;
-      row.name = row.editName;
-      row.description = row.editDesc;
-      //row.menuId = row.editMenuId;
-      //console.log(row);
-      //row.menu2 = this.menus.find((s) => s.id == row.menuId).name;
+    saveMenuPermission() {
+      // console.log( this.$refs.menuTree.getHalfCheckedNodes(),1,
+      // this.$refs.menuTree.getHalfCheckedKeys(),2,
+      // this.$refs.menuTree.getCurrentKey(),3,
+      // this.$refs.menuTree.getCurrentNode(),4,
+      // this.$refs.menuTree.getCheckedKeys(),5,
+      // this.$refs.menuTree.getCheckedNodes(),);
 
       this.axios
-        .put(API_REST_ROLE, row)
+        .post(
+          `${API_REST_ROLE}/${this.roleId}/menu`,
+          this.$refs.menuTree.getCheckedKeys()
+        )
         .then((response) => {
           row.mode = 0;
           this.$message({
@@ -109,10 +154,32 @@ export default {
           this.showError = true;
         });
     },
+  saveButtonPermission() {
+      // console.log( this.$refs.menuTree.getHalfCheckedNodes(),1,
+      // this.$refs.menuTree.getHalfCheckedKeys(),2,
+      // this.$refs.menuTree.getCurrentKey(),3,
+      // this.$refs.menuTree.getCurrentNode(),4,
+      // this.$refs.menuTree.getCheckedKeys(),5,
+      // this.$refs.menuTree.getCheckedNodes(),);
 
-    saveMenuPermission() {
-      
-    }
+      this.axios
+        .post(
+          `${API_REST_ROLE}/${this.roleId}/button`,
+          this.$refs.menuTree.getCheckedKeys()
+        )
+        .then((response) => {
+          row.mode = 0;
+          this.$message({
+            message: "保存成功",
+            type: "success",
+          });
+          //console.log(response.data);
+        })
+        .catch((error) => {
+          this.errorMsg = "服务器异常，请稍后再试";
+          this.showError = true;
+        });
+    },
   },
 };
 </script>

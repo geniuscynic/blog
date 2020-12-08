@@ -16,13 +16,13 @@ namespace Blog.Core.IService
         /// 分配 菜单权限
         /// </summary>
         /// <returns></returns>
-        public Task<bool> AssignMenuPermission(int roleId, List<Menu> menus);
+        public Task<bool> AssignMenuPermission(int roleId, List<int> menus);
 
           /// <summary>
           /// 分配按钮权限
           /// </summary>
           /// <returns></returns>
-        public Task<bool> AssignButtonPermission(int roleId, List<Button> buttons);
+        public Task<bool> AssignButtonPermission(int roleId, List<int> buttons);
 
 
           /// <summary>

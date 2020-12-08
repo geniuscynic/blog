@@ -47,14 +47,68 @@ namespace Blog.Service
         }
 
 
-        public Task<bool> AssignMenuPermission(int roleId, List<Menu> menus)
+        public async Task<bool> AssignMenuPermission(int roleId, List<int> menus)
         {
-            throw new NotImplementedException();
+            try
+            {
+                baseRepository.Db.Ado.BeginTran();
+                await baseRepository.Db.Deleteable<MenuPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
+
+                var listMenusPermission = new List<MenuPermission>();
+
+                menus.ForEach(t =>
+                {
+                    listMenusPermission.Add(new MenuPermission()
+                    {
+                        RoleId = roleId,
+                        MenuId = t
+                    });
+                });
+
+
+                
+
+
+                await baseRepository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
+                baseRepository.Db.Ado.CommitTran();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                baseRepository.Db.Ado.RollbackTran();
+                throw;
+            }
         }
 
-        public Task<bool> AssignButtonPermission(int roleId, List<Button> buttons)
+        public async Task<bool> AssignButtonPermission(int roleId, List<int> buttons)
         {
-            throw new NotImplementedException();
+            try
+            {
+                baseRepository.Db.Ado.BeginTran();
+                await baseRepository.Db.Deleteable<ButtonPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
+
+                var listMenusPermission = new List<ButtonPermission>();
+
+                buttons.ForEach(t =>
+                {
+                    listMenusPermission.Add(new ButtonPermission()
+                    {
+                        RoleId = roleId,
+                        ButtonId = t
+                    });
+                });
+
+                await baseRepository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
+                baseRepository.Db.Ado.CommitTran();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                baseRepository.Db.Ado.RollbackTran();
+                throw;
+            }
         }
     }
 }

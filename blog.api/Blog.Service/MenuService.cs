@@ -33,6 +33,7 @@ namespace Blog.Service
                 return await baseRepository.Db.Queryable<Menu>()
                     .Where(t => t.ParentId == 0)
                     .Mapper(t => t.ChildMenus, t => t.Id, t => t.Parent.ParentId)
+                    .Mapper(t => t.Buttons, t => t.Buttons.First().MenuId)
                     .ToListAsync();
                     
             }
@@ -41,6 +42,7 @@ namespace Blog.Service
                                   JoinType.Inner, t.Id == mp.MenuId,
                                   JoinType.Inner, mp.RoleId == r.Id && jwt.Role.Contains(r.Code) //SqlFunc.ContainsArray(jwt.Role, r.Code)
                 ))
+                .Mapper(t => t.Buttons, t => t.Buttons.First().MenuId)
                 .Mapper((menu, cache) =>
                 {
                     var items = cache.Get(ol =>

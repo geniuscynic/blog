@@ -58,5 +58,12 @@ namespace Blog.Core.Models
         /// </summary>
         [SugarColumn(IsIgnore = true)]
         public List<Menu> ChildMenus { get; set; }
+
+
+        /// <summary>
+        /// 子 menu
+        /// </summary>
+        [SugarColumn(IsIgnore = true)]
+        public List<Button> Buttons { get; set; }
     }
 }
