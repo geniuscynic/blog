@@ -19,6 +19,7 @@ using Blog.Repository.IRepository;
 using Blog.Repository.Repository;
 using Blog.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -68,6 +69,7 @@ namespace Blog.API
             {
                 // 全局异常过滤
                 configure.Filters.Add(typeof(GlobalExceptionsFilter));
+                configure.Filters.Add(typeof(MyActionFilterAttribute));
             });
 
 
@@ -87,6 +89,13 @@ namespace Blog.API
 
 
             services.AddCors();
+
+            services.AddSingleton<IAuthorizationHandler, CustomPermissionHandler>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("mypermission", policy =>
+                    policy.Requirements.Add(new CustomRequirement()));
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

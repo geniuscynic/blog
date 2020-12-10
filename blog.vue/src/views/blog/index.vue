@@ -1,6 +1,6 @@
 <template>
   <div id="blog-list-container">
-    <el-button type="primary" icon="el-icon-plus" @click="add"
+    <el-button type="primary" icon="el-icon-plus" @click="add" v-if='hasPermission("blog_add")'
       >新增博客</el-button
     >
 
@@ -50,7 +50,7 @@
 <script>
 //import router from '@/router'
 
-import { API_REST_BLOG } from "@/plugins/const";
+import { API_REST_BLOG, hasPermission } from "@/plugins/const";
 
 export default {
   name: "blog-list",

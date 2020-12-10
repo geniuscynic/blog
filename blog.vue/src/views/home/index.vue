@@ -39,7 +39,7 @@ export default {
     }
   },
   mounted() {
-    console.log("routeHome", this.$router.params);
+    //console.log("routeHome", this.$router.params);
   },
   components: {
     LeftMenu,

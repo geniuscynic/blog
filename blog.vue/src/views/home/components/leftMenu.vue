@@ -58,7 +58,7 @@
 
 <script>
 import styles from "@/styles/global.module.scss";
-import { API_REST_MENU,GET_MENU } from "@/plugins/const";
+import { API_REST_MENU,GET_MENU, GET_BUTTON } from "@/plugins/const";
 import { mapActions,mapState  } from 'vuex'
 // @ is an alias to /src
 
@@ -78,6 +78,7 @@ export default {
   },
   mounted() {
     this[GET_MENU]();
+    this[GET_BUTTON]();
     // this.axios
     //   .get(API_REST_MENU)
     //   .then((response) => {
@@ -91,7 +92,7 @@ export default {
   },
   methods: {
     ...mapActions([
-      GET_MENU
+      GET_MENU, GET_BUTTON
     ]),
   }
 };
