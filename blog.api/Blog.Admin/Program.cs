@@ -19,18 +19,18 @@ namespace Blog.API
         public static void Main(string[] args)
         {
 
-            var tsTypes = typeof(BlogController).Assembly.GetTypes()
-                .Where(t => t.Namespace == "Blog.API.Controllers" && t.FullName.EndsWith("Controller"))
-                 .SelectMany(t => t.GetMethods())
-                .Where(t => t.DeclaringType.Namespace == "Blog.API.Controllers")
-                .Select(t=> new
-                {
-                    name = t.DeclaringType.Name,
-                    action = t.Name,
-                    parments = t.GetParameters(),
-                    other = t
-                })
-                .ToList();
+            //var tsTypes = typeof(BlogController).Assembly.GetTypes()
+            //    .Where(t => t.Namespace == "Blog.API.Controllers" && t.FullName.EndsWith("Controller"))
+            //     .SelectMany(t => t.GetMethods())
+            //    .Where(t => t.DeclaringType.Namespace == "Blog.API.Controllers")
+            //    .Select(t=> new
+            //    {
+            //        name = t.DeclaringType.Name,
+            //        action = t.Name,
+            //        parments = t.GetParameters(),
+            //        other = t
+            //    })
+            //    .ToList();
 
                 
             

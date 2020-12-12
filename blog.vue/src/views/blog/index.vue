@@ -1,6 +1,6 @@
 <template>
   <div id="blog-list-container">
-    <el-button type="primary" icon="el-icon-plus" @click="add" v-if='hasPermission("blog_add")'
+    <el-button type="primary" icon="el-icon-plus" @click="add" v-if="hasAddPermission"
       >新增博客</el-button
     >
 
@@ -59,7 +59,9 @@ export default {
       blogs: [],
       pageModel: {},
       currentPage: 1,
-      currentPageSize: 5
+      currentPageSize: 5,
+
+      hasAddPermission:false
     };
   },
   methods: {
@@ -77,6 +79,10 @@ export default {
       });
     },
     init() {
+      //console.log(hasPermission);
+      this.hasAddPermission = hasPermission('BLOG_ADD');
+      //console.log(hasAddPermission);
+
       this.axios
       .get(`${API_REST_BLOG}?pageIndex=${this.currentPage}&pageSize=${this.currentPageSize}`)
       .then((response) => {
@@ -97,6 +103,7 @@ export default {
           this.init();
           console.log(val);
        },
+       
   },
   mounted() {
     this.init();

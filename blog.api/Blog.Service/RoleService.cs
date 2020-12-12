@@ -9,6 +9,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -30,6 +31,8 @@ namespace Blog.Service
 
         }
 
+       
+
         public async Task<List<MenuPermission>> GetMenusByRole(int roleId)
         {
 
@@ -44,6 +47,23 @@ namespace Blog.Service
             return await baseRepository.Db.Queryable<ButtonPermission>()
                 .Where(t => t.RoleId == roleId)
                 .ToListAsync();
+        }
+
+        public async Task<List<ApiMethodPermission>> GetApiMethodByRole(int roleId)
+        {
+            return await baseRepository.Db.Queryable<ApiMethodPermission>()
+                .Where(t => t.RoleId == roleId)
+                .ToListAsync();
+        }
+
+        public async Task<bool> HasApiMethodPermission(List<string> roleCode, string route, string httpMethod)
+        {
+            return await baseRepository.Db.Queryable<ApiMethod, ApiMethodPermission, Role>(
+                    (t1, t2, t3) => t1.Id == t2.ApiId && t2.RoleId == t3.Id)
+                .Where((t1, t2, t3) => roleCode.Contains(t3.Code))
+                .Where(t1 => t1.RoutePath == route && t1.HttpMethod == httpMethod)
+                .Select(t1 => t1)
+                .AnyAsync();
         }
 
 
@@ -96,6 +116,37 @@ namespace Blog.Service
                     {
                         RoleId = roleId,
                         ButtonId = t
+                    });
+                });
+
+                await baseRepository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
+                baseRepository.Db.Ado.CommitTran();
+
+                return true;
+            }
+            catch (Exception)
+            {
+                baseRepository.Db.Ado.RollbackTran();
+                throw;
+            }
+        }
+
+
+        public async Task<bool> AssignApiMethodPermission(int roleId, List<int> apis)
+        {
+            try
+            {
+                baseRepository.Db.Ado.BeginTran();
+                await baseRepository.Db.Deleteable<ApiMethodPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
+
+                var listMenusPermission = new List<ApiMethodPermission>();
+
+                apis.ForEach(t =>
+                {
+                    listMenusPermission.Add(new ApiMethodPermission()
+                    {
+                        RoleId = roleId,
+                        ApiId = t
                     });
                 });
 

@@ -24,6 +24,8 @@ export const API_REST_BLOG = '/api/Blog'
 
 
 export const hasPermission = function(code) {
-    return store.state.buttons.includes(t=>t.code == code);
-}
+    console.log(code, store.state.buttons.filter(t=>t.code == code));
+
+    return store.state.buttons.findIndex(t=>t.code == code) > -1;
+};
 

@@ -80,6 +80,7 @@ namespace Blog.API.Controllers
         /// <returns></returns>
         // GET api/<BlogController>/5
         [HttpGet("{id}")]
+        [Authorize(Policy = "mypermission")]
         public async Task<MessageModel<PostBlogViewModel>> Get(int id)
         {
             var blog = await service.Get(id);
@@ -110,6 +111,7 @@ namespace Blog.API.Controllers
         /// <param name="blog"></param>
         /// <returns></returns>
         // PUT api/<BlogController>/5
+        [Authorize(Policy = "mypermission")]
         [HttpPut]
         public async Task<MessageModel<int>> Put([FromBody] PostBlogViewModel blog)
         {

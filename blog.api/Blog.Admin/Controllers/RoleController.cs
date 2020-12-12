@@ -18,11 +18,13 @@ namespace Blog.API.Controllers
     public class RoleController : ControllerBase
     {
         private readonly IRoleService _service;
+        private readonly IApiMethodService _apiMethodService;
         private readonly IHttpContextAccessor _httpContext;
 
-        public RoleController(IRoleService service, IHttpContextAccessor httpContext)
+        public RoleController(IRoleService service, IApiMethodService apiMethodService, IHttpContextAccessor httpContext)
         {
             _service = service;
+            _apiMethodService = apiMethodService;
             _httpContext = httpContext;
         }
 
@@ -71,6 +73,15 @@ namespace Blog.API.Controllers
         {
         }
 
+        [HttpGet("GetApiMethods")]
+        public async Task<MessageModel<List<ApiMethod>>> GetApiMethods()
+        {
+            return new MessageModel<List<ApiMethod >>
+            {
+                response = await _apiMethodService.GetAll()
+            };
+        }
+
         [HttpGet("{id}/menu")]
         public async Task<MessageModel<List<MenuPermission>>> GetMenusByRole(int id)
         {
@@ -83,10 +94,20 @@ namespace Blog.API.Controllers
         [HttpGet("{id}/button")]
         public async Task<MessageModel<List<ButtonPermission>>> GetButtonsByRole(int id)
         {
-            var a = await _service.GetButtonByRole(id);
+            //var a = await _service.GetButtonByRole(id);
             return new MessageModel<List<ButtonPermission>>
             {
                 response = await _service.GetButtonByRole(id)
+            };
+        }
+
+        [HttpGet("{id}/apis")]
+        public async Task<MessageModel<List<ApiMethodPermission>>> GetApiMethodByRole(int id)
+        {
+            //var a = await _service.GetApiMethodByRole(id);
+            return new MessageModel<List<ApiMethodPermission>>
+            {
+                response = await _service.GetApiMethodByRole(id)
             };
         }
 
@@ -106,6 +127,15 @@ namespace Blog.API.Controllers
             return new MessageModel<bool>
             {
                 response = await _service.AssignButtonPermission(id, buttons)
+            };
+        }
+
+        [HttpPost("{id}/apis")]
+        public async Task<MessageModel<bool>> AssignApisPermission(int id, [FromBody] List<int> apis)
+        {
+            return new MessageModel<bool>
+            {
+                response = await _service.AssignApiMethodPermission(id, apis)
             };
         }
     }

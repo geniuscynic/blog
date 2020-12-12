@@ -1,7 +1,7 @@
 <template>
   <div id="permission-menu-container">
     <el-row :gutter="24">
-      <el-col :span="12">
+      <el-col :span="4">
         <el-tree
           :data="menus"
           show-checkbox
@@ -14,7 +14,7 @@
         </el-tree>
         <el-button type="primary" @click="saveMenuPermission">保存</el-button>
       </el-col>
-      <el-col :span="12">
+      <el-col :span="4">
         <el-tree
           :data="menus"
           show-checkbox
@@ -26,6 +26,26 @@
         >
         </el-tree>
         <el-button type="primary" @click="saveButtonPermission">保存</el-button>
+      </el-col>
+      <el-col :span="12">
+        <el-table :data="apis" style="width: 100%" ref="multipleTable" @selection-change="handleSelectionChange">
+          <el-table-column type="selection" width="55"> </el-table-column>
+          <el-table-column prop="id" label="id" width="80"> </el-table-column>
+          <el-table-column
+            prop="controller"
+            label="控制器"
+            width="180"
+            column-key="controller"
+            :filters="filterController"
+            :filter-method="filterHandler"
+          >
+          </el-table-column>
+          <el-table-column prop="routePath" label="RoutePath" width="180">
+          </el-table-column>
+          <el-table-column prop="httpMethod" label="HttpMethod" width="180">
+          </el-table-column>
+        </el-table>
+        <el-button type="primary" @click="saveApiPermission">保存</el-button>
       </el-col>
     </el-row>
   </div>
@@ -46,6 +66,11 @@ export default {
 
       roleId: 0,
       checkMenuId: [],
+
+      apis: [],
+      filterController: [],
+      checkApis: [],
+
       // menus: [],
       formLabelWidth: "120px",
       defaultProps: {
@@ -55,6 +80,10 @@ export default {
       defaultProps2: {
         children: "buttons",
         label: "name",
+      },
+      defaultProps3: {
+        children: "buttons",
+        label: "RoutePath",
       },
     };
   },
@@ -86,8 +115,6 @@ export default {
           this.errorMsg = "服务器异常，请稍后再试";
           this.showError = true;
         });
-
-      
     },
 
     init() {
@@ -126,8 +153,67 @@ export default {
           this.errorMsg = "服务器异常，请稍后再试";
           this.showError = true;
         });
+
+      this.axios
+        .get(`${API_REST_ROLE}/GetApiMethods`)
+        .then((response) => {
+          //console.log(this.menus);
+          let temps = response.data.response;
+
+          for (let api of temps) {
+            //console.log(this.api);
+
+            if (
+              this.filterController.findIndex((t) => t.text == api.controller) <
+              0
+            ) {
+              let temp = {
+                text: api.controller,
+                value: api.controller,
+              };
+
+              this.filterController.push(temp);
+            }
+          }
+
+          this.apis = temps;
+
+          this.axios
+            .get(`${API_REST_ROLE}/${this.roleId}/apis`)
+            .then((response) => {
+              //const temp = [];
+
+              //console.log(response.data);
+              for (const data of response.data.response) {
+                let row = this.apis.find(t=>t.id == data.apiId);
+
+                this.$refs.multipleTable.toggleRowSelection(row);
+              }
+
+              //this.checkApis = temp;
+              //console.log(this.checkMenuId);
+            })
+            .catch((error) => {
+              this.errorMsg = "服务器异常，请稍后再试";
+              this.showError = true;
+            });
+        })
+        .catch((error) => {
+          console.log(error);
+          this.errorMsg = "服务器异常，请稍后再试";
+          this.showError = true;
+        });
     },
 
+    filterHandler(value, row, column) {
+      //console.log(value, row, column);
+
+      const property = column["property"];
+      return row[property] === value;
+    },
+    handleSelectionChange(val) {
+        this.checkApis = val;
+      },
     saveMenuPermission() {
       // console.log( this.$refs.menuTree.getHalfCheckedNodes(),1,
       // this.$refs.menuTree.getHalfCheckedKeys(),2,
@@ -154,7 +240,7 @@ export default {
           this.showError = true;
         });
     },
-  saveButtonPermission() {
+    saveButtonPermission() {
       // console.log( this.$refs.menuTree.getHalfCheckedNodes(),1,
       // this.$refs.menuTree.getHalfCheckedKeys(),2,
       // this.$refs.menuTree.getCurrentKey(),3,
@@ -180,6 +266,31 @@ export default {
           this.showError = true;
         });
     },
+    saveApiPermission() {
+      console.log(this.checkApis);
+      const ids = [];
+
+      for(const apis of this.checkApis) {
+        ids.push(apis.id);
+      }
+      this.axios
+        .post(
+          `${API_REST_ROLE}/${this.roleId}/apis`,
+          ids
+        )
+        .then((response) => {
+         
+          this.$message({
+            message: "保存成功",
+            type: "success",
+          });
+          //console.log(response.data);
+        })
+        .catch((error) => {
+          this.errorMsg = "服务器异常，请稍后再试";
+          this.showError = true;
+        });
+    }
   },
 };
 </script>
