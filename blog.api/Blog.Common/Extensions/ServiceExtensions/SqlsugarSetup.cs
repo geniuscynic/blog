@@ -3,8 +3,11 @@ using SqlSugar;
 using StackExchange.Profiling;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using DbType = SqlSugar.DbType;
 
 namespace Blog.Common.Extensions.ServiceExtensions
 {
@@ -13,6 +16,14 @@ namespace Blog.Common.Extensions.ServiceExtensions
         public static int i = 1;
         public static void AddSqlsugarSetup(this IServiceCollection services)
         {
+
+            services.AddScoped<IDbConnection>(o =>
+            {
+                       var connection = new SqlConnection(AppSettingHelper.App("ConnectionStrings:Default"));
+
+                       return connection;
+            });
+
             services.AddScoped<ISqlSugarClient>(o =>
             {
                 SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()

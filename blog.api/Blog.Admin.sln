@@ -11,7 +11,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Repository", "Blog.Rep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Service", "Blog.Service\Blog.Service.csproj", "{C80DAEF1-1D1D-43B6-8CFD-0A05C6E99201}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Blog.Common", "Blog.Common\Blog.Common.csproj", "{72E105A4-DB18-4FA5-8451-9764DA55CCF4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Common", "Blog.Common\Blog.Common.csproj", "{72E105A4-DB18-4FA5-8451-9764DA55CCF4}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.IRepository", "Blog.IRepository\Blog.IRepository.csproj", "{1E89EDBB-F750-4A5A-BD54-C609D71E2A80}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Dapper", "..\Dapper\Dapper\Dapper.csproj", "{8A8CB7F2-2342-4B4D-8B06-31E12F519ED7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +43,14 @@ Global
 		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1E89EDBB-F750-4A5A-BD54-C609D71E2A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E89EDBB-F750-4A5A-BD54-C609D71E2A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E89EDBB-F750-4A5A-BD54-C609D71E2A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E89EDBB-F750-4A5A-BD54-C609D71E2A80}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A8CB7F2-2342-4B4D-8B06-31E12F519ED7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A8CB7F2-2342-4B4D-8B06-31E12F519ED7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A8CB7F2-2342-4B4D-8B06-31E12F519ED7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A8CB7F2-2342-4B4D-8B06-31E12F519ED7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

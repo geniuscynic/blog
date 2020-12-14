@@ -31,7 +31,7 @@ namespace Blog.Core.Models
         /// <summary>
         /// 最后登入时间
         /// </summary>
-        public DateTime LoginTime { get; set; }
+        public DateTime LoginTime { get; set; } = DateTime.Now;
 
         /// <summary>
         /// 所属角色

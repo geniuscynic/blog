@@ -1,6 +1,5 @@
 ﻿using Blog.Core.IService;
 using Blog.Repository;
-using Blog.Repository.IRepository;
 using Blog.Repository.Repository;
 using Blog.Service;
 using Microsoft.AspNetCore.Http;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.IRepository;
 
 namespace Blog.Common.Extensions.ServiceExtensions
 {
@@ -19,7 +19,7 @@ namespace Blog.Common.Extensions.ServiceExtensions
 
             services.AddScoped<Dbcontext>();
             //services.AddScoped(typeof(IBaseService<>), typeof(BaseServices<>));
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(Repository.IRepository.IBaseRepository<>), typeof(BaseRepository<>));
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
@@ -29,6 +29,7 @@ namespace Blog.Common.Extensions.ServiceExtensions
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IApiMethodService, ApiMethodService>();
 
+            services.AddScoped<IUserRepository, UserRepository>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
         }
