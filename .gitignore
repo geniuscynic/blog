@@ -1,1 +1,8 @@
 ref
+ref/
+.vs
+bin
+obj
+bin/
+obj/
+.vs
