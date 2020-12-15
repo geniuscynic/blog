@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\workplace\\git\\study\\net\\blog\\testOrm\\testOrm\\testOrm.csproj": {}
+    "D:\\workplace\\git\\study\\net\\blog\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj": {}
   },
   "projects": {
-    "D:\\workplace\\git\\study\\net\\blog\\testOrm\\testOrm\\testOrm.csproj": {
+    "D:\\workplace\\git\\study\\net\\blog\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\workplace\\git\\study\\net\\blog\\testOrm\\testOrm\\testOrm.csproj",
-        "projectName": "testOrm",
-        "projectPath": "D:\\workplace\\git\\study\\net\\blog\\testOrm\\testOrm\\testOrm.csproj",
+        "projectUniqueName": "D:\\workplace\\git\\study\\net\\blog\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
+        "projectName": "ConsoleApp1",
+        "projectPath": "D:\\workplace\\git\\study\\net\\blog\\ConsoleApp1\\ConsoleApp1\\ConsoleApp1.csproj",
         "packagesPath": "C:\\Users\\geniu\\.nuget\\packages\\",
-        "outputPath": "D:\\workplace\\git\\study\\net\\blog\\testOrm\\testOrm\\obj\\",
+        "outputPath": "D:\\workplace\\git\\study\\net\\blog\\ConsoleApp1\\ConsoleApp1\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\geniu\\AppData\\Roaming\\NuGet\\NuGet.Config",
