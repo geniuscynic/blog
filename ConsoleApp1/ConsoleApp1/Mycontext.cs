@@ -12,11 +12,11 @@ namespace ConsoleApp1
         {
            
         }
-        public Mycontext(Expression expression, IQueryProvider provider) : base(expression, provider)
+        private Mycontext(Expression expression, IQueryProvider provider) : base(expression, provider)
         {
         }
 
-        public Mycontext(IQueryProvider provider) : base(provider)
+        private Mycontext(IQueryProvider provider) : base(provider)
         {
         }
     }

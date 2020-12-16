@@ -9,6 +9,7 @@ namespace ConsoleApp1
     public class MyQueryProvider : IQueryProvider
     {
         private StringBuilder _whereSql = new StringBuilder();
+        private StringBuilder _selectSql = new StringBuilder();
 
         public IQueryable CreateQuery(Expression expression)
         {
@@ -55,11 +56,17 @@ namespace ConsoleApp1
                     Console.WriteLine(name);
                     foreach (var param in express.Arguments)
                     {
-                        ProcessExpression(param);
+                        
 
                         if (param is MethodCallExpression)
                         {
+                            ProcessExpression(param);
+
                             _whereSql.Append(" and ");
+                        }
+                        else if (name == "Select")
+                        {
+                            ProcessSelectExpression(param);
                         }
                     }
 
@@ -140,6 +147,81 @@ namespace ConsoleApp1
                     break;
             }
 
+        }
+
+        private void ProcessSelectExpression(Expression expression)
+        {
+            switch (expression)
+            {
+                case MethodCallExpression express:
+
+                    
+                    break;
+
+                case BinaryExpression express:
+
+
+
+                    break;
+
+                case MemberExpression express:
+                    //_whereSql.Append(express.ToString());
+
+                    _selectSql.Append($"{express}, ");
+
+
+                    break;
+
+                case UnaryExpression express:
+                    ProcessSelectExpression(express.Operand);
+
+                    break;
+
+                case ConstantExpression express:
+                    //if (express.Type == typeof(int))
+                    //{
+                    //    _whereSql.Append(express.Value);
+
+                    //}
+                    //else if (express.Type == typeof(string))
+                    //{
+                    //    _whereSql.Append($"'{express.Value}'");
+
+                    //}
+
+                    break;
+                case ConditionalExpression express:
+
+                    var ca = "";
+                    break;
+                case LambdaExpression express:
+
+                    ProcessSelectExpression(express.Body);
+                    break;
+                case ParameterExpression express:
+
+                    var e = "";
+                    break;
+
+                case NewExpression express:
+                    //var length = express.Arguments.Count;
+
+                    foreach (var expressArgument in express.Arguments)
+                    {
+                        ProcessSelectExpression(expressArgument);
+                    }
+                    //foreach (var valueTuple in express.Arguments.Zip(express.Members))
+                    //{
+                    //    if (valueTuple.First is MemberExpression member)
+                    //    {
+                    //        _selectSql.Append($"{member.ToString()} as '{valueTuple.Second.Name}', ");
+
+                    //    }
+                    //}
+
+
+                    break;
+            }
         }
         //protected abstract string getQueryText();
 
