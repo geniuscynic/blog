@@ -34,12 +34,16 @@ namespace ConsoleApp1
         }
 
 
+        
+
         /*提供抽象方法，交给下层实现*/
         protected object excute(Expression expression)
         {
-           
 
-            ProcessExpression(expression);
+           var visitor =   new MyExpressionVisitor(expression);
+           visitor.Visit(expression);
+
+           // ProcessExpression(expression);
            
             return "";
         }

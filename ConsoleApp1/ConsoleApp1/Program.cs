@@ -20,18 +20,19 @@ namespace ConsoleApp1
             
 
 
-            var context = new PersonContext();
+           
 
             var mycontext = new Mycontext<Person>();
             var query = mycontext//.Where(t => t.Age < 40 && t.Age > 35)
-                //.Where(t => t.Name == "nnn")
-                .Select(t => new {
-                    aa = t.Name,
-                    bb = t.Age,
-                    cc = new {
-                    dd = t.ID
-                }
-        })
+                .Where(t => t.Name == "nnn")
+                .Where(t => t.Name == "bbb")
+                //        .Select(t => new {
+                //            aa = t.Name,
+                //            bb = t.Age,
+                //            cc = new {
+                //            dd = t.ID
+                //        }
+                //})
                 .ToList();
              
 
