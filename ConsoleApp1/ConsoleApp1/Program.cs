@@ -17,24 +17,29 @@ namespace ConsoleApp1
                 };
 
             Expression<Func<Person, bool>> expression = t => t.Age < 40 && t.Age > 35;
-            
+
+            var age = 10;
+                          var query = new Queryable<Person>();
+                          var sql = query.Where(t => t.Age < 10 && t.ID > 5)
+                              .Where(t=>t.ID == 22)
+                              .build();
 
 
-           
+            Console.WriteLine(sql);
 
-            var mycontext = new Mycontext<Person>();
-            var query = mycontext//.Where(t => t.Age < 40 && t.Age > 35)
-                .Where(t => t.Name == "nnn")
-                .Where(t => t.Name == "bbb")
-                //        .Select(t => new {
-                //            aa = t.Name,
-                //            bb = t.Age,
-                //            cc = new {
-                //            dd = t.ID
-                //        }
-                //})
-                .ToList();
-             
+            //var mycontext = new Mycontext<Person>();
+            //var query = mycontext//.Where(t => t.Age < 40 && t.Age > 35)
+            //    .Where(t => t.Name == "nnn")
+            //    .Where(t => t.Name == "bbb")
+            //    //        .Select(t => new {
+            //    //            aa = t.Name,
+            //    //            bb = t.Age,
+            //    //            cc = new {
+            //    //            dd = t.ID
+            //    //        }
+            //    //})
+            //    .ToList();
+
 
             //var query = context.Where(p => p.Age < 40);
 
@@ -42,10 +47,10 @@ namespace ConsoleApp1
             //    where p.Age < 40
             //    select p;
 
-          
+
             Console.ReadLine();
 
-            Console.WriteLine("Hello World!");
+           
         }
     }
 }

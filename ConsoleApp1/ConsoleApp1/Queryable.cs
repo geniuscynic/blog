@@ -19,12 +19,20 @@ namespace ConsoleApp1
 
         public string build()
         {
+            
+             var sqls = new List<string>();
+            
             _whereExpressionList.ForEach(t =>
             {
-                var vistor = new MyExpressionVisitor(t);
-                vistor.Visit()
+                var vistor = new MyExpressionVisitor();
+                vistor.Visit(t);
+
+                sqls.Add($"({vistor.SQL})");
             });
-             
+
+
+            return string.Join(" and ", sqls);
+
         }
     }
 }

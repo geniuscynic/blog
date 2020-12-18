@@ -9,11 +9,20 @@ namespace ConsoleApp1
 {
     public class MyExpressionVisitor : ExpressionVisitor
     {
-        private readonly Expression _expression;
+        //private readonly Expression _expression;
 
-        public MyExpressionVisitor(Expression expression)
+        public StringBuilder SQL
         {
-            _expression = expression;
+            get;
+            set;
+        }         = new StringBuilder();
+
+        private List<string> memberList = new List<string>();
+        
+
+        public MyExpressionVisitor()
+        {
+            //_expression = expression;
         }
         //
         // 摘要:
@@ -28,7 +37,41 @@ namespace ConsoleApp1
         //     returns the original expression.
         protected override Expression VisitBinary(BinaryExpression node)
         {
-            return base.VisitBinary(node);
+            //SQL.Append($"({node.Left}");
+
+           
+
+            //SQL.Append($"{node.Right})");
+
+            Visit(node.Left);
+            switch (node.NodeType)
+            {
+                case ExpressionType.Equal:
+                    SQL.Append(" = ");
+                    break;
+
+                case ExpressionType.GreaterThan:
+                    SQL.Append(" > ");
+                    break;
+
+                case ExpressionType.GreaterThanOrEqual:
+                    SQL.Append(" >= ");
+                    break;
+
+                case ExpressionType.LessThan:
+                    SQL.Append(" < ");
+                    break;
+
+                case ExpressionType.LessThanOrEqual:
+                    SQL.Append(" <= ");
+                    break;
+
+                case ExpressionType.AndAlso:
+                    SQL.Append(" and ");
+                    break;
+            };
+            Visit(node.Right);
+            return node;
         }
 
         //
@@ -92,6 +135,8 @@ namespace ConsoleApp1
         //     returns the original expression.
         protected override Expression VisitConstant(ConstantExpression node)
         {
+            //memberList.Add(node.ToString());
+            SQL.Append(node.ToString());
             return base.VisitConstant(node);
         }
 
@@ -320,6 +365,9 @@ namespace ConsoleApp1
         //     returns the original expression.
         protected override Expression VisitMember(MemberExpression node)
         {
+            memberList.Add(node.ToString());
+            SQL.Append(node);
+
             return base.VisitMember(node);
         }
 

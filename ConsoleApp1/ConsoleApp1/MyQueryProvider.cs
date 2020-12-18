@@ -40,7 +40,7 @@ namespace ConsoleApp1
         protected object excute(Expression expression)
         {
 
-           var visitor =   new MyExpressionVisitor(expression);
+           var visitor =   new MyExpressionVisitor();
            visitor.Visit(expression);
 
            // ProcessExpression(expression);
