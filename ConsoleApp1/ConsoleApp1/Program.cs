@@ -18,14 +18,38 @@ namespace ConsoleApp1
 
             Expression<Func<Person, bool>> expression = t => t.Age < 40 && t.Age > 35;
 
-            var age = 10;
-                          var query = new Queryable<Person>();
-                          var sql = query.Where(t => t.Age < 10 && t.ID > 5)
-                              .Where(t=>t.ID == 22)
-                              .build();
+            //var age = 10;
+            //              var query = new Queryable<Person>();
+            //              var sql = query.Where(t => t.Age < 10 && t.ID > 5)
+            //                  //.Where(t=>t.ID == 22)
+            //                  .Select(t => new
+            //                  {
+            //                      a = t.Name,
+            //                      b = t.Age
+            //                  })
+            //                  .Select(t=>t)
+            //                  .Build();
 
+            var connectionString =
+                "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var dbContext = new Dbcontext(connectionString);
+            var result = dbContext.Queryable<BlogArticle>()
+                .Where(t => t.Id > 2)
+                //.Where(t=>t.ID == 22)
+                //.Select(t => new
+                //{
+                //    a = t.Title,
+                //    b = t.Id
+                //})
+                .Select(t => t)
+                .ToList()
+                .FirstOrDefault();
 
-            Console.WriteLine(sql);
+           // dbContext.Insertable(result).Execute();
+           dbContext.Updateable(result).UpdateColumns(t => t.Title);
+
+            var a = "";
+            //Console.WriteLine(sql);
 
             //var mycontext = new Mycontext<Person>();
             //var query = mycontext//.Where(t => t.Age < 40 && t.Age > 35)

@@ -481,7 +481,7 @@ namespace ConsoleApp1
         //     returns the original expression.
         protected override Expression VisitNew(NewExpression node)
         {
-            throw null;
+            return base.VisitNew(node);
         }
 
         //
