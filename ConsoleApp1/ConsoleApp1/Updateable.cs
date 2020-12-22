@@ -41,7 +41,7 @@ namespace ConsoleApp1
                 var property = _model.GetType().GetProperties().Single(x => x.Name == t.oriFieldName);
 
 
-                sql.Append()
+                sql.Append($"{t.fieldName}=@{t.paramterName},")
 
             });
             foreach (var p in _model.GetType().GetProperties())
