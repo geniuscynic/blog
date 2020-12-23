@@ -6,7 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
+
 
 namespace ConsoleApp1
 {
@@ -85,9 +85,9 @@ namespace ConsoleApp1
         {
             var sql = Build();
 
-            var result = _connection.Query<T>(this.sql).ToList();
+            //var result = _connection.Query<T>(this.sql).ToList();
 
-            return result;
+            return null;
         }
 
         public string Build()

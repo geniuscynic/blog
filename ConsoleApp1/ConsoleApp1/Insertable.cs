@@ -7,7 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
+
 
 namespace ConsoleApp1
 {
@@ -55,7 +55,7 @@ namespace ConsoleApp1
             sql.Append("select  @@IDENTITY;");
 
 
-            var result = _connection.ExecuteScalar<int>(sql.ToString(), _model);
+            var result = 1; //_connection.ExecuteScalar<int>(sql.ToString(), _model);
 
             return result;
         }

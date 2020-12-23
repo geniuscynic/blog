@@ -33,20 +33,23 @@ namespace ConsoleApp1
             var connectionString =
                 "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
             var dbContext = new Dbcontext(connectionString);
-            var result = dbContext.Queryable<BlogArticle>()
-                .Where(t => t.Id > 2)
-                //.Where(t=>t.ID == 22)
-                //.Select(t => new
-                //{
-                //    a = t.Title,
-                //    b = t.Id
-                //})
-                .Select(t => t)
-                .ToList()
-                .FirstOrDefault();
+            //var result = dbContext.Queryable<BlogArticle>()
+            //    .Where(t => t.Id > 2)
+            //    //.Where(t=>t.ID == 22)
+            //    //.Select(t => new
+            //    //{
+            //    //    a = t.Title,
+            //    //    b = t.Id
+            //    //})
+            //    .Select(t => t)
+            //    .ToList()
+            //    .FirstOrDefault();
 
+            var result = new BlogArticle();
            // dbContext.Insertable(result).Execute();
-           dbContext.Updateable(result).UpdateColumns(t => t.Title);
+           dbContext.Updateable(result)
+               .UpdateColumns(t => new { t.Title, t.Author })
+               .Execute();
 
             var a = "";
             //Console.WriteLine(sql);

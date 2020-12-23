@@ -13,6 +13,9 @@ namespace ConsoleApp1
 
         public string fieldName { get; set; }
         public string paramterName { get; set; }
+
+
+        public string Prefix { get; set; }
     }
     public class UpdateExpressionVisitor : ExpressionVisitor
     {
@@ -31,23 +34,31 @@ namespace ConsoleApp1
 
         protected override Expression VisitNew(NewExpression node)
         {
-            foreach (var valueTuple in node.Arguments.Zip(node.Members))
-            {
-                Sql.Append($"{valueTuple.First} as {valueTuple.Second.Name},");
-            }
+            //foreach (var valueTuple in node.Arguments.Zip(node.Members))
+            //{
+            //    Sql.Append($"{valueTuple.First} as {valueTuple.Second.Name},");
+            //}
 
-            Sql.Remove(Sql.Length - 1, 1);
+            //Sql.Remove(Sql.Length - 1, 1);
+            foreach (var nodeArgument in node.Arguments)
+            {
+                Visit(nodeArgument);
+            }
 
             return node;
         }
 
         protected override Expression VisitMember(MemberExpression node)
         {
+            var expression = node.Expression as ParameterExpression;
+            
+
             UpdateModels.Add(new UpdateModel
             {
                 fieldName = node.Member.Name.ToLowerInvariant(),
                 paramterName = node.Member.Name.ToLowerInvariant(),
-                oriFieldName = node.Member.Name
+                oriFieldName = node.Member.Name,
+                Prefix = expression.Name
             });
 
             // Sql.Append($"{node.Member.Name.ToLowerInvariant()} = @{node.Member.Name.ToLowerInvariant()}");

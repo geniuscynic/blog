@@ -7,7 +7,6 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
-using Dapper;
 
 namespace ConsoleApp1
 {
@@ -36,31 +35,37 @@ namespace ConsoleApp1
         private StringBuilder buildSql()
         {
             var sql = new StringBuilder();
+
+            sql.Append("update t set ");
             _visitor.UpdateModels.ForEach(t =>
             {
                 var property = _model.GetType().GetProperties().Single(x => x.Name == t.oriFieldName);
 
 
-                sql.Append($"{t.fieldName}=@{t.paramterName},")
+                sql.Append($"{t.fieldName}=@{t.paramterName},");
 
             });
+
+            
+
+            sql.Remove(sql.Length - 1, 1);
+
+            sql.Append(" from ");
+            sql.Append(_model.GetType().Name);
+            sql.Append($" {_visitor.UpdateModels.First().Prefix}");
+
             foreach (var p in _model.GetType().GetProperties())
             {
                 if (p.Name.ToLowerInvariant() == "id")
                 {
-                            continue;
-                           
+                    sql.Append($" where id = @{p.Name}");
+                    continue;
                 }
-
-                p1.Add(p.Name.ToLowerInvariant());
-                p2.Add($"@{p.Name}");
-
-                //Console.WriteLine("Name:{0} Value:{1}", p.Name, p.GetValue(_model));
             }
 
-            StringBuilder sql = new StringBuilder();
+            //StringBuilder sql = new StringBuilder();
 
-            sql.Append($"insert into {_model.GetType().Name} ({string.Join(",", p1)}) values ({string.Join(",", p2)});");
+            //sql.Append($"insert into {_model.GetType().Name} ({string.Join(",", p1)}) values ({string.Join(",", p2)});");
 
             return sql;
         }
@@ -69,10 +74,10 @@ namespace ConsoleApp1
 
             var sql = buildSql();
 
-            sql.Append("select  @@IDENTITY;");
+           
 
 
-            var result = _connection.ExecuteScalar<int>(sql.ToString(), _model);
+            var result = 1; //_connection.ExecuteScalar<int>(sql.ToString(), _model);
 
             return result;
         }
