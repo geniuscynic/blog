@@ -45,10 +45,15 @@ namespace ConsoleApp1
             //    .ToList()
             //    .FirstOrDefault();
 
-            var result = new BlogArticle();
+            var result = new BlogArticle()
+            {
+                Title = "aa",
+                Author = "bb"
+            };
            // dbContext.Insertable(result).Execute();
            dbContext.Updateable(result)
-               .UpdateColumns(t => new { t.Title, t.Author })
+               .UpdateColumns(t => t.Title)
+               .Where(t=>t.Title == "cc" && 12 > t.CategoryId)
                .Execute();
 
             var a = "";

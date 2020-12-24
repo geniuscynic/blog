@@ -56,7 +56,7 @@ namespace ConsoleApp1
             UpdateModels.Add(new UpdateModel
             {
                 fieldName = node.Member.Name.ToLowerInvariant(),
-                paramterName = node.Member.Name.ToLowerInvariant(),
+                paramterName = node.Member.Name,
                 oriFieldName = node.Member.Name,
                 Prefix = expression.Name
             });
