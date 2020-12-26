@@ -11,13 +11,13 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class Insertable3<T>
+    public class Insertable<T>
     {
         private readonly SqlConnection _connection;
         private readonly T _model;
 
 
-        public Insertable3(SqlConnection connection, T model)
+        public Insertable(SqlConnection connection, T model)
         {
             _connection = connection;
             _model = model;

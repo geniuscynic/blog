@@ -6,6 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="command\**" />
+    <Compile Remove="visitor\**" />
+    <EmbeddedResource Remove="command\**" />
+    <EmbeddedResource Remove="visitor\**" />
+    <None Remove="command\**" />
+    <None Remove="visitor\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="command3\Deleteable.cs" />
+    <Compile Remove="command3\Insertable.cs" />
+    <Compile Remove="command3\Updateable.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.NETFramework.ReferenceAssemblies.net461" Version="1.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

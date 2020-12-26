@@ -10,25 +10,25 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class Updateable3<T>
+    public class Updateable<T>
     {
         private readonly SqlConnection _connection;
         private readonly T _model;
 
-        UpdateExpressionVisitor3 _visitor = new UpdateExpressionVisitor3();
-        UpdateExpressionVisitor3 _ignorevisitor = new UpdateExpressionVisitor3();
+        UpdateExpressionVisitor _visitor = new UpdateExpressionVisitor();
+        UpdateExpressionVisitor _ignorevisitor = new UpdateExpressionVisitor();
         private readonly List<Expression> _whereExpressionList = new List<Expression>();
         private int index = 0;
         Dictionary<string, object> dict = new Dictionary<string, object>();
 
-        public Updateable3(SqlConnection connection, T model)
+        public Updateable(SqlConnection connection, T model)
         {
             _connection = connection;
             _model = model;
         }
 
 
-        public Updateable3<T> UpdateColumns<TResult>(Expression<Func<T, TResult>> predicate)
+        public Updateable<T> UpdateColumns<TResult>(Expression<Func<T, TResult>> predicate)
         {
 
             _visitor.Visit(predicate);
@@ -36,7 +36,7 @@ namespace ConsoleApp1
             return this;
         }
 
-        public Updateable3<T> IgnoreColumns<TResult>(Expression<Func<T, TResult>> predicate)
+        public Updateable<T> IgnoreColumns<TResult>(Expression<Func<T, TResult>> predicate)
         {
 
             _ignorevisitor.Visit(predicate);
@@ -44,7 +44,7 @@ namespace ConsoleApp1
             return this;
         }
 
-        public Updateable3<T> Where(Expression<Func<T, bool>> predicate)
+        public Updateable<T> Where(Expression<Func<T, bool>> predicate)
         {
             _whereExpressionList.Add(predicate);
             return this;
@@ -56,7 +56,7 @@ namespace ConsoleApp1
 
             _whereExpressionList.ForEach(t =>
             {
-                var vistor = new WhereExpressionVisitor2(index);
+                var vistor = new WhereExpressionVisitor(index);
                 vistor.Visit(t);
                 index = vistor.Index + 1;
 

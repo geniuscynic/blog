@@ -17,7 +17,7 @@ namespace ConsoleApp1
 
         public string Prefix { get; set; }
     }
-    public class UpdateExpressionVisitor3 : ExpressionVisitor
+    public class UpdateExpressionVisitor : ExpressionVisitor
     {
 
         public List<UpdateModel> UpdateModels = new List<UpdateModel>();

@@ -21,7 +21,7 @@ namespace ConsoleApp1
     //    public StringBuilder Sql { get; set; } = new StringBuilder();
     //}
 
-    public class WhereExpressionVisitor : ExpressionVisitor
+    public class WhereExpressionVisitor3 : ExpressionVisitor
     {
               public List<ExpandoObject> WhereModels = new List<ExpandoObject>();
 

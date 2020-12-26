@@ -50,11 +50,25 @@ namespace ConsoleApp1
                 Title = "aa",
                 Author = "bb"
             };
+            dbContext.Queryable<BlogArticle>()
+                .Where(t => t.Title == "aa" && t.Id > 2)
+                .Where(t => t.Content == "cc")
+                .Select(t => new { t.Title, t.Author})
+                .Select(x=>new 
+                {
+                      c=   x.Author
+                })
+                .Where(x=>x.c == "bb")
+                .Select(x=>x)
+                .Build();
+
            // dbContext.Insertable(result).Execute();
-           dbContext.Updateable(result)
-               .UpdateColumns(t => t.Title)
-               .Where(t=>t.Title == "cc" && 12 > t.CategoryId)
-               .Execute();
+           //dbContext.Updateable(result)
+           //    .UpdateColumns(t => t.Title)
+           //    .Where(t=>t.Title == "cc" && 12 > t.CategoryId)
+           //    .Execute();
+
+            //dbContext.Deleteable<BlogArticle>(result).Execute();
 
             var a = "";
             //Console.WriteLine(sql);

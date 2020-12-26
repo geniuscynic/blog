@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-    public class Queryable<T>
+    public class Queryable3<T>
     {
         private readonly SqlConnection _connection;
 
@@ -19,31 +19,31 @@ namespace ConsoleApp1
 
         private string sql = "";
 
-        public Queryable(SqlConnection connection) : this(connection, "")
+        public Queryable3(SqlConnection connection) : this(connection, "")
         {
             
         }
 
-        public Queryable(SqlConnection connection, string sql)
+        public Queryable3(SqlConnection connection, string sql)
         {
             this.sql = sql;
             _connection = connection;
         }
 
 
-        public Queryable<T> Where(Expression<Func<T, bool>> predicate)
+        public Queryable3<T> Where(Expression<Func<T, bool>> predicate)
         {
 
             _whereExpressionList.Add(predicate);
             return this;
         }
 
-        public Queryable<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate)
+        public Queryable3<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate)
         {
             var whereSql = BuildWhere();
 
 
-            var vistor = new SelectExpressionVisitor();
+            var vistor = new SelectExpressionVisitor3();
             vistor.Visit(predicate);
 
             //var name = typeof(T).Name;
@@ -64,7 +64,7 @@ namespace ConsoleApp1
 
             _whereExpressionList.ForEach(t =>
             {
-                var vistor = new WhereExpressionVisitor();
+                var vistor = new WhereExpressionVisitor3();
                 vistor.Visit(t);
 
                 sqls.Add($"({vistor.Sql})");

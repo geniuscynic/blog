@@ -23,15 +23,25 @@ namespace ConsoleApp1
                 return new Queryable<T>(_connection);
         }
 
-        public Insertable<T> Insertable<T>(T model)
-        {
-            return new Insertable<T>(_connection, model);
-        }
+        //public Insertable<T> Insertable<T>(T model)
+        //{
+        //    return new Insertable<T>(_connection, model);
+        //}
 
-        public Updateable<T> Updateable<T>(T model)
-        {
-            return new Updateable<T>(_connection, model);
-        }
+        //public Updateable<T> Updateable<T>(T model)
+        //{
+        //    return new Updateable<T>(_connection, model);
+        //}
+
+        //public Deleteable<T> Deleteable<T>()
+        //{
+        //    return new Deleteable<T>(_connection);
+        //}
+
+        //public Deleteable<T> Deleteable<T>(T model)
+        //{
+        //    return new Deleteable<T>(_connection, model);
+        //}
 
 
         public void Dispose()

@@ -7,15 +7,30 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1
 {
-   
+    public class SelectModel
+    {
+        public StringBuilder Sql { get; set; } = new StringBuilder();
 
-    public class SelectExpressionVisitor3 : ExpressionVisitor
+        public string TableName { get; set; } 
+    }
+    public class SelectExpressionVisitor : ExpressionVisitor
     {
         //private readonly Expression _expression;
 
-        public StringBuilder Sql{ get;set;}  = new StringBuilder();
+        public SelectModel Result { get; } = new SelectModel();
 
 
+        public void Run(Expression node)
+        {
+            Result.Sql.Append("select ");
+            var expression = node as LambdaExpression;
+
+              Result.TableName = expression.Parameters.First().Name;
+
+              base.Visit(expression.Body);
+
+              Result.Sql.Append(" from ");
+        }
         protected override Expression VisitLambda<T>(Expression<T> node)
         {
             return base.Visit(node.Body);
@@ -26,10 +41,10 @@ namespace ConsoleApp1
         {
             foreach (var valueTuple in node.Arguments.Zip(node.Members))
             {
-                Sql.Append($"{valueTuple.First} as {valueTuple.Second.Name},");
+                Result.Sql.Append($"{valueTuple.First} as {valueTuple.Second.Name},");
             }
 
-            Sql.Remove(Sql.Length - 1, 1);
+            Result.Sql.Remove(Result.Sql.Length - 1, 1);
 
             return node;
         }
@@ -37,7 +52,7 @@ namespace ConsoleApp1
         protected override Expression VisitMember(MemberExpression node)
         {
 
-            Sql.Append(node);
+            Result.Sql.Append(node);
 
             return node;
         }
@@ -45,7 +60,7 @@ namespace ConsoleApp1
 
         protected override Expression VisitParameter(ParameterExpression node)
         {
-             Sql.Append($"{node}.*");
+             Result.Sql.Append($"{node}.*");
             return node;
         }
     }
