@@ -13,7 +13,7 @@ namespace ConsoleApp1
         private readonly IQueryProvider _provider;
 
         public MyQueryable(Expression expression, IQueryProvider provider)
-        {
+        { 
             _expression = expression;
             _provider = provider;
         }

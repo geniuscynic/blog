@@ -53,12 +53,12 @@ namespace ConsoleApp1
             dbContext.Queryable<BlogArticle>()
                 .Where(t => t.Title == "aa" && t.Id > 2)
                 .Where(t => t.Content == "cc")
-                .Select(t => new { t.Title, t.Author})
-                .Select(x=>new 
+                .Select(t => new { t.Title, t.Author })
+                .Select(x => new
                 {
-                      c=   x.Author
+                    c = x.Author
                 })
-                .Where(x=>x.c == "bb")
+                .Where(x => x.c == "bb")
                 .Select(x=>x)
                 .Build();
 

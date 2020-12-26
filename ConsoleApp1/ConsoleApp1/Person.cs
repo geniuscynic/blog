@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using ConsoleApp1.attribute;
 
 namespace ConsoleApp1
 {
@@ -13,12 +14,14 @@ namespace ConsoleApp1
 
     public class BlogArticle 
     {
+        [XjjxmmKey]
         public int Id { get; set; }
 
         /// <summary>
         /// 标题
         /// </summary>
 
+        [XjjxmmField(FieldName = "title11")]
         public string Title { get; set; }
 
         /// <summary>

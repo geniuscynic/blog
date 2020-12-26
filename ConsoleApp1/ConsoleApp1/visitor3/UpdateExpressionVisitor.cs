@@ -21,7 +21,7 @@ namespace ConsoleApp1
     {
 
         public List<UpdateModel> UpdateModels = new List<UpdateModel>();
-        //private readonly Expression _expression;
+        //private readonly WhereExpression _expression;
 
         public StringBuilder Sql { get; set; } = new StringBuilder();
 

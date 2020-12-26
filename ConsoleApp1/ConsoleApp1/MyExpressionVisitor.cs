@@ -9,7 +9,7 @@ namespace ConsoleApp1
 {
     public class MyExpressionVisitor : ExpressionVisitor
     {
-        //private readonly Expression _expression;
+        //private readonly WhereExpression _expression;
 
         public StringBuilder SQL
         {
@@ -302,7 +302,7 @@ namespace ConsoleApp1
 
         //
         // 摘要:
-        //     Visits the children of the System.Linq.Expressions.Expression`1.
+        //     Visits the children of the System.Linq.Expressions.WhereExpression`1.
         //
         // 参数:
         //   node:

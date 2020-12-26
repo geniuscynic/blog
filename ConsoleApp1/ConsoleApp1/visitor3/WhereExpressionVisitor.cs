@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Dynamic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp1.attribute;
+using ConsoleApp1.visitor3;
 
 namespace ConsoleApp1
 {
@@ -12,11 +15,11 @@ namespace ConsoleApp1
     {
         public int Start { get; set; }
 
-        public StringBuilder Sql { get; set; }  = new StringBuilder();
+        public StringBuilder Sql { get; set; } = new StringBuilder();
 
         //public StringBuilder ResultSql { get; set; } = new StringBuilder();
 
-        public Dictionary<string, object> Paramters = new Dictionary<string, object>();
+        public Dictionary<string, object> Parameters = new Dictionary<string, object>();
     }
 
     public class WhereExpressionVisitor : ExpressionVisitor
@@ -107,7 +110,7 @@ namespace ConsoleApp1
             //memberList.Add(node.ToString());
             Result.Sql.Append($"@p{Result.Start}");
 
-            Result.Paramters.Add($"p{Result.Start}", node.Value);
+            Result.Parameters.Add($"p{Result.Start}", node.Value);
 
             Result.Start++;
             //model.value = node.Value;
@@ -117,7 +120,11 @@ namespace ConsoleApp1
 
         protected override Expression VisitMember(MemberExpression node)
         {
-            Result.Sql.Append(node);
+            var member =  XjjxmmExpressionVistorHelper.VisitMember(node);
+                
+
+
+            Result.Sql.Append(member.WhereExpression);
             //Sql.Append(node);
 
             //model.Sql.Append(node);

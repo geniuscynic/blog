@@ -14,8 +14,8 @@ namespace ConsoleApp1
     {
         private readonly SqlConnection _connection;
 
-        //private readonly List<Expression> _whereExpressionList = new List<Expression>();
-        //private readonly List<Expression> _selectExpressionList = new List<Expression>();
+        //private readonly List<WhereExpression> _whereExpressionList = new List<WhereExpression>();
+        //private readonly List<WhereExpression> _selectExpressionList = new List<WhereExpression>();
 
         private StringBuilder sql = new StringBuilder();
         private WhereExpressionVisitor _whereVisitor;
@@ -79,7 +79,7 @@ namespace ConsoleApp1
             return new Queryable<TResult>(_connection, sql, _whereVisitor);
         }
 
-        //public Queryable<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate)
+        //public Queryable<TResult> Select<TResult>(WhereExpression<Func<T, TResult>> predicate)
         //{
         //    var whereSql = BuildWhere();
 
@@ -111,7 +111,7 @@ namespace ConsoleApp1
 
         public string Build()
         {
-            var res = _whereVisitor.Result.Sql;
+   
 
             return sql.ToString();
 
