@@ -30,6 +30,7 @@ namespace ConsoleApp1.attribute
 
         public string OriginFieldName { get; set; }
 
+        public bool IsKey { get; set; }
 
         public string WhereExpression => $"{Prefix}.{FieldName}";
 

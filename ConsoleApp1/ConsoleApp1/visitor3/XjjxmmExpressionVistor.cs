@@ -21,7 +21,7 @@ namespace ConsoleApp1.visitor3
 
             if (string.IsNullOrWhiteSpace(field))
             {
-                field = node.Member.Name.ToLowerInvariant();
+                field = node.Member.Name;
             }
 
 
@@ -42,16 +42,19 @@ namespace ConsoleApp1.visitor3
 
                 if (string.IsNullOrWhiteSpace(field))
                 {
-                    field = propertyInfo.Name.ToLowerInvariant();
+                    field = propertyInfo.Name;
 
                 }
+
+                var isKey = CommonUnity.IsKey(propertyInfo.CustomAttributes);
 
 
                 yield return new Member
                 {
                     FieldName = field,
                     Prefix = prefix,
-                    OriginFieldName = propertyInfo.Name
+                    OriginFieldName = propertyInfo.Name,
+                    IsKey = isKey
                 };
             }
         }

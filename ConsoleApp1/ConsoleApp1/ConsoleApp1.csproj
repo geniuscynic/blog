@@ -16,8 +16,6 @@
 
   <ItemGroup>
     <Compile Remove="command3\Deleteable.cs" />
-    <Compile Remove="command3\Insertable.cs" />
-    <Compile Remove="command3\Updateable.cs" />
   </ItemGroup>
 
   <ItemGroup>

@@ -9,6 +9,13 @@ namespace ConsoleApp1.attribute
 {
     public class CommonUnity
     {
+        public static bool IsKey(IEnumerable<CustomAttributeData> customAttributeDatas)
+        {
+            var attribute = customAttributeDatas.FirstOrDefault(t => t.AttributeType == typeof(XjjxmmKeyAttribute));
+
+            return attribute != null;
+        }
+
         public static string GetFieldName(IEnumerable<CustomAttributeData> customAttributeDatas)
         {
             return CommonUnity.GetFieldName(customAttributeDatas, "FieldName");

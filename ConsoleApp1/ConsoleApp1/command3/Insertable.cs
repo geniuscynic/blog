@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp1.visitor3;
 
 
 namespace ConsoleApp1
@@ -23,20 +24,21 @@ namespace ConsoleApp1
             _model = model;
         }
 
-        private StringBuilder buildSql()
+        private StringBuilder BuildSql()
         {
             var p1 = new List<string>();
             var p2 = new List<string>();
-            foreach (var p in _model.GetType().GetProperties())
+
+            var properties = XjjxmmExpressionVistorHelper.VisitProperty(_model.GetType().GetProperties(), "");
+            foreach (var p in properties)
             {
-                if (p.Name.ToLowerInvariant() == "id")
+                if (p.IsKey)
                 {
-                            continue;
-                           
+                    continue;
                 }
 
-                p1.Add(p.Name.ToLowerInvariant());
-                p2.Add($"@{p.Name}");
+                p1.Add(p.FieldName);
+                p2.Add($"@{p.OriginFieldName}");
 
                 //Console.WriteLine("Name:{0} Value:{1}", p.Name, p.GetValue(_model));
             }
@@ -50,7 +52,7 @@ namespace ConsoleApp1
         public int Execute()
         {
 
-            var sql = buildSql();
+            var sql = BuildSql();
 
             sql.Append("select  @@IDENTITY;");
 

@@ -17,6 +17,7 @@ namespace ConsoleApp1
 
         UpdateExpressionVisitor _visitor = new UpdateExpressionVisitor();
         UpdateExpressionVisitor _ignorevisitor = new UpdateExpressionVisitor();
+
         private readonly List<Expression> _whereExpressionList = new List<Expression>();
         private int index = 0;
         Dictionary<string, object> dict = new Dictionary<string, object>();
@@ -50,41 +51,41 @@ namespace ConsoleApp1
             return this;
         }
 
-        private string BuildWhere()
-        {
-            var sqls = new List<string>();
+        //private string BuildWhere()
+        //{
+        //    var sqls = new List<string>();
 
-            _whereExpressionList.ForEach(t =>
-            {
-                var vistor = new WhereExpressionVisitor(index);
-                vistor.Visit(t);
-                index = vistor.Index + 1;
+        //    _whereExpressionList.ForEach(t =>
+        //    {
+        //        var vistor = new WhereExpressionVisitor(index);
+        //        vistor.Visit(t);
+        //        index = vistor.Index + 1;
 
-                sqls.Add($"({vistor.Sql})");
+        //        sqls.Add($"({vistor.Sql})");
 
-                foreach (var keyValuePair in vistor.dict)
-                {
-                    dict.Add(keyValuePair.Key, keyValuePair.Value);
-                }
-            });
+        //        foreach (var keyValuePair in vistor.dict)
+        //        {
+        //            dict.Add(keyValuePair.Key, keyValuePair.Value);
+        //        }
+        //    });
 
 
-            _whereExpressionList.Clear();
+        //    _whereExpressionList.Clear();
 
-            return sqls.Count switch
-            {
-                0 => string.Join(" and ", sqls),
-                _ => " where " + string.Join(" and ", sqls)
-            };
-        }
+        //    return sqls.Count switch
+        //    {
+        //        0 => string.Join(" and ", sqls),
+        //        _ => " where " + string.Join(" and ", sqls)
+        //    };
+        //}
 
         private StringBuilder buildSql()
         {
             var sql = new StringBuilder();
 
-            sql.Append("update t set ");
+             
 
-            dynamic model = new object();
+            //dynamic model = new object();
 
             dynamic dobj = new System.Dynamic.ExpandoObject();
 
@@ -95,37 +96,37 @@ namespace ConsoleApp1
             {
                 _visitor.UpdateModels.ForEach(t =>
                 {
-                    var property = _model.GetType().GetProperties().Single(x => x.Name == t.oriFieldName);
+                    var property = _model.GetType().GetProperties().Single(x => x.Name == t.OriginFieldName);
 
 
-                    sql.Append($"{t.fieldName}=@{t.paramterName},");
+                    sql.Append($"{t.FieldName}=@{t.OriginFieldName},");
 
-                    dic[t.oriFieldName] = property.GetValue(_model);
+                    dic[t.OriginFieldName] = property.GetValue(_model);
 
                 });
             }
-            else if (_ignorevisitor.UpdateModels.Count > 0)
-            {
-                foreach (var propertyInfo in _model.GetType().GetProperties())
-                {
-                    if (_ignorevisitor.UpdateModels.Any(t => t.oriFieldName == propertyInfo.Name)) continue;
-                    
-                    sql.Append($"{propertyInfo.Name}=@{propertyInfo.Name},");
+            //else if (_ignorevisitor.UpdateModels.Count > 0)
+            //{
+            //    foreach (var propertyInfo in _model.GetType().GetProperties())
+            //    {
+            //        if (_ignorevisitor.UpdateModels.Any(t => t.oriFieldName == propertyInfo.Name)) continue;
 
-                    dic[propertyInfo.Name] = propertyInfo.GetValue(_model);
-                }
-            }
-            else
-            {
-                foreach (var propertyInfo in _model.GetType().GetProperties())
-                {
+            //        sql.Append($"{propertyInfo.Name}=@{propertyInfo.Name},");
 
-                    sql.Append($"{propertyInfo.Name}=@{propertyInfo.Name},");
+            //        dic[propertyInfo.Name] = propertyInfo.GetValue(_model);
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (var propertyInfo in _model.GetType().GetProperties())
+            //    {
 
-                    dic[propertyInfo.Name] = propertyInfo.GetValue(_model);
+            //        sql.Append($"{propertyInfo.Name}=@{propertyInfo.Name},");
 
-                }
-            }
+            //        dic[propertyInfo.Name] = propertyInfo.GetValue(_model);
+
+            //    }
+            //}
 
 
             sql.Remove(sql.Length - 1, 1);
@@ -135,29 +136,29 @@ namespace ConsoleApp1
             sql.Append($" {_visitor.UpdateModels.First().Prefix}");
 
 
-            var where = BuildWhere();
+            //var where = BuildWhere();
 
-            if (string.IsNullOrEmpty(where))
-            {
-                foreach (var p in _model.GetType().GetProperties())
-                {
-                    if (p.Name.ToLowerInvariant() == "id")
-                    {
-                        sql.Append($" where id = @{p.Name}");
-                        break;
-                    }
-                }
-            }
-            else
-            {
-                foreach (var keyValuePair in dict)
-                {
-                    dic[keyValuePair.Key] = keyValuePair.Value;
+            //if (string.IsNullOrEmpty(where))
+            //{
+            //    foreach (var p in _model.GetType().GetProperties())
+            //    {
+            //        if (p.Name.ToLowerInvariant() == "id")
+            //        {
+            //            sql.Append($" where id = @{p.Name}");
+            //            break;
+            //        }
+            //    }
+            //}
+            //else
+            //{
+            //    foreach (var keyValuePair in dict)
+            //    {
+            //        dic[keyValuePair.Key] = keyValuePair.Value;
 
-                }
+            //    }
 
-                sql.Append(" " + where);
-            }
+            //    sql.Append(" " + where);
+            //}
 
 
 
