@@ -54,7 +54,8 @@ namespace ConsoleApp1.visitor3
                     FieldName = field,
                     Prefix = prefix,
                     OriginFieldName = propertyInfo.Name,
-                    IsKey = isKey
+                    IsKey = isKey ,
+                    PropertyInfo = propertyInfo
                 };
             }
         }

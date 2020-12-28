@@ -7,9 +7,14 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using ConsoleApp1.visitor3;
 
 namespace ConsoleApp1
 {
+    /// <summary>
+    /// 需要where
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
     public class Updateable<T>
     {
         private readonly SqlConnection _connection;
@@ -18,12 +23,15 @@ namespace ConsoleApp1
         UpdateExpressionVisitor _visitor = new UpdateExpressionVisitor();
         UpdateExpressionVisitor _ignorevisitor = new UpdateExpressionVisitor();
 
-        private readonly List<Expression> _whereExpressionList = new List<Expression>();
+        private readonly WhereExpressionVisitor _whereVisitor;
+
         private int index = 0;
         Dictionary<string, object> dict = new Dictionary<string, object>();
 
         public Updateable(SqlConnection connection, T model)
         {
+            _whereVisitor = new WhereExpressionVisitor();
+
             _connection = connection;
             _model = model;
         }
@@ -47,7 +55,8 @@ namespace ConsoleApp1
 
         public Updateable<T> Where(Expression<Func<T, bool>> predicate)
         {
-            _whereExpressionList.Add(predicate);
+            _whereVisitor.Run(predicate);
+
             return this;
         }
 
@@ -83,8 +92,16 @@ namespace ConsoleApp1
         {
             var sql = new StringBuilder();
 
-             
-
+            var prefix = "";
+            if (_whereVisitor.Result.Sql.Length == 0)
+            {
+                sql.Append($"update {typeof(T).Name} set ");
+            }
+            else
+            {
+                prefix = _whereVisitor.Result.Prefix + ".";
+                sql.Append($"update {_whereVisitor.Result.Prefix} set ");
+            }
             //dynamic model = new object();
 
             dynamic dobj = new System.Dynamic.ExpandoObject();
@@ -99,76 +116,54 @@ namespace ConsoleApp1
                     var property = _model.GetType().GetProperties().Single(x => x.Name == t.OriginFieldName);
 
 
-                    sql.Append($"{t.FieldName}=@{t.OriginFieldName},");
+                    sql.Append($"{prefix}{t.FieldName}=@{t.OriginFieldName},");
 
                     dic[t.OriginFieldName] = property.GetValue(_model);
 
                 });
             }
-            //else if (_ignorevisitor.UpdateModels.Count > 0)
-            //{
-            //    foreach (var propertyInfo in _model.GetType().GetProperties())
-            //    {
-            //        if (_ignorevisitor.UpdateModels.Any(t => t.oriFieldName == propertyInfo.Name)) continue;
 
-            //        sql.Append($"{propertyInfo.Name}=@{propertyInfo.Name},");
+            else
+            {
+                var properties = XjjxmmExpressionVistorHelper.VisitProperty(_model.GetType().GetProperties(), "");
+                foreach (var propertyInfo in properties)
+                {
+                    if (_whereVisitor.Result.Sql.Length == 0 && propertyInfo.IsKey)
+                    {
+                        _whereVisitor.Result.Sql.Append(
+                            $"where {prefix}{propertyInfo.FieldName} = @{propertyInfo.OriginFieldName}");  
 
-            //        dic[propertyInfo.Name] = propertyInfo.GetValue(_model);
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (var propertyInfo in _model.GetType().GetProperties())
-            //    {
+                        dic[propertyInfo.OriginFieldName] = propertyInfo.PropertyInfo.GetValue(_model);
+                    }
 
-            //        sql.Append($"{propertyInfo.Name}=@{propertyInfo.Name},");
+                    if (_ignorevisitor.UpdateModels.Count > 0)
+                    {
+                        if (_ignorevisitor.UpdateModels.Any(t => t.OriginFieldName == propertyInfo.OriginFieldName)) continue;
+                    }
 
-            //        dic[propertyInfo.Name] = propertyInfo.GetValue(_model);
 
-            //    }
-            //}
+
+                    sql.Append($"{prefix}{propertyInfo.FieldName}=@{propertyInfo.OriginFieldName},");
+
+                    dic[propertyInfo.OriginFieldName] = propertyInfo.PropertyInfo.GetValue(_model);
+
+                }
+            }
 
 
             sql.Remove(sql.Length - 1, 1);
 
             sql.Append(" from ");
             sql.Append(_model.GetType().Name);
-            sql.Append($" {_visitor.UpdateModels.First().Prefix}");
 
+            if (prefix.Length > 0)
+            {
+                prefix = prefix.Substring(0, prefix.Length - 2);
+                sql.Append($" {prefix} ");
+            }
 
-            //var where = BuildWhere();
+            sql.Append(_whereVisitor.Result.Sql);
 
-            //if (string.IsNullOrEmpty(where))
-            //{
-            //    foreach (var p in _model.GetType().GetProperties())
-            //    {
-            //        if (p.Name.ToLowerInvariant() == "id")
-            //        {
-            //            sql.Append($" where id = @{p.Name}");
-            //            break;
-            //        }
-            //    }
-            //}
-            //else
-            //{
-            //    foreach (var keyValuePair in dict)
-            //    {
-            //        dic[keyValuePair.Key] = keyValuePair.Value;
-
-            //    }
-
-            //    sql.Append(" " + where);
-            //}
-
-
-
-
-
-
-
-            //StringBuilder sql = new StringBuilder();
-
-            //sql.Append($"insert into {_model.GetType().Name} ({string.Join(",", p1)}) values ({string.Join(",", p2)});");
 
             return sql;
         }

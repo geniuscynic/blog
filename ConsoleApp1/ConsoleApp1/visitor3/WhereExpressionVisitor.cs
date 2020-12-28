@@ -17,6 +17,8 @@ namespace ConsoleApp1
 
         public StringBuilder Sql { get; set; } = new StringBuilder();
 
+        public string Prefix { get; set; } = "";
+
         //public StringBuilder ResultSql { get; set; } = new StringBuilder();
 
         public Dictionary<string, object> Parameters = new Dictionary<string, object>();
@@ -121,9 +123,9 @@ namespace ConsoleApp1
         protected override Expression VisitMember(MemberExpression node)
         {
             var member =  XjjxmmExpressionVistorHelper.VisitMember(node);
-                
 
 
+            Result.Prefix = member.Prefix;
             Result.Sql.Append(member.WhereExpression);
             //Sql.Append(node);
 

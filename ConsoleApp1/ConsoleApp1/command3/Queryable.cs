@@ -18,7 +18,7 @@ namespace ConsoleApp1
         //private readonly List<WhereExpression> _selectExpressionList = new List<WhereExpression>();
 
         private StringBuilder sql = new StringBuilder();
-        private WhereExpressionVisitor _whereVisitor;
+        private readonly WhereExpressionVisitor _whereVisitor;
 
         public Queryable(SqlConnection connection) : this(connection, new StringBuilder(), new WhereExpressionVisitor())
         {

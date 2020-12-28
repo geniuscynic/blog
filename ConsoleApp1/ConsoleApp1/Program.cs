@@ -64,8 +64,8 @@ namespace ConsoleApp1
 
             // dbContext.Insertable(result).Execute();
             dbContext.Update(result)
-                .UpdateColumns(t => t.Title)
-                .Where(t => t.Title == "cc" && 12 > t.CategoryId)
+                //.UpdateColumns(t => t.Title)
+                //.Where(t => t.Title == "cc" && 12 > t.CategoryId)
                 .Execute();
 
             //dbContext.Deleteable<BlogArticle>(result).Execute();

@@ -9,12 +9,7 @@ using ConsoleApp1.visitor3;
 
 namespace ConsoleApp1
 {
-    public class SelectModel
-    {
-        public StringBuilder Sql { get; set; } = new StringBuilder();
-
-        public string TableName { get; set; }
-    }
+    
     public class SelectExpressionVisitor : ExpressionVisitor
     {
         //private readonly WhereExpression _expression;
