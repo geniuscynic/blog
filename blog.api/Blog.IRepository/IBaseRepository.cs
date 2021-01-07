@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Core.Models;
 
 namespace Blog.IRepository
 {
-    public interface IBaseRepository<TEntity> where TEntity : class, new()
+    public interface IBaseRepository<TEntity> where TEntity : RootEntityTkey<int>, new()
     {
 
         //public ISqlSugarClient Db { get;  }

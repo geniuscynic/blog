@@ -8,23 +8,26 @@ using System.Threading.Tasks;
 using Blog.Core.Models;
 using Blog.IRepository;
 using Dapper;
+using Dapper.XjjxmmHelper;
 
 namespace Blog.Repository
 {
     public class UserRepository  : IUserRepository
     {
-        private readonly IDbConnection _connection;
+        private readonly XjjxmmContext _context;
 
-        public UserRepository(IDbConnection connection)
+        public UserRepository(XjjxmmContext context)
         {
-            _connection = connection;
+            _context = context;
         }
         public async Task<User> Add(User model)
         {
-            var sql = "INSERT INTO [dbo].[User] ([Account],[Password],[NickName],[LoginTime]) VALUES(@Account,@Password,@NickName,@LoginTime); " +
-                      "select @@IDENTITY";
+            //var sql = "INSERT INTO [dbo].[User] ([Account],[Password],[NickName],[LoginTime]) VALUES(@Account,@Password,@NickName,@LoginTime); " +
+            //          "select @@IDENTITY";
 
-            var id = await _connection.ExecuteScalarAsync<int>(sql, model);
+            //var id = await _connection.ExecuteScalarAsync<int>(sql, model);
+
+            var id = await _context.Insert(model).ExecuteAsync();
 
             model.Id = id;
 
@@ -74,10 +77,13 @@ namespace Blog.Repository
 
         public async Task<IEnumerable<User>> GetUsers()
         {
-            var sql = "select * from [User]";
+            //var sql = "select * from [User]";
 
-            var user = await _connection.QueryAsync<User>(sql);
-               
+            //var user = await _connection.QueryAsync<User>(sql);
+
+
+           var user = await _context.Query<User>().Select(t => t).ToListAsync();
+
             return user;
             //var addUserModel = mapper.Map<List<User>, List<AddUserViewModel>>(user);
             //addUserModel.Ro

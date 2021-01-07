@@ -6,20 +6,22 @@ using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Core.Models;
+using Dapper.XjjxmmHelper;
 
 namespace Blog.Repository
 {
-    public class BaseRepository2<TEntity> : IBaseRepository<TEntity> where TEntity : class, new()
+    public class BaseRepository2<TEntity> : IBaseRepository<TEntity> where TEntity : RootEntityTkey<int>, new()
     {
-        private readonly ISqlSugarClient _db;
-        //protected readonly Dbcontext _dbcontext;
+        private readonly XjjxmmContext _context;
+        //protected readonly XjjxmmContext _dbcontext;
 
-        //protected ISqlSugarClient DbClient => Dbcontext.Db;
+        //protected ISqlSugarClient DbClient => XjjxmmContext.Db;
 
 
-        public BaseRepository2(ISqlSugarClient sqlSugarClient)
+        public BaseRepository2(XjjxmmContext context)
         {
-            _db = sqlSugarClient;
+            _context = context;
 
             //this._dbcontext = dbcontext;
         }
@@ -31,7 +33,11 @@ namespace Blog.Repository
         /// <returns></returns>
         public async Task<TEntity> Add(TEntity model)
         {
-            return await _db.Insertable(model).ExecuteReturnEntityAsync();
+            var id =  await _context.Insert(model).ExecuteAsync();
+            model.Id = id;
+
+            return model;
+
         }
 
         /// <summary>
@@ -41,28 +47,36 @@ namespace Blog.Repository
         /// <returns></returns>
         public async Task<bool> Add(List<TEntity> models)
         {
-            return await _db.Insertable(models.ToArray()).ExecuteCommandIdentityIntoEntityAsync();
+            models.ForEach(async t=> t = await Add(t));
+            return true;
         }
 
         public async Task<bool> Edit(TEntity model)
         {
-           return await _db.Saveable(model).ExecuteCommandAsync() > 0;
+           return await _context.Update(model).ExecuteAsync() > 0;
+        }
+
+        public Task<bool> DeleteById<T>(T id)
+        {
+
+            throw new NotImplementedException();
         }
 
         public async Task<bool> Delete(TEntity model)
         {
-            return await _db.Deleteable<TEntity>(model).ExecuteCommandAsync() > 0;
+            return await _context.Delete<TEntity>(model).ExecuteAsync() > 0;
         }
 
-        public async Task<bool> DeleteById<T>(T id)
-        {
+        //public async Task<bool> DeleteById(T id)
+        //{
             
-            return await _db.Deleteable<TEntity>(id).ExecuteCommandAsync() > 0;
-        }
+        //    return await _context.Delete<TEntity>().Where(t=>t.Id == id).ExecuteAsync() > 0;
+        //}
 
         public async Task<bool> DeleteByIds<T>(T[] ids)
         {
-            return await _db.Deleteable<TEntity>(ids).ExecuteCommandAsync() > 0;
+            throw new Exception();
+            //return await _context.Delete<TEntity>(ids).ExecuteCommandAsync() > 0;
         }
 
         
@@ -73,17 +87,20 @@ namespace Blog.Repository
         /// <returns></returns>
         public async Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression)
         {
-            return await _db.Queryable<TEntity>().Where(whereExpression).ToListAsync();
+            throw new Exception();
+            //return await _context.Query<TEntity>().Where(whereExpression).ToListAsync();
         }
 
         public async Task<TEntity> QueryById(object id)
         {
-            return await _db.Queryable<TEntity>().InSingleAsync(id);
+            throw new Exception();
+            //return await _db.Queryable<TEntity>().InSingleAsync(id);
         }
 
         public async Task<List<TEntity>> GetAll()
         {
-            return await _db.Queryable<TEntity>().ToListAsync();
+            throw new Exception();
+            //return await _db.Queryable<TEntity>().ToListAsync();
         }
 
        

@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Threading.Tasks;
+using Dapper.XjjxmmHelper;
 using DbType = SqlSugar.DbType;
 
 namespace Blog.Common.Extensions.ServiceExtensions
@@ -17,11 +18,19 @@ namespace Blog.Common.Extensions.ServiceExtensions
         public static void AddSqlsugarSetup(this IServiceCollection services)
         {
 
-            services.AddScoped<IDbConnection>(o =>
-            {
-                       var connection = new SqlConnection(AppSettingHelper.App("ConnectionStrings:Default"));
+            //services.AddScoped<IDbConnection>(o =>
+            //{
+            //           var connection = new SqlConnection(AppSettingHelper.App("ConnectionStrings:Default"));
 
-                       return connection;
+            //           return connection;
+            //});
+
+
+            services.AddScoped<XjjxmmContext>(o =>
+            {
+                var connection = new XjjxmmContext(AppSettingHelper.App("ConnectionStrings:Default"));
+
+                return connection;
             });
 
             services.AddScoped<ISqlSugarClient>(o =>

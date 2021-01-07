@@ -10,10 +10,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Dapper\Dapper\Dapper.csproj" />
     <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
     <ProjectReference Include="..\Blog.IRepository\Blog.IRepository.csproj" />
     <ProjectReference Include="..\Blog.Model\Blog.Core.csproj" />
+    <ProjectReference Include="..\Dapper.XjjxmmHelper\Dapper.XjjxmmHelper.csproj" />
   </ItemGroup>
 
 </Project>
