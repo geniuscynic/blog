@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
@@ -10,6 +10,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
+    <ProjectReference Include="..\Blog.Entity\Blog.Entity.csproj" />
+    <ProjectReference Include="..\Blog.IService\Blog.IService.csproj" />
     <ProjectReference Include="..\Blog.Model\Blog.Core.csproj" />
     <ProjectReference Include="..\Blog.Repository\Blog.Repository.csproj" />
   </ItemGroup>

@@ -1,5 +1,5 @@
 ﻿using Blog.Core;
-using Blog.Core.IService;
+using Blog.IService;
 using Blog.Core.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;

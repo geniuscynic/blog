@@ -1,5 +1,4 @@
-﻿using Blog.Core.IService;
-using Blog.Repository;
+﻿using Blog.Repository;
 using Blog.Repository.IRepository;
 using Blog.Repository.Repository;
 using Blog.Service;
@@ -9,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Blog.IService;
 
 namespace Blog.Common.Extensions.ServiceExtensions
 {

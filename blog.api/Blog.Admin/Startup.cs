@@ -13,7 +13,7 @@ using Blog.API.Filter;
 using Blog.Common.Extensions.AutoMapper;
 using Blog.Common.Extensions.Middlewares;
 using Blog.Common.Extensions.ServiceExtensions;
-using Blog.Core.IService;
+using Blog.IService;
 using Blog.Repository;
 using Blog.Repository.IRepository;
 using Blog.Repository.Repository;

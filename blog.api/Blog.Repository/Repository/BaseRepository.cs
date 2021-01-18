@@ -11,24 +11,23 @@ namespace Blog.Repository.Repository
 {
     public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, new()
     {
-        protected readonly Dbcontext dbcontext;
+         private readonly Dbcontext _dbcontext;
 
-        public ISqlSugarClient Db
-        {
-            get { return dbcontext.Db; }
-        }
+        public ISqlSugarClient Db => _dbcontext.Db;
 
-        protected SimpleClient<TEntity> simpleClient
-        {
-            get { return dbcontext.GetSimpleClient<TEntity>(); }
-        }
+        //protected SimpleClient<TEntity> simpleClient
+        //{
+        //    get { return DbcContext.GetSimpleClient<TEntity>(); }
+        //}
 
         public BaseRepository(Dbcontext dbcontext)
         {
+            this._dbcontext = dbcontext;
+        }
 
-            this.dbcontext = dbcontext;
-
-
+        public async Task<int> Add(TEntity model)
+        {
+            return await Db.Insertable(model).ExecuteReturnIdentityAsync();
         }
 
         /// <summary>
@@ -36,13 +35,10 @@ namespace Blog.Repository.Repository
         /// </summary>
         /// <param name="model"></param>
         /// <returns></returns>
-        public async Task<int> Add(TEntity model)
+        public async Task<TEntity> AddReturnEntity(TEntity model)
         {
-            return await Db.Insertable(model).ExecuteReturnIdentityAsync();
+            return await Db.Insertable(model).ExecuteReturnEntityAsync();
         }
-
-
-       
 
         /// <summary>
         /// 批量插入
@@ -51,12 +47,27 @@ namespace Blog.Repository.Repository
         /// <returns></returns>
         public async Task<bool> Add(List<TEntity> models)
         {
-            return await Db.Insertable(models.ToArray()).ExecuteCommandIdentityIntoEntityAsync();
+            return await Db.Insertable(models.ToArray()).ExecuteCommandAsync() > 0;
         }
 
-        public async Task<bool> Edit(TEntity model)
+        public Task<bool> Edit(TEntity model)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> Edit(TEntity model, Expression<Func<TEntity, bool>> whereExpression)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<bool> Save(TEntity model)
         {
            return await Db.Saveable(model).ExecuteCommandAsync() > 0;
+        }
+
+        public async Task<bool> UpdateColumns(TEntity model, Expression<Func<TEntity, object>> columns)
+        {
+            return await Db.Updateable<TEntity>(model).UpdateColumns(columns).ExecuteCommandAsync() > 0;
         }
 
         public async Task<bool> Delete(TEntity model)
@@ -84,7 +95,7 @@ namespace Blog.Repository.Repository
             return await Db.Queryable<TEntity>().Where(whereExpression).ToListAsync();
         }
 
-        public async Task<TEntity> QueryById(object id)
+        public async Task<TEntity> FindById(object id)
         {
             return await Db.Queryable<TEntity>().InSingleAsync(id);
         }

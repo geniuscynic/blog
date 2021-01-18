@@ -1,4 +1,4 @@
-﻿using Blog.Core.IService;
+﻿using Blog.IService;
 using Blog.Core.Models;
 using Blog.Repository.IRepository;
 using System;

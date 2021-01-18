@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Blog.Core;
-using Blog.Core.IService;
 using Blog.Core.Models;
 using Blog.Core.ViewModels;
 using Blog.Repository.IRepository;
@@ -10,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.IService;
 
 namespace Blog.Service
 {

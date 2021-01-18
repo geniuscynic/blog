@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using Blog.Common;
 using Blog.Core;
-using Blog.Core.IService;
+using Blog.IService;
 using Blog.Core.Models;
 using Blog.Core.ViewModels;
 using Blog.Repository.IRepository;

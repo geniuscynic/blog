@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Blog.Core;
-using Blog.Core.IService;
+using Blog.IService;
 using Blog.Core.Models;
 using Blog.Core.ViewModels;
 using Microsoft.AspNetCore.Mvc;

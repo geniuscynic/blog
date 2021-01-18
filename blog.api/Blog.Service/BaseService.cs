@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Common.Extensions.AOP;
-using Blog.Core.IService;
+using Blog.IService;
 using Blog.Repository.IRepository;
 using System;
 using System.Collections.Generic;
@@ -31,7 +31,9 @@ namespace Blog.Service
         /// <returns></returns>
         public async Task<int> Add(TEntity model)
         {
-            return await baseRepository.Add(model);
+            await baseRepository.Add(model);
+
+            return 1;
         }
 
         /// <summary>
@@ -64,9 +66,9 @@ namespace Blog.Service
             return await baseRepository.GetAll();
         }
 
-        public async Task<TEntity> QueryById(object id)
+        public async Task<TEntity> FindById(object id)
         {
-            return await baseRepository.QueryById(id);
+            return await baseRepository.FindById(id);
         }
     }
 }
