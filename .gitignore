@@ -1,0 +1,9 @@
+.vs
+bin
+obj
+bin/
+obj/
+.vs
+ref/
+./Dapper/
+ConsoleApp1/
