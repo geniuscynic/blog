@@ -35,9 +35,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
+    <ProjectReference Include="..\Blog.Extension\Blog.Extension.csproj" />
     <ProjectReference Include="..\Blog.IService\Blog.IService.csproj" />
-    <ProjectReference Include="..\Blog.Model\Blog.Core.csproj" />
-    <ProjectReference Include="..\Blog.Service\Blog.Service.csproj" />
+    <ProjectReference Include="..\Blog.Model\Blog.Model.csproj" />
   </ItemGroup>
 
 

@@ -1,5 +1,4 @@
-﻿using Blog.Core;
-using Blog.Repository.IRepository;
+﻿using Blog.Repository.IRepository;
 using SqlSugar;
 using System;
 using System.Collections.Generic;

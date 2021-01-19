@@ -1,8 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Common;
 using Blog.Core;
-using Blog.Core.Models;
-using Blog.Core.ViewModels;
 using Blog.Repository.IRepository;
 using SqlSugar;
 using System;
@@ -10,7 +8,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Entity;
 using Blog.IService;
+using Blog.Model.Permission;
 
 namespace Blog.Service
 {

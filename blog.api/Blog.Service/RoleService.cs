@@ -2,8 +2,6 @@
 using Blog.Common;
 using Blog.Core;
 using Blog.IService;
-using Blog.Core.Models;
-using Blog.Core.ViewModels;
 using Blog.Repository.IRepository;
 using SqlSugar;
 using System;
@@ -12,6 +10,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Entity;
 
 namespace Blog.Service
 {

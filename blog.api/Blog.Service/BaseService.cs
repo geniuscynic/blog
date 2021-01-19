@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Blog.Common.Extensions.AOP;
 using Blog.IService;
 using Blog.Repository.IRepository;
 using System;

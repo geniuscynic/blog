@@ -1,11 +1,11 @@
 ﻿using AutoMapper;
 using Blog.IService;
-using Blog.Core.Models;
 using Blog.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using Blog.Entity;
 
 namespace Blog.Service
 {

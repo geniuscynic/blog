@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blog.Core;
 using Blog.IService;
-using Blog.Core.Models;
+using Blog.Entity;
 using log4net.Appender;
 using Microsoft.AspNetCore.Http;
 

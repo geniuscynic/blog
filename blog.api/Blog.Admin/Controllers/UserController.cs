@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blog.Core;
 using Blog.IService;
-using Blog.Core.Models;
-using Blog.Core.ViewModels;
+using Blog.Entity;
+using Blog.Model.Permission;
 using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
