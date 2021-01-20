@@ -15,11 +15,11 @@ namespace Blog.Service
 {
     public class MenuService : BaseServices<Menu>, IMenuService
     {
-        protected override IBaseRepository<Menu> baseRepository { get; set; }
+        //protected override IBaseRepository<Menu> _repository { get; set; }
 
         public MenuService(IBaseRepository<Menu> repository, IMapper mapper) :base(repository, mapper)
         {
-            //this.baseRepository = repository;
+            //this._repository = repository;
         }
 
 
@@ -30,15 +30,15 @@ namespace Blog.Service
 
             if(jwt.Role.Contains("superAdmin"))
             {
-                return await baseRepository.Db.Queryable<Menu>()
+                return await _repository.Db.Queryable<Menu>()
                     .Where(t => t.ParentId == 0)
                     .Mapper(t => t.ChildMenus, t => t.Id, t => t.Parent.ParentId)
                     .Mapper(t => t.Buttons, t => t.Buttons.First().MenuId)
                     .ToListAsync();
                     
             }
-            //baseRepository.Db.Queryable<Menu>().ToTree(it => it.Child, it => it.ParentId, 0);
-            return baseRepository.Db.Queryable<Menu, MenuPermission, Role>((t, mp, r) => new JoinQueryInfos(
+            //_repository.Db.Queryable<Menu>().ToTree(it => it.Child, it => it.ParentId, 0);
+            return _repository.Db.Queryable<Menu, MenuPermission, Role>((t, mp, r) => new JoinQueryInfos(
                                   JoinType.Inner, t.Id == mp.MenuId,
                                   JoinType.Inner, mp.RoleId == r.Id && jwt.Role.Contains(r.Code) //SqlFunc.ContainsArray(jwt.Role, r.Code)
                 ))
@@ -60,15 +60,15 @@ namespace Blog.Service
 
 
 
-            //var query1 = baseRepository.Db.Queryable<Menu, MenuPermission, Role>((t, mp, r) => new JoinQueryInfos(
+            //var query1 = _repository.Db.Queryable<Menu, MenuPermission, Role>((t, mp, r) => new JoinQueryInfos(
             //                      JoinType.Inner, t.Id == mp.MenuId,
             //                      JoinType.Inner, mp.RoleId == r.Id && jwt.Role.Contains(r.Code) //SqlFunc.ContainsArray(jwt.Role, r.Code)
             //    ));
 
-            ////baseRepository.Db.Queryable<Menu>(query1,.Where(t => t.ParentId == 0)
-            //var query2 = baseRepository.Db.Queryable<Menu>().Where(t => t.ParentId == 0);
+            ////_repository.Db.Queryable<Menu>(query1,.Where(t => t.ParentId == 0)
+            //var query2 = _repository.Db.Queryable<Menu>().Where(t => t.ParentId == 0);
 
-            //return await baseRepository.Db.Queryable(query1, query2, (p1, p2) =>
+            //return await _repository.Db.Queryable(query1, query2, (p1, p2) =>
             //   p1.Id == p2.Id
             //)
             //.Mapper(p2 => p2.ChildMenus, p2 => p2.Id, p2 => p2.Parent.ParentId)
@@ -79,9 +79,9 @@ namespace Blog.Service
 
         public async Task<int> AddMenu(AddMenuViewModel addMenuViewModel)
         {
-            var menu = mapper.Map<AddMenuViewModel, Menu>(addMenuViewModel);
+            var menu = _mapper.Map<AddMenuViewModel, Menu>(addMenuViewModel);
 
-            var length = baseRepository.Db.Queryable<Menu>().Where(t => t.ParentId == addMenuViewModel.Pid).Count();
+            var length = _repository.Db.Queryable<Menu>().Where(t => t.ParentId == addMenuViewModel.Pid).Count();
             menu.SeqNum = length + 1;
 
             return await Add(menu);

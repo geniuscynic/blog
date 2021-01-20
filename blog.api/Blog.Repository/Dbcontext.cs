@@ -23,5 +23,10 @@ namespace Blog.Repository
         {
             return _db.GetSimpleClient<T>();
         }
+
+        public class MyClass
+        {
+            
+        }
     }
 }

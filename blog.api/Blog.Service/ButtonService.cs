@@ -15,11 +15,11 @@ namespace Blog.Service
 {
     public class ButtonService : BaseServices<Button>, IButtonService
     {
-        protected override IBaseRepository<Button> baseRepository { get; set; }
+        //protected override IBaseRepository<Button> _repository { get; set; }
 
         public ButtonService(IBaseRepository<Button> repository, IMapper mapper) :base(repository, mapper)
         {
-            //this.baseRepository = repository;
+            //this._repository = repository;
         }
 
         public async Task<List<Button>> GetButtons(string token)
@@ -28,12 +28,12 @@ namespace Blog.Service
 
             if (jwt.Role.Contains("superAdmin"))
             {
-                return await baseRepository.Db.Queryable<Button>()
+                return await _repository.Db.Queryable<Button>()
                     .ToListAsync();
 
             }
-            //baseRepository.Db.Queryable<Menu>().ToTree(it => it.Child, it => it.ParentId, 0);
-            return await baseRepository.Db.Queryable<Button, ButtonPermission, Role>((t, mp, r) => new JoinQueryInfos(
+            //_repository.Db.Queryable<Menu>().ToTree(it => it.Child, it => it.ParentId, 0);
+            return await _repository.Db.Queryable<Button, ButtonPermission, Role>((t, mp, r) => new JoinQueryInfos(
                                   JoinType.Inner, t.Id == mp.ButtonId,
                                   JoinType.Inner, mp.RoleId == r.Id  //SqlFunc.ContainsArray(jwt.Role, r.Code)
                 ))
@@ -43,9 +43,9 @@ namespace Blog.Service
 
         public async Task<int> AddButton(AddButtonViewModel addButtonViewModel)
         {
-            var button = mapper.Map<AddButtonViewModel, Button>(addButtonViewModel);
+            var button = _mapper.Map<AddButtonViewModel, Button>(addButtonViewModel);
 
-            //var length = baseRepository.Db.Queryable<Menu>().Where(t => t.ParentId == addMenuViewModel.Pid).Count();
+            //var length = _repository.Db.Queryable<Menu>().Where(t => t.ParentId == addMenuViewModel.Pid).Count();
             //menu.SeqNum = length + 1;
 
             return await Add(button);

@@ -17,27 +17,27 @@ namespace Blog.Service
     public class UserService : BaseServices<User>, IUserService
     {
         //private readonly IBaseRepository<BlogArticle> blogRepository;
-        //private readonly IMapper mapper;
+        //private readonly IMapper _mapper;
 
 
-        protected override IBaseRepository<User> baseRepository { get; set; }
+        //protected override IBaseRepository<User> _repository { get; set; }
 
 
         public UserService(IBaseRepository<User> userRepository, IMapper mapper) : base(userRepository, mapper)
         {
-            //baseRepository = userRepository;
-            //this.mapper = mapper;
+            //_repository = userRepository;
+            //this._mapper = _mapper;
 
         }
 
         public async Task<User> Add(AddUserViewModel addUserViewModel)
         {
-            var user = mapper.Map<AddUserViewModel, User>(addUserViewModel);
+            var user = _mapper.Map<AddUserViewModel, User>(addUserViewModel);
 
             try
             {
-                baseRepository.Db.Ado.BeginTran();
-                var id = await baseRepository.Add(user);
+                _repository.Db.Ado.BeginTran();
+                var id = await _repository.Add(user);
                 user.Id = id;
 
                 var userRole = new List<UserRole>();
@@ -52,14 +52,14 @@ namespace Blog.Service
                 });
 
 
-                await baseRepository.Db.Insertable(userRole).ExecuteCommandAsync();
-                baseRepository.Db.Ado.CommitTran();
+                await _repository.Db.Insertable(userRole).ExecuteCommandAsync();
+                _repository.Db.Ado.CommitTran();
 
                 return user;
             }
             catch (Exception)
             {
-                baseRepository.Db.Ado.RollbackTran();
+                _repository.Db.Ado.RollbackTran();
                 throw;
             }
 
@@ -67,12 +67,12 @@ namespace Blog.Service
 
         public async Task<User> Edit(AddUserViewModel addUserViewModel)
         {
-            var user = mapper.Map<AddUserViewModel, User>(addUserViewModel);
+            var user = _mapper.Map<AddUserViewModel, User>(addUserViewModel);
 
             try
             {
-                baseRepository.Db.Ado.BeginTran();
-                await baseRepository.Edit(user);
+                _repository.Db.Ado.BeginTran();
+                await _repository.Edit(user);
                 //user.Id = id;
 
                 var userRole = new List<UserRole>();
@@ -86,26 +86,26 @@ namespace Blog.Service
                     });
                 });
 
-                await baseRepository.Db.Deleteable<UserRole>().Where(t => t.UserId == user.Id).ExecuteCommandAsync();
-                await baseRepository.Db.Insertable(userRole).ExecuteCommandAsync();
-                baseRepository.Db.Ado.CommitTran();
+                await _repository.Db.Deleteable<UserRole>().Where(t => t.UserId == user.Id).ExecuteCommandAsync();
+                await _repository.Db.Insertable(userRole).ExecuteCommandAsync();
+                _repository.Db.Ado.CommitTran();
 
                 return user;
             }
             catch (Exception)
             {
-                baseRepository.Db.Ado.RollbackTran();
+                _repository.Db.Ado.RollbackTran();
                 throw;
             }
         }
         public async Task<List<AddUserViewModel>> GetUsers()
         {
-            var user = await baseRepository.Db.Queryable<User>()
+            var user = await _repository.Db.Queryable<User>()
                 .Mapper((result, cache) =>
                 {
                     var cres = cache.Get(l =>
                     {
-                        var r1 = baseRepository.Db.Queryable<UserRole>()
+                        var r1 = _repository.Db.Queryable<UserRole>()
                             .Mapper(ur => ur.Role, ur => ur.RoleId)
                             .In(it => it.UserId, l.Select(it => it.Id).ToArray()).ToList();
                         //.ToListAsync().Result;
@@ -130,22 +130,22 @@ namespace Blog.Service
             }).ToList();
 
             return result;
-            //var addUserModel = mapper.Map<List<User>, List<AddUserViewModel>>(user);
+            //var addUserModel = _mapper.Map<List<User>, List<AddUserViewModel>>(user);
             //addUserModel.Ro
 
         }
 
         public async Task<string> Login(LoginViewModel loginViewModel)
         {
-            //mapper.Map<LoginViewModel, User>(blogViewModel);
+            //_mapper.Map<LoginViewModel, User>(blogViewModel);
             //throw new NotImplementedException();
-            var user = await baseRepository.Db.Queryable<User>()
+            var user = await _repository.Db.Queryable<User>()
                 .Where(t => t.Account == loginViewModel.Login && t.Password == loginViewModel.Password)
                 .Mapper((result, cache) =>
                 {
                     var cres = cache.Get(l =>
                     {
-                        var r1 = baseRepository.Db.Queryable<UserRole>()
+                        var r1 = _repository.Db.Queryable<UserRole>()
                                   .Mapper(ur => ur.Role, ur => ur.RoleId)
                                   .In(it => it.UserId, l.Select(it => it.Id).ToArray()).ToList();
                         //.ToListAsync().Result;
@@ -163,7 +163,7 @@ namespace Blog.Service
                 return "";
             }
 
-            var tokenModel = mapper.Map<User, TokenModelJwt>(user);
+            var tokenModel = _mapper.Map<User, TokenModelJwt>(user);
             tokenModel.Role = user.Roles.Select(t => t.Code).ToList();
 
             var token = JwtHelper.IssueJwt(tokenModel);

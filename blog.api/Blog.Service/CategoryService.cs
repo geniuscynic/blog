@@ -11,11 +11,11 @@ namespace Blog.Service
 {
     public class CategoryService : BaseServices<Category>, ICategoryService
     {
-        protected override IBaseRepository<Category> baseRepository { get; set; }
+        //protected override IBaseRepository<Category> _repository { get; set; }
 
         public CategoryService(IBaseRepository<Category> repository, IMapper mapper) : base(repository, mapper)
         {
-            //this.baseRepository = repository;
+            //this._repository = repository;
         }
 
         public async Task<Category> Save(Category category)

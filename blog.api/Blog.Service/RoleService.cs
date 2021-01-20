@@ -17,16 +17,16 @@ namespace Blog.Service
     public class RoleService : BaseServices<Role>, IRoleService
     {
         //private readonly IBaseRepository<BlogArticle> blogRepository;
-        //private readonly IMapper mapper;
+        //private readonly IMapper _mapper;
 
 
-        protected override IBaseRepository<Role> baseRepository { get; set; }
+        //protected override IBaseRepository<Role> _repository { get; set; }
 
 
         public RoleService(IBaseRepository<Role> userRepository, IMapper mapper):base(userRepository, mapper)
         {
-            //baseRepository = userRepository;
-            //this.mapper = mapper;
+            //_repository = userRepository;
+            //this._mapper = _mapper;
 
         }
 
@@ -35,7 +35,7 @@ namespace Blog.Service
         public async Task<List<MenuPermission>> GetMenusByRole(int roleId)
         {
 
-            return await baseRepository.Db.Queryable<MenuPermission>()
+            return await _repository.Db.Queryable<MenuPermission>()
                 .Where(t => t.RoleId == roleId)
                 .ToListAsync();
         }
@@ -43,21 +43,21 @@ namespace Blog.Service
         public async Task<List<ButtonPermission>> GetButtonByRole(int roleId)
         {
 
-            return await baseRepository.Db.Queryable<ButtonPermission>()
+            return await _repository.Db.Queryable<ButtonPermission>()
                 .Where(t => t.RoleId == roleId)
                 .ToListAsync();
         }
 
         public async Task<List<ApiMethodPermission>> GetApiMethodByRole(int roleId)
         {
-            return await baseRepository.Db.Queryable<ApiMethodPermission>()
+            return await _repository.Db.Queryable<ApiMethodPermission>()
                 .Where(t => t.RoleId == roleId)
                 .ToListAsync();
         }
 
         public async Task<bool> HasApiMethodPermission(List<string> roleCode, string route, string httpMethod)
         {
-            return await baseRepository.Db.Queryable<ApiMethod, ApiMethodPermission, Role>(
+            return await _repository.Db.Queryable<ApiMethod, ApiMethodPermission, Role>(
                     (t1, t2, t3) => t1.Id == t2.ApiId && t2.RoleId == t3.Id)
                 .Where((t1, t2, t3) => roleCode.Contains(t3.Code))
                 .Where(t1 => t1.RoutePath == route && t1.HttpMethod == httpMethod)
@@ -70,8 +70,8 @@ namespace Blog.Service
         {
             try
             {
-                baseRepository.Db.Ado.BeginTran();
-                await baseRepository.Db.Deleteable<MenuPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
+                _repository.Db.Ado.BeginTran();
+                await _repository.Db.Deleteable<MenuPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
 
                 var listMenusPermission = new List<MenuPermission>();
 
@@ -88,14 +88,14 @@ namespace Blog.Service
                 
 
 
-                await baseRepository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
-                baseRepository.Db.Ado.CommitTran();
+                await _repository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
+                _repository.Db.Ado.CommitTran();
 
                 return true;
             }
             catch (Exception)
             {
-                baseRepository.Db.Ado.RollbackTran();
+                _repository.Db.Ado.RollbackTran();
                 throw;
             }
         }
@@ -104,8 +104,8 @@ namespace Blog.Service
         {
             try
             {
-                baseRepository.Db.Ado.BeginTran();
-                await baseRepository.Db.Deleteable<ButtonPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
+                _repository.Db.Ado.BeginTran();
+                await _repository.Db.Deleteable<ButtonPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
 
                 var listMenusPermission = new List<ButtonPermission>();
 
@@ -118,14 +118,14 @@ namespace Blog.Service
                     });
                 });
 
-                await baseRepository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
-                baseRepository.Db.Ado.CommitTran();
+                await _repository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
+                _repository.Db.Ado.CommitTran();
 
                 return true;
             }
             catch (Exception)
             {
-                baseRepository.Db.Ado.RollbackTran();
+                _repository.Db.Ado.RollbackTran();
                 throw;
             }
         }
@@ -135,8 +135,8 @@ namespace Blog.Service
         {
             try
             {
-                baseRepository.Db.Ado.BeginTran();
-                await baseRepository.Db.Deleteable<ApiMethodPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
+                _repository.Db.Ado.BeginTran();
+                await _repository.Db.Deleteable<ApiMethodPermission>().Where(t => t.RoleId == roleId).ExecuteCommandAsync();
 
                 var listMenusPermission = new List<ApiMethodPermission>();
 
@@ -149,14 +149,14 @@ namespace Blog.Service
                     });
                 });
 
-                await baseRepository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
-                baseRepository.Db.Ado.CommitTran();
+                await _repository.Db.Insertable(listMenusPermission).ExecuteCommandAsync();
+                _repository.Db.Ado.CommitTran();
 
                 return true;
             }
             catch (Exception)
             {
-                baseRepository.Db.Ado.RollbackTran();
+                _repository.Db.Ado.RollbackTran();
                 throw;
             }
         }

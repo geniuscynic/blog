@@ -14,11 +14,11 @@ namespace Blog.Service
 {
     public class ApiMethodService : BaseServices<ApiMethod>, IApiMethodService
     {
-        protected override IBaseRepository<ApiMethod> baseRepository { get; set; }
+        //protected override IBaseRepository<ApiMethod> _repository { get; set; }
 
         public ApiMethodService(IBaseRepository<ApiMethod> repository, IMapper mapper) :base(repository, mapper)
         {
-            //this.baseRepository = repository;
+            //this._repository = repository;
         }
 
     }

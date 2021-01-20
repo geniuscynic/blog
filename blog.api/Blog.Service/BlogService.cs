@@ -16,18 +16,18 @@ namespace Blog.Service
     public class BlogService : BaseServices<BlogArticle>, IBlogService
     {
         //private readonly IBaseRepository<BlogArticle> blogRepository;
-        //private readonly IMapper mapper;
+        //private readonly IMapper _mapper;
         private readonly IBaseRepository<Tag> tagRepository;
         private readonly IBaseRepository<BlogTag> blogTagRepository;
 
-        protected override IBaseRepository<BlogArticle> baseRepository { get; set; }
+        //protected override IBaseRepository<BlogArticle> _repository { get; set; }
 
 
         public BlogService(IBaseRepository<BlogArticle> blogRepository, IMapper mapper, IBaseRepository<Tag> tagRepository, IBaseRepository<BlogTag> blogTagRepository)
             : base(blogRepository, mapper)
         {
-            //baseRepository = blogRepository;
-            //this.mapper = mapper;
+            //_repository = blogRepository;
+            //this._mapper = _mapper;
             this.tagRepository = tagRepository;
             this.blogTagRepository = blogTagRepository;
         }
@@ -39,9 +39,9 @@ namespace Blog.Service
 
             try
             {
-                baseRepository.Db.Ado.BeginTran();
+                _repository.Db.Ado.BeginTran();
 
-                var blog = mapper.Map<PostBlogViewModel, BlogArticle>(blogViewModel);
+                var blog = _mapper.Map<PostBlogViewModel, BlogArticle>(blogViewModel);
 
                 blog.PublishDate = DateTime.Now;
 
@@ -112,13 +112,13 @@ namespace Blog.Service
                 }
 
                 //throw new Exception("dd");
-                baseRepository.Db.Ado.CommitTran();
+                _repository.Db.Ado.CommitTran();
 
                 return id;
             }
             catch (Exception)
             {
-                baseRepository.Db.Ado.RollbackTran();
+                _repository.Db.Ado.RollbackTran();
                 throw;
             }
 
@@ -127,7 +127,7 @@ namespace Blog.Service
 
         public async Task<PageModel<ListBlogViewModel>> GetBlogList(int pageIndex = 1, int pageSize = 20)
         {
-            /* var result = await baseRepository.Db.Queryable<BlogArticle, Category, BlogTag, Tag>(
+            /* var result = await _repository.Db.Queryable<BlogArticle, Category, BlogTag, Tag>(
                  (b, c, bt, t) =>
                    new JoinQueryInfos(
                        JoinType.Left, b.CategoryId == c.Id,
@@ -141,7 +141,7 @@ namespace Blog.Service
 
            }).ToListAsync();*/
 
-            //var result = await baseRepository.Db.Queryable<BlogArticle>()
+            //var result = await _repository.Db.Queryable<BlogArticle>()
             //    .Mapper(it => it.Category, it => it.CategoryId)
             //    .Mapper((b, cache) =>
             //    {
@@ -149,7 +149,7 @@ namespace Blog.Service
             //        {
             //            var allOrderIds = ol.Select(x => x.Id).ToList();
 
-            //            return baseRepository.Db.Queryable<Tag, BlogTag>((t, b) =>
+            //            return _repository.Db.Queryable<Tag, BlogTag>((t, b) =>
             //                new JoinQueryInfos(
             //                    JoinType.Inner, t.Id == b.TagId
             //                )
@@ -159,7 +159,7 @@ namespace Blog.Service
             //                tag = t
             //            }).In(t => t.id, allOrderIds).ToList();
 
-            //           // return baseRepository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
+            //           // return _repository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
             //        });
 
             //        b.Tags = bts.Where(it => it.id == b.Id).Select(t => t.tag).ToList();
@@ -169,7 +169,7 @@ namespace Blog.Service
             //    .ToListAsync();
 
             RefAsync<int> total = 0;
-            var result = await baseRepository.Db.Queryable<BlogArticle>()
+            var result = await _repository.Db.Queryable<BlogArticle>()
                .Mapper(it => it.Category, it => it.CategoryId)
                .Mapper((result, cache) =>
                {
@@ -178,7 +178,7 @@ namespace Blog.Service
 
                    var allMps = cache.Get<List<BlogTag>>(l =>
                    {
-                       var blogTags = baseRepository.Db.Queryable<BlogTag>()
+                       var blogTags = _repository.Db.Queryable<BlogTag>()
                                              .Mapper(it => it.Tag, it => it.TagId)
                                              .In(it => it.BlogId, l.Select(it => it.Id).ToArray())
                                              .ToList();
@@ -187,7 +187,7 @@ namespace Blog.Service
 
                    });
 
-                   // return baseRepository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
+                   // return _repository.Db.Queryable<Tag, BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
 
 
                    result.Tags = allMps.Where(it => it.BlogId == result.Id).Select(it => it.Tag).ToList();
@@ -203,14 +203,14 @@ namespace Blog.Service
             //    {
             //        var allOrderIds = ol.Select(x => x.Id).ToList();
 
-            //        return baseRepository.Db.Queryable<BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
+            //        return _repository.Db.Queryable<BlogTag>().In(it => it.BlogId, allOrderIds).ToList();//一次性查询出所有Order集合所需要的Items
             //         });
 
             //    items.Where(t=>t.TagId ==tag.)
             //});
 
 
-            var blogs = mapper.Map<List<BlogArticle>, List<ListBlogViewModel>>(result);
+            var blogs = _mapper.Map<List<BlogArticle>, List<ListBlogViewModel>>(result);
             //.Select((b, c, bt, t) => {
             //    b.Category = c,
             //     b.Tags = t
@@ -231,13 +231,13 @@ namespace Blog.Service
 
         public async Task<PostBlogViewModel> Get(int id)
         {
-            var result = await baseRepository.Db
+            var result = await _repository.Db
                 .Queryable<BlogArticle>()
                 .Mapper((result, cache) =>
                 {
                     var allMps = cache.Get<List<BlogTag>>(l =>
                     {
-                        var blogTags = baseRepository.Db.Queryable<BlogTag>()
+                        var blogTags = _repository.Db.Queryable<BlogTag>()
                                               .Mapper(it => it.Tag, it => it.TagId)
                                               .In(it => it.BlogId, l.Select(it => it.Id).ToArray())
                                               .ToList();
@@ -254,7 +254,7 @@ namespace Blog.Service
                 //.FirstAsync(t => t.Id == id);
                 .InSingleAsync(id);
 
-            var blog = mapper.Map<BlogArticle, PostBlogViewModel>(result);
+            var blog = _mapper.Map<BlogArticle, PostBlogViewModel>(result);
 
 
 

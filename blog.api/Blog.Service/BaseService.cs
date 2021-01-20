@@ -10,16 +10,18 @@ namespace Blog.Service
 {
     public abstract class BaseServices<TEntity> : IBaseService<TEntity> where TEntity : class, new()
     {
-        protected readonly IMapper mapper;
+        protected readonly IMapper _mapper;
 
-        public BaseServices(IBaseRepository<TEntity> baseRepository, IMapper mapper)
+        protected readonly IBaseRepository<TEntity> _repository;
+
+        protected BaseServices(IBaseRepository<TEntity> repository, IMapper mapper)
         {
-            this.baseRepository = baseRepository;
-            this.mapper = mapper;
+            this._repository = repository;
+            this._mapper = mapper;
         }
 
 
-        protected abstract IBaseRepository<TEntity> baseRepository { get; set; }//通过在子类的构造函数中注入，这里是基类，不用构造函数
+        //protected abstract IBaseRepository<TEntity> _repository { get; private set; }//通过在子类的构造函数中注入，这里是基类，不用构造函数
 
         
 
@@ -30,9 +32,7 @@ namespace Blog.Service
         /// <returns></returns>
         public async Task<int> Add(TEntity model)
         {
-            await baseRepository.Add(model);
-
-            return 1;
+            return await _repository.Add(model);
         }
 
         /// <summary>
@@ -42,32 +42,32 @@ namespace Blog.Service
         /// <returns></returns>
         public async Task<bool> Edit(TEntity model)
         {
-            return await baseRepository.Edit(model);
+            return await _repository.Edit(model);
         }
 
         public async Task<bool> Delete(TEntity model)
         {
-            return await baseRepository.Delete(model);
+            return await _repository.Delete(model);
         }
 
         public async Task<bool> DeleteById(object id)
         {
-            return await baseRepository.DeleteById(id);
+            return await _repository.DeleteById(id);
         }
 
         public async Task<bool> DeleteByIds(object[] ids)
         {
-            return await baseRepository.DeleteById(ids);
+            return await _repository.DeleteById(ids);
         }
 
         public async Task<List<TEntity>> GetAll()
         {
-            return await baseRepository.GetAll();
+            return await _repository.GetAll();
         }
 
         public async Task<TEntity> FindById(object id)
         {
-            return await baseRepository.FindById(id);
+            return await _repository.FindById(id);
         }
     }
 }
