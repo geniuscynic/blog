@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Blog.Entity\Blog.Entity.csproj" />
+    <ProjectReference Include="..\Blog.IRepository\Blog.IRepository.csproj" />
   </ItemGroup>
 
 </Project>

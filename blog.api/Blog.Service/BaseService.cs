@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
 using Blog.IService;
-using Blog.Repository.IRepository;
+using Blog.IRepository;
 using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -12,9 +13,9 @@ namespace Blog.Service
     {
         protected readonly IMapper _mapper;
 
-        protected readonly IBaseRepository<TEntity> _repository;
+        protected readonly IRepository<TEntity> _repository;
 
-        protected BaseServices(IBaseRepository<TEntity> repository, IMapper mapper)
+        protected BaseServices(IRepository<TEntity> repository, IMapper mapper)
         {
             this._repository = repository;
             this._mapper = mapper;
@@ -48,6 +49,11 @@ namespace Blog.Service
         public async Task<bool> Delete(TEntity model)
         {
             return await _repository.Delete(model);
+        }
+
+        public async Task<bool> Delete(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            return await _repository.Delete(whereExpression);
         }
 
         public async Task<bool> DeleteById(object id)

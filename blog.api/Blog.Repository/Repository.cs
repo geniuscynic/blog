@@ -1,14 +1,13 @@
-﻿using Blog.Repository.IRepository;
-using SqlSugar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
+using Blog.IRepository;
+using SqlSugar;
 
-namespace Blog.Repository.Repository
+namespace Blog.Repository
 {
-    public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class, new()
+    public class Repository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
          private readonly Dbcontext _dbcontext;
 
@@ -19,7 +18,7 @@ namespace Blog.Repository.Repository
         //    get { return DbcContext.GetSimpleClient<TEntity>(); }
         //}
 
-        public BaseRepository(Dbcontext dbcontext)
+        public Repository(Dbcontext dbcontext)
         {
             this._dbcontext = dbcontext;
         }
@@ -72,6 +71,11 @@ namespace Blog.Repository.Repository
         public async Task<bool> Delete(TEntity model)
         {
             return await Db.Deleteable<TEntity>(model).ExecuteCommandAsync() > 0;
+        }
+
+        public async Task<bool> Delete(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            return await Db.Deleteable<TEntity>().Where(whereExpression).ExecuteCommandAsync() > 0;
         }
 
         public async Task<bool> DeleteById(object id)

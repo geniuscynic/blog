@@ -1,5 +1,4 @@
 ﻿using Blog.IService;
-using Blog.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -17,7 +16,7 @@ namespace Blog.Service
     {
         //protected override IBaseRepository<Menu> _repository { get; set; }
 
-        public MenuService(IBaseRepository<Menu> repository, IMapper mapper) :base(repository, mapper)
+        public MenuService(IRepository<Menu> repository, IMapper mapper) :base(repository, mapper)
         {
             //this._repository = repository;
         }

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Blog.IService
@@ -38,6 +40,15 @@ namespace Blog.IService
         /// <param name="model"></param>
         /// <returns></returns>
         Task<bool> Delete(TEntity model);
+
+
+        /// <summary>
+        /// 条件删除model
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="whereExpression"></param>
+        /// <returns></returns>
+        Task<bool> Delete(Expression<Func<TEntity, bool>> whereExpression);
 
         /// <summary>
         /// 批量删除

@@ -1,16 +1,12 @@
-﻿using SqlSugar;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
 using System.Threading.Tasks;
 
-namespace Blog.Repository.IRepository
+namespace Blog.IRepository
 {
-    public interface IBaseRepository<TEntity> where TEntity : class, new()
+    public interface IRepository<TEntity> where TEntity : class, new()
     {
-
-        public ISqlSugarClient Db { get;  }
 
         Task<int> Add(TEntity model);
 
@@ -52,6 +48,15 @@ namespace Blog.Repository.IRepository
         /// <param name="model"></param>
         /// <returns></returns>
         Task<bool> Delete(TEntity model);
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="model"></param>
+        /// <param name="whereExpression"></param>
+        /// <returns></returns>
+        Task<bool> Delete(Expression<Func<TEntity, bool>> whereExpression);
 
         /// <summary>
         /// 批量删除

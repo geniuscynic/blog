@@ -1,7 +1,6 @@
 ﻿using Blog.IService;
 using Blog.Repository;
-using Blog.Repository.IRepository;
-using Blog.Repository.Repository;
+using Blog.IRepository;
 using Blog.Service;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +14,7 @@ namespace Blog.Extension
 
             services.AddScoped<Dbcontext>();
             //services.AddScoped(typeof(IBaseService<>), typeof(BaseServices<>));
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();

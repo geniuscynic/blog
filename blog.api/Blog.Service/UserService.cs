@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Blog.Common;
 using Blog.Core;
-using Blog.Repository.IRepository;
 using SqlSugar;
 using System;
 using System.Collections.Generic;
@@ -9,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Entity;
+using Blog.IRepository;
 using Blog.IService;
 using Blog.Model.Permission;
 
@@ -16,6 +16,9 @@ namespace Blog.Service
 {
     public class UserService : BaseServices<User>, IUserService
     {
+        private readonly IRepository<UserRole> _userRoleRepository;
+
+        private readonly IUnitOfWork _unitOfWork;
         //private readonly IBaseRepository<BlogArticle> blogRepository;
         //private readonly IMapper _mapper;
 
@@ -23,11 +26,13 @@ namespace Blog.Service
         //protected override IBaseRepository<User> _repository { get; set; }
 
 
-        public UserService(IBaseRepository<User> userRepository, IMapper mapper) : base(userRepository, mapper)
+        public UserService(IRepository<User> userRepository, IRepository<UserRole> userRoleRepository,
+            IMapper mapper, IUnitOfWork unitOfWork) : base(userRepository, mapper)
         {
+            _userRoleRepository = userRoleRepository;
+            _unitOfWork = unitOfWork;
             //_repository = userRepository;
             //this._mapper = _mapper;
-
         }
 
         public async Task<User> Add(AddUserViewModel addUserViewModel)
@@ -36,7 +41,7 @@ namespace Blog.Service
 
             try
             {
-                _repository.Db.Ado.BeginTran();
+                _unitOfWork.BeginTran();
                 var id = await _repository.Add(user);
                 user.Id = id;
 
@@ -52,14 +57,14 @@ namespace Blog.Service
                 });
 
 
-                await _repository.Db.Insertable(userRole).ExecuteCommandAsync();
-                _repository.Db.Ado.CommitTran();
+                await _userRoleRepository.Add(userRole);
+                _unitOfWork.Commit();
 
                 return user;
             }
             catch (Exception)
             {
-                _repository.Db.Ado.RollbackTran();
+                _unitOfWork.Rollback();
                 throw;
             }
 
@@ -71,7 +76,7 @@ namespace Blog.Service
 
             try
             {
-                _repository.Db.Ado.BeginTran();
+                _unitOfWork.BeginTran();
                 await _repository.Edit(user);
                 //user.Id = id;
 
@@ -86,18 +91,20 @@ namespace Blog.Service
                     });
                 });
 
-                await _repository.Db.Deleteable<UserRole>().Where(t => t.UserId == user.Id).ExecuteCommandAsync();
+                await _userRoleRepository.Delete(t => t.UserId == user.Id);        
+                //await _repository.Db.Deleteable<UserRole>().Where(t => t.UserId == user.Id).ExecuteCommandAsync();
                 await _repository.Db.Insertable(userRole).ExecuteCommandAsync();
-                _repository.Db.Ado.CommitTran();
+                _unitOfWork.Commit();
 
                 return user;
             }
             catch (Exception)
             {
-                _repository.Db.Ado.RollbackTran();
+                _unitOfWork.Rollback();
                 throw;
             }
         }
+
         public async Task<List<AddUserViewModel>> GetUsers()
         {
             var user = await _repository.Db.Queryable<User>()

@@ -28,8 +28,5 @@ namespace Blog.Entity
         /// </summary>
         [SugarColumn(Length = 50, ColumnDataType = "nvarchar")]
         public string Description { get; set; } = "";
-
-
-
     }
 }
