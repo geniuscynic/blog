@@ -17,21 +17,24 @@ namespace Blog.Service
     public class UserService : BaseServices<User>, IUserService
     {
         private readonly IRepository<UserRole> _userRoleRepository;
+        private readonly IUserRepository _userRepository;
 
         private readonly IUnitOfWork _unitOfWork;
-        //private readonly IBaseRepository<BlogArticle> blogRepository;
+        //private readonly IBaseRepository<BlogArticle> blogDefaultRepository;
         //private readonly IMapper _mapper;
 
 
-        //protected override IBaseRepository<User> _repository { get; set; }
+        //protected override IBaseRepository<User> _defaultRepository { get; set; }
 
 
-        public UserService(IRepository<User> userRepository, IRepository<UserRole> userRoleRepository,
-            IMapper mapper, IUnitOfWork unitOfWork) : base(userRepository, mapper)
+        public UserService(IRepository<User> userDefaultRepository, IRepository<UserRole> userRoleRepository, 
+            IUserRepository userRepository,
+            IMapper mapper, IUnitOfWork unitOfWork) : base(userDefaultRepository, mapper)
         {
             _userRoleRepository = userRoleRepository;
+            _userRepository = userRepository;
             _unitOfWork = unitOfWork;
-            //_repository = userRepository;
+            //_defaultRepository = userDefaultRepository;
             //this._mapper = _mapper;
         }
 
@@ -42,7 +45,7 @@ namespace Blog.Service
             try
             {
                 _unitOfWork.BeginTran();
-                var id = await _repository.Add(user);
+                var id = await _defaultRepository.Add(user);
                 user.Id = id;
 
                 var userRole = new List<UserRole>();
@@ -77,7 +80,7 @@ namespace Blog.Service
             try
             {
                 _unitOfWork.BeginTran();
-                await _repository.Edit(user);
+                await _defaultRepository.Edit(user);
                 //user.Id = id;
 
                 var userRole = new List<UserRole>();
@@ -91,9 +94,11 @@ namespace Blog.Service
                     });
                 });
 
-                await _userRoleRepository.Delete(t => t.UserId == user.Id);        
-                //await _repository.Db.Deleteable<UserRole>().Where(t => t.UserId == user.Id).ExecuteCommandAsync();
-                await _repository.Db.Insertable(userRole).ExecuteCommandAsync();
+                await _userRoleRepository.Delete(t => t.UserId == user.Id);
+                await _userRoleRepository.Add(userRole);
+                //await _defaultRepository.Db.Deleteable<UserRole>().Where(t => t.UserId == user.Id).ExecuteCommandAsync();
+                //await _defaultRepository.Db.Insertable(userRole).ExecuteCommandAsync();
+                
                 _unitOfWork.Commit();
 
                 return user;
@@ -107,24 +112,7 @@ namespace Blog.Service
 
         public async Task<List<AddUserViewModel>> GetUsers()
         {
-            var user = await _repository.Db.Queryable<User>()
-                .Mapper((result, cache) =>
-                {
-                    var cres = cache.Get(l =>
-                    {
-                        var r1 = _repository.Db.Queryable<UserRole>()
-                            .Mapper(ur => ur.Role, ur => ur.RoleId)
-                            .In(it => it.UserId, l.Select(it => it.Id).ToArray()).ToList();
-                        //.ToListAsync().Result;
-
-                        return r1;
-                    });
-
-
-                    result.Roles = cres.Where(it => it.UserId == result.Id)
-                        .Select(it => it.Role).ToList();
-                })
-                .ToListAsync();
+            var user = await _userRepository.GetUser();
 
 
             var result = user.Select(t => new AddUserViewModel
@@ -146,24 +134,11 @@ namespace Blog.Service
         {
             //_mapper.Map<LoginViewModel, User>(blogViewModel);
             //throw new NotImplementedException();
-            var user = await _repository.Db.Queryable<User>()
-                .Where(t => t.Account == loginViewModel.Login && t.Password == loginViewModel.Password)
-                .Mapper((result, cache) =>
-                {
-                    var cres = cache.Get(l =>
-                    {
-                        var r1 = _repository.Db.Queryable<UserRole>()
-                                  .Mapper(ur => ur.Role, ur => ur.RoleId)
-                                  .In(it => it.UserId, l.Select(it => it.Id).ToArray()).ToList();
-                        //.ToListAsync().Result;
+            var users = await _userRepository.GetUser(t => t.Account == loginViewModel.Login && t.Password == loginViewModel.Password);
 
-                        return r1;
-                    });
-
-
-                    result.Roles = cres.Where(it => it.UserId == result.Id)
-                                    .Select(it => it.Role).ToList();
-                }).FirstAsync();
+            var user = users.FirstOrDefault();
+                
+                
 
             if (user == null)
             {

@@ -17,8 +17,6 @@ using Blog.Extension;
 using Blog.Extension.Extensions.ServiceExtensions;
 using Blog.IService;
 using Blog.Repository;
-using Blog.Repository.IRepository;
-using Blog.Repository.Repository;
 using Blog.Service;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;

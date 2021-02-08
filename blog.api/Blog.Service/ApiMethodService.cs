@@ -1,5 +1,4 @@
-﻿using Blog.Repository.IRepository;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -14,11 +13,11 @@ namespace Blog.Service
 {
     public class ApiMethodService : BaseServices<ApiMethod>, IApiMethodService
     {
-        //protected override IBaseRepository<ApiMethod> _repository { get; set; }
+        //protected override IBaseRepository<ApiMethod> _defaultRepository { get; set; }
 
-        public ApiMethodService(IBaseRepository<ApiMethod> repository, IMapper mapper) :base(repository, mapper)
+        public ApiMethodService(IBaseRepository<ApiMethod> defaultRepository, IMapper mapper) :base(defaultRepository, mapper)
         {
-            //this._repository = repository;
+            //this._defaultRepository = defaultRepository;
         }
 
     }

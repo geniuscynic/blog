@@ -15,6 +15,9 @@ namespace Blog.Extension
             services.AddScoped<Dbcontext>();
             //services.AddScoped(typeof(IBaseService<>), typeof(BaseServices<>));
             services.AddScoped(typeof(IRepository<>), typeof(Repository<>));
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IApiMethodRepository, ApiMethodRepository>();
+
             services.AddScoped<IBlogService, BlogService>();
             services.AddScoped<ICategoryService, CategoryService>();
             services.AddScoped<IUserService, UserService>();
@@ -23,6 +26,7 @@ namespace Blog.Extension
             services.AddScoped<IRoleService, RoleService>();
             services.AddScoped<IPermissionService, PermissionService>();
             services.AddScoped<IApiMethodService, ApiMethodService>();
+
 
 
             //services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();

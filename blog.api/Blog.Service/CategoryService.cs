@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Blog.IService;
-using Blog.Repository.IRepository;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -11,11 +10,11 @@ namespace Blog.Service
 {
     public class CategoryService : BaseServices<Category>, ICategoryService
     {
-        //protected override IBaseRepository<Category> _repository { get; set; }
+        //protected override IBaseRepository<Category> _defaultRepository { get; set; }
 
-        public CategoryService(IBaseRepository<Category> repository, IMapper mapper) : base(repository, mapper)
+        public CategoryService(IBaseRepository<Category> defaultRepository, IMapper mapper) : base(defaultRepository, mapper)
         {
-            //this._repository = repository;
+            //this._defaultRepository = defaultRepository;
         }
 
         public async Task<Category> Save(Category category)
