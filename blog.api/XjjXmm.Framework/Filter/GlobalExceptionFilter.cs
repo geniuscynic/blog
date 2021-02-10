@@ -1,14 +1,12 @@
-﻿
+﻿using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using System;
 
-namespace Blog.API.Filter
+namespace XjjXmm.Framework.Filter
 {
     /// <summary>
     /// 全局异常错误日志
@@ -30,7 +28,7 @@ namespace Blog.API.Filter
 
             json.Message = context.Exception.Message;//错误信息
             var errorAudit = "Unable to resolve service for";
-            if (!string.IsNullOrEmpty(json.Message)&& json.Message.Contains(errorAudit))
+            if (!string.IsNullOrEmpty(json.Message) && json.Message.Contains(errorAudit))
             {
                 json.Message = json.Message.Replace(errorAudit, $"（若新添加服务，需要重新编译项目）{errorAudit}");
             }
@@ -38,10 +36,10 @@ namespace Blog.API.Filter
             if (_env.IsDevelopment())
             {
                 json.DevelopmentMessage = context.Exception.StackTrace;//堆栈信息
-             }
+            }
             context.Result = new InternalServerErrorObjectResult(json);
 
-           
+
 
             //采用log4net 进行错误日志记录
             _loggerHelper.LogError(json.Message + WriteLog(json.Message, context.Exception));

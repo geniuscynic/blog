@@ -15,10 +15,15 @@ namespace Blog.Service
 {
     public class PermissionService : BaseServices<Button>, IPermissionService
     {
+        private readonly IButtonRepository _buttonRepository;
         //protected override IBaseRepository<Button> _defaultRepository { get; set; }
 
-        public PermissionService(IRepository<Button> defaultRepository, IMapper mapper) :base(defaultRepository, mapper)
+        public PermissionService(IRepository<Button> defaultRepository,
+            IButtonRepository buttonRepository,
+            
+            IMapper mapper) :base(defaultRepository, mapper)
         {
+            _buttonRepository = buttonRepository;
             //this._defaultRepository = defaultRepository;
         }
 
@@ -35,12 +40,15 @@ namespace Blog.Service
 
             }
             //_defaultRepository.Db.Queryable<Menu>().ToTree(it => it.Child, it => it.ParentId, 0);
-            return await _defaultRepository.Db.Queryable<Button, ButtonPermission, Role>((t, mp, r) => new JoinQueryInfos(
-                                  JoinType.Inner, t.Id == mp.ButtonId,
-                                  JoinType.Inner, mp.RoleId == r.Id  //SqlFunc.ContainsArray(jwt.Role, r.Code)
-                ))
-                .ToListAsync(); 
-                
+            //return await _defaultRepository.Db.Queryable<Button, ButtonPermission, Role>((t, mp, r) => new JoinQueryInfos(
+            //                      JoinType.Inner, t.Id == mp.ButtonId,
+            //                      JoinType.Inner, mp.RoleId == r.Id  //SqlFunc.ContainsArray(jwt.Role, r.Code)
+            //    ))
+            //    .ToListAsync(); 
+
+            return await _buttonRepository.GetButtonsByRole(jwt.Role);
+
+
         }
 
         public async Task<int> AddButton(AddButtonViewModel addButtonViewModel)

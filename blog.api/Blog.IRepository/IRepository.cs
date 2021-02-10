@@ -75,5 +75,7 @@ namespace Blog.IRepository
         Task<List<TEntity>> Query(Expression<Func<TEntity, bool>> whereExpression);
 
         Task<TEntity> FindById(object id);
+
+        Task<int> Count(Expression<Func<TEntity, bool>> whereExpression);
     }
 }

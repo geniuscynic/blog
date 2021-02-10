@@ -1,12 +1,10 @@
-﻿using AspectCore.DynamicProxy;
+﻿using System;
+using System.Threading.Tasks;
+using AspectCore.DynamicProxy;
 using Microsoft.Extensions.Logging;
 using StackExchange.Profiling;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Blog.Common.Extensions.AOP
+namespace Blog.Extension.Extensions.AOP
 {
     /// <summary>
     /// AOP log 记录 并掏出异常

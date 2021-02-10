@@ -9,7 +9,6 @@ using AspectCore.Configuration;
 using AspectCore.Extensions.DependencyInjection;
 using AutoMapper;
 using Blog.API.AuthorHelper;
-using Blog.API.Filter;
 using Blog.Common;
 using Blog.Common.Extensions.Middlewares;
 using Blog.Common.Extensions.ServiceExtensions;
@@ -33,6 +32,9 @@ using Microsoft.OpenApi.Models;
 using SqlSugar;
 using StackExchange.Profiling.Storage;
 using Swashbuckle.AspNetCore.Filters;
+using XjjXmm.Framework;
+using XjjXmm.Framework.Filter;
+using XjjXmm.Framework.Swagger;
 
 namespace Blog.API
 {
@@ -59,23 +61,23 @@ namespace Blog.API
             services.AddAspectCore();
             //services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
             services.AddAutoMapperSetup();
-            services.AddSingleton(new AppSettingHelper(Configuration));
+            //services.AddSingleton(new AppSettingHelper(Configuration));
+
+            services
+                .AddCommonSetup(Configuration)
+                .AddSwaggerSetup()
+                .AddPermissionSetup();
+
             services.AddSqlsugarSetup();
 
 
             services.addService();
 
 
-            services.AddControllers(configure =>
-            {
-                // 全局异常过滤
-                configure.Filters.Add(typeof(GlobalExceptionsFilter));
-                configure.Filters.Add(typeof(MyActionFilterAttribute));
-            });
+           
 
 
-
-            services.AddSwaggerSetup();
+            //services.AddSwaggerSetup();
 
             services.AddJwtSetup();
 
@@ -91,13 +93,7 @@ namespace Blog.API
 
             services.AddCors();
 
-            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddSingleton<IAuthorizationHandler, CustomPermissionHandler>();
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy("mypermission", policy =>
-                    policy.Requirements.Add(new CustomRequirement()));
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -38,6 +38,7 @@
     <ProjectReference Include="..\Blog.Extension\Blog.Extension.csproj" />
     <ProjectReference Include="..\Blog.IService\Blog.IService.csproj" />
     <ProjectReference Include="..\Blog.Model\Blog.Model.csproj" />
+    <ProjectReference Include="..\XjjXmm.Framework\XjjXmm.Framework.csproj" />
   </ItemGroup>
 
 

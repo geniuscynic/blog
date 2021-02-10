@@ -25,6 +25,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{385F2EB4-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bussiness", "Bussiness", "{AD907AF6-3971-4FF4-B88A-FE8D66A7C3D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XjjXmm.Framework", "XjjXmm.Framework\XjjXmm.Framework.csproj", "{B24CABF8-B837-4E7F-A224-C3D3776B83B3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -67,6 +69,10 @@ Global
 		{D96BC165-82DE-4C4B-A94D-6D4D92C52852}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D96BC165-82DE-4C4B-A94D-6D4D92C52852}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D96BC165-82DE-4C4B-A94D-6D4D92C52852}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B24CABF8-B837-4E7F-A224-C3D3776B83B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B24CABF8-B837-4E7F-A224-C3D3776B83B3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B24CABF8-B837-4E7F-A224-C3D3776B83B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B24CABF8-B837-4E7F-A224-C3D3776B83B3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

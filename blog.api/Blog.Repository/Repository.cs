@@ -103,6 +103,11 @@ namespace Blog.Repository
             return await Db.Queryable<TEntity>().InSingleAsync(id);
         }
 
+        public async Task<int> Count(Expression<Func<TEntity, bool>> whereExpression)
+        {
+            return await Db.Queryable<TEntity>().Where(whereExpression).CountAsync();
+        }
+
         public async Task<List<TEntity>> GetAll()
         {
             return await Db.Queryable<TEntity>().ToListAsync();

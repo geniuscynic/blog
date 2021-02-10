@@ -9,15 +9,19 @@ using SqlSugar;
 using AutoMapper;
 using Blog.Entity;
 using Blog.Model.Permission;
+using Blog.IRepository;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Blog.Service
 {
     public class ButtonService : BaseServices<Button>, IButtonService
     {
+        private readonly IButtonRepository _buttonRepository;
         //protected override IBaseRepository<Button> _defaultRepository { get; set; }
 
-        public ButtonService(IBaseRepository<Button> defaultRepository, IMapper mapper) :base(defaultRepository, mapper)
+        public ButtonService(IRepository<Button> defaultRepository, IButtonRepository buttonRepository,  IMapper mapper) :base(defaultRepository, mapper)
         {
+            _buttonRepository = buttonRepository;
             //this._defaultRepository = defaultRepository;
         }
 
@@ -27,16 +31,14 @@ namespace Blog.Service
 
             if (jwt.Role.Contains("superAdmin"))
             {
-                return await _defaultRepository.Db.Queryable<Button>()
-                    .ToListAsync();
+                //return await _defaultRepository.Db.Queryable<Button>()
+                //    .ToListAsync();
+
+                return await _buttonRepository.GetAll();
 
             }
             //_defaultRepository.Db.Queryable<Menu>().ToTree(it => it.Child, it => it.ParentId, 0);
-            return await _defaultRepository.Db.Queryable<Button, ButtonPermission, Role>((t, mp, r) => new JoinQueryInfos(
-                                  JoinType.Inner, t.Id == mp.ButtonId,
-                                  JoinType.Inner, mp.RoleId == r.Id  //SqlFunc.ContainsArray(jwt.Role, r.Code)
-                ))
-                .ToListAsync(); 
+            return await _buttonRepository.GetButtons(token); 
                 
         }
 

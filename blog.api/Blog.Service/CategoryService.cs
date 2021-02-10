@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using Blog.Entity;
+using Blog.IRepository;
 
 namespace Blog.Service
 {
@@ -12,7 +13,7 @@ namespace Blog.Service
     {
         //protected override IBaseRepository<Category> _defaultRepository { get; set; }
 
-        public CategoryService(IBaseRepository<Category> defaultRepository, IMapper mapper) : base(defaultRepository, mapper)
+        public CategoryService(IRepository<Category> defaultRepository, IMapper mapper) : base(defaultRepository, mapper)
         {
             //this._defaultRepository = defaultRepository;
         }
