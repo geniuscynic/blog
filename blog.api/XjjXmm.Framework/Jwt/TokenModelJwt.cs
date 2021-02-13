@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Blog.Model.Permission
+namespace XjjXmm.Framework.Jwt
 {
 
     /// <summary>

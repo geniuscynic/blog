@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 using System.Linq;
 using SqlSugar;
 using AutoMapper;
-using Blog.Common;
 using Blog.Entity;
 using Blog.Model.Permission;
 using Blog.IRepository;
+using XjjXmm.Framework.Jwt;
 
 namespace Blog.Service
 {

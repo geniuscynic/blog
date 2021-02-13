@@ -1,13 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using SqlSugar;
-using StackExchange.Profiling;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
-using System.Threading.Tasks;
-using Blog.Extension.Extensions.ServiceExtensions;
+using Microsoft.Extensions.DependencyInjection;
+using SqlSugar;
+using XjjXmm.Framework.Configuration;
 
-namespace Blog.Common.Extensions.ServiceExtensions
+namespace Blog.Extension.Extensions.ServiceExtensions
 {
     public static class SqlsugarSetup
     {
@@ -18,7 +15,7 @@ namespace Blog.Common.Extensions.ServiceExtensions
             {
                 SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
                 {
-                    ConnectionString = AppSettingHelper.App("ConnectionStrings:Default"),//连接符字串
+                    ConnectionString = ConfigurationManager.Appsetting("ConnectionStrings:Default"),//连接符字串
                     DbType = DbType.SqlServer,
                     IsAutoCloseConnection = true,
                     InitKeyType = InitKeyType.Attribute,//从特性读取主键自增信息
@@ -40,7 +37,7 @@ namespace Blog.Common.Extensions.ServiceExtensions
                 db.Aop.OnLogExecuting = (sql, pars) =>
                 {
                     var res = sql + "\r\n" + db.Utilities.SerializeObject(pars.ToDictionary(it => it.ParameterName, it => it.Value));
-                    MiniProfiler.Current.Step($"执行的sql: {++i} \r\n {res}");
+                    //MiniProfiler.Current.Step($"执行的sql: {++i} \r\n {res}");
                     //MiniProfiler.Current.Step($"{res}");
 
                     Console.WriteLine($"生成的sql {i}:\r\n");

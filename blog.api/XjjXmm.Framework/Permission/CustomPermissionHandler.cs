@@ -97,10 +97,10 @@ namespace XjjXmm.Framework.Permission
 
             
         //}
-        protected override Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomRequirement requirement)
+        protected override async Task HandleRequirementAsync(AuthorizationHandlerContext context, CustomRequirement requirement)
         {
             context.Succeed(requirement);
-            return;
+          
         }
     }
 }

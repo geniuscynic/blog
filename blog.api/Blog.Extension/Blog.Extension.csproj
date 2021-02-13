@@ -6,11 +6,8 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="10.1.1" />
-    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="3.1.9" />
     <PackageReference Include="Microsoft.OpenApi" Version="1.2.3" />
-    <PackageReference Include="MiniProfiler.Shared" Version="4.2.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="6.0.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,9 +16,11 @@
     <ProjectReference Include="..\Blog.Model\Blog.Model.csproj" />
     <ProjectReference Include="..\Blog.Repository\Blog.Repository.csproj" />
     <ProjectReference Include="..\Blog.Service\Blog.Service.csproj" />
+    <ProjectReference Include="..\XjjXmm.Framework\XjjXmm.Framework.csproj" />
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Extensions\AOP\" />
     <Folder Include="Extensions\Middlewares\" />
   </ItemGroup>
 

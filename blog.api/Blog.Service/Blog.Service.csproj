@@ -5,16 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.1.0" />
     <PackageReference Include="AutoMapper" Version="10.1.1" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Blog.Common\Blog.Common.csproj" />
     <ProjectReference Include="..\Blog.Entity\Blog.Entity.csproj" />
     <ProjectReference Include="..\Blog.IRepository\Blog.IRepository.csproj" />
     <ProjectReference Include="..\Blog.IService\Blog.IService.csproj" />
     <ProjectReference Include="..\Blog.Model\Blog.Model.csproj" />
+    <ProjectReference Include="..\XjjXmm.Framework\XjjXmm.Framework.csproj" />
   </ItemGroup>
 
 </Project>

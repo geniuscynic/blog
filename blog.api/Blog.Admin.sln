@@ -11,8 +11,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Repository", "Blog.Rep
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Service", "Blog.Service\Blog.Service.csproj", "{C80DAEF1-1D1D-43B6-8CFD-0A05C6E99201}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Common", "Blog.Common\Blog.Common.csproj", "{72E105A4-DB18-4FA5-8451-9764DA55CCF4}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.IService", "Blog.IService\Blog.IService.csproj", "{B9781980-8AC8-4CAF-81F1-B95E7CBD10E4}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.Entity", "Blog.Entity\Blog.Entity.csproj", "{4C40F64C-9792-4AB3-B013-89FFE274147B}"
@@ -25,7 +23,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Data", "Data", "{385F2EB4-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Bussiness", "Bussiness", "{AD907AF6-3971-4FF4-B88A-FE8D66A7C3D9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XjjXmm.Framework", "XjjXmm.Framework\XjjXmm.Framework.csproj", "{B24CABF8-B837-4E7F-A224-C3D3776B83B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmm.Framework", "XjjXmm.Framework\XjjXmm.Framework.csproj", "{B24CABF8-B837-4E7F-A224-C3D3776B83B3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,10 +47,6 @@ Global
 		{C80DAEF1-1D1D-43B6-8CFD-0A05C6E99201}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C80DAEF1-1D1D-43B6-8CFD-0A05C6E99201}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C80DAEF1-1D1D-43B6-8CFD-0A05C6E99201}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72E105A4-DB18-4FA5-8451-9764DA55CCF4}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B9781980-8AC8-4CAF-81F1-B95E7CBD10E4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B9781980-8AC8-4CAF-81F1-B95E7CBD10E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9781980-8AC8-4CAF-81F1-B95E7CBD10E4}.Release|Any CPU.ActiveCfg = Release|Any CPU

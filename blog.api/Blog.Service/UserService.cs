@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Blog.Common;
 using Blog.Core;
 using SqlSugar;
 using System;
@@ -11,6 +10,7 @@ using Blog.Entity;
 using Blog.IRepository;
 using Blog.IService;
 using Blog.Model.Permission;
+using XjjXmm.Framework.Jwt;
 
 namespace Blog.Service
 {
@@ -145,11 +145,12 @@ namespace Blog.Service
                 return "";
             }
 
+            //todo
             var tokenModel = _mapper.Map<User, TokenModelJwt>(user);
             tokenModel.Role = user.Roles.Select(t => t.Code).ToList();
 
-            var token = JwtHelper.IssueJwt(tokenModel);
-            return token;
+            //var token = JwtHelper.IssueJwt(tokenModel);
+            return "";
 
         }
 

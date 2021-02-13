@@ -7,6 +7,10 @@ namespace Blog.Model.Permission
     /// </summary>
     public class AddUserViewModel
     {
+
+        /// <summary>
+        /// 
+        /// </summary>
         public int Id { get; set; }
 
         /// <summary>

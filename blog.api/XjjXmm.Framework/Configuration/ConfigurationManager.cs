@@ -21,7 +21,6 @@ namespace XjjXmm.Framework.Configuration
         {
             try
             {
-
                 if (sections.Any())
                 {
                     return Configuration[string.Join(":", sections)];
@@ -34,5 +33,23 @@ namespace XjjXmm.Framework.Configuration
 
             return "";
         }
+
+        public static T GetSection<T>(string key) where T:class
+        {
+            try
+            {
+
+                return Configuration.GetSection(key).Get<T>();
+
+
+            }
+            catch (Exception ex)
+            {
+                Logger?.LogError(ex, $"{key}: 不存在", null);
+            }
+
+            return null;
+        }
+        
     }
 }

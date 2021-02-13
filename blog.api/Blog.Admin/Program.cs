@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using AspectCore.Extensions.DependencyInjection;
 using AutoMapper.Internal;
 using Blog.API.Controllers;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using XjjXmm.Framework.AutoFac;
+using XjjXmm.Framework.Logger;
 
 namespace Blog.API
 {
@@ -47,19 +48,7 @@ namespace Blog.API
                 {
                     webBuilder.UseStartup<Startup>();
                 })
-            .ConfigureLogging((hostingContext, builder) =>
-            {
-                //过滤掉系统默认的一些日志
-                //builder.AddFilter("System", LogLevel.Error);
-                //builder.AddFilter("Microsoft", LogLevel.Error);
-                //builder.AddFilter("Blog.Core.AuthHelper.ApiResponseHandler", LogLevel.Error);
-
-                //可配置文件
-                var path = Path.Combine(Directory.GetCurrentDirectory(), "Log4net.config");
-
-
-                builder.AddLog4Net(path);
-            }).
-            UseServiceProviderFactory(new DynamicProxyServiceProviderFactory());
+                .AddLogNetBuilder()
+                .AddAutoFaceBuilder();
     }
 }

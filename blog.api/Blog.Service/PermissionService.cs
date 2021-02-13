@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Linq;
-using Blog.Common;
 using SqlSugar;
 using AutoMapper;
 using Blog.Entity;
 using Blog.Model.Permission;
 using Blog.IRepository;
+using XjjXmm.Framework.Jwt;
 
 namespace Blog.Service
 {

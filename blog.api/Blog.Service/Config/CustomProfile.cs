@@ -4,7 +4,7 @@ using Blog.Model.Blog;
 using Blog.Model.Permission;
 using XjjXmm.Framework.Jwt;
 
-namespace Blog.Extension
+namespace Blog.Service.Config
 {
 
     /// <summary>

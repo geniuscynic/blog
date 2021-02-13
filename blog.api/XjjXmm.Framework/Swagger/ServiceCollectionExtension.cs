@@ -43,12 +43,9 @@ namespace XjjXmm.Framework.Swagger
                  c.IncludeXmlComments(xmlPath, true);//默认的第二个参数是false，这个是controller的注释，记得修改*/
 
                 var comments = Directory.GetFiles(AppContext.BaseDirectory, "*.Swagger.xml");
-                if (comments != null)
+                foreach (var comment in comments)
                 {
-                    foreach (var comment in comments)
-                    {
-                        c.IncludeXmlComments(comment, true);
-                    }
+                    c.IncludeXmlComments(comment, true);
                 }
 
                 c.OperationFilter<AddResponseHeadersFilter>();

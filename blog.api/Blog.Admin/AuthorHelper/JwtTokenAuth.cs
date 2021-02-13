@@ -8,6 +8,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Blog.Extension;
 using Blog.Model.Permission;
+using XjjXmm.Framework.Jwt;
 
 namespace Blog.API.AuthorHelper
 {

@@ -1,17 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Security.Policy;
-using System.Threading.Tasks;
-using AspectCore.Configuration;
-using AspectCore.Extensions.DependencyInjection;
+using Autofac;
 using AutoMapper;
 using Blog.API.AuthorHelper;
 using Blog.Common;
 using Blog.Common.Extensions.Middlewares;
-using Blog.Common.Extensions.ServiceExtensions;
 using Blog.Extension;
 using Blog.Extension.Extensions.ServiceExtensions;
 using Blog.IService;
@@ -30,11 +21,20 @@ using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using SqlSugar;
-using StackExchange.Profiling.Storage;
-using Swashbuckle.AspNetCore.Filters;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Reflection;
+using System.Security.Policy;
+using System.Threading.Tasks;
 using XjjXmm.Framework;
+using XjjXmm.Framework.AutoFac;
+using XjjXmm.Framework.Configuration;
 using XjjXmm.Framework.Filter;
+using XjjXmm.Framework.Jwt;
 using XjjXmm.Framework.Swagger;
+
 
 namespace Blog.API
 {
@@ -47,10 +47,35 @@ namespace Blog.API
 
         public IConfiguration Configuration { get; }
 
+        public void ConfigureContainer(ContainerBuilder containerBuilder)
+        {
+
+            containerBuilder.RegisterModule("Blog.Service.dll");
+            containerBuilder.RegisterModule("Blog.Repository.dll");
+
+            
+            #region 在控制器中使用属性依赖注入，其中注入属性必须标注为public
+            //在控制器中使用属性依赖注入，其中注入属性必须标注为public
+            var controllersTypesInAssembly = typeof(Startup).Assembly.GetExportedTypes()
+                .Where(type => typeof(ControllerBase).IsAssignableFrom(type)).ToArray();
+            containerBuilder.RegisterTypes(controllersTypesInAssembly).PropertiesAutowired();
+            #endregion
+        }
+
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
 
+            //string issue = Configuration["JWT:Issue"]; // "Issuer";
+
+            //var JwtTokenSetting = new JwtTokenSetting();
+            //Configuration.GetSection("JWT").Bind(JwtTokenSetting);
+
+            // var setting = services.Configure<JwtTokenSetting>(Configuration.GetSection("JWT"));
+
+            //var loggingOptions = Configuration.GetSection("JWT").Get<JwtTokenSetting>();
+
+            //loggingOptions.GetClickSkew();
             //services.ConfigureDynamicProxy(config =>
             //{
             //    //TestInterceptor拦截器类
@@ -58,10 +83,11 @@ namespace Blog.API
             //    config.Interceptors.AddTyped<LogInterceptor>();
             //});
             //services.BuildAspectInjectorProvider();
-            services.AddAspectCore();
+            //services.AddAspectCore();
             //services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
-            services.AddAutoMapperSetup();
+            //services.AddAutoMapperSetup();
             //services.AddSingleton(new AppSettingHelper(Configuration));
+            services.AddAutoMapper(typeof(CustomProfile));
 
             services
                 .AddCommonSetup(Configuration)
@@ -70,25 +96,28 @@ namespace Blog.API
 
             services.AddSqlsugarSetup();
 
+            services.AddScoped<Dbcontext>();
+            //services.addService();
+            //var ServicesDllFile = Path.Combine(basePath, "Exercise.Services.dll");//获取注入项目绝对路径
+            //var assemblysServices = Assembly.LoadFile(ServicesDllFile);//直接采用加载文件的方法
+            //containerBuilder.RegisterAssemblyTypes(assemblysServices).AsImplementedInterfaces();
 
-            services.addService();
 
 
-           
 
 
             //services.AddSwaggerSetup();
 
-            services.AddJwtSetup();
+            services.AddJwtSetup("JWT");
 
             //services.ConfigureDynamicProxy();
 
-            services.AddMiniProfiler(options =>
-            {
-                options.RouteBasePath = "/profiler";//注意这个路径要和下边 index.html 脚本配置中的一致，
-                //(options.Storage as MemoryCacheStorage).CacheDuration = TimeSpan.FromMinutes(10);
+            //services.AddMiniProfiler(options =>
+            //{
+            //    options.RouteBasePath = "/profiler";//注意这个路径要和下边 index.html 脚本配置中的一致，
+            //    //(options.Storage as MemoryCacheStorage).CacheDuration = TimeSpan.FromMinutes(10);
 
-            });
+            //});
 
 
             services.AddCors();
@@ -106,23 +135,8 @@ namespace Blog.API
                 app.UseDeveloperExceptionPage();
             }
 
-
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint($"/swagger/v1/swagger.json", $"xjjxmm v1");
-
-                c.RoutePrefix = "";
-
-
-                var streamHtml = ReflectionExtensions.GetTypeInfo(GetType()).Assembly.GetManifestResourceStream("Blog.API.index.html");
-
-                c.IndexStream = () => streamHtml;
-            });
-
-
-            
-
+            app.UseSwaggerMiddlewares();
+            //app.UseSwaggerMiddlewares();
 
             app.UseRouting();
 
@@ -146,7 +160,7 @@ namespace Blog.API
 
             app.UseSeedDataMildd(dbcontext);
 
-            app.UseMiniProfiler();
+            //app.UseMiniProfiler();
 
 
             app.UseEndpoints(endpoints =>

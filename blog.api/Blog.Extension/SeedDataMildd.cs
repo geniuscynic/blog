@@ -1,5 +1,4 @@
-﻿using Blog.Common.Extensions.ServiceExtensions;
-using Blog.Repository;
+﻿using Blog.Repository;
 using Microsoft.AspNetCore.Builder;
 using SqlSugar;
 using System;
@@ -8,6 +7,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Blog.Entity;
 using Blog.Extension.Extensions.ServiceExtensions;
+using SqlSugar.Extensions;
+using XjjXmm.Framework.Configuration;
 
 namespace Blog.Common.Extensions.Middlewares
 {
@@ -16,7 +17,7 @@ namespace Blog.Common.Extensions.Middlewares
         public static void UseSeedDataMildd(this IApplicationBuilder app, Dbcontext dbcontext)
         {
 
-            if (AppSettingHelper.App("SeedDBEnabled:table").ObjToBool())
+            if (ConfigurationManager.Appsetting("SeedDBEnabled:table").ObjToBool())
             {
                 dbcontext.Db.DbMaintenance.CreateDatabase();
                 dbcontext.Db.CodeFirst.InitTables(typeof(BlogArticle));
@@ -34,7 +35,7 @@ namespace Blog.Common.Extensions.Middlewares
                 dbcontext.Db.CodeFirst.InitTables(typeof(ApiMethodPermission));
             }
 
-            if (AppSettingHelper.App("SeedDBEnabled:data").ObjToBool())
+            if (ConfigurationManager.Appsetting("SeedDBEnabled:data").ObjToBool())
             {
 
                 if (!dbcontext.GetSimpleClient<Category>().GetList().Any())
