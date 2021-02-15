@@ -8,7 +8,7 @@ namespace XjjXmm.Framework.Jwt
 {
     public static class ServiceCollectionExtension
     {
-        public static void AddJwtSetup(this IServiceCollection services, string key)
+        public static IServiceCollection AddJwtSetup(this IServiceCollection services, string key)
         {
            // string issue = ConfigurationManager.Appsetting("JWT", "Issue"); // "Issuer";
             //string aud = ConfigurationManager.Appsetting("JWT", "Aud"); // "Audience";
@@ -56,6 +56,8 @@ namespace XjjXmm.Framework.Jwt
                 };
 
             });
+
+            return services;
         }
     }
 }

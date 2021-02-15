@@ -28,27 +28,35 @@ namespace XjjXmm.Framework.Configuration
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"{string.Join(":", sections)} 不存在", null);
+                Logger?.LogError(ex, $"{ToKey(sections)} 不存在", null);
             }
 
             return "";
         }
 
-        public static T GetSection<T>(string key) where T:class
+        public static T GetSection<T>(params string[] keys) where T:class
         {
             try
             {
-
-                return Configuration.GetSection(key).Get<T>();
+                if (keys.Any())
+                {
+                    return Configuration.GetSection(ToKey(keys)).Get<T>();
+                }
+                
 
 
             }
             catch (Exception ex)
             {
-                Logger?.LogError(ex, $"{key}: 不存在", null);
+                Logger?.LogError(ex, $"{ToKey(keys)}: 不存在", null);
             }
 
             return null;
+        }
+
+        private static string ToKey(params string[] keys)
+        {
+            return string.Join(":", keys);
         }
         
     }

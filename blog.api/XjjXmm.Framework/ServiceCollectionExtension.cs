@@ -20,7 +20,7 @@ namespace XjjXmm.Framework
                 // 全局异常过滤
                 configure.Filters.Add(typeof(GlobalExceptionsFilter));
 
-            });
+            }).AddControllersAsServices();
 
             return services;
         }

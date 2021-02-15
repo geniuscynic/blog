@@ -28,8 +28,10 @@ using System.Linq;
 using System.Reflection;
 using System.Security.Policy;
 using System.Threading.Tasks;
+using Autofac.Extras.DynamicProxy;
 using XjjXmm.Framework;
 using XjjXmm.Framework.AutoFac;
+using XjjXmm.Framework.AutoMap;
 using XjjXmm.Framework.Configuration;
 using XjjXmm.Framework.Filter;
 using XjjXmm.Framework.Jwt;
@@ -50,10 +52,29 @@ namespace Blog.API
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
 
-            containerBuilder.RegisterModule("Blog.Service.dll");
-            containerBuilder.RegisterModule("Blog.Repository.dll");
+            //containerBuilder.RegisterModule("Blog.Service.dll");
+            //containerBuilder.RegisterModule("Blog.Repository.dll");
 
-            
+            containerBuilder.RegisterGenericModule();
+
+            containerBuilder
+                .RegisterModulesByKey("blog", "ModuleDll");
+            //.RegisterControllerByKey("blog", "ControllerDll");
+
+            //var servicesDllFile = Path.Combine(AppContext.BaseDirectory, "Blog.Repository.dll");
+            //var assemblysServices = Assembly.LoadFile(servicesDllFile);//直接采用加载文件的方法
+
+            //var servicesDllFile2 = Path.Combine(AppContext.BaseDirectory, "Blog.IRepository.dll");
+            //var assemblysServices2 = Assembly.LoadFile(servicesDllFile);//直接采用加载文件的方法
+
+            //containerBuilder.RegisterAssemblyTypes(assemblysServices2, assemblysServices)
+            //    //.Where(t => t.Name.EndsWith("Repository"))
+            //    .AsSelf()
+            //    .AsImplementedInterfaces()
+            //    .InstancePerLifetimeScope()
+            //    .EnableInterfaceInterceptors()
+            //    .PropertiesAutowired(); ;
+
             #region 在控制器中使用属性依赖注入，其中注入属性必须标注为public
             //在控制器中使用属性依赖注入，其中注入属性必须标注为public
             var controllersTypesInAssembly = typeof(Startup).Assembly.GetExportedTypes()
@@ -87,11 +108,13 @@ namespace Blog.API
             //services.AddAutoMapper(typeof(Startup));//这是AutoMapper的2.0新特性
             //services.AddAutoMapperSetup();
             //services.AddSingleton(new AppSettingHelper(Configuration));
-            services.AddAutoMapper(typeof(CustomProfile));
+            //services.AddAutoMapper(typeof(CustomProfile));
+            
 
             services
                 .AddCommonSetup(Configuration)
                 .AddSwaggerSetup()
+                .AddAutoMapperByKey("blog", "AutoMapConfig")
                 .AddPermissionSetup();
 
             services.AddSqlsugarSetup();

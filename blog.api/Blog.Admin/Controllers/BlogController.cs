@@ -59,8 +59,8 @@ namespace Blog.API.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        [Authorize(Policy = "mypermission")]
-        [Authorize]
+        //[Authorize(Policy = "mypermission")]
+        //[Authorize]
         public async Task<MessageModel<PageModel<ListBlogViewModel>>> Get(int pageIndex = 1, int pageSize = 20)
         {
             var blogs = await service.GetBlogList(pageIndex, pageSize);

@@ -16,12 +16,13 @@ namespace Blog.API.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-        private readonly IUserService _userService;
+        public IUserService _userService { get; set; }
+        //private readonly IUserService _userService;
 
-        public UserController(IUserService userService)
-        {
-            _userService = userService;
-        }
+        //public UserController(IUserService userService)
+        //{
+        //    _userService = userService;
+        //}
 
         // GET: api/<UserController>
         [HttpGet]

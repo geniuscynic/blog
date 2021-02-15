@@ -15,7 +15,7 @@ namespace Blog.Extension.Extensions.ServiceExtensions
             {
                 SqlSugarClient db = new SqlSugarClient(new ConnectionConfig()
                 {
-                    ConnectionString = ConfigurationManager.Appsetting("ConnectionStrings:Default"),//连接符字串
+                    ConnectionString = ConfigurationManager.Appsetting("blog:ConnectionStrings:Default"),//连接符字串
                     DbType = DbType.SqlServer,
                     IsAutoCloseConnection = true,
                     InitKeyType = InitKeyType.Attribute,//从特性读取主键自增信息

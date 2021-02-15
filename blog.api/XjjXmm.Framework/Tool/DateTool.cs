@@ -35,7 +35,18 @@ namespace XjjXmm.Framework.Tool
 
         }
 
-       
+        private static int TimeSpanStringToInt(this string value, int defaultValue)
+        {
+            value = value.ToLower()
+                .Replace("d", "")
+                .Replace("h", "")
+                .Replace("m", "")
+                .Replace("s", "");
+
+            return int.TryParse(value, out var outValue) ? outValue : defaultValue;
+        }
+
+
 
     }
 }
