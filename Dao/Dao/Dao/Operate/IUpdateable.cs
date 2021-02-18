@@ -8,7 +8,7 @@ namespace ConsoleApp1.Dao.Operate
 {
     public interface IUpdateable<T>  : IOperate
     {
-        IUpdateable<T> SetColumns(Expression<Func<T>> predicate);
+        IUpdateable<T> SetColumns<TResult>(Expression<Func<TResult>> predicate);
 
         IUpdateable<T> Where(Expression<Func<T, bool>> predicate);
 

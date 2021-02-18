@@ -12,7 +12,7 @@ using Dapper;
 
 namespace ConsoleApp1.Dao.Command
 {
-    public class Updateable<T> : IUpdateable<T>
+    public class Queryable<T> : IXjjXmmQueryable<T>
     {
         private readonly IDbConnection _connection;
 
@@ -22,55 +22,32 @@ namespace ConsoleApp1.Dao.Command
 
         private readonly StringBuilder _whereCause = new StringBuilder();
 
-        private readonly StringBuilder setSql = new StringBuilder();
-
-     
+      
 
         private Dictionary<string, object> _dynamicModel = new Dictionary<string, object>();
 
-        public Updateable(IDbConnection connection)
+        public Queryable(IDbConnection connection)
         {
             _connection = connection;
 
         }
 
-        public IUpdateable<T> SetColumns<TResult>(Expression<Func<TResult>> predicate)
-        {
-            var visitor = new NewObjectExpressionVisitor();
-            visitor.Visit(predicate);
+       
 
-            //var dic = (IDictionary<string, object>)_dynamicModel;
-
-            var model = predicate.Compile().Invoke();
-            var types = model.GetType();
-
-
-            visitor.UpdatedFields.ForEach(t =>
-            {
-                var values = types.GetProperty(t.Parameter)?.GetValue(model);
-
-                setSql.Append($" {t.ColumnName} = @{t.Parameter},");
-
-                _dynamicModel[t.Parameter] = values;
-            });
-
-            return this;
-        }
-
-        public IUpdateable<T> Where(Expression<Func<T, bool>> predicate)
+        public IXjjXmmQueryable<T> Where(Expression<Func<T, bool>> predicate)
         {
             _wherevisitor.Visit(predicate);
 
             return this;
         }
 
-        public IUpdateable<T> Where(string whereExpression)
+        public IXjjXmmQueryable<T> Where(string whereExpression)
         {
             _whereCause.Append($" ({whereExpression}) and");
             return this;
         }
 
-        public IUpdateable<T> Where<TEntity>(string whereExpression, Expression<Func<TEntity>> predicate)
+        public IXjjXmmQueryable<T> Where<TEntity>(string whereExpression, Expression<Func<TEntity>> predicate)
         {
             _whereCause.Append($" ({whereExpression}) and");
 
@@ -94,6 +71,11 @@ namespace ConsoleApp1.Dao.Command
           
         }
 
+        public IXjjXmmQueryable<T> Select<TResult>(Expression<Func<TResult>> predicate)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private StringBuilder BuildSql()
         {
@@ -102,12 +84,7 @@ namespace ConsoleApp1.Dao.Command
             var type = typeof(T);
             var (tableName, _) = DaoHelper.GetMetas(type);
 
-            sql.Append($"update {tableName} set ");
-
-
-            sql.Append(setSql);
-
-            sql.Remove(sql.Length - 1, 1);
+            sql.Append($"select * from {tableName}  ");
 
             sql.Append(" where ");
 
@@ -125,7 +102,7 @@ namespace ConsoleApp1.Dao.Command
             var sql = BuildSql();
 
 
-            var result = await _connection.ExecuteAsync(sql.ToString(), _dynamicModel);
+            var result = await _connection.QueryAsync<T>(sql.ToString(), _dynamicModel);
 
             return 1;
         }

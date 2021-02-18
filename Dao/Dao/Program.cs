@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using ConsoleApp1.Dao;
 
@@ -50,21 +51,31 @@ namespace ConsoleApp1
             //    }
             //).Execute();
 
-            await dbContext.Updateable<BlogArticle>().SetColumns(() => new BlogArticle
-            {
-                Title = "aa",
-                Author1 = "bb3",
-                Content = c,
-                PublishDate = DateTime.Now
+            //await dbContext.Updateable<BlogArticle>().SetColumns(() => new BlogArticle
+            //{
+            //    Title = "aa",
+            //    Author1 = "bb3",
+            //    Content = c,
+            //    PublishDate = DateTime.Now
 
-            })
-                .Where("id > 10 || content = 'c'")
-                .Where("id > 10 || content = @content", () => new
-                {
-                    content = c
-                })
-                //.Where(t => (t.Id >10 || t.Content == c) && t.PublishDate > DateTime.Now)
-                //.Where(t => t.CategoryId == 2)
+            //})
+            //    .Where("id > 10 or content = 'c'")
+            //    .Where("id > @cid or content = @content1", () => new
+            //    {
+            //        content1 = c,
+            //        cid = 9
+            //    })
+            //    .Where("PublishDate > @pub", () => new
+            //    {
+            //        pub = DateTime.Now.AddMonths(-1)
+            //    })
+            //    //.Where(t => (t.Id >10 || t.Content == c) && t.PublishDate > DateTime.Now)
+            //    //.Where(t => t.CategoryId == 2)
+            //    .Execute();
+
+            await dbContext.Queryable<BlogArticle>()
+                .Where("id > 3")
+                .Where("id > @id", () => new {id = 4})
                 .Execute();
 
             Console.WriteLine("Hello World!");

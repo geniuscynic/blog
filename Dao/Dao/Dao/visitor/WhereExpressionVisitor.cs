@@ -86,7 +86,7 @@ namespace ConsoleApp1.Dao.visitor
         protected override Expression VisitConstant(ConstantExpression node)
         {
             //memberList.Add(node.ToString());
-            Result.Sql.Append($"@p{Result.Start}");
+            //Result.Sql.Append($"@p{Result.Start}");
 
             //Result.Parameters.Add($"p{Result.Start}", node.Value);
 

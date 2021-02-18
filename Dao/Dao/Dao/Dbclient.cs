@@ -37,6 +37,12 @@ namespace ConsoleApp1.Dao
         }
 
 
+        public IXjjXmmQueryable<T> Queryable<T>()
+        {
+            return new Queryable<T>(_connection);
+        }
+
+
 
 
         public void Dispose()
