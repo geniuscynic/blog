@@ -15,7 +15,7 @@ namespace ConsoleApp1.Dao.visitor
            
             foreach (var nodeArgument in node.Arguments)
             {
-                var member = ExpressionVistorHelper.VisitMember((nodeArgument as MemberExpression)?.Member);
+                var member = ExpressionVistorHelper.VisitMember((nodeArgument as MemberExpression));
 
                 UpdatedFields.Add(member);
                 
@@ -28,7 +28,7 @@ namespace ConsoleApp1.Dao.visitor
         {
             
             
-            var member = ExpressionVistorHelper.VisitMember(node.Member);
+            var member = ExpressionVistorHelper.VisitMember(node);
 
             UpdatedFields.Add(member);
             

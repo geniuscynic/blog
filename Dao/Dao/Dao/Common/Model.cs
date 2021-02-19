@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Reflection;
 using System.Text;
 
@@ -59,7 +60,7 @@ namespace ConsoleApp1.Dao.Common
 
         public Dictionary<string, object> Parameter { get; set; }     = new Dictionary<string, object>();
 
-       
+        public string Prefix { get; set; } = "";
 
     }
 }

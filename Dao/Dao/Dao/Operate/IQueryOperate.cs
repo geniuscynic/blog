@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Dao.Operate
 {
-    public interface IQueryOperate
+    public interface IQueryOperate<T>
     {
        
-        Task<int> Execute();
+        Task<List<T>> ToList();
     }
 }

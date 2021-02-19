@@ -22,9 +22,11 @@ namespace ConsoleApp1.Dao.Command
 
         private readonly StringBuilder _whereCause = new StringBuilder();
 
-      
+        private readonly StringBuilder _selectField = new StringBuilder();
 
         private Dictionary<string, object> _dynamicModel = new Dictionary<string, object>();
+
+        private string prefix = "";
 
         public Queryable(IDbConnection connection)
         {
@@ -32,18 +34,28 @@ namespace ConsoleApp1.Dao.Command
 
         }
 
-       
+
+
+
+
+
 
         public IXjjXmmQueryable<T> Where(Expression<Func<T, bool>> predicate)
         {
             _wherevisitor.Visit(predicate);
 
+            _wherevisitor.whereModel.Sql.Append(" and");
+
+
+            prefix = _wherevisitor.whereModel.Prefix;
             return this;
         }
 
         public IXjjXmmQueryable<T> Where(string whereExpression)
         {
             _whereCause.Append($" ({whereExpression}) and");
+
+            
             return this;
         }
 
@@ -59,6 +71,7 @@ namespace ConsoleApp1.Dao.Command
             var model = predicate.Compile().Invoke();
             var types = model.GetType();
 
+            
 
             visitor.UpdatedFields.ForEach(t =>
             {
@@ -71,9 +84,21 @@ namespace ConsoleApp1.Dao.Command
           
         }
 
-        public IXjjXmmQueryable<T> Select<TResult>(Expression<Func<TResult>> predicate)
+        public IQueryOperate<TResult> Select<TResult>(Expression<Func<T,TResult>> predicate)
         {
-            throw new NotImplementedException();
+            
+
+            var visitor = new UpdateExpressionVisitor();
+            visitor.Visit(predicate);
+
+            visitor.UpdatedFields.ForEach(t =>
+            {
+                _selectField.Append($"{t.Prefix}.{t.ColumnName} as {t.Parameter},");
+
+                prefix = t.Prefix;
+            });
+            _selectField.Remove(_selectField.Length - 1, 1);
+            return new SimpleQueryable<TResult>(_connection, BuildSql(), _dynamicModel);
         }
 
 
@@ -84,30 +109,41 @@ namespace ConsoleApp1.Dao.Command
             var type = typeof(T);
             var (tableName, _) = DaoHelper.GetMetas(type);
 
-            sql.Append($"select * from {tableName}  ");
+            var selectSql = "*";
+            if (_selectField.Length > 0)
+            {
+                selectSql = _selectField.ToString();
+            }
+
+
+            sql.Append($"select {selectSql} from {tableName} {prefix} ");
 
             sql.Append(" where ");
 
             sql.Append(_whereCause);
 
+            sql.Append(_wherevisitor.whereModel.Sql);
             sql.Remove(sql.Length - 3, 3);
 
-
+            foreach (var keyValuePair in _wherevisitor.whereModel.Parameter)
+            {
+                _dynamicModel[keyValuePair.Key] = keyValuePair.Value;
+            }
             return sql;
         }
 
-        public async Task<int> Execute()
-        {
+       
 
+
+        public async Task<List<T>> ToList()
+        {
             var sql = BuildSql();
 
-             Console.WriteLine(sql);
+            Console.WriteLine(sql);
 
             var result = await _connection.QueryAsync<T>(sql.ToString(), _dynamicModel);
 
-            return 1;
+            return result.ToList();
         }
-
-
     }
 }

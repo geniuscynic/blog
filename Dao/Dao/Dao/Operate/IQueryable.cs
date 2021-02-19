@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1.Dao.Operate
 {
-    public interface IXjjXmmQueryable<T>  : IOperate
+    public interface IXjjXmmQueryable<T>  : IQueryOperate<T>
     {
         IXjjXmmQueryable<T> Where(Expression<Func<T, bool>> predicate);
 
@@ -14,6 +14,6 @@ namespace ConsoleApp1.Dao.Operate
 
         IXjjXmmQueryable<T> Where<TResult>(string whereExpression, Expression<Func<TResult>> predicate);
 
-        IXjjXmmQueryable<T> Select<TResult>(Expression<Func<TResult>> predicate);
+        IQueryOperate<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
     }
 }

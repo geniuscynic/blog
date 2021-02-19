@@ -73,13 +73,15 @@ namespace ConsoleApp1
             //    //.Where(t => t.CategoryId == 2)
             //    .Execute();
 
-           
 
-            await dbContext.Queryable<BlogArticle>()
-                .Where(t=> t.Author1 == c || 4 < t.Id )
-                //.Where("id > 3")
+            var now = DateTime.Now.AddYears(-2);
+            var result1 = await dbContext.Queryable<BlogArticle>()
+                //.Where(t=> t.Author1 == c && (t.PublishDate > DateTime.Now || 4 < t.Id) )
+                .Where(t => t.PublishDate > now )
+                .Where(t => t.Id > 1 )
+                .Select(t=> t)
                 //.Where("id > @id", () => new {id = 4})
-                .Execute();
+                .ToList();
 
             Console.WriteLine("Hello World!");
 
