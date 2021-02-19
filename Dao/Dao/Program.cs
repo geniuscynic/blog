@@ -73,9 +73,12 @@ namespace ConsoleApp1
             //    //.Where(t => t.CategoryId == 2)
             //    .Execute();
 
+           
+
             await dbContext.Queryable<BlogArticle>()
-                .Where("id > 3")
-                .Where("id > @id", () => new {id = 4})
+                .Where(t=> t.Author1 == c || 4 < t.Id )
+                //.Where("id > 3")
+                //.Where("id > @id", () => new {id = 4})
                 .Execute();
 
             Console.WriteLine("Hello World!");

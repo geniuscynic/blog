@@ -50,16 +50,16 @@ namespace ConsoleApp1.Dao.Common
 
         public string Prefix { get; set; }
 
+        public string Express => !string.IsNullOrEmpty(Prefix) ? $"{Prefix}.{ColumnName}" : ColumnName;
     }
 
     public class WhereModel
     {
-        public string ColumnName { get; set; }
+        public StringBuilder Sql { get; set; }    = new StringBuilder();
 
-        public string Parameter { get; set; }
+        public Dictionary<string, object> Parameter { get; set; }     = new Dictionary<string, object>();
 
-        public string Prefix { get; set; }
+       
 
-        public string Operator { get; set; }
     }
 }

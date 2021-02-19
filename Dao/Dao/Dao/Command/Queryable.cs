@@ -101,6 +101,7 @@ namespace ConsoleApp1.Dao.Command
 
             var sql = BuildSql();
 
+             Console.WriteLine(sql);
 
             var result = await _connection.QueryAsync<T>(sql.ToString(), _dynamicModel);
 
