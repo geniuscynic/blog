@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
-using ConsoleApp1.Dao.Command;
+using ConsoleApp1.Dao.Interface.Command;
 
-namespace ConsoleApp1.Dao.Operate
+namespace ConsoleApp1.Dao.Interface.Operate
 {
-    public interface ISaveable<T> : IOperate
+    public interface ISaveable<T> : IExecuteCommand
     {
         ISaveable<T> UpdateColumns<TResult>(Expression<Func<T, TResult>> predicate);
 

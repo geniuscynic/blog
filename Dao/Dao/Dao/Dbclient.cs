@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Text;
 using ConsoleApp1.Dao.Command;
-using ConsoleApp1.Dao.Operate;
+using ConsoleApp1.Dao.Imp.Operate;
+using ConsoleApp1.Dao.Interface.Operate;
 
 namespace ConsoleApp1.Dao
 {
@@ -37,7 +38,7 @@ namespace ConsoleApp1.Dao
         }
 
 
-        public IXjjXmmQueryable<T> Queryable<T>()
+        public IXXQueryable<T> Queryable<T>()
         {
             return new Queryable<T>(_connection);
         }

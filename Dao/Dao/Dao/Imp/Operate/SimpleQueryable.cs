@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using ConsoleApp1.Dao.Common;
-using ConsoleApp1.Dao.Operate;
-using ConsoleApp1.Dao.visitor;
+using ConsoleApp1.Dao.Interface.Command;
 using Dapper;
 
-namespace ConsoleApp1.Dao.Command
+namespace ConsoleApp1.Dao.Imp.Operate
 {
-    public class SimpleQueryable<T> : IQueryOperate<T>
+    class SimpleQueryable<T> : IQueryCommand<T>
     {
         private readonly IDbConnection _connection;
         private readonly StringBuilder _sql;

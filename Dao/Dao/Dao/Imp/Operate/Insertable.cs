@@ -1,13 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleApp1.Dao.Common;
-using ConsoleApp1.Dao.Operate;
+using ConsoleApp1.Dao.Interface.Operate;
 using Dapper;
 
-namespace ConsoleApp1.Dao.Command
+namespace ConsoleApp1.Dao.Imp.Operate
 {
     public class Insertable<T>  : IInsertable<T>
     {

@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleApp1.Dao.Common;
-using ConsoleApp1.Dao.Operate;
+using ConsoleApp1.Dao.Imp.Command;
+using ConsoleApp1.Dao.Interface.Command;
+using ConsoleApp1.Dao.Interface.Operate;
 using ConsoleApp1.Dao.visitor;
 using Dapper;
 
-namespace ConsoleApp1.Dao.Command
+namespace ConsoleApp1.Dao.Imp.Operate
 {
     public class Updateable<T> : IUpdateable<T>
     {
@@ -18,19 +19,23 @@ namespace ConsoleApp1.Dao.Command
 
 
 
-        private readonly WhereExpressionVisitor _wherevisitor = new WhereExpressionVisitor();
+        //private readonly WhereExpressionVisitor _wherevisitor = new WhereExpressionVisitor();
 
-        private readonly StringBuilder _whereCause = new StringBuilder();
+        //private readonly StringBuilder _whereCause = new StringBuilder();
+
+        private readonly IWhereCommand<T> whereCommand;
 
         private readonly StringBuilder setSql = new StringBuilder();
 
      
 
-        private Dictionary<string, object> _dynamicModel = new Dictionary<string, object>();
+        private readonly Dictionary<string, object> _sqlPamater = new Dictionary<string, object>();
 
         public Updateable(IDbConnection connection)
         {
             _connection = connection;
+
+            whereCommand = new WhereCommand<T>(_sqlPamater);
 
         }
 
@@ -59,36 +64,20 @@ namespace ConsoleApp1.Dao.Command
 
         public IUpdateable<T> Where(Expression<Func<T, bool>> predicate)
         {
-            _wherevisitor.Visit(predicate);
+            whereCommand.Where(predicate);
 
             return this;
         }
 
         public IUpdateable<T> Where(string whereExpression)
         {
-            _whereCause.Append($" ({whereExpression}) and");
+            whereCommand.Where(whereExpression);
             return this;
         }
 
         public IUpdateable<T> Where<TEntity>(string whereExpression, Expression<Func<TEntity>> predicate)
         {
-            _whereCause.Append($" ({whereExpression}) and");
-
-            var visitor = new NewObjectExpressionVisitor();
-            visitor.Visit(predicate);
-
-            //var dic = (IDictionary<string, object>)_dynamicModel;
-
-            var model = predicate.Compile().Invoke();
-            var types = model.GetType();
-
-
-            visitor.UpdatedFields.ForEach(t =>
-            {
-                var values = types.GetProperty(t.Parameter)?.GetValue(model);
-
-                _dynamicModel[t.Parameter] = values;
-            });
+            whereCommand.Where(whereExpression, predicate);
 
             return this;
           
@@ -109,11 +98,13 @@ namespace ConsoleApp1.Dao.Command
 
             sql.Remove(sql.Length - 1, 1);
 
-            sql.Append(" where ");
+            sql.Append(whereCommand.Build());
 
-            sql.Append(_whereCause);
+            //sql.Append(" where ");
 
-            sql.Remove(sql.Length - 3, 3);
+            //sql.Append(_whereCause);
+
+            //sql.Remove(sql.Length - 3, 3);
 
 
             return sql;
@@ -125,7 +116,7 @@ namespace ConsoleApp1.Dao.Command
             var sql = BuildSql();
 
 
-            var result = await _connection.ExecuteAsync(sql.ToString(), _dynamicModel);
+            var result = await _connection.ExecuteAsync(sql.ToString(), _sqlPamater);
 
             return 1;
         }

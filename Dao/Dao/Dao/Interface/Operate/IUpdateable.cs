@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using ConsoleApp1.Dao.Interface.Command;
 
-namespace ConsoleApp1.Dao.Operate
+namespace ConsoleApp1.Dao.Interface.Operate
 {
-    public interface IUpdateable<T>  : IOperate
+    public interface IUpdateable<T>  : IExecuteCommand
     {
         IUpdateable<T> SetColumns<TResult>(Expression<Func<TResult>> predicate);
 

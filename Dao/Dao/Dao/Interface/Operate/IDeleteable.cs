@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq.Expressions;
-using System.Text;
-using System.Threading.Tasks;
+using ConsoleApp1.Dao.Interface.Command;
 
-namespace ConsoleApp1.Dao.Operate
+namespace ConsoleApp1.Dao.Interface.Operate
 {
-    public interface IDeleteable<T>  : IOperate
+    public interface IDeleteable<T>  : IExecuteCommand
     {
-
-
         IDeleteable<T> Where(Expression<Func<T, bool>> predicate);
 
         IDeleteable<T> Where(string whereExpression);

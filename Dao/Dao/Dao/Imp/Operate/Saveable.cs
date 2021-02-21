@@ -6,7 +6,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using ConsoleApp1.Dao.Common;
-using ConsoleApp1.Dao.Operate;
+using ConsoleApp1.Dao.Interface.Operate;
 using ConsoleApp1.Dao.visitor;
 using Dapper;
 
