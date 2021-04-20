@@ -2,7 +2,7 @@
 using System.Linq.Expressions;
 using System.Text;
 
-namespace DoCare.Zkzx.Core.Database.Interface.Command
+namespace XjjXmm.Core.Database.Interface.Command
 {
     interface IJoinCommand
     {

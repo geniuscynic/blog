@@ -1,24 +1,22 @@
-﻿using System;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using Microsoft.AspNetCore.Http;
 
-namespace DoCare.Extension.Filter
+namespace XjjXmm.Core.FrameWork.Filter
 {
     /// <summary>
     /// 全局异常错误日志
     /// </summary>
     public class GlobalExceptionsFilter : IExceptionFilter
     {
-        private readonly IWebHostEnvironment _env;
+      //  private readonly IWebHostEnvironment _env;
         private readonly ILogger<GlobalExceptionsFilter> _loggerHelper;
 
-        public GlobalExceptionsFilter(IWebHostEnvironment env, ILogger<GlobalExceptionsFilter> loggerHelper)
+        public GlobalExceptionsFilter(ILogger<GlobalExceptionsFilter> loggerHelper)
         {
-            _env = env;
+            //_env = env;
             _loggerHelper = loggerHelper;
         }
 
@@ -33,10 +31,10 @@ namespace DoCare.Extension.Filter
                 json.Message = json.Message.Replace(errorAudit, $"（若新添加服务，需要重新编译项目）{errorAudit}");
             }
 
-            if (_env.IsDevelopment())
-            {
+           // if (_env.IsDevelopment())
+           // {
                 json.DevelopmentMessage = context.Exception.StackTrace;//堆栈信息
-            }
+          //  }
             context.Result = new InternalServerErrorObjectResult(json);
 
 

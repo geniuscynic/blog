@@ -4,10 +4,10 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using DoCare.Zkzx.Core.Database.Interface.Command;
-using DoCare.Zkzx.Core.Database.Utility;
+using XjjXmm.Core.Database.Interface.Command;
+using XjjXmm.Core.Database.Utility;
 
-namespace DoCare.Zkzx.Core.Database.Imp.Command.MsSql
+namespace XjjXmm.Core.Database.Imp.Command.MsSql
 {
     public class MsSqlReaderableCommand<T> : ReaderableCommand<T>
     {

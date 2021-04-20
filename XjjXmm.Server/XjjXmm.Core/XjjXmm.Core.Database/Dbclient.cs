@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using DoCare.Zkzx.Core.Database.Imp.Operate;
-using DoCare.Zkzx.Core.Database.Interface.Operate;
-using DoCare.Zkzx.Core.Database.Utility;
+using XjjXmm.Core.Database.Imp.Operate;
+using XjjXmm.Core.Database.Interface.Operate;
+using XjjXmm.Core.Database.Utility;
+using XjjXmm.Core.Database.Utility;
 
-namespace DoCare.Zkzx.Core.Database
+namespace XjjXmm.Core.Database
 {
     public class Dbclient : IDisposable
     {

@@ -6,14 +6,14 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using DoCare.Zkzx.Core.Database.Imp.Command;
-using DoCare.Zkzx.Core.Database.Imp.Command.MsSql;
-using DoCare.Zkzx.Core.Database.Interface.Command;
-using DoCare.Zkzx.Core.Database.Interface.Operate;
-using DoCare.Zkzx.Core.Database.SqlProvider;
-using DoCare.Zkzx.Core.Database.Utility;
+using XjjXmm.Core.Database.Imp.Command;
+using XjjXmm.Core.Database.Imp.Command.MsSql;
+using XjjXmm.Core.Database.Interface.Command;
+using XjjXmm.Core.Database.Interface.Operate;
+using XjjXmm.Core.Database.SqlProvider;
+using XjjXmm.Core.Database.Utility;
 
-namespace DoCare.Zkzx.Core.Database.Imp.Operate
+namespace XjjXmm.Core.Database.Imp.Operate
 {
     public abstract class Queryable<T> : BaseOperate, IDoCareQueryable<T>
     {

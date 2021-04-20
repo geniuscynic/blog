@@ -5,9 +5,9 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace DoCare.Zkzx.Core.Database.Utility
+namespace XjjXmm.Core.Database.Utility
 {
-    static class ProviderHelper
+    internal static class ProviderHelper
     {
         public static (string tableName, IEnumerable<Member> members) GetMetas(Type type)
         {

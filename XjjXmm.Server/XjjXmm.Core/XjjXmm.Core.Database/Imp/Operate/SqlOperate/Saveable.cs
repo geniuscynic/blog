@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
+namespace XjjXmm.Core.Database.Imp.Operate.SqlOperate
 {
     public class SqlSaveable<T, TEntity>  : Saveable<T, TEntity>
     {

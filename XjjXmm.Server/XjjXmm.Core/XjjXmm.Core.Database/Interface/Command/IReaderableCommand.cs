@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace DoCare.Zkzx.Core.Database.Interface.Command
+namespace XjjXmm.Core.Database.Interface.Command
 {
     public interface IReaderableCommand
     {

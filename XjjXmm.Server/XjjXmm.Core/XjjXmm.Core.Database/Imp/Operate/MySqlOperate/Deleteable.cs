@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
+namespace XjjXmm.Core.Database.Imp.Operate.MySqlOperate
 {
     public class MySqlDeleteable<T> : Deleteable<T>
     {

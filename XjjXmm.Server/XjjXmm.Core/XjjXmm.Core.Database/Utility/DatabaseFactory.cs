@@ -2,19 +2,20 @@
 using System.Data;
 using System.Data.SqlClient;
 using System.Text;
-using DoCare.Zkzx.Core.Database.Imp.Command.MsSql;
-using DoCare.Zkzx.Core.Database.Imp.Command.MySql;
-using DoCare.Zkzx.Core.Database.Imp.Command.Oracle;
-using DoCare.Zkzx.Core.Database.Imp.Operate;
-using DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate;
-using DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate;
-using DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate;
-using DoCare.Zkzx.Core.Database.Interface.Command;
-using DoCare.Zkzx.Core.Database.Interface.Operate;
+using XjjXmm.Core.Database.Imp.Command.MsSql;
+using XjjXmm.Core.Database.Imp.Command.MySql;
+using XjjXmm.Core.Database.Imp.Command.Oracle;
+using XjjXmm.Core.Database.Imp.Operate;
+using XjjXmm.Core.Database.Imp.Operate.MySqlOperate;
+using XjjXmm.Core.Database.Imp.Operate.OracleOperate;
+using XjjXmm.Core.Database.Imp.Operate.SqlOperate;
+using XjjXmm.Core.Database.Interface.Command;
+using XjjXmm.Core.Database.Interface.Operate;
+using XjjXmm.Core.Database.Utility;
 using MySql.Data.MySqlClient;
 using Oracle.ManagedDataAccess.Client;
 
-namespace DoCare.Zkzx.Core.Database.Utility
+namespace XjjXmm.Core.Database.Utility
 {
     public class DatabaseFactory
     {

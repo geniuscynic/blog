@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
-using DoCare.Zkzx.Core.Database.Utility;
+using XjjXmm.Core.Database.Utility;
 
 
-namespace DoCare.Zkzx.Core.Database.SqlProvider
+namespace XjjXmm.Core.Database.SqlProvider
 {
 
     public class WhereProvider : ExpressionVisitor

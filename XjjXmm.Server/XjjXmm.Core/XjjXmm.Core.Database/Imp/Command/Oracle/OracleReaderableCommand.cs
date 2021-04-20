@@ -3,9 +3,9 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using DoCare.Zkzx.Core.Database.Utility;
+using XjjXmm.Core.Database.Utility;
 
-namespace DoCare.Zkzx.Core.Database.Imp.Command.Oracle
+namespace XjjXmm.Core.Database.Imp.Command.Oracle
 {
     public class OracleReaderableCommand<T> : ReaderableCommand<T>
     {

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace DoCare.Extension.Common
+﻿namespace XjjXmm.Core.FrameWork.Common
 {
    
     /// <summary>
@@ -13,24 +9,24 @@ namespace DoCare.Extension.Common
 
         public BussinessModel(T response)
         {
-            this.response = response;
+            this.Response = response;
         }
         /// <summary>
         /// 状态码
         /// </summary>
-        public int status { get; set; } = 200;
+        public int Status { get; set; } = 200;
         /// <summary>
         /// 操作是否成功
         /// </summary>
-        public bool success { get; set; } = true;
+        public bool Success { get; set; } = true;
         /// <summary>
         /// 返回信息
         /// </summary>
-        public string msg { get; set; } = "";
+        public string Message { get; set; } = "";
         /// <summary>
         /// 返回数据集合
         /// </summary>
-        public T response { get; set; }
+        public T Response { get; set; }
 
     }
 }
