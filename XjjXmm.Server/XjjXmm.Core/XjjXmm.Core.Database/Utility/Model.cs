@@ -4,7 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
 
-namespace XjjXmm.Core.Database.Utility
+namespace DoCare.Zkzx.Core.Database.Utility
 {
 
     public enum DatabaseProvider

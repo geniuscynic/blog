@@ -3,9 +3,9 @@ using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.Imp.Command.MySql
+namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
 {
     public class MySqlReaderableCommand<T> : ReaderableCommand<T>
     {

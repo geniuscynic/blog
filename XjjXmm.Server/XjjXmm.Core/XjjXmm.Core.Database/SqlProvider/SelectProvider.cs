@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.SqlProvider
+namespace DoCare.Zkzx.Core.Database.SqlProvider
 {
 
     public class SelectProvider : ExpressionVisitor

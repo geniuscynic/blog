@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace XjjXmm.Core.Database.Utility
+namespace DoCare.Zkzx.Core.Database.Utility
 {
     public class Aop
     {

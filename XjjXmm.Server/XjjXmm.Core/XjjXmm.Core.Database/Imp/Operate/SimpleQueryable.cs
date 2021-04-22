@@ -2,11 +2,11 @@
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
-using XjjXmm.Core.Database.Interface.Command;
-using XjjXmm.Core.Database.Utility;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.Imp.Operate
+namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
     public class SimpleQueryable<T> :BaseOperate, IReaderableCommand<T>
     {

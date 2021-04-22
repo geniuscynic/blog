@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Data;
 using System.Text;
-using XjjXmm.Core.Database.Imp.Command.MySql;
-using XjjXmm.Core.Database.Interface.Command;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Imp.Command.MySql;
+using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.Imp.Operate.MySqlOperate
+namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
     public class MySqlQueryable<T> : Queryable<T>
     {

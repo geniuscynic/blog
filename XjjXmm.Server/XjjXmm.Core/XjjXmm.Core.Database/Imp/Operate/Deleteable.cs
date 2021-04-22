@@ -5,12 +5,12 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
-using XjjXmm.Core.Database.Imp.Command;
-using XjjXmm.Core.Database.Interface.Command;
-using XjjXmm.Core.Database.Interface.Operate;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Imp.Command;
+using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.Interface.Operate;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.Imp.Operate
+namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
     public class Deleteable<T> : BaseOperate, IDeleteable<T>
     {

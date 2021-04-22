@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace XjjXmm.Core.Database.Imp.Operate.SqlOperate
+namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
     public class SqlDeleteable<T> : Deleteable<T>
     {

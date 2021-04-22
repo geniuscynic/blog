@@ -2,10 +2,10 @@
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
-using XjjXmm.Core.Database.Interface.Command;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.Imp.Command
+namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
     public class WriteableCommand : IWriteableCommand 
     {

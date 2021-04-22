@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 
-namespace XjjXmm.Core.Database.Utility
+namespace DoCare.Zkzx.Core.Database.Utility
 {
 //   public class TableDefind
 //    {

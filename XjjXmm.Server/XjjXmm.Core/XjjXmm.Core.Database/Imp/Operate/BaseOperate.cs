@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Data;
-using XjjXmm.Core.Database.Utility;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database.Imp.Operate
+namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
     public class BaseOperate
     {

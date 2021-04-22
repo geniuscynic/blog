@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-namespace XjjXmm.Core.Database.Imp.Operate.MySqlOperate
+namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
     public class MySqlUpdateable<T> : Updateable<T>
     {

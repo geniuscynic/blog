@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq.Expressions;
-using XjjXmm.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.Interface.Command;
 
-namespace XjjXmm.Core.Database.Interface.Operate
+namespace DoCare.Zkzx.Core.Database.Interface.Operate
 {
     public interface IDeleteable<T>  : IWriteableCommand
     {

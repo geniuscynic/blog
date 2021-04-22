@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using XjjXmm.Core.Database.Imp.Operate;
-using XjjXmm.Core.Database.Interface.Operate;
-using XjjXmm.Core.Database.Utility;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Imp.Operate;
+using DoCare.Zkzx.Core.Database.Interface.Operate;
+using DoCare.Zkzx.Core.Database.Utility;
 
-namespace XjjXmm.Core.Database
+namespace DoCare.Zkzx.Core.Database
 {
     public class Dbclient : IDisposable
     {
@@ -35,6 +34,11 @@ namespace XjjXmm.Core.Database
             //    },
 
             //};
+        }
+
+        public Dbclient(string connectionString, DatabaseProvider provider)
+        {
+            _connection = DatabaseFactory.CreateConnection(connectionString, provider);
         }
 
         public IInsertable<T> Insertable<T>(T model)

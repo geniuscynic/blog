@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
-using XjjXmm.Core.Database.Interface.Command;
-using XjjXmm.Core.Database.SqlProvider;
+using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 
 
-namespace XjjXmm.Core.Database.Imp.Command
+namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
     internal class OrderByCommand : IOrderByCommand
     {
