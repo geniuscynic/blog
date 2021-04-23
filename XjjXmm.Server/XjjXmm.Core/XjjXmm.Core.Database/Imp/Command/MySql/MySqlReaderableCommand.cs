@@ -21,7 +21,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
             var total = await _connection.ExecuteScalarAsync<int>(countSql, _sqlParameter);
 
             // _sql.Append($" offset {pageIndex} rows fetch next {pageSize} rows only");
-            _sql.Append($" limit {pageIndex * pageSize}, {pageSize}");
+            _sql.Append($" limit { (pageIndex - 1) * pageSize}, {pageSize}");
 
             var result = await EnumerableDelegate(async () => await _connection.QueryAsync<T>(_sql.ToString(), _sqlParameter));
 

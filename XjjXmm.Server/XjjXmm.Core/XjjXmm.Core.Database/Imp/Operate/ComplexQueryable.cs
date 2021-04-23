@@ -36,7 +36,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public IComplexQueryable<T, T2> LeftJoin<T2>(string alias, Expression<Func<T, T2, bool>> predicate)
         {
-            _provider.Join(alias, predicate);
+            _provider.LeftJoin(alias, predicate);
 
             return new ComplexQueryable<T, T2>(_provider);
         }
@@ -144,7 +144,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public IComplexQueryable<T1, T2, T3> LeftJoin<T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
         {
 
-            _provider.Join(alias, predicate);
+            _provider.LeftJoin(alias, predicate);
 
 
             return new ComplexQueryable<T1, T2, T3>(_provider);
@@ -204,7 +204,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             Expression<Func<T1, T2, T3, T4, bool>> predicate)
         {
 
-            _provider.Join(alias, predicate);
+            _provider.LeftJoin(alias, predicate);
 
 
             return new ComplexQueryable<T1, T2, T3, T4>(_provider);

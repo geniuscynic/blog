@@ -72,14 +72,14 @@ namespace DoCare.Zkzx.Core.Database
             return DatabaseFactory.CreateQueryable<T>(_connection, Aop);
         }
 
-        public SimpleQueryable<T> Queryable<T>(string sql)
+        public SimpleQueryable<T> Queryable<T>(string fullSql)
         {
-            return Queryable<T>(sql, new Dictionary<string, object>());
+            return Queryable<T>(fullSql, new Dictionary<string, object>());
         }
 
-        public SimpleQueryable<T> Queryable<T>(string sql, Dictionary<string, object> sqlParameter)
+        public SimpleQueryable<T> Queryable<T>(string fullSql, Dictionary<string, object> sqlParameter)
         {
-            return new SimpleQueryable<T>(_connection, sql, sqlParameter)
+            return new SimpleQueryable<T>(_connection, fullSql, sqlParameter)
             {
                 Aop = Aop
             };

@@ -11,7 +11,6 @@ using DoCare.Zkzx.Core.Database.Interface.Command;
 using DoCare.Zkzx.Core.Database.Interface.Operate;
 using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
-using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
@@ -63,7 +62,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
         {
             var joinCommand = new JoinCommand(alias, _providerModel);
-            joinCommand.Join(predicate);
+            joinCommand.LeftJoin(predicate);
 
             _joinSql.Append(joinCommand.Build<T2>());
         }
@@ -71,7 +70,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public void LeftJoin<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
         {
             var joinCommand = new JoinCommand(alias, _providerModel);
-            joinCommand.Join(predicate);
+            joinCommand.LeftJoin(predicate);
 
             _joinSql.Append(joinCommand.Build<T3>());
         }
@@ -79,7 +78,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public void LeftJoin<T1, T2, T3, T4>(string alias, Expression<Func<T1, T2, T3, T4, bool>> predicate)
         {
             var joinCommand = new JoinCommand(alias, _providerModel);
-            joinCommand.Join(predicate);
+            joinCommand.LeftJoin(predicate);
 
             _joinSql.Append(joinCommand.Build<T4>());
         }
@@ -268,6 +267,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize)
         {
+            if (pageIndex < 1)
+            {
+                throw new Exception("pageIndex 不能小于1页");
+            }
+
+            if (pageSize < 1)
+            {
+                throw new Exception("pageSize 不能小于1条");
+            }
+
             var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
 
             return await command.ToPageList(pageIndex, pageSize);

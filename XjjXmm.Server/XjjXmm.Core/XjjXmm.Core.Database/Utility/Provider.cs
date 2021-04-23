@@ -124,6 +124,32 @@ namespace DoCare.Zkzx.Core.Database.Utility
         }
 
 
+        public static Field VisitMember(MemberAssignment node)
+        {
+            MemberExpression nodeMemberExpression = node.Expression as MemberExpression;
+         
+
+            var prefix = (nodeMemberExpression.Expression as ParameterExpression)?.Name ?? "";
+            //var field = node.Member.Name;
+
+            var field = GetFieldName(nodeMemberExpression.Member.CustomAttributes);
+
+            if (string.IsNullOrWhiteSpace(field))
+            {
+                field = node.Member.Name;
+            }
+
+            
+
+
+            return new Field
+            {
+                ColumnName = field,
+                Prefix = prefix,
+                Parameter = node.Member.Name
+            };
+        }
+
         private static string GetFieldName(IEnumerable<CustomAttributeData> customAttributeDatas)
         {
             var attribute = customAttributeDatas.FirstOrDefault(t => t.AttributeType == typeof(ColumnAttribute));

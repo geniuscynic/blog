@@ -171,6 +171,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
         {
+            if (pageIndex < 1)
+            {
+                throw new Exception("pageIndex 不能小于1页");
+            }
+
+            if (pageSize < 1)
+            {
+                throw new Exception("pageSize 不能小于1条");
+            }
+
             var command = CreateReaderableCommand<T>(Connection, Build(), _providerModel.Parameter, Aop);
             //DatabaseFactory.CreateReaderableCommand<T>(Connection, Build(), _providerModel.Parameter, Aop);
 

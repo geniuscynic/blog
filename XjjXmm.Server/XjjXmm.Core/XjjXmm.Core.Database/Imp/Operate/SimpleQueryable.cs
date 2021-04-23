@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Text;
 using System.Threading.Tasks;
@@ -60,6 +61,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
         {
+            if (pageIndex < 1)
+            {
+                throw new Exception("pageIndex 不能小于1页");
+            }
+
+            if (pageSize < 1)
+            {
+                throw new Exception("pageSize 不能小于1条");
+            }
+
             var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
 
             return await command.ToPageList(pageIndex, pageSize);

@@ -50,29 +50,45 @@ namespace DoCare.Zkzx.Core.Database
                 throw new Exception("参数不能为空");
             }
 
-            var property = typeof(T).GetProperties().Where(t =>
+            PropertyInfo property = null;
+            var colunm = "";
+            foreach (var t in typeof(T).GetProperties())
             {
                 var customAttribute = t.GetCustomAttribute<ColumnAttribute>();
-                return customAttribute?.IsPrimaryKey ?? false;
 
-            }).SingleOrDefault();
+                if (customAttribute?.IsPrimaryKey == true)
+                {
+                    property = t;
+                    colunm = customAttribute.ColumnName;
+                    break;
+                    
+                }
+            }
+
+
+            //var property = typeof(T).GetProperties().Where(t =>
+            //{
+            //    var customAttribute = t.GetCustomAttribute<ColumnAttribute>();
+            //    return customAttribute?.IsPrimaryKey ?? false;
+
+            //}).SingleOrDefault();
 
             var sql = "";
 
             if (property?.PropertyType == typeof(int))
             {
-                sql = $"{property?.Name} = {int.Parse(id)}";
+                sql = $"{colunm} = {int.Parse(id)}";
             }
             else if (property?.PropertyType == typeof(string))
             {
-                sql = $"{property?.Name} = '{id}'";
+                sql = $"{colunm} = '{id}'";
             }
             else
             {
                 throw new Exception("不支持的主键类型");
             }
 
-            return await _dbclient.Queryable<T>(sql).ExecuteSingleOrDefault();
+            return await _dbclient.Queryable<T>().Where(sql).ExecuteSingleOrDefault();
         }
 
         public async Task<IEnumerable<T>> Query(Expression<Func<T, bool>> whereExpression)

@@ -84,6 +84,12 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
         public StringBuilder Build(bool ignorePrefix = true)
         {
             var sql = new StringBuilder();
+
+            if (_whereCause.Length == 0 && _whereProvider.whereModel.Sql.Length == 0)
+            {
+                return sql;
+            }
+
             sql.Append(" where ");
 
             sql.Append(_whereCause);

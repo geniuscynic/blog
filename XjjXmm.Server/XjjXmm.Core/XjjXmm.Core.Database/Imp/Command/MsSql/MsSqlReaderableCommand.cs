@@ -22,7 +22,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.MsSql
 
             var total = await _connection.ExecuteScalarAsync<int>(countSql, _sqlParameter);
 
-            _sql.Append($" offset {pageIndex} rows fetch next {pageSize} rows only");
+            _sql.Append($" offset {(pageIndex - 1) * pageSize} rows fetch next {pageSize} rows only");
 
             var result = await EnumerableDelegate(async () => await _connection.QueryAsync<T>(_sql.ToString(), _sqlParameter));
 

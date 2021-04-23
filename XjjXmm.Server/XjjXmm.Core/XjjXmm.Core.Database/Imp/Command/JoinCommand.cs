@@ -15,13 +15,15 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
        // private readonly ProviderModel _providerModel;
         private readonly Dictionary<string, object> _sqlPamater;
         private readonly WhereProvider _joinProvider;
-        
+        private readonly WhereProvider _leftJoinProvider;
+
         public JoinCommand(string alias, ProviderModel providerModel)
         {
             _alias = alias;
             //this._providerModel = _providerModel;
            // _sqlPamater = sqlPamater;
             _joinProvider = new WhereProvider(providerModel);
+            _leftJoinProvider = new WhereProvider(providerModel);
         }
 
 
@@ -42,17 +44,17 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         public void LeftJoin<T1, T2>(Expression<Func<T1, T2, bool>> predicate)
         {
-            _joinProvider.Visit(predicate);
+            _leftJoinProvider.Visit(predicate);
         }
 
         public void LeftJoin<T1, T2, T3>(Expression<Func<T1, T2, T3, bool>> predicate)
         {
-            _joinProvider.Visit(predicate);
+            _leftJoinProvider.Visit(predicate);
         }
 
         public void LeftJoin<T1, T2, T3, T4>(Expression<Func<T1, T2, T3, T4, bool>> predicate)
         {
-            _joinProvider.Visit(predicate);
+            _leftJoinProvider.Visit(predicate);
         }
 
         
@@ -65,15 +67,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             if (_joinProvider.whereModel.Sql.Length > 0)
             {
                 sql.Append($" join {tableName} {_alias} on ");
-
+                sql.Append(_joinProvider.whereModel.Sql);
             }
-            else
+
+            if (_leftJoinProvider.whereModel.Sql.Length > 0)
             {
                 sql.Append($" left join {tableName} {_alias} on ");
-
+                sql.Append(_leftJoinProvider.whereModel.Sql);
             }
 
-            sql.Append(_joinProvider.whereModel.Sql);
+            
             //sql.Remove(sql.Length - 3, 3);
 
             //foreach (var keyValuePair in _joinProvider.whereModel.Parameter)
