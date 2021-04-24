@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
 
 
 namespace Permission.Entity
@@ -10,6 +10,7 @@ namespace Permission.Entity
     /// <summary>
     /// 用户类
     /// </summary>
+    [Table("BlogUser")]
     public class User
     {
         [Column(IsPrimaryKey = true)]
@@ -36,22 +37,24 @@ namespace Permission.Entity
         /// <summary>
         /// 最后登入时间
         /// </summary>
-        public DateTime LoginTime { get; set; }
+        public DateTime? LoginTime { get; set; }
 
         /// <summary>
         /// 创建时间
         /// </summary>
-        public string CreateTime { get; set; }
+        [Column(IgnoreSave = true)]
+        public DateTime CreateTime { get; set; }
 
         /// <summary>
         /// 创建人
         /// </summary>
+        [Column(IgnoreSave = true)]
         public string CreateBy { get; set; }
 
         /// <summary>
         /// 修改时间
         /// </summary>
-        public string UpdatedTime { get; set; }
+        public DateTime UpdatedTime { get; set; }
 
         /// <summary>
         /// 修改人
@@ -62,6 +65,7 @@ namespace Permission.Entity
         /// <summary>
         ///  0 删除， 1 正常状态
         /// </summary>
+        [Column(IgnoreSave = true)]
         public int Status { get; set; } = 1;
 
         

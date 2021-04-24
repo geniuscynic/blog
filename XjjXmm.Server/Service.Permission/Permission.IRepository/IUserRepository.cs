@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DoCare.Zkzx.Core.Database;
 using Permission.Entity;
-using XjjXmm.Core.FrameWork.Repository;
 
 namespace Permission.IRepository
 {

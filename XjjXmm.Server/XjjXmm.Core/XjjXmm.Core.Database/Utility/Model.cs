@@ -54,6 +54,8 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public bool Ignore { get; set; }
 
+        public bool IgnoreSave { get; set; }
+
     }
 
     public class Member
@@ -61,9 +63,12 @@ namespace DoCare.Zkzx.Core.Database.Utility
         public bool IsIdentity { get; set; } = false;
         public bool IsPrimaryKey { get; set; } = false;
 
+        public bool IgnoreSave { get; set; } = false;
+
         public string ColumnName { get; set; }
 
         public string Parameter { get; set; }
+
 
         public PropertyInfo PropertyInfo { get; set; }
 

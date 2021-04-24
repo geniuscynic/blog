@@ -15,27 +15,28 @@ namespace Permission.IService
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
-        Task<BussinessModel<UserModel>> FindUserByLoginPassword(LoginModel loginModel);
+        Task<BussinessModel<UserModel>> FindUser(LoginModel loginModel);
 
         /// <summary>
         /// 添加用户
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        Task<BussinessModel<bool>> AddRole(UserModel userModel);
-
-        /// <summary>
-        /// 添加用户
-        /// </summary>
-        /// <param name="userModel"></param>
-        /// <returns></returns>
-        Task<BussinessModel<bool>> AddUser(UserModel userModel);
+        Task<BussinessModel<UserModel>> AddUser(AddUserModel userModel);
 
         /// <summary>
         /// 修改用户
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        Task<BussinessModel<bool>> EditUser(UserModel userModel);
+        Task<BussinessModel<UserModel>> EditUser(EditUserModel userModel);
+
+
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="userModel"></param>
+        /// <returns></returns>
+        Task<BussinessModel<RoleModel>> AddRole(RoleModel userModel);
     }
 }

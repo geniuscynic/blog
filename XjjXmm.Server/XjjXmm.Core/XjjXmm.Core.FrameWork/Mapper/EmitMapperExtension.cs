@@ -17,6 +17,8 @@ namespace XjjXmm.Core.FrameWork.Mapper
         /// <returns>映射结果</returns>
         public static T MapTo<S, T>(this S source)
         {
+            if (source == null) return default;
+
             var mapper = ObjectMapperManager.DefaultInstance.GetMapper<S, T>();
             var result = mapper.Map(source);
             return result;
@@ -30,6 +32,8 @@ namespace XjjXmm.Core.FrameWork.Mapper
         /// <returns>映射结果</returns>
         public static IEnumerable<T> MapTo<S, T>(this IEnumerable<S> sources)
         {
+            if (sources == null) return default;
+
             var mapper = ObjectMapperManager.DefaultInstance.GetMapper<S, T>();
             return mapper.MapEnum(sources);
         }

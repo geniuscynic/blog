@@ -24,10 +24,7 @@ namespace XjjXmm.Core.FrameWork.ToolKit
             catch (Exception e)
             {
                 
-                throw new BussinessException(new BussinessException.ErrCode()
-                {
-
-                });
+                throw BussinessException.CreateException(ExceptionCode.EmptyOrNullString, e);
             }
         }
     }

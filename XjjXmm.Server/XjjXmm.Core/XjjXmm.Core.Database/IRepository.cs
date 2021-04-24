@@ -15,6 +15,8 @@ namespace DoCare.Zkzx.Core.Database
 
         public Task<int> Save(IEnumerable<T> t);
 
+        public Task<int> Update<TResult>(Expression<Func<TResult>> setColunmExpression, Expression<Func<T, bool>> whereExpression);
+
 
         public Task<IEnumerable<T>> GetAll();
 

@@ -6,44 +6,63 @@ using System.Threading.Tasks;
 
 namespace XjjXmm.Core.FrameWork.Common
 {
-    public class ErrorCodeFactory
+
+    public enum ExceptionCode
     {
-        private Dictionary<int, ErrCode> errCodes = new Dictionary<int, ErrCode>()
-        {
-            { 0x01, new ErrCode(0x01, "字符串不能为空", "空字符串异常")},
-            { 0x02, new ErrCode(0x02, "key不存在", "key不存在异常")}
-        };
-        public ErrCode GetErrorCode(int code)
-        {
-            if (!errCodes.ContainsKey(code))
-            {
-                 throw new  BussinessException();
-            }
-            return errCodes[code];
-        }
+        EmptyOrNullString = 1,
+        KeyNotExist
     }
 
-    public class ErrCode
+    public class ExceptionModel
     {
-        public int Code { get;  }
-        public string Name { get;  }
-        public string Message { get;  }
+        public ExceptionCode Code { get; }
+        public string Name { get; }
+        public string Message { get; set; }
 
-        public ErrCode(int code, string name, string message)
+        public ExceptionModel(ExceptionCode code, string name, string message)
         {
-            this.Code = code;
-            this.Name = name;
-            this.Message = message;
+            Code = code;
+            Name = name;
+            Message = message;
         }
     }
 
     public class BussinessException : Exception
     {
-        public ErrCode Code { get; }
+        public ExceptionModel ExceptionModel { get; set; }
 
-        public BussinessException(int errCode, Exception innerException = null) : base(errCode.Message, innerException)
+        private BussinessException(ExceptionModel exceptionModel, Exception innerException = null) : base(exceptionModel.Message, innerException)
         {
-            Code = errCode;
+            this.ExceptionModel = exceptionModel;
+        }
+
+        private static Dictionary<ExceptionCode, ExceptionModel> errCodes = new Dictionary<ExceptionCode, ExceptionModel>()
+        {
+            { ExceptionCode.EmptyOrNullString, new ExceptionModel(ExceptionCode.EmptyOrNullString, "字符串不能为空", "空字符串异常")},
+            { ExceptionCode.KeyNotExist, new ExceptionModel(ExceptionCode.KeyNotExist, "key不存在", "key不存在异常")}
+        };
+
+        public static BussinessException CreateException(ExceptionCode code, Exception innerException)
+        {
+            return CreateException(code, "", innerException);
+        }
+
+        public static BussinessException CreateException(ExceptionCode code, string errorMessage = "",
+            Exception innerException = null)
+        {
+            if (!errCodes.ContainsKey(code))
+            {
+                throw BussinessException.CreateException(ExceptionCode.KeyNotExist);
+            }
+
+            var errorCode = errCodes[code];
+            if (!string.IsNullOrWhiteSpace(errorMessage))
+            {
+                errorCode.Message = errorMessage;
+            }
+
+            return new BussinessException(errorCode);
+
         }
     }
 }

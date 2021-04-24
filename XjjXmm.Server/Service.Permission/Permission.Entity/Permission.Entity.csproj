@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\XjjXmm.Core\XjjXmm.Core.Database\XjjXmm.Core.Database.csproj" />
+    <ProjectReference Include="..\..\XjjXmm.Core\XjjXmm.Core.Database\DoCare.Zkzx.Core.Database.csproj" />
   </ItemGroup>
 
 </Project>

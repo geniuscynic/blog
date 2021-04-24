@@ -1,4 +1,4 @@
-﻿using XjjXmm.Core.Database.Utility;
+﻿using DoCare.Zkzx.Core.Database.Utility;
 
 namespace Permission.Entity
 {

@@ -38,6 +38,11 @@ namespace DoCare.Zkzx.Core.Database
             return await _dbclient.Saveable(t).Execute();
         }
 
+        public async Task<int> Update<TResult>(Expression<Func<TResult>> setColunmExpression, Expression<Func<T, bool>> whereExpression)
+        {
+            return await _dbclient.Updateable<T>().SetColumns(setColunmExpression).Where(whereExpression).Execute();
+        }
+
         public async Task<IEnumerable<T>> GetAll()
         {
             return await _dbclient.Queryable<T>().ExecuteQuery();

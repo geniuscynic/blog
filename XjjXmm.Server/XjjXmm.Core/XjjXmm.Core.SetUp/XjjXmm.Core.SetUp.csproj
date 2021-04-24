@@ -23,7 +23,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\XjjXmm.Core.FrameWork\XjjXmm.Core.FrameWork.csproj" />
-    <ProjectReference Include="..\XjjXmm.Core.ToolKit\XjjXmm.Core.ToolKit.csproj" />
+  
   </ItemGroup>
 
 </Project>

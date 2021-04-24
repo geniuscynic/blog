@@ -31,7 +31,7 @@ namespace XjjXmm.Core.SetUp.Swagger
 
                 });
 
-                c.CustomSchemaIds(t=>t.FullName);
+                //c.CustomSchemaIds(t=>t.FullName);
 
                 c.OrderActionsBy(o => o.RelativePath);
 

@@ -3,7 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Microsoft.Extensions.Logging;
+using Serilog;
+
 
 namespace XjjXmm.Core.FrameWork.Interceptor
 {
@@ -12,7 +13,7 @@ namespace XjjXmm.Core.FrameWork.Interceptor
     /// </summary>
     public class LogInterceptor : AsyncInterceptorBase
     {
-        public ILogger<LogInterceptor> logger { get; set; }
+        public ILogger logger { get; set; }
 
         public StringBuilder LogMessage = new StringBuilder();
         protected override void BeforeProceed(IInvocation invocation)
@@ -29,6 +30,8 @@ namespace XjjXmm.Core.FrameWork.Interceptor
             if (hasAsynResult)
             {
                 LogMessage.Append($"【执行完成结果】：{invocation.ReturnValue}");
+
+                logger.Information(LogMessage.ToString());
             }
 
             return Task.CompletedTask;
@@ -37,16 +40,18 @@ namespace XjjXmm.Core.FrameWork.Interceptor
         protected override void AfterProceedSync(IInvocation invocation)
         {
             LogMessage.Append($"【执行完成结果】：{invocation.ReturnValue}");
+
+            logger.Information(LogMessage.ToString());
         }
 
         protected override void ProceedException(IInvocation invocation, Exception ex)
         {
-            logger.LogError(WriteLog("AOP:" + invocation.Method.Name, ex));
+            logger.Error(WriteLog("AOP:" + invocation.Method.Name, ex));
         }
 
         private string WriteLog(string throwMsg, Exception ex)
         {
-            return string.Format("\r\n【自定义错误】：{0} \r\n【异常类型】：{1} \r\n【异常信息】：{2} \r\n【堆栈调用】：{3}", new object[] { throwMsg,
+            return string.Format("\r\n【自定义错误1】：{0} \r\n【异常类型】：{1} \r\n【异常信息】：{2} \r\n【堆栈调用】：{3}", new object[] { throwMsg,
                 ex.GetType().Name, ex.Message, ex.StackTrace });
         }
 

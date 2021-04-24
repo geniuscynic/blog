@@ -29,7 +29,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blog", "Blog", "{506FAADA-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Core", "Core", "{EB681905-6B4A-44B1-BE6F-0036FF73C94A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmm.Core.Database", "XjjXmm.Core\XjjXmm.Core.Database\XjjXmm.Core.Database.csproj", "{413540AB-6DBE-46C6-8782-0BA101148181}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoCare.Zkzx.Core.Database", "XjjXmm.Core\XjjXmm.Core.Database\DoCare.Zkzx.Core.Database.csproj", "{413540AB-6DBE-46C6-8782-0BA101148181}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmm.Core.FrameWork", "XjjXmm.Core\XjjXmm.Core.FrameWork\XjjXmm.Core.FrameWork.csproj", "{B9792EA5-C04F-4F84-9218-0292E2CF6150}"
 EndProject

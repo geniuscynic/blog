@@ -2,7 +2,8 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using XjjXmm.Core.Database.Utility;
+using DoCare.Zkzx.Core.Database.Utility;
+
 
 
 namespace Permission.Entity

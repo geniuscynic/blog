@@ -1,43 +1,85 @@
+using System;
+using System.Reflection;
+using Autofac;
+using DoCare.Zkzx.Core.Database;
+using DoCare.Zkzx.Core.Database.Utility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Autofac;
+using Newtonsoft.Json;
+using Serilog;
+using XjjXmm.Core.FrameWork.Interceptor;
 using XjjXmm.Core.SetUp;
 using XjjXmm.Core.SetUp.AutoFac;
+using XjjXmm.Core.SetUp.Configuration;
 using XjjXmm.Core.SetUp.Jwt;
 using XjjXmm.Core.SetUp.Swagger;
 
-namespace XjjXmm.Service.Permission
+namespace Permission.Api
 {
     public class Startup
     {
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+          
         }
 
         public IConfiguration Configuration { get; }
 
-       // private IServiceCollection Services { get; set; }
+       
+
+        // private IServiceCollection Services { get; set; }
 
         public void ConfigureContainer(ContainerBuilder containerBuilder)
         {
 
+            
+            
             containerBuilder.RegisterCommon(Configuration);
 
             
             
             containerBuilder.RegisterController(typeof(Startup).Assembly);
 
-           // Services.AddAuthorization();
+            
+
+            var connectionString = ConfigurationManager.Appsetting($"ConnectionStrings:User:connectionString");
+            var providerName = ConfigurationManager.Appsetting($"ConnectionStrings:User:providerName");
+
+            containerBuilder.Register<ILogger>(t =>
+            {
+                return Log.Logger;
+            });
+
+            containerBuilder.Register(c => new Dbclient(connectionString, providerName)
+                {
+                    Aop = new Aop()
+                    {
+                        OnError = (sql, paramter) =>
+                        {
+                            //Log.Information("Sql: \r\n{0}", sql);
+                            Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                            //Console.WriteLine(sql);
+                        },
+                        OnExecuting = (sql, paramter) =>
+                        {
+                            //Console.WriteLine(sql);
+                            Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                        },
+
+                    }
+                })
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
+
+            containerBuilder
+                .RegisterAssmblyAsImplementedInterfaces(Assembly.Load("Permission.Repository"))
+                .RegisterAssmblyAsSelf(Assembly.Load("Permission.Service"));
+            // Services.AddAuthorization();
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.

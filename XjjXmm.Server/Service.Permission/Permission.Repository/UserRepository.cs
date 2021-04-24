@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DoCare.Zkzx.Core.Database;
 using Permission.Entity;
 using Permission.IRepository;
-using XjjXmm.Core.Database;
-using XjjXmm.Core.FrameWork.Repository;
+
 
 namespace Permission.Repository
 {
-    public class UserRepository: Repository<User> , IUserRepository
+    public class UserRepository: Repository<User>, IUserRepository
     {
         public UserRepository(Dbclient dbclient) : base(dbclient)
         {

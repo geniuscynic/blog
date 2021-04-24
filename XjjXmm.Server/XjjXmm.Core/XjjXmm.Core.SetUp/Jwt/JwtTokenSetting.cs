@@ -1,6 +1,6 @@
 ﻿using System;
+using XjjXmm.Core.FrameWork.ToolKit;
 using XjjXmm.Core.SetUp.Configuration;
-using XjjXmm.Core.ToolKit;
 
 namespace XjjXmm.Core.SetUp.Jwt
 {

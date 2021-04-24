@@ -65,7 +65,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             }
             else
             {
-                existProperty = properties.Where(p => !p.IsPrimaryKey && _ignoreProvider.SelectFields.All(t => t.ColumnName != p.ColumnName));
+                existProperty = properties.Where(p => !p.IsPrimaryKey && !p.IgnoreSave && _ignoreProvider.SelectFields.All(t => t.ColumnName != p.ColumnName));
             }
 
             foreach (var p in existProperty)

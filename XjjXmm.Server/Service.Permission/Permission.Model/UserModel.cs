@@ -95,7 +95,7 @@ namespace Permission.Model
         /// <summary>
         /// 最后登入时间
         /// </summary>
-        public DateTime LoginTime { get; set; }
+        public DateTime? LoginTime { get; set; }
 
         /// <summary>
         /// 创建时间
@@ -121,7 +121,7 @@ namespace Permission.Model
         /// <summary>
         ///  0 删除， 1 正常状态
         /// </summary>
-        public int Status { get; set; } = 1;
+        //public int Status { get; set; } = 1;
 
 
     }
