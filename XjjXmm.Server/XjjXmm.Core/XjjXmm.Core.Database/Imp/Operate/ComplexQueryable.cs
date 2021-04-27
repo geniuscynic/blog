@@ -56,8 +56,6 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             return this;
         }
 
-       
-
         public IComplexQueryable<T> Where<TEntity>(string whereExpression, Expression<Func<TEntity>> predicate)
         {
             _provider.Where(whereExpression, predicate);
@@ -152,6 +150,14 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             return new ComplexQueryable<T1, T2, T3>(_provider);
         }
 
+        public new IComplexQueryable<T1, T2> Where(string whereExpression)
+        {
+            _provider.Where(whereExpression);
+
+            return this;
+        }
+
+
         public IComplexQueryable<T1, T2> Where(Expression<Func<T1, T2, bool>> predicate)
         {
             _provider.Where(predicate);
@@ -212,6 +218,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             return new ComplexQueryable<T1, T2, T3, T4>(_provider);
         }
 
+        public new IComplexQueryable<T1, T2, T3> Where(string whereExpression)
+        {
+            _provider.Where(whereExpression);
+
+            return this;
+        }
+
         public IComplexQueryable<T1, T2, T3> Where(Expression<Func<T1, T2, T3, bool>> predicate)
         {
             _provider.Where(predicate);
@@ -248,6 +261,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public ComplexQueryable(IQueryableProvider provider) : base(provider)
         {
             _provider = provider;
+        }
+
+        public new IComplexQueryable<T1, T2,T3,T4> Where(string whereExpression)
+        {
+            _provider.Where(whereExpression);
+
+            return this;
         }
 
         public IComplexQueryable<T1, T2, T3, T4> Where(Expression<Func<T1, T2, T3, T4, bool>> predicate)

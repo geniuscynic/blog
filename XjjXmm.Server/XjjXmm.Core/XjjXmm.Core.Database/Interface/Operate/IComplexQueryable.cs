@@ -81,6 +81,8 @@ namespace DoCare.Zkzx.Core.Database.Interface.Operate
 
         IComplexQueryable<T1, T2, T3> LeftJoin<T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate);
 
+        new IComplexQueryable<T1, T2> Where(string whereExpression);
+
         IComplexQueryable<T1, T2> Where(Expression<Func<T1, T2, bool>> predicate);
 
         //IComplexQueryable<T1, T2> Where(string whereExpression);
@@ -102,6 +104,8 @@ namespace DoCare.Zkzx.Core.Database.Interface.Operate
 
         IComplexQueryable<T1, T2, T3, T4> LeftJoin<T4>(string alias, Expression<Func<T1, T2, T3, T4, bool>> predicate);
 
+        new IComplexQueryable<T1, T2, T3> Where(string whereExpression);
+
         IComplexQueryable<T1, T2, T3> Where(Expression<Func<T1, T2, T3, bool>> predicate);
 
         //IComplexQueryable<T1, T2> Where(string whereExpression);
@@ -118,6 +122,8 @@ namespace DoCare.Zkzx.Core.Database.Interface.Operate
 
     public interface IComplexQueryable<T1, T2, T3, T4> : IComplexQueryable<T1, T2, T3>
     {
+        new IComplexQueryable<T1, T2, T3, T4> Where(string whereExpression);
+
         IComplexQueryable<T1, T2, T3, T4> Where(Expression<Func<T1, T2, T3, T4, bool>> predicate);
 
         //IComplexQueryable<T1, T2> Where(string whereExpression);
