@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
+using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database
 {
@@ -18,12 +19,15 @@ namespace DoCare.Zkzx.Core.Database
         public Task<int> Update<TResult>(Expression<Func<TResult>> setColunmExpression, Expression<Func<T, bool>> whereExpression);
 
 
+        public Task<int> Delete(Expression<Func<T, bool>> whereExpression);
+
         public Task<IEnumerable<T>> GetAll();
 
         public Task<T> Find(string id);
 
         public Task<IEnumerable<T>> Query(Expression<Func<T, bool>> whereExpression);
 
+        public Task<IEnumerable<T>> Query<TResult>(Expression<Func<T, bool>> whereExpression, Expression<Func<T, TResult>> orderBy, OrderByType orderByType = OrderByType.ASC);
 
         public Task<T> SingleOrDefault(Expression<Func<T, bool>> whereExpression);
 

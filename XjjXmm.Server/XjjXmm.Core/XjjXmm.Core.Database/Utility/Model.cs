@@ -21,6 +21,12 @@ namespace DoCare.Zkzx.Core.Database.Utility
         Inner
     }
 
+    public enum OrderByType
+    {
+        ASC,
+        DESC
+    }
+
     public class JoinInfo
     {
         //public JoinInfo(JoinType joinType, Expression<Func<>>)
@@ -83,6 +89,8 @@ namespace DoCare.Zkzx.Core.Database.Utility
         public string Prefix { get; set; }
 
         public string Express => !string.IsNullOrEmpty(Prefix) ? $"{Prefix}.{ColumnName}" : ColumnName;
+
+        public MethodCallExpression Expression { get; set; }
     }
 
     public class ProviderModel

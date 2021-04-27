@@ -160,7 +160,21 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
             provider.SelectFields.ForEach(t =>
             {
-                _selectField.Append($"{t.Prefix}.{t.ColumnName} as {t.Parameter},");
+                if (t.Expression != null)
+                {
+                    var result = SqlFunVisit.Visit(t.Expression, Connection);
+                    _selectField.Append($"{result} as {t.Parameter},");
+                }
+                else if (string.IsNullOrWhiteSpace(t.Prefix))
+                {
+                    _selectField.Append($"'{t.ColumnName}' as {t.Parameter},");
+                }
+                else
+                {
+                    _selectField.Append($"{t.Prefix}.{t.ColumnName} as {t.Parameter},");
+                }
+
+                
 
                 //prefix = t.Prefix;
             });

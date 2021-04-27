@@ -43,6 +43,11 @@ namespace DoCare.Zkzx.Core.Database
             return await _dbclient.Updateable<T>().SetColumns(setColunmExpression).Where(whereExpression).Execute();
         }
 
+        public async Task<int> Delete(Expression<Func<T, bool>> whereExpression)
+        {
+            return await _dbclient.Deleteable<T>().Where(whereExpression).Execute();
+        }
+
         public async Task<IEnumerable<T>> GetAll()
         {
             return await _dbclient.Queryable<T>().ExecuteQuery();
@@ -98,7 +103,29 @@ namespace DoCare.Zkzx.Core.Database
 
         public async Task<IEnumerable<T>> Query(Expression<Func<T, bool>> whereExpression)
         {
-            return await _dbclient.Queryable<T>().Where(whereExpression).ExecuteQuery();
+            var queryable = _dbclient.Queryable<T>().Where(whereExpression);
+           
+
+            return await queryable.ExecuteQuery();
+        }
+
+        public async Task<IEnumerable<T>> Query<TResult>(Expression<Func<T, bool>> whereExpression, Expression<Func<T, TResult>> orderBy = null, OrderByType orderByType = OrderByType.ASC)
+        {
+            var queryable = _dbclient.Queryable<T>().Where(whereExpression);
+            if (orderBy != null)
+            {
+                switch (orderByType)
+                {
+                    case OrderByType.ASC:
+                        queryable.OrderBy(orderBy);
+                        break;
+                    case OrderByType.DESC:
+                        queryable.OrderByDesc(orderBy);
+                        break;
+                }
+            }
+
+            return await queryable.ExecuteQuery();
         }
 
         public async Task<T> SingleOrDefault(Expression<Func<T, bool>> whereExpression)

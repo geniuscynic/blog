@@ -127,27 +127,56 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public static Field VisitMember(MemberAssignment node)
         {
-            MemberExpression nodeMemberExpression = node.Expression as MemberExpression;
-         
+            string field = "";
+            string prefix = "";
+            MethodCallExpression expression = null;
 
-            var prefix = (nodeMemberExpression.Expression as ParameterExpression)?.Name ?? "";
-            //var field = node.Member.Name;
+            if (node.Expression is MemberExpression)
+            {
 
-            var field = GetFieldName(nodeMemberExpression.Member.CustomAttributes);
+                MemberExpression nodeMemberExpression = node.Expression as MemberExpression;
+
+
+                prefix = (nodeMemberExpression.Expression as ParameterExpression)?.Name ?? "";
+                //var field = node.Member.Name;
+
+                field = GetFieldName(nodeMemberExpression.Member.CustomAttributes);
+
+                
+            }
+            else if(node.Expression is ConstantExpression)
+            {
+                var exp = node.Expression as ConstantExpression;
+                var value = exp.Value;
+                field = value.ToString();
+            }
+            else if (node.Expression is MethodCallExpression)
+            {
+                expression = node.Expression as MethodCallExpression;
+                //var value = exp.Value;
+                //field = value.ToString();
+            }
+            else 
+            {
+
+                var value = Expression.Lambda(node.Expression).Compile().DynamicInvoke();
+                field = value.ToString();
+            }
 
             if (string.IsNullOrWhiteSpace(field))
             {
                 field = node.Member.Name;
             }
 
-            
+
 
 
             return new Field
             {
                 ColumnName = field,
                 Prefix = prefix,
-                Parameter = node.Member.Name
+                Parameter = node.Member.Name,
+                Expression = expression
             };
         }
 

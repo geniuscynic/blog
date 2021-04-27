@@ -11,11 +11,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
     {
         private readonly IDbConnection _connection;
         private readonly string _sql;
-        private readonly Dictionary<string, object> _sqlParameter;
+        private readonly object _sqlParameter;
         private readonly Aop _aop;
 
 
-        public WriteableCommand(IDbConnection connection, string sql, Dictionary<string, object> sqlParameter, Aop aop)
+        public WriteableCommand(IDbConnection connection, string sql, Dictionary<string, object> sqlParameter, Aop aop):this(connection,sql,(object)sqlParameter, aop)
+        {
+           
+        }
+
+        public WriteableCommand(IDbConnection connection, string sql, object sqlParameter, Aop aop)
         {
             _connection = connection;
             _sql = sql;

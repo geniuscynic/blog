@@ -41,7 +41,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
                 columnList.Add(p.ColumnName);
                 parameterList.Add($"{_providerModel.DataParamterPrefix}{p.Parameter}");
-                _providerModel.Parameter.Add(p.Parameter, p.PropertyInfo.GetValue(_model));
+
+                //if (_model is IEnumerable<>)
+                //{
+
+                //}
+                //else
+                //{
+                //    _providerModel.Parameter.Add(p.Parameter, p.PropertyInfo.GetValue(_model));
+                //}
+                    
                 //Console.WriteLine("Name:{0} Value:{1}", p.Name, p.GetValue(_model));
             }
 
@@ -55,7 +64,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(Connection, Build().ToString(), _providerModel.Parameter, Aop);
+            var command = new WriteableCommand(Connection, Build().ToString(), _model, Aop);
           
             return await command.Execute();
         }

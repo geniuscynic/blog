@@ -97,6 +97,13 @@ namespace DoCare.Zkzx.Core.Database
         }
 
         
+        public IDbTransaction BeginTransaction()
+        {
+            return _connection.BeginTransaction();
+        }
+
+        //public ISqlFunc SqlFunc => DatabaseFactory.CreateSqlFunc(_connection);
+
 
         public IDbConnection GetConnection()
         {

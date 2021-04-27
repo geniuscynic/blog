@@ -56,6 +56,8 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             return this;
         }
 
+       
+
         public IComplexQueryable<T> Where<TEntity>(string whereExpression, Expression<Func<TEntity>> predicate)
         {
             _provider.Where(whereExpression, predicate);

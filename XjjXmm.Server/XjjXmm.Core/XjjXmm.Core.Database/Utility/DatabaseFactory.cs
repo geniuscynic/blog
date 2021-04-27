@@ -149,5 +149,14 @@ namespace DoCare.Zkzx.Core.Database.Utility
             };
         }
 
+        internal static ISqlFuncVisit CreateSqlFunc(IDbConnection dbConnection)
+        {
+            return dbConnection switch
+            {
+                SqlConnection _ => new OracleSqlFunc(),
+                _ => new OracleSqlFunc()
+            };
+        }
+
     }
 }
