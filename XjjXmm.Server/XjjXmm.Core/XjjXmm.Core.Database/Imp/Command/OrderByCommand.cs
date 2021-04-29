@@ -15,7 +15,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         private void VisitOrderBy(Expression predicate)
         {
-            var provider = new SelectProvider();
+            var provider = new OrderByProvider();
             provider.Visit(predicate);
 
             provider.SelectFields.ForEach(t =>
@@ -30,7 +30,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         public void VisitOrderByDesc(Expression predicate)
         {
-            var provider = new SelectProvider();
+            var provider = new OrderByProvider();
             provider.Visit(predicate);
 
             provider.SelectFields.ForEach(t =>
@@ -110,7 +110,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
         private string prefix = "";
         public void AscBy<TResult>(Expression<Func<T, TResult>> predicate)
         {
-            var provider = new SelectProvider();
+            var provider = new OrderByProvider();
             provider.Visit(predicate);
 
             provider.SelectFields.ForEach(t =>
@@ -124,7 +124,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         public void DescBy<TResult>(Expression<Func<T, TResult>> predicate)
         {
-            var provider = new SelectProvider();
+            var provider = new OrderByProvider();
             provider.Visit(predicate);
 
             provider.SelectFields.ForEach(t =>

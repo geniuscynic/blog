@@ -65,6 +65,16 @@ namespace DoCare.Zkzx.Core.Database.Utility
             };
         }
 
+        public static DatabaseProvider GetDbType(IDbConnection dbConnection)
+        {
+            return dbConnection switch
+            {
+                SqlConnection _ => DatabaseProvider.MsSql,
+                MySqlConnection _ => DatabaseProvider.MySql,
+                _ => DatabaseProvider.Oracle
+            };
+        }
+
 
         public static IInsertable<T> CreateInsertable<T, TEntity>(IDbConnection connection, TEntity model, Aop aop)
         {
@@ -156,6 +166,21 @@ namespace DoCare.Zkzx.Core.Database.Utility
                 SqlConnection _ => new OracleSqlFunc(),
                 _ => new OracleSqlFunc()
             };
+        }
+
+        internal static ISqlFuncVisit CreateSqlFunc(DatabaseProvider dbConnection)
+        {
+            return dbConnection switch
+            {
+                DatabaseProvider.Oracle => new OracleSqlFunc(),
+                _ => new OracleSqlFunc()
+            };
+
+            //return dbConnection switch
+            //{
+            //    DatabaseProvider.Oracle _ => new OracleSqlFunc(),
+            //    _ => new OracleSqlFunc()
+            //};
         }
 
     }

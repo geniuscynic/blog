@@ -36,8 +36,8 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             //DbPrefix = DatabaseFactory.GetStatementPrefix(connection);
 
             var dbPrefix = DatabaseFactory.GetStatementPrefix(connection);
-
-            _providerModel = new ProviderModel(dbPrefix, SqlParameter, start);
+            var dbType = DatabaseFactory.GetDbType(connection);
+            _providerModel = new ProviderModel(dbPrefix, SqlParameter, start, dbType);
         }
 
        

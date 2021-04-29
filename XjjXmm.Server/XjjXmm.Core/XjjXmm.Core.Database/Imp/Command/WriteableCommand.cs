@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
 using Dapper;
@@ -42,7 +43,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
                 return result;
             }
-            catch
+            catch(Exception ex)
             {
                 _aop?.OnError?.Invoke(_sql, _sqlParameter);
                 throw;

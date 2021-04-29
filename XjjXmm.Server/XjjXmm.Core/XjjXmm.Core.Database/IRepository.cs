@@ -25,6 +25,9 @@ namespace DoCare.Zkzx.Core.Database
 
         public Task<T> Find(string id);
 
+        public Task<IEnumerable<T>> Query<TResult>(Expression<Func<T, TResult>> orderBy, OrderByType orderByType = OrderByType.ASC);
+
+
         public Task<IEnumerable<T>> Query(Expression<Func<T, bool>> whereExpression);
 
         public Task<IEnumerable<T>> Query<TResult>(Expression<Func<T, bool>> whereExpression, Expression<Func<T, TResult>> orderBy, OrderByType orderByType = OrderByType.ASC);

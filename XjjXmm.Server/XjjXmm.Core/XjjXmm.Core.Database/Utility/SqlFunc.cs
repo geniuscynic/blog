@@ -21,26 +21,54 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
     public class SqlFunVisit
     {
-        public static string Visit(MethodCallExpression expression, IDbConnection connection)
+        private static string Visit(MethodCallExpression expression, ISqlFuncVisit visit)
         {
-            var sqlFunc = DatabaseFactory.CreateSqlFunc(connection);
+            var sqlFunc = visit;
 
             Type p = sqlFunc.GetType();
 
             MethodInfo m = p.GetMethod(expression.Method.Name);
 
-            var parms = new List<object>();
-            foreach (var expression1 in expression.Arguments)
+            switch (m?.Name)
             {
-                var field = ProviderHelper.VisitMember(expression1 as MemberExpression);
-                //var parameterExpression = (ParameterExpression) expression1;
-                parms.Add(field.Express);
-            }
+                case "Like":
 
-            if (m != null)
-                return m.Invoke(sqlFunc, parms.ToArray()).ToString();
+                    var p1 = ProviderHelper.VisitMember(expression.Arguments[0] as MemberExpression).Express;
+                    var p2 = Expression.Lambda(expression.Arguments[1]).Compile().DynamicInvoke();  
+
+                    return m.Invoke(sqlFunc, new []{ p1, p2 } ).ToString();
+                   
+                case "IsNull":
+                    var parms = new List<object>();
+                    foreach (var expression1 in expression.Arguments)
+                    {
+                        var field = ProviderHelper.VisitMember(expression1 as MemberExpression);
+                        //var parameterExpression = (ParameterExpression) expression1;
+                        parms.Add(field.Express);
+                    }
+
+                    return m.Invoke(sqlFunc, parms.ToArray()).ToString();
+                    
+            }
+           
 
             return "";
+        }
+
+        public static string Visit(MethodCallExpression expression, DatabaseProvider connection)
+        {
+            var sqlFunc = DatabaseFactory.CreateSqlFunc(connection);
+
+            
+
+            return Visit(expression, sqlFunc);
+        }
+
+        public static string Visit(MethodCallExpression expression, IDbConnection connection)
+        {
+            var sqlFunc = DatabaseFactory.CreateSqlFunc(connection);
+
+            return Visit(expression, sqlFunc);
         }
     }
     internal interface ISqlFuncVisit
@@ -59,7 +87,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public string Like(string p1, string p2)
         {
-            return $"{p1} like '{p2}'";
+            return $"{p1} like '%{p2}%'";
         }
     }
 }

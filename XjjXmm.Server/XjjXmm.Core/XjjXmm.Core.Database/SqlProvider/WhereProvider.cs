@@ -79,6 +79,21 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
             return base.VisitConstant(node);
         }
 
+        protected override Expression VisitMethodCall(MethodCallExpression node)
+        {
+           // var expression = node.Expression as MethodCallExpression;
+
+            var sql = SqlFunVisit.Visit(node, _providerModel.DbType);
+
+            //var sqlFunc = DatabaseFactory.CreateSqlFunc(_providerModel.DbType);
+
+            //var member = ProviderHelper.VisitMember(node);
+
+            //whereModel.Prefix = member.Prefix;
+            whereModel.Sql.Append(sql);
+            return node;
+        }
+
         protected override Expression VisitMember(MemberExpression node)
         {
             if (node.Expression is ParameterExpression)
@@ -89,6 +104,7 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
                 whereModel.Prefix = member.Prefix;
                 whereModel.Sql.Append(member.Express);
             }
+            
             else 
             {
               

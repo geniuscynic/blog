@@ -100,12 +100,14 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public readonly string DataParamterPrefix;
 
+        public readonly DatabaseProvider DbType;
 
-        public ProviderModel(string dataParamterPrefix, Dictionary<string, object> parameter, int start)
+        public ProviderModel(string dataParamterPrefix, Dictionary<string, object> parameter, int start, DatabaseProvider dbType)
         {
             this.DataParamterPrefix = dataParamterPrefix;
             this.Start = start;
             this.Parameter = parameter;
+            DbType = dbType;
         }
     }
 

@@ -101,6 +101,11 @@ namespace DoCare.Zkzx.Core.Database
             return await _dbclient.Queryable<T>().Where(sql).ExecuteSingleOrDefault();
         }
 
+        public async Task<IEnumerable<T>> Query<TResult>(Expression<Func<T, TResult>> orderBy, OrderByType orderByType = OrderByType.ASC)
+        {
+            return await this.Query(null, orderBy, orderByType);
+        }
+
         public async Task<IEnumerable<T>> Query(Expression<Func<T, bool>> whereExpression)
         {
             var queryable = _dbclient.Queryable<T>().Where(whereExpression);
@@ -111,7 +116,13 @@ namespace DoCare.Zkzx.Core.Database
 
         public async Task<IEnumerable<T>> Query<TResult>(Expression<Func<T, bool>> whereExpression, Expression<Func<T, TResult>> orderBy = null, OrderByType orderByType = OrderByType.ASC)
         {
-            var queryable = _dbclient.Queryable<T>().Where(whereExpression);
+            var queryable = _dbclient.Queryable<T>();
+
+            if (whereExpression != null)
+            {
+                queryable = queryable.Where(whereExpression);
+            }
+
             if (orderBy != null)
             {
                 switch (orderByType)
