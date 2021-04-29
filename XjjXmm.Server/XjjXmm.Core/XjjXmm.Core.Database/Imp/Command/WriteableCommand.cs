@@ -10,23 +10,26 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
     public class WriteableCommand : IWriteableCommand 
     {
-        private readonly IDbConnection _connection;
+        //private readonly DbInfo _dbInfo;
+        private readonly Lazy<IDbConnection> _connection;
         private readonly string _sql;
         private readonly object _sqlParameter;
         private readonly Aop _aop;
 
 
-        public WriteableCommand(IDbConnection connection, string sql, Dictionary<string, object> sqlParameter, Aop aop):this(connection,sql,(object)sqlParameter, aop)
+        public WriteableCommand(DbInfo dbInfo, string sql, Dictionary<string, object> sqlParameter):this(dbInfo, sql,(object)sqlParameter)
         {
-           
+            
         }
 
-        public WriteableCommand(IDbConnection connection, string sql, object sqlParameter, Aop aop)
+        public WriteableCommand(DbInfo dbInfo, string sql, object sqlParameter)
         {
-            _connection = connection;
+            _aop = dbInfo.Aop;
+            _connection = dbInfo.Connection;
+
             _sql = sql;
             _sqlParameter = sqlParameter;
-            _aop = aop;
+           
         }
 
         public async Task<int> Execute()
@@ -37,7 +40,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             {
                 _aop?.OnExecuting?.Invoke(_sql, _sqlParameter);
 
-                var result = await _connection.ExecuteAsync(_sql, _sqlParameter);
+                var result = await _connection.Value.ExecuteAsync(_sql, _sqlParameter);
 
                 _aop?.OnExecuted?.Invoke(_sql, _sqlParameter);
 

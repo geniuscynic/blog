@@ -21,7 +21,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         private readonly StringBuilder setSql = new StringBuilder();
 
 
-        public Updateable(IDbConnection connection) : base(connection)
+        public Updateable(DbInfo info) : base(info)
         {
             whereCommand = new WhereCommand(_providerModel);
         }
@@ -41,7 +41,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             {
                 var values = types.GetProperty(t.Parameter)?.GetValue(model);
 
-                setSql.Append($" {t.ColumnName} = {_providerModel.DataParamterPrefix}{t.Parameter},");
+                setSql.Append($" {t.ColumnName} = {_providerModel.DbInfo.StatementPrefix}{t.Parameter},");
 
                 _providerModel.Parameter[t.Parameter] = values;
             });
@@ -93,7 +93,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(Connection, Build().ToString(), _providerModel.Parameter, Aop);
+            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
 
             return await command.Execute();
         }

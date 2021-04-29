@@ -10,66 +10,48 @@ namespace DoCare.Zkzx.Core.Database
     public class Dbclient : IDisposable
     {
 
-        //public ILog logger { get; set; }
+        private DbInfo _builder;
 
-        private readonly IDbConnection _connection;
-
-        public Aop Aop { get; set; }
-        public Dbclient(string connectionString, string provider)
+      
+        public Dbclient(string connectionString, string provider, Aop aop = null)
         {
-            _connection = DatabaseFactory.CreateConnection(connectionString, provider);
-
-            //Aop = new Aop()
-            //{
-            //    OnError = (sql, paramter) =>
-            //    {
-                    
-            //        logger?.Error($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
-            //        //Console.WriteLine(sql);
-            //    },
-            //    OnExecuting = (sql, paramter) =>
-            //    {
-            //        //Console.WriteLine(sql);
-            //        logger?.InfoFormat("Sql: \r\n{0}", sql);
-            //    },
-
-            //};
+            _builder = new DbInfo(connectionString, provider, aop);
         }
 
-        public Dbclient(string connectionString, DatabaseProvider provider)
+        public Dbclient(string connectionString, DatabaseProvider provider, Aop aop = null)
         {
-            _connection = DatabaseFactory.CreateConnection(connectionString, provider);
+            _builder = new DbInfo(connectionString, provider, aop);
         }
 
         public IInsertable<T> Insertable<T>(T model)
         {
-            return DatabaseFactory.CreateInsertable<T, T>(_connection, model, Aop);
+            return DatabaseFactory.CreateInsertable<T, T>(_builder, model);
         }
 
         public IInsertable<T> Insertable<T>(IEnumerable<T> model)
         {
-            return DatabaseFactory.CreateInsertable<T, IEnumerable<T>>(_connection, model, Aop);
+            return DatabaseFactory.CreateInsertable<T, IEnumerable<T>>(_builder, model);
         }
 
         public ISaveable<T> Saveable<T>(T model)
         {
-            return DatabaseFactory.CreateSaveable<T, T>(_connection, model, Aop);
+            return DatabaseFactory.CreateSaveable<T, T>(_builder, model);
         }
 
         public ISaveable<T> Saveable<T>(List<T> model)
         {
-            return DatabaseFactory.CreateSaveable<T, List<T>>(_connection, model, Aop);
+            return DatabaseFactory.CreateSaveable<T, List<T>>(_builder, model);
         }
 
         public IUpdateable<T> Updateable<T>()
         {
-            return DatabaseFactory.CreateUpdateable<T>(_connection, Aop);
+            return DatabaseFactory.CreateUpdateable<T>(_builder.Connection, _builder.Aop);
         }
 
 
         public IDoCareQueryable<T> Queryable<T>()
         {
-            return DatabaseFactory.CreateQueryable<T>(_connection, Aop);
+            return DatabaseFactory.CreateQueryable<T>(_builder.Connection, _builder.Aop);
         }
 
         public SimpleQueryable<T> Queryable<T>(string fullSql)
@@ -79,27 +61,27 @@ namespace DoCare.Zkzx.Core.Database
 
         public SimpleQueryable<T> Queryable<T>(string fullSql, Dictionary<string, object> sqlParameter)
         {
-            return new SimpleQueryable<T>(_connection, fullSql, sqlParameter)
+            return new SimpleQueryable<T>(_builder.Connection, fullSql, sqlParameter)
             {
-                Aop = Aop
+                Aop = _builder.Aop
             };
         }
 
         public IComplexQueryable<T> ComplexQueryable<T>(string alias)
         {
-            return DatabaseFactory.CreateComplexQueryable<T>(_connection, Aop, alias);
+            return DatabaseFactory.CreateComplexQueryable<T>(_builder.Connection, _builder.Aop, alias);
         }
 
 
         public IDeleteable<T> Deleteable<T>()
         {
-            return DatabaseFactory.CreateDeleteable<T>(_connection, Aop);
+            return DatabaseFactory.CreateDeleteable<T>(_builder.Connection, _builder.Aop);
         }
 
         
         public IDbTransaction BeginTransaction()
         {
-            return _connection.BeginTransaction();
+            return _builder.Connection.Value.BeginTransaction();
         }
 
         //public ISqlFunc SqlFunc => DatabaseFactory.CreateSqlFunc(_connection);
@@ -107,12 +89,12 @@ namespace DoCare.Zkzx.Core.Database
 
         public IDbConnection GetConnection()
         {
-            return _connection;
+            return _builder.Connection.Value;
         }
 
         public void Dispose()
         {
-            _connection?.Dispose();
+            _builder.Connection?.Value.Dispose();
         }
     }
 }

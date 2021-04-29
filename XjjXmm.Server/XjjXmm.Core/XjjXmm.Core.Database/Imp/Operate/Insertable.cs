@@ -18,7 +18,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         protected readonly TEntity _model;
 
-        public Insertable(IDbConnection connection, TEntity model) : base(connection)
+        public Insertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter)
         {
             _model = model;
         }
@@ -30,7 +30,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
             var type = typeof(T);
            
-            var (tableName, properties) = Utility.ProviderHelper.GetMetas(type);
+            var (tableName, properties) = ProviderHelper.GetMetas(type);
 
             foreach (var p in properties)
             {
@@ -40,7 +40,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
                 }
 
                 columnList.Add(p.ColumnName);
-                parameterList.Add($"{_providerModel.DataParamterPrefix}{p.Parameter}");
+                parameterList.Add($"{_providerModel.DbInfo.StatementPrefix}{p.Parameter}");
 
                 //if (_model is IEnumerable<>)
                 //{
@@ -64,11 +64,12 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(Connection, Build().ToString(), _model, Aop);
+            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _model);
           
             return await command.Execute();
         }
 
-      
+
+        
     }
 }

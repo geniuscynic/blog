@@ -1,16 +1,12 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
 {
     public class OracleInsertable<T, TEntity>  : Insertable<T, TEntity>
     {
-       
-       
-        public OracleInsertable(IDbConnection connection, TEntity model) : base(connection, model)
+        public OracleInsertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter, model)
         {
-            
         }
-
-       
     }
 }

@@ -20,6 +20,39 @@ namespace DoCare.Zkzx.Core.Database.Utility
     public class DatabaseFactory
     {
 
+        public static IInsertable<T> CreateInsertable<T, TEntity>(DbInfo builder, TEntity model)
+        {
+            return builder.DbType switch
+            {
+                DatabaseProvider.MsSql => new SqlInsertable<T, TEntity>(builder, model),
+                DatabaseProvider.MySql => new MySqlInsertable<T, TEntity>(builder, model),
+                DatabaseProvider.Oracle => new OracleInsertable<T, TEntity>(builder, model),
+                _ => new Insertable<T, TEntity>(builder, model)
+            };
+        }
+
+        public static ISaveable<T> CreateSaveable<T, TEntity>(DbInfo builder, TEntity model)
+        {
+            return builder.DbType switch
+            {
+                DatabaseProvider.MsSql => new SqlSaveable<T, TEntity>(builder, model),
+                DatabaseProvider.MySql => new MySqlSaveable<T, TEntity>(builder, model),
+                DatabaseProvider.Oracle => new OracleSqlSaveable<T, TEntity>(builder, model),
+                _ => new Saveable<T, TEntity>(builder, model)
+            };
+        }
+
+        public static IUpdateable<T> CreateUpdateable<T>(DbInfo builder, Aop aop)
+        {
+            return builder.DbType switch
+            {
+                DatabaseProvider.MsSql => new SqlUpdateable<T>(builder),
+                DatabaseProvider.MySql => new MySqlUpdateable<T>(builder),
+                DatabaseProvider.Oracle => new OracleUpdateable<T>(builder),
+                _ => new Updateable<T>(builder)
+            };
+        }
+
         public static IDbConnection CreateConnection(string connectionString, DatabaseProvider provider)
         {
             if (provider == DatabaseProvider.MsSql)
@@ -76,39 +109,12 @@ namespace DoCare.Zkzx.Core.Database.Utility
         }
 
 
-        public static IInsertable<T> CreateInsertable<T, TEntity>(IDbConnection connection, TEntity model, Aop aop)
-        {
-            return connection switch
-            {
-                SqlConnection _ => new SqlInsertable<T, TEntity>(connection, model) { Aop = aop},
-                MySqlConnection _ => new MySqlInsertable<T, TEntity>(connection, model) { Aop = aop },
-                OracleConnection _ => new OracleInsertable<T, TEntity>(connection, model) { Aop = aop },
-                _ => new Insertable<T, TEntity>(connection, model) { Aop = aop }
-            };
-        }
+       
 
-        public static ISaveable<T> CreateSaveable<T, TEntity>(IDbConnection connection, TEntity model, Aop aop)
-        {
-            return connection switch
-            {
-                SqlConnection _ => new SqlSaveable<T, TEntity>(connection, model) { Aop = aop },
-                MySqlConnection _ => new MySqlSaveable<T, TEntity>(connection, model) { Aop = aop },
-                OracleConnection _ => new OracleSqlSaveable<T,TEntity>(connection, model) { Aop = aop },
-                _ => new Saveable<T,TEntity>(connection, model) { Aop = aop }
-            };
-        }
+       
 
 
-        public static IUpdateable<T> CreateUpdateable<T>(IDbConnection connection, Aop aop)
-        {
-            return connection switch
-            {
-                SqlConnection _ => new SqlUpdateable<T>(connection) { Aop = aop },
-                MySqlConnection _ => new MySqlUpdateable<T>(connection) { Aop = aop },
-                OracleConnection _ => new OracleUpdateable<T>(connection) { Aop = aop },
-                _ => new Updateable<T>(connection) { Aop = aop }
-            };
-        }
+        
 
         public static IDoCareQueryable<T> CreateQueryable<T>(IDbConnection connection, Aop aop)
         {

@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
@@ -6,10 +7,10 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
     {
        
         //private string sql = "insert into {0}  values ({1});";
-        public MySqlInsertable(IDbConnection connection, TEntity model):base(connection,model)
-        {
-            
-        }
 
+
+        public MySqlInsertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter, model)
+        {
+        }
     }
 }

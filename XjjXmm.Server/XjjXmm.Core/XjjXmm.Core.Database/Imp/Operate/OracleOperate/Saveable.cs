@@ -1,15 +1,12 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
 {
     public class OracleSqlSaveable<T, TEntity>  : Saveable<T, TEntity>
     {
-       
-
-        public OracleSqlSaveable(IDbConnection connection, TEntity model): base(connection, model)
+        public OracleSqlSaveable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {
-           
         }
-
     }
 }

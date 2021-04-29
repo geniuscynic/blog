@@ -23,9 +23,8 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         private readonly SelectProvider _selectProvider = new SelectProvider();
         private readonly SelectProvider _ignoreProvider = new SelectProvider();
 
-        
 
-        public Saveable(IDbConnection connection, TEntity model): base(connection)
+        public Saveable(DbInfo dbInfo, TEntity model): base(dbInfo)
         {
            
             _model = model;
@@ -70,7 +69,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
             foreach (var p in existProperty)
             {
-                sql.Append($" {p.ColumnName} = {_providerModel.DataParamterPrefix}{p.Parameter},");
+                sql.Append($" {p.ColumnName} = {_providerModel.DbInfo.StatementPrefix}{p.Parameter},");
                 _providerModel.Parameter.Add(p.Parameter, p.PropertyInfo.GetValue(_model));
             }
 
@@ -80,7 +79,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
             foreach (var member in properties.Where(t => t.IsPrimaryKey))
             {
-                sql.Append($" {member.ColumnName} = {_providerModel.DataParamterPrefix}{member.Parameter} and");
+                sql.Append($" {member.ColumnName} = {_providerModel.DbInfo.StatementPrefix}{member.Parameter} and");
                 _providerModel.Parameter.Add(member.Parameter, member.PropertyInfo.GetValue(_model));
             }
 
@@ -91,7 +90,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(Connection, Build().ToString(), _providerModel.Parameter, Aop);
+            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
 
             return await command.Execute();
         }

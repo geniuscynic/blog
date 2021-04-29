@@ -14,6 +14,27 @@ namespace DoCare.Zkzx.Core.Database.Utility
         MySql
     }
 
+    public static class DatabaseProviderExtension
+    {
+        public static DatabaseProvider ToDatabaseProvider(this string provider)
+        {
+            if (provider == DatabaseProvider.MsSql.ToString())
+            {
+                return DatabaseProvider.MsSql;
+            }
+            else if (provider == DatabaseProvider.MySql.ToString())
+            {
+                return DatabaseProvider.MySql;
+            }
+            else if (provider == DatabaseProvider.Oracle.ToString())
+            {
+                return DatabaseProvider.Oracle;
+            }
+
+            throw new  Exception($"无效的provider：${provider}");
+        }
+    }
+
 
     public enum JoinType
     {
@@ -95,19 +116,18 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
     public class ProviderModel
     {
-        public int Start;
-        public readonly Dictionary<string, object> Parameter;
+        internal DbInfo DbInfo { get; }
+        internal int Start { get; }
+        internal Dictionary<string, object> Parameter { get; }
 
-        public readonly string DataParamterPrefix;
 
-        public readonly DatabaseProvider DbType;
 
-        public ProviderModel(string dataParamterPrefix, Dictionary<string, object> parameter, int start, DatabaseProvider dbType)
+        internal ProviderModel(DbInfo dbClientParamter, Dictionary<string, object> parameter, int start)
         {
-            this.DataParamterPrefix = dataParamterPrefix;
+            DbInfo = dbClientParamter;
             this.Start = start;
             this.Parameter = parameter;
-            DbType = dbType;
+          
         }
     }
 
