@@ -13,18 +13,17 @@ using XjjXmm.Core.FrameWork.ToolKit;
 
 namespace Permission.Service
 {
-    [Intercept(typeof(LogInterceptor))]
-    public class AccountService //: IAccountService
+    public class RoleService //: IAccountService
     {
 
-        public IUserRepository UserRepository { get; set; }
+        public IRoleRepository RoleRepository { get; set; }
 
-        public async Task<BussinessModel<IEnumerable<UserModel>>> GetUser()
+        public async Task<BussinessModel<IEnumerable<RoleModel>>> GetRoles()
         {
-            var users = await UserRepository.GetAll();
+            var roles = await RoleRepository.GetAll();
 
 
-            return new BussinessModel<IEnumerable<UserModel>>(users.MapTo<User, UserModel>());
+            return new BussinessModel<IEnumerable<RoleModel>>(roles.MapTo<Role, RoleModel>());
         }
 
         public async Task<BussinessModel<UserModel>> AddUser(AddUserModel userModel)
@@ -70,7 +69,7 @@ namespace Permission.Service
 
             var result = await UserRepository.Update<User>(() => new User()
             {
-                Status = (int)status
+                Status = status.ToInt()
             },
                 u => u.Id == id) > 0;
 

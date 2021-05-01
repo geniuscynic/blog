@@ -16,7 +16,7 @@ namespace Permission.Api.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        public AccountService AccountService { get; set; }
+        public UserService AccountService { get; set; }
 
         [HttpGet]
         public async Task<BussinessModel<IEnumerable<UserModel>>> Get()

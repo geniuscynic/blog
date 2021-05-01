@@ -3,7 +3,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Castle.DynamicProxy;
-using Serilog;
+
+
 
 
 namespace XjjXmm.Core.FrameWork.Interceptor
@@ -13,7 +14,13 @@ namespace XjjXmm.Core.FrameWork.Interceptor
     /// </summary>
     public class LogInterceptor : AsyncInterceptorBase
     {
-        public ILogger logger { get; set; }
+        //public LogInterceptor(ILogger<LogInterceptor> _logger) 
+        public Logger logger { get; set; } 
+
+        public LogInterceptor(Logger logger)
+        {
+            this.logger = logger;
+        }
 
         public StringBuilder LogMessage = new StringBuilder();
         protected override void BeforeProceed(IInvocation invocation)
@@ -31,7 +38,7 @@ namespace XjjXmm.Core.FrameWork.Interceptor
             {
                 LogMessage.Append($"【执行完成结果】：{invocation.ReturnValue}");
 
-                logger.Information(LogMessage.ToString());
+                logger.Info(LogMessage.ToString());
             }
 
             return Task.CompletedTask;
@@ -41,7 +48,7 @@ namespace XjjXmm.Core.FrameWork.Interceptor
         {
             LogMessage.Append($"【执行完成结果】：{invocation.ReturnValue}");
 
-            logger.Information(LogMessage.ToString());
+            logger.Info(LogMessage.ToString());
         }
 
         protected override void ProceedException(IInvocation invocation, Exception ex)

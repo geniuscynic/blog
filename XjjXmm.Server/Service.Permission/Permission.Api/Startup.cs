@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json;
 using Serilog;
+using XjjXmm.Core.FrameWork;
 using XjjXmm.Core.FrameWork.Interceptor;
 using XjjXmm.Core.SetUp;
 using XjjXmm.Core.SetUp.AutoFac;
@@ -49,10 +50,7 @@ namespace Permission.Api
             var connectionString = ConfigurationManager.Appsetting($"ConnectionStrings:User:connectionString");
             var providerName = ConfigurationManager.Appsetting($"ConnectionStrings:User:providerName");
 
-            containerBuilder.Register<ILogger>(t =>
-            {
-                return Log.Logger;
-            });
+            containerBuilder.Register<Logger>(t => new Logger(Log.Logger)).AsSelf().PropertiesAutowired();
 
             containerBuilder.Register(c => new Dbclient(connectionString, providerName)
                 {
