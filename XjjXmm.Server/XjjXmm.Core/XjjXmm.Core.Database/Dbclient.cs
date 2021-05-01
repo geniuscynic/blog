@@ -45,13 +45,13 @@ namespace DoCare.Zkzx.Core.Database
 
         public IUpdateable<T> Updateable<T>()
         {
-            return DatabaseFactory.CreateUpdateable<T>(_builder.Connection, _builder.Aop);
+            return DatabaseFactory.CreateUpdateable<T>(_builder);
         }
 
 
         public IDoCareQueryable<T> Queryable<T>()
         {
-            return DatabaseFactory.CreateQueryable<T>(_builder.Connection, _builder.Aop);
+            return DatabaseFactory.CreateQueryable<T>(_builder);
         }
 
         public SimpleQueryable<T> Queryable<T>(string fullSql)
@@ -61,21 +61,18 @@ namespace DoCare.Zkzx.Core.Database
 
         public SimpleQueryable<T> Queryable<T>(string fullSql, Dictionary<string, object> sqlParameter)
         {
-            return new SimpleQueryable<T>(_builder.Connection, fullSql, sqlParameter)
-            {
-                Aop = _builder.Aop
-            };
+            return new SimpleQueryable<T>(_builder, fullSql, sqlParameter);
         }
 
         public IComplexQueryable<T> ComplexQueryable<T>(string alias)
         {
-            return DatabaseFactory.CreateComplexQueryable<T>(_builder.Connection, _builder.Aop, alias);
+            return DatabaseFactory.CreateComplexQueryable<T>(_builder, alias);
         }
 
 
         public IDeleteable<T> Deleteable<T>()
         {
-            return DatabaseFactory.CreateDeleteable<T>(_builder.Connection, _builder.Aop);
+            return DatabaseFactory.CreateDeleteable<T>(_builder);
         }
 
         
@@ -84,7 +81,7 @@ namespace DoCare.Zkzx.Core.Database
             return _builder.Connection.Value.BeginTransaction();
         }
 
-        //public ISqlFunc SqlFunc => DatabaseFactory.CreateSqlFunc(_connection);
+        //public ISqlFunc SqlFunc => DatabaseFactory.CreateSqlFunc(Connection);
 
 
         public IDbConnection GetConnection()

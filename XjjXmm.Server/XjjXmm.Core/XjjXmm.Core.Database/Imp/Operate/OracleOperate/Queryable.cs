@@ -9,17 +9,17 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
 {
     public class OracleQueryable<T> : Queryable<T>
     {
-        public OracleQueryable(IDbConnection connection):base(connection)
-        {
-            
 
+        public OracleQueryable(DbInfo dbInfo) : base(dbInfo)
+        {
         }
 
-
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(IDbConnection connection, StringBuilder sql,
-            Dictionary<string, object> sqlParameter, Aop aop)
+        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql,
+            Dictionary<string, object> sqlParameter)
         {
-            return new OracleReaderableCommand<TResult>(connection, sql, sqlParameter, aop);
+            return new OracleReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
         }
+
+        
     }
 }

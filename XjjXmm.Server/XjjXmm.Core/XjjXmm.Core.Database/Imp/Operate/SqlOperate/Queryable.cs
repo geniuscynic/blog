@@ -9,17 +9,17 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
     public class SqlQueryable<T> : Queryable<T>
     {
-        public SqlQueryable(IDbConnection connection):base(connection)
+        public SqlQueryable(DbInfo dbInfo) : base(dbInfo)
         {
-            
-
         }
 
 
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(IDbConnection connection, StringBuilder sql,
-            Dictionary<string, object> sqlParameter, Aop aop)
+        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql,
+            Dictionary<string, object> sqlParameter)
         {
-            return new MsSqlReaderableCommand<TResult>(connection, sql, sqlParameter, aop);
+            return new MsSqlReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
         }
+
+       
     }
 }

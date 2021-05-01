@@ -6,7 +6,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
     public class BaseOperate
     {
-        private readonly DbInfo _dbClientParamter;
+        private readonly DbInfo _dbInfo;
         
 
         //protected Dictionary<string, object> SqlParameter;
@@ -17,18 +17,18 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
        
 
-        public BaseOperate(DbInfo dbClientParamter) : this(dbClientParamter, new Dictionary<string, object>())
+        public BaseOperate(DbInfo dbInfo) : this(dbInfo, new Dictionary<string, object>())
         {
            
         }
 
 
-        public BaseOperate(DbInfo dbClientParamter, Dictionary<string, object> SqlParameter)
+        public BaseOperate(DbInfo dbInfo, Dictionary<string, object> SqlParameter)
         {
-            _dbClientParamter = dbClientParamter;
+            _dbInfo = dbInfo;
 
 
-            _providerModel = new ProviderModel(dbClientParamter, SqlParameter, start);
+            _providerModel = new ProviderModel(dbInfo, SqlParameter, start);
         }
 
 

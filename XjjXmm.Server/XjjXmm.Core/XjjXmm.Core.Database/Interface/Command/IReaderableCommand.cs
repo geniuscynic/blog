@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace DoCare.Zkzx.Core.Database.Interface.Command
@@ -31,5 +32,10 @@ namespace DoCare.Zkzx.Core.Database.Interface.Command
         Task<T> ExecuteSingleOrDefault();
 
         Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize);
+    }
+
+    public interface ICommandBuilder
+    {
+        IReaderableCommand<T> Build<T>(StringBuilder sql, Dictionary<string, object> sqlParameter);
     }
 }

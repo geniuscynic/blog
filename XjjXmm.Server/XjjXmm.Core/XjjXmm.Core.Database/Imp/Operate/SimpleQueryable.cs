@@ -14,47 +14,47 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
        
         private readonly string _sql;
 
-        public SimpleQueryable(IDbConnection connection, string sql) : this(connection, sql, new Dictionary<string, object>())
+        public SimpleQueryable(DbInfo info, string sql) : this(info, sql, new Dictionary<string, object>())
         {
            
         }
 
-        public SimpleQueryable(IDbConnection connection, string sql, Dictionary<string, object> sqlParameter) :base(connection, sqlParameter)
+        public SimpleQueryable(DbInfo info, string sql, Dictionary<string, object> sqlParameter) :base(info, sqlParameter)
         {
             _sql = sql;
         }
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
+            var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ExecuteQuery();
         }
 
         public async Task<T> ExecuteFirst()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
+            var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ExecuteFirst();
         }
 
         public async Task<T> ExecuteFirstOrDefault()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
+            var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ExecuteFirstOrDefault();
         }
 
         public async Task<T> ExecuteSingle()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
+            var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ExecuteSingle();
         }
 
         public async Task<T> ExecuteSingleOrDefault()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
+            var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ExecuteSingleOrDefault();
         }
@@ -71,7 +71,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
                 throw new Exception("pageSize 不能小于1条");
             }
 
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, new StringBuilder(_sql), _providerModel.Parameter, Aop);
+            var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ToPageList(pageIndex, pageSize);
 

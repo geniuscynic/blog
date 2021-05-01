@@ -9,7 +9,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
         //private string sql = "insert into {0}  values ({1});";
 
 
-        public MySqlInsertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter, model)
+        public MySqlInsertable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {
         }
     }

@@ -42,7 +42,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
             };
         }
 
-        public static IUpdateable<T> CreateUpdateable<T>(DbInfo builder, Aop aop)
+        public static IUpdateable<T> CreateUpdateable<T>(DbInfo builder)
         {
             return builder.DbType switch
             {
@@ -53,86 +53,20 @@ namespace DoCare.Zkzx.Core.Database.Utility
             };
         }
 
-        public static IDbConnection CreateConnection(string connectionString, DatabaseProvider provider)
+        public static IDoCareQueryable<T> CreateQueryable<T>(DbInfo info)
         {
-            if (provider == DatabaseProvider.MsSql)
+            return info.DbType switch
             {
-                return new SqlConnection(connectionString);
-            }
-            if (provider == DatabaseProvider.MySql)
-            {
-                return new MySqlConnection(connectionString);
-            }
-            if (provider == DatabaseProvider.Oracle)
-            {
-                return new OracleConnection(connectionString);
-            }
+                DatabaseProvider.MsSql  => new SqlQueryable<T>(info),
+                DatabaseProvider.MySql  => new MySqlQueryable<T>(info),
+                _ => new OracleQueryable<T>(info),
 
-            return null;
-        }
-
-        public static IDbConnection CreateConnection(string connectionString, string provider)
-        {
-            if (provider == DatabaseProvider.MsSql.ToString())
-            {
-                return new SqlConnection(connectionString);
-            }
-            if (provider == DatabaseProvider.MySql.ToString())
-            {
-                return new MySqlConnection(connectionString);
-            }
-            if (provider == DatabaseProvider.Oracle.ToString())
-            {
-                return new OracleConnection(connectionString);
-            }
-
-            return null;
-        }
-
-        public static string GetStatementPrefix(IDbConnection dbConnection)
-        {
-            return dbConnection switch
-            {
-                SqlConnection _ => "@",
-                _ => ":"
             };
         }
 
-        public static DatabaseProvider GetDbType(IDbConnection dbConnection)
+        public static IComplexQueryable<T> CreateComplexQueryable<T>(DbInfo info, string alias)
         {
-            return dbConnection switch
-            {
-                SqlConnection _ => DatabaseProvider.MsSql,
-                MySqlConnection _ => DatabaseProvider.MySql,
-                _ => DatabaseProvider.Oracle
-            };
-        }
-
-
-       
-
-       
-
-
-        
-
-        public static IDoCareQueryable<T> CreateQueryable<T>(IDbConnection connection, Aop aop)
-        {
-            return connection switch
-            {
-                SqlConnection _ => new SqlQueryable<T>(connection) { Aop = aop },
-                MySqlConnection _ => new MySqlQueryable<T>(connection) { Aop = aop },
-                _ => new OracleQueryable<T>(connection) { Aop = aop },
-               
-            };
-        }
-
-        public static IComplexQueryable<T> CreateComplexQueryable<T>(IDbConnection connection, Aop aop, string alias)
-        {
-            var provider = new QueryableProvider(connection, alias)
-            {
-                Aop = aop
-            };
+            var provider = new QueryableProvider(info, alias);
 
             return new ComplexQueryable<T>(provider);
             //return connection switch
@@ -144,50 +78,41 @@ namespace DoCare.Zkzx.Core.Database.Utility
             //};
         }
 
-        public static IDeleteable<T> CreateDeleteable<T>(IDbConnection connection, Aop aop)
+        //todo 不合理
+        public static IReaderableCommand<T> CreateReaderableCommand<T>(DbInfo info, StringBuilder sql, Dictionary<string, object> sqlParameter)
         {
-            return connection switch
+            return info.DbType switch
             {
-                SqlConnection _ => new SqlDeleteable<T>(connection) { Aop = aop },
-                MySqlConnection _ => new MySqlDeleteable<T>(connection) { Aop = aop },
-                OracleConnection _ => new OracleDeleteable<T>(connection) { Aop = aop },
-                _ => new Deleteable<T>(connection) { Aop = aop }
+                DatabaseProvider.MsSql  => new MsSqlReaderableCommand<T>(info, sql, sqlParameter),
+                DatabaseProvider.MySql  => new MySqlReaderableCommand<T>(info, sql, sqlParameter),
+                _ => new OracleReaderableCommand<T>(info, sql, sqlParameter),
             };
         }
 
-        public static IReaderableCommand<T> CreateReaderableCommand<T>(IDbConnection connection, StringBuilder sql, Dictionary<string, object> sqlParameter, Aop aop)
+        public static IDeleteable<T> CreateDeleteable<T>(DbInfo info)
         {
-            return connection switch
+            return info.DbType switch
             {
-                SqlConnection _ => new MsSqlReaderableCommand<T>(connection, sql, sqlParameter, aop),
-                MySqlConnection _ => new MySqlReaderableCommand<T>(connection, sql, sqlParameter, aop),
-                _ => new OracleReaderableCommand<T>(connection, sql, sqlParameter, aop),
+                DatabaseProvider.MsSql  => new SqlDeleteable<T>(info),
+                DatabaseProvider.MySql  => new MySqlDeleteable<T>(info),
+                DatabaseProvider.Oracle  => new OracleDeleteable<T>(info),
+                _ => new Deleteable<T>(info)
             };
         }
 
-        internal static ISqlFuncVisit CreateSqlFunc(IDbConnection dbConnection)
-        {
-            return dbConnection switch
-            {
-                SqlConnection _ => new OracleSqlFunc(),
-                _ => new OracleSqlFunc()
-            };
-        }
 
-        internal static ISqlFuncVisit CreateSqlFunc(DatabaseProvider dbConnection)
+        internal static ISqlFuncVisit CreateSqlFunc(DbInfo dbInfo)
         {
-            return dbConnection switch
+            return dbInfo.DbType switch
             {
+                DatabaseProvider.MsSql => new OracleSqlFunc(),
+                DatabaseProvider.MySql => new OracleSqlFunc(),
                 DatabaseProvider.Oracle => new OracleSqlFunc(),
                 _ => new OracleSqlFunc()
             };
-
-            //return dbConnection switch
-            //{
-            //    DatabaseProvider.Oracle _ => new OracleSqlFunc(),
-            //    _ => new OracleSqlFunc()
-            //};
         }
+
+       
 
     }
 }

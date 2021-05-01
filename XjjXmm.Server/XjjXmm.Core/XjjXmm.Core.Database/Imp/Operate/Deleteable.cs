@@ -16,7 +16,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
     {
         private readonly  IWhereCommand whereCommand;
 
-        public Deleteable(IDbConnection connection) : base(connection)
+        public Deleteable(DbInfo dbInfo) : base(dbInfo)
         {
             whereCommand = new WhereCommand(_providerModel);
         }
@@ -65,7 +65,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
                 foreach (var member in properties.Where(t => t.IsPrimaryKey))
                 {
-                    sql.Append($" {member.ColumnName} = {_providerModel.DataParamterPrefix}{member.Parameter} and");
+                    sql.Append($" {member.ColumnName} = {_providerModel.DbInfo.StatementPrefix}{member.Parameter} and");
                 }
 
                 sql.Remove(sql.Length - 3, 3);
@@ -81,7 +81,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(Connection, Build().ToString(), _providerModel.Parameter, Aop);
+            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
 
             return await command.Execute();
 

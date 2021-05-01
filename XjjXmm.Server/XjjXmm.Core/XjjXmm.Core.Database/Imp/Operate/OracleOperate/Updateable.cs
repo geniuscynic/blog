@@ -1,13 +1,12 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
 {
     public class OracleUpdateable<T> : Updateable<T>
     {
-        public OracleUpdateable(IDbConnection connection) : base(connection)
+        public OracleUpdateable(DbInfo info) : base(info)
         {
-
-
         }
     }
 }

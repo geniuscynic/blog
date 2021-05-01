@@ -18,7 +18,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         protected readonly TEntity _model;
 
-        public Insertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter)
+        public Insertable(DbInfo dbInfo, TEntity model) : base(dbInfo)
         {
             _model = model;
         }

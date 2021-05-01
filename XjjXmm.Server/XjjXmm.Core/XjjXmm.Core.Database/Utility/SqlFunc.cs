@@ -55,21 +55,16 @@ namespace DoCare.Zkzx.Core.Database.Utility
             return "";
         }
 
-        public static string Visit(MethodCallExpression expression, DatabaseProvider connection)
+        public static string Visit(MethodCallExpression expression,  DbInfo dbInfo)
         {
-            var sqlFunc = DatabaseFactory.CreateSqlFunc(connection);
+            var sqlFunc = DatabaseFactory.CreateSqlFunc(dbInfo);
 
             
 
             return Visit(expression, sqlFunc);
         }
 
-        public static string Visit(MethodCallExpression expression, IDbConnection connection)
-        {
-            var sqlFunc = DatabaseFactory.CreateSqlFunc(connection);
-
-            return Visit(expression, sqlFunc);
-        }
+       
     }
     internal interface ISqlFuncVisit
     {

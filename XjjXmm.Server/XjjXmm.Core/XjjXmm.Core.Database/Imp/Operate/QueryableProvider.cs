@@ -17,18 +17,18 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
     internal class QueryableProvider :  BaseOperate, IQueryableProvider
     {
         protected readonly string _alias;
+        private readonly ReaderableCommand.ReaderableCommandBuilder _readerableCommandBuilder;
         private readonly WhereCommand _whereCommand;
         private readonly IOrderByCommand _orderByCommand;
 
         private readonly StringBuilder _selectField = new StringBuilder();
         private StringBuilder _joinSql = new StringBuilder();
 
-        
-
-        public QueryableProvider(IDbConnection connection, string alias) : base(connection)
+        public QueryableProvider(DbInfo dbInfo, string alias, ReaderableCommand.ReaderableCommandBuilder readerableCommandBuilder) : base(dbInfo)
         {
             
             _alias = alias;
+            _readerableCommandBuilder = readerableCommandBuilder;
             _whereCommand = new WhereCommand(_providerModel);
 
             _orderByCommand = new OrderByCommand();
@@ -162,7 +162,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             {
                 if (t.Expression != null)
                 {
-                    var result = SqlFunVisit.Visit(t.Expression, Connection);
+                    var result = SqlFunVisit.Visit(t.Expression, _providerModel.DbInfo);
                     _selectField.Append($"{result} as {t.Parameter},");
                 }
                 else if (string.IsNullOrWhiteSpace(t.Prefix))
@@ -179,7 +179,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
                 //prefix = t.Prefix;
             });
             _selectField.Remove(_selectField.Length - 1, 1);
-            return DatabaseFactory.CreateReaderableCommand<TResult>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            return DatabaseFactory.CreateReaderableCommand<TResult>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
         }
 
         public IReaderableCommand<TResult> Select<T, TResult>(Expression<Func<T, TResult>> predicate)
@@ -246,37 +246,53 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<IEnumerable<T>> ExecuteQuery<T>()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            var command =  _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
+            return await command.ExecuteQuery<T>();
 
-            return await command.ExecuteQuery();
+            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+
+            //return await command.ExecuteQuery();
         }
 
         public async Task<T> ExecuteFirst<T>()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            var command = _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
+            return await command.ExecuteFirst<T>();
 
-            return await command.ExecuteFirst();
+            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+
+            //return await command.ExecuteFirst();
         }
 
         public async Task<T> ExecuteFirstOrDefault<T>()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            var command = _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault<T>();
 
-            return await command.ExecuteFirstOrDefault();
+            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+
+            //return await command.ExecuteFirstOrDefault();
         }
 
         public async Task<T> ExecuteSingle<T>()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            var command = _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
+            return await command.ExecuteSingle<T>();
 
-            return await command.ExecuteSingle();
+            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+
+            //return await command.ExecuteSingle();
         }
 
         public async Task<T> ExecuteSingleOrDefault<T>()
         {
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            var command = _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
 
-            return await command.ExecuteSingleOrDefault();
+            return await command.ExecuteSingleOrDefault<T>();
+
+            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+
+            //return await command.ExecuteSingleOrDefault();
         }
 
         public async Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize)
@@ -291,9 +307,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
                 throw new Exception("pageSize 不能小于1条");
             }
 
-            var command = DatabaseFactory.CreateReaderableCommand<T>(Connection, Build<T>(), _providerModel.Parameter, Aop);
+            var command = _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
 
-            return await command.ToPageList(pageIndex, pageSize);
+            return await command.ToPageList<T>(pageIndex, pageSize);
+
+            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+
+            //return await command.ToPageList(pageIndex, pageSize);
 
         }
 

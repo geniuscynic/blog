@@ -53,7 +53,7 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
 
         private void AddConstant(object result)
         {
-            whereModel.Sql.Append($"{_providerModel.DataParamterPrefix}p{_providerModel.Start}");
+            whereModel.Sql.Append($"{_providerModel.DbInfo.StatementPrefix}p{_providerModel.Start}");
 
             _providerModel.Parameter[$"p{_providerModel.Start}"] = result;
 
@@ -83,7 +83,7 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
         {
            // var expression = node.Expression as MethodCallExpression;
 
-            var sql = SqlFunVisit.Visit(node, _providerModel.DbType);
+            var sql = SqlFunVisit.Visit(node, _providerModel.DbInfo);
 
             //var sqlFunc = DatabaseFactory.CreateSqlFunc(_providerModel.DbType);
 

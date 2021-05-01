@@ -9,7 +9,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
         //private string sql = "insert into {0}  values ({1});";
 
 
-        public SqlInsertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter, model)
+        public SqlInsertable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {
         }
     }

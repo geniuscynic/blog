@@ -5,7 +5,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
 {
     public class OracleInsertable<T, TEntity>  : Insertable<T, TEntity>
     {
-        public OracleInsertable(DbInfo dbClientParamter, TEntity model) : base(dbClientParamter, model)
+        public OracleInsertable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {
         }
     }

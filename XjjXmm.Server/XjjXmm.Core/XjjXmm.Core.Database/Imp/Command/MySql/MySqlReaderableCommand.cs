@@ -9,21 +9,25 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
 {
     public class MySqlReaderableCommand<T> : ReaderableCommand<T>
     {
-        public MySqlReaderableCommand(IDbConnection connection, StringBuilder sql, Dictionary<string, object> sqlParameter, Aop aop) : base(connection, sql, sqlParameter, aop)
+        private MySqlReaderableCommand()
         {
+
         }
+        //public MySqlReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter) : base(dbInfo, sql, sqlParameter)
+        //{
+        //}
 
 
         public override async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
         {
-            var countSql = $"select count(1) from ({_sql}) t";
+            var countSql = $"select count(1) from ({Sql}) t";
 
-            var total = await _connection.ExecuteScalarAsync<int>(countSql, _sqlParameter);
+            var total = await Connection.Value.ExecuteScalarAsync<int>(countSql, SqlParameter);
 
             // _sql.Append($" offset {pageIndex} rows fetch next {pageSize} rows only");
-            _sql.Append($" limit { (pageIndex - 1) * pageSize}, {pageSize}");
+            Sql.Append($" limit { (pageIndex - 1) * pageSize}, {pageSize}");
 
-            var result = await EnumerableDelegate(async () => await _connection.QueryAsync<T>(_sql.ToString(), _sqlParameter));
+            var result = await EnumerableDelegate(async () => await Connection.Value.QueryAsync<T>(Sql.ToString(), SqlParameter));
 
             return (result, total);
             // _sql.Append($" limit {pageIndex}, {pageSize}");
@@ -32,6 +36,58 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
             //_sql.Append($"select * from ({_sql}) rn >= {pageIndex * pageSize}");
         }
 
-        
+        internal class MySqlReaderableCommandBuilder : ReaderableCommandBuilder
+        {
+            public MySqlReaderableCommandBuilder(DbInfo dbInfo) : base(dbInfo)
+            {
+            }
+
+            protected override ReaderableCommand<T> GetReaderableCommand()
+            {
+                return new MySqlReaderableCommand<T>();
+            }
+        }
     }
+
+    //public class MySqlReaderableCommand : ReaderableCommand
+    //{
+    //    private MySqlReaderableCommand()
+    //    {
+
+    //    }
+    //    //public MySqlReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter) : base(dbInfo, sql, sqlParameter)
+    //    //{
+    //    //}
+
+
+    //    public override async Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize)
+    //    {
+    //        var countSql = $"select count(1) from ({Sql}) t";
+
+    //        var total = await Connection.Value.ExecuteScalarAsync<int>(countSql, SqlParameter);
+
+    //        // _sql.Append($" offset {pageIndex} rows fetch next {pageSize} rows only");
+    //        Sql.Append($" limit { (pageIndex - 1) * pageSize}, {pageSize}");
+
+    //        var result = await EnumerableDelegate(async () => await Connection.Value.QueryAsync<T>(Sql.ToString(), SqlParameter));
+
+    //        return (result, total);
+    //        // _sql.Append($" limit {pageIndex}, {pageSize}");
+
+    //        //_sql.Append($"select ROWNUM rn, t.* from ({_sql}) t where rn < {(pageIndex + 1) * pageSize} ");
+    //        //_sql.Append($"select * from ({_sql}) rn >= {pageIndex * pageSize}");
+    //    }
+
+    //    internal class MySqlReaderableCommandBuilder : ReaderableCommandBuilder
+    //    {
+    //        public MySqlReaderableCommandBuilder(DbInfo dbInfo) : base(dbInfo)
+    //        {
+    //        }
+
+    //        protected override ReaderableCommand GetReaderableCommand()
+    //        {
+    //            return new MySqlReaderableCommand();
+    //        }
+    //    }
+    //}
 }

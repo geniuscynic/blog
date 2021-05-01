@@ -117,7 +117,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
     public class ProviderModel
     {
         internal DbInfo DbInfo { get; }
-        internal int Start { get; }
+        internal int Start { get; set; }
         internal Dictionary<string, object> Parameter { get; }
 
 

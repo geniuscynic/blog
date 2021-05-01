@@ -9,17 +9,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
     public class MySqlQueryable<T> : Queryable<T>
     {
-        public MySqlQueryable(IDbConnection connection):base(connection)
+        public MySqlQueryable(DbInfo dbInfo) : base(dbInfo)
         {
-            
-
         }
 
 
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(IDbConnection connection, StringBuilder sql, Dictionary<string, object> sqlParameter,
-            Aop aop)
+        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo info, StringBuilder sql, Dictionary<string, object> sqlParameter)
         {
-            return new MySqlReaderableCommand<TResult>(connection, sql, sqlParameter, aop);
+            return new MySqlReaderableCommand<TResult>(info, sql, sqlParameter);
         }
+
+        
     }
 }
