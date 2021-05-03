@@ -10,7 +10,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 namespace DoCare.Zkzx.Core.Database.SqlProvider
 {
 
-    public abstract class WhereProvider : ExpressionVisitor
+    internal abstract class WhereProvider : ExpressionVisitor
     {
         private readonly ProviderModel _providerModel;
         //public List<WhereModel> Result = new List<WhereModel>();

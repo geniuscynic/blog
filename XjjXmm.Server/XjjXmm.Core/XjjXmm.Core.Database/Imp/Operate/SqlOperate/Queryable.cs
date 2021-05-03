@@ -8,7 +8,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
-    public class MsSqlQueryable<T> : Queryable<T>
+    internal class MsSqlQueryable<T> : Queryable<T>
     {
         public MsSqlQueryable(DbInfo dbInfo) : base(dbInfo)
         {

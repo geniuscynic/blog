@@ -14,7 +14,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public class ComplexQueryable<T> : IComplexQueryable<T>
+    internal class ComplexQueryable<T> : IComplexQueryable<T>
     {
         private readonly IQueryableProvider _provider;
 
@@ -121,7 +121,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
     }
 
-    public class ComplexQueryable<T1, T2> : ComplexQueryable<T1>, IComplexQueryable<T1, T2>
+    internal class ComplexQueryable<T1, T2> : ComplexQueryable<T1>, IComplexQueryable<T1, T2>
     {
         private readonly IQueryableProvider _provider;
 
@@ -186,7 +186,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
     }
 
 
-    public class ComplexQueryable<T1, T2, T3> : ComplexQueryable<T1, T2>, IComplexQueryable<T1, T2, T3>
+    internal class ComplexQueryable<T1, T2, T3> : ComplexQueryable<T1, T2>, IComplexQueryable<T1, T2, T3>
     {
         //private readonly StringBuilder _join;
 
@@ -252,7 +252,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         }
     }
 
-    public class ComplexQueryable<T1, T2, T3, T4> : ComplexQueryable<T1, T2, T3>, IComplexQueryable<T1, T2, T3, T4>
+    internal class ComplexQueryable<T1, T2, T3, T4> : ComplexQueryable<T1, T2, T3>, IComplexQueryable<T1, T2, T3, T4>
     {
         //private readonly StringBuilder _join;
 

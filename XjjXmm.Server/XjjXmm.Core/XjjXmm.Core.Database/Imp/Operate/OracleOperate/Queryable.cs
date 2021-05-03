@@ -8,7 +8,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
 {
-    public class OracleQueryable<T> : Queryable<T>
+    internal class OracleQueryable<T> : Queryable<T>
     {
 
         public OracleQueryable(DbInfo dbInfo) : base(dbInfo)

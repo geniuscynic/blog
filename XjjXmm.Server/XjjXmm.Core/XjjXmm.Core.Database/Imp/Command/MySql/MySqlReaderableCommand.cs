@@ -7,7 +7,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
 {
-    public class MySqlReaderableCommand<T> : ReaderableCommand<T>
+    internal class MySqlReaderableCommand<T> : ReaderableCommand<T>
     {
         //private MySqlReaderableCommand()
         //{

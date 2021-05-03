@@ -6,7 +6,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
-    public class MySqlSimpleQueryable<T> :SimpleQueryable<T>
+    internal class MySqlSimpleQueryable<T> :SimpleQueryable<T>
     {
         public MySqlSimpleQueryable(DbInfo info, string sql) : base(info, sql)
         {

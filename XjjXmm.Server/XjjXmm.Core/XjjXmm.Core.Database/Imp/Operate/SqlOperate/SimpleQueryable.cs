@@ -7,7 +7,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
-    public class SqlSimpleQueryable<T> :SimpleQueryable<T>
+    internal class SqlSimpleQueryable<T> :SimpleQueryable<T>
     {
         public SqlSimpleQueryable(DbInfo info, string sql) : base(info, sql)
         {

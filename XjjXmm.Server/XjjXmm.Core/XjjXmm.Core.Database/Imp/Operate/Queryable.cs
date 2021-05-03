@@ -15,7 +15,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public abstract class Queryable<T> : BaseOperate, IDoCareQueryable<T>
+    internal abstract class Queryable<T> : BaseOperate, IDoCareQueryable<T>
     {
         private readonly IWhereCommand whereCommand;
         private readonly IOrderByCommand<T> orderByCommand;

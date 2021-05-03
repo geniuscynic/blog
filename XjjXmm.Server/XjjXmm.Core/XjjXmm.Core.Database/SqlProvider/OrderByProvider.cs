@@ -5,7 +5,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 namespace DoCare.Zkzx.Core.Database.SqlProvider
 {
 
-    public class OrderByProvider : ExpressionVisitor
+    internal class OrderByProvider : ExpressionVisitor
     {
 
         public List<Field> SelectFields { get; set; } = new List<Field>();

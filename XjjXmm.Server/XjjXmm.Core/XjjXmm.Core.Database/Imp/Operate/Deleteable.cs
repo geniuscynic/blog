@@ -13,7 +13,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public abstract class Deleteable<T> : BaseOperate, IDeleteable<T>
+    internal abstract class Deleteable<T> : BaseOperate, IDeleteable<T>
     {
         private readonly  IWhereCommand whereCommand;
 

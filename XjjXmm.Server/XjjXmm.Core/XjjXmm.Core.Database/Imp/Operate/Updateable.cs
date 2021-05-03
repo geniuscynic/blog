@@ -13,7 +13,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public abstract class Updateable<T> : BaseOperate, IUpdateable<T>
+    internal abstract class Updateable<T> : BaseOperate, IUpdateable<T>
     {
         
         private readonly IWhereCommand whereCommand;

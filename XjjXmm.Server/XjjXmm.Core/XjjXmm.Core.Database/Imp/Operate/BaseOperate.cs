@@ -4,7 +4,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public class BaseOperate
+    internal class BaseOperate
     {
         private readonly DbInfo _dbInfo;
         

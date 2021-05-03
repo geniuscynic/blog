@@ -11,7 +11,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
-    public abstract class ReaderableCommand<T> : IReaderableCommand<T>
+    internal abstract class ReaderableCommand<T> : IReaderableCommand<T>
     {
         protected Lazy<IDbConnection> Connection { get; set; }
         protected StringBuilder Sql { get; set; }

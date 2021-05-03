@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using DoCare.Zkzx.Core.Database.Imp.Operate;
+using DoCare.Zkzx.Core.Database.Interface.Command;
 using DoCare.Zkzx.Core.Database.Interface.Operate;
 using DoCare.Zkzx.Core.Database.Utility;
 
@@ -54,12 +55,12 @@ namespace DoCare.Zkzx.Core.Database
             return DatabaseFactory.CreateQueryable<T>(_builder);
         }
 
-        public SimpleQueryable<T> Queryable<T>(string fullSql)
+        public IReaderableCommand<T> Queryable<T>(string fullSql)
         {
             return Queryable<T>(fullSql, new Dictionary<string, object>());
         }
 
-        public SimpleQueryable<T> Queryable<T>(string fullSql, Dictionary<string, object> sqlParameter)
+        public IReaderableCommand<T> Queryable<T>(string fullSql, Dictionary<string, object> sqlParameter)
         {
             return DatabaseFactory.CreateSimpleQueryable<T>(_builder, fullSql, sqlParameter);
         }

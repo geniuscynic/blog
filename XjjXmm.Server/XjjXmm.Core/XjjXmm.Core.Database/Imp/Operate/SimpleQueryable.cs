@@ -8,7 +8,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public abstract class SimpleQueryable<T> :BaseOperate, IReaderableCommand<T>
+    internal abstract class SimpleQueryable<T> :BaseOperate, IReaderableCommand<T>
     {
        
         private readonly string _sql;

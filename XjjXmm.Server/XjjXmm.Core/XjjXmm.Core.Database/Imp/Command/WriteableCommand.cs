@@ -8,7 +8,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
-    public class WriteableCommand : IWriteableCommand 
+    internal class WriteableCommand : IWriteableCommand 
     {
         //private readonly DbInfo _dbInfo;
         private readonly Lazy<IDbConnection> _connection;

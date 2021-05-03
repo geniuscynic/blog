@@ -8,7 +8,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
-    public class MySqlQueryable<T> : Queryable<T>
+    internal class MySqlQueryable<T> : Queryable<T>
     {
         public MySqlQueryable(DbInfo dbInfo) : base(dbInfo)
         {

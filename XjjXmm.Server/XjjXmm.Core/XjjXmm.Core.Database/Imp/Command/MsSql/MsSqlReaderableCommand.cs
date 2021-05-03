@@ -10,7 +10,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command.MsSql
 {
-    public class MsSqlReaderableCommand<T> : ReaderableCommand<T>
+    internal class MsSqlReaderableCommand<T> : ReaderableCommand<T>
     {
         //protected MsSqlReaderableCommand()
         //{

@@ -8,7 +8,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command.Oracle
 {
-    public class OracleReaderableCommand<T> : ReaderableCommand<T>
+    internal class OracleReaderableCommand<T> : ReaderableCommand<T>
     {
         //private OracleReaderableCommand()
         //{

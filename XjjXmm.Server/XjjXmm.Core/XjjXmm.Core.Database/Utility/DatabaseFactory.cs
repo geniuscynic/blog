@@ -53,7 +53,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
             };
         }
 
-        public static SimpleQueryable<T> CreateSimpleQueryable<T>(DbInfo info, string fullSql, Dictionary<string, object> sqlParameter)
+        public static IReaderableCommand<T> CreateSimpleQueryable<T>(DbInfo info, string fullSql, Dictionary<string, object> sqlParameter)
         {
             return info.DbType switch
             {

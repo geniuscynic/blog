@@ -4,7 +4,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
-    public class MsSqlDeleteable<T> : Deleteable<T>
+    internal class MsSqlDeleteable<T> : Deleteable<T>
     {
         public MsSqlDeleteable(DbInfo dbInfo) : base(dbInfo)
         {

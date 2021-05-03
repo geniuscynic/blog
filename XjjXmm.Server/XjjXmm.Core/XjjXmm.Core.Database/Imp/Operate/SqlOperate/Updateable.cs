@@ -4,7 +4,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
-    public class MsSqlUpdateable<T> : Updateable<T>
+    internal class MsSqlUpdateable<T> : Updateable<T>
     {
         public MsSqlUpdateable(DbInfo info) : base(info)
         {

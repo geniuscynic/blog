@@ -6,7 +6,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 namespace DoCare.Zkzx.Core.Database.SqlProvider
 {
 
-    public class SetProvider : ExpressionVisitor
+    internal class SetProvider : ExpressionVisitor
     {
 
         public List<Field> UpdatedFields = new List<Field>();
