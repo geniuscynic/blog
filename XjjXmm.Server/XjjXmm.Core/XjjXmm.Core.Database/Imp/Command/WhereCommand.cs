@@ -9,7 +9,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
-    public class WhereCommand : IWhereCommand
+    internal class WhereCommand : IWhereCommand
     {
         private readonly ProviderModel _providerModel;
         //private readonly Dictionary<string, object> _sqlPamater;
@@ -19,10 +19,12 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         public string prefix = "";
 
-        public WhereCommand(ProviderModel providerModel)
+        public WhereCommand(ProviderModel providerModel, WhereProvider whereProvider)
         {
             _providerModel = providerModel;
-            _whereProvider = new WhereProvider(providerModel);
+            //_whereProvider = new WhereProvider(providerModel);
+            _whereProvider = whereProvider;
+
             // _sqlPamater = sqlPamater;
         }
 

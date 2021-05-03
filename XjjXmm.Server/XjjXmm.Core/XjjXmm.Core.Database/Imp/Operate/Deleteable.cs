@@ -8,17 +8,18 @@ using Dapper;
 using DoCare.Zkzx.Core.Database.Imp.Command;
 using DoCare.Zkzx.Core.Database.Interface.Command;
 using DoCare.Zkzx.Core.Database.Interface.Operate;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public class Deleteable<T> : BaseOperate, IDeleteable<T>
+    public abstract class Deleteable<T> : BaseOperate, IDeleteable<T>
     {
         private readonly  IWhereCommand whereCommand;
 
         public Deleteable(DbInfo dbInfo) : base(dbInfo)
         {
-            whereCommand = new WhereCommand(_providerModel);
+            whereCommand = new WhereCommand(_providerModel, CreateWhereProvider(_providerModel));
         }
 
         public IDeleteable<T> Where(Expression<Func<T, bool>> predicate)
@@ -87,7 +88,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         }
 
+        protected abstract WhereProvider CreateWhereProvider(ProviderModel providerModel);
 
-       
     }
 }

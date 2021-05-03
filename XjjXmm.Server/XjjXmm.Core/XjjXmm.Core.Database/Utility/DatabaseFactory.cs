@@ -24,7 +24,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
         {
             return builder.DbType switch
             {
-                DatabaseProvider.MsSql => new SqlInsertable<T, TEntity>(builder, model),
+                DatabaseProvider.MsSql => new MsSqlInsertable<T, TEntity>(builder, model),
                 DatabaseProvider.MySql => new MySqlInsertable<T, TEntity>(builder, model),
                 DatabaseProvider.Oracle => new OracleInsertable<T, TEntity>(builder, model),
                 _ => new Insertable<T, TEntity>(builder, model)
@@ -46,10 +46,21 @@ namespace DoCare.Zkzx.Core.Database.Utility
         {
             return builder.DbType switch
             {
-                DatabaseProvider.MsSql => new SqlUpdateable<T>(builder),
+                DatabaseProvider.MsSql => new MsSqlUpdateable<T>(builder),
                 DatabaseProvider.MySql => new MySqlUpdateable<T>(builder),
-                DatabaseProvider.Oracle => new OracleUpdateable<T>(builder),
-                _ => new Updateable<T>(builder)
+                _ => new OracleUpdateable<T>(builder),
+
+            };
+        }
+
+        public static SimpleQueryable<T> CreateSimpleQueryable<T>(DbInfo info, string fullSql, Dictionary<string, object> sqlParameter)
+        {
+            return info.DbType switch
+            {
+                DatabaseProvider.MsSql => new SqlSimpleQueryable<T>(info, fullSql, sqlParameter),
+                DatabaseProvider.MySql => new MySqlSimpleQueryable<T>(info,  fullSql, sqlParameter),
+                _ => new OracleSimpleQueryable<T>(info, fullSql, sqlParameter),
+
             };
         }
 
@@ -57,7 +68,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
         {
             return info.DbType switch
             {
-                DatabaseProvider.MsSql  => new SqlQueryable<T>(info),
+                DatabaseProvider.MsSql  => new MsSqlQueryable<T>(info),
                 DatabaseProvider.MySql  => new MySqlQueryable<T>(info),
                 _ => new OracleQueryable<T>(info),
 
@@ -66,53 +77,35 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public static IComplexQueryable<T> CreateComplexQueryable<T>(DbInfo info, string alias)
         {
-            var provider = new QueryableProvider(info, alias);
+            // var provider = new QueryableProvider(info, alias);
+
+            IQueryableProvider provider = info.DbType switch
+            {
+                DatabaseProvider.MsSql => new MsSqlQueryableProvider(info, alias),
+                DatabaseProvider.MySql => new MySqlQueryableProvider(info, alias),
+                _ => new OracleQueryableProvider(info, alias),
+
+            };
 
             return new ComplexQueryable<T>(provider);
-            //return connection switch
-            //{
-            //    SqlConnection _ => new ComplexQueryable<T>(provider),
-            //    MySqlConnection _ => new ComplexQueryable<T>(provider),
-            //    OracleConnection _ => new ComplexQueryable<T>(provider),
-            //    _ => new ComplexQueryable<T>(connection, alias)
-            //};
+           
         }
 
-        //todo 不合理
-        public static IReaderableCommand<T> CreateReaderableCommand<T>(DbInfo info, StringBuilder sql, Dictionary<string, object> sqlParameter)
-        {
-            return info.DbType switch
-            {
-                DatabaseProvider.MsSql  => new MsSqlReaderableCommand<T>(info, sql, sqlParameter),
-                DatabaseProvider.MySql  => new MySqlReaderableCommand<T>(info, sql, sqlParameter),
-                _ => new OracleReaderableCommand<T>(info, sql, sqlParameter),
-            };
-        }
+       
 
         public static IDeleteable<T> CreateDeleteable<T>(DbInfo info)
         {
             return info.DbType switch
             {
-                DatabaseProvider.MsSql  => new SqlDeleteable<T>(info),
+                DatabaseProvider.MsSql  => new MsSqlDeleteable<T>(info),
                 DatabaseProvider.MySql  => new MySqlDeleteable<T>(info),
-                DatabaseProvider.Oracle  => new OracleDeleteable<T>(info),
-                _ => new Deleteable<T>(info)
+                _  => new OracleDeleteable<T>(info),
+               
             };
         }
 
 
-        internal static ISqlFuncVisit CreateSqlFunc(DbInfo dbInfo)
-        {
-            return dbInfo.DbType switch
-            {
-                DatabaseProvider.MsSql => new OracleSqlFunc(),
-                DatabaseProvider.MySql => new OracleSqlFunc(),
-                DatabaseProvider.Oracle => new OracleSqlFunc(),
-                _ => new OracleSqlFunc()
-            };
-        }
-
-       
+        
 
     }
 }

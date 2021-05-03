@@ -61,7 +61,7 @@ namespace DoCare.Zkzx.Core.Database
 
         public SimpleQueryable<T> Queryable<T>(string fullSql, Dictionary<string, object> sqlParameter)
         {
-            return new SimpleQueryable<T>(_builder, fullSql, sqlParameter);
+            return DatabaseFactory.CreateSimpleQueryable<T>(_builder, fullSql, sqlParameter);
         }
 
         public IComplexQueryable<T> ComplexQueryable<T>(string alias)

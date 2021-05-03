@@ -3,13 +3,14 @@ using System.Data;
 using System.Text;
 using DoCare.Zkzx.Core.Database.Imp.Command.MsSql;
 using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
-    public class SqlQueryable<T> : Queryable<T>
+    public class MsSqlQueryable<T> : Queryable<T>
     {
-        public SqlQueryable(DbInfo dbInfo) : base(dbInfo)
+        public MsSqlQueryable(DbInfo dbInfo) : base(dbInfo)
         {
         }
 
@@ -20,6 +21,9 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
             return new MsSqlReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
         }
 
-       
+        protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)
+        {
+            return new MsSqlWhereProvider(providerModel);
+        }
     }
 }

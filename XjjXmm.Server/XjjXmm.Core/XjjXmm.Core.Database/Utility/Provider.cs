@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using DoCare.Zkzx.Core.Database.Interface.Operate;
 
 namespace DoCare.Zkzx.Core.Database.Utility
 {
@@ -131,36 +132,37 @@ namespace DoCare.Zkzx.Core.Database.Utility
             string prefix = "";
             MethodCallExpression expression = null;
 
-            if (node.Expression is MemberExpression)
+            switch (node.Expression)
             {
+                case MemberExpression nodeExpression:
+                {
+                    MemberExpression nodeMemberExpression = nodeExpression;
 
-                MemberExpression nodeMemberExpression = node.Expression as MemberExpression;
 
+                    prefix = (nodeMemberExpression.Expression as ParameterExpression)?.Name ?? "";
+                    //var field = node.Member.Name;
 
-                prefix = (nodeMemberExpression.Expression as ParameterExpression)?.Name ?? "";
-                //var field = node.Member.Name;
-
-                field = GetFieldName(nodeMemberExpression.Member.CustomAttributes);
-
-                
-            }
-            else if(node.Expression is ConstantExpression)
-            {
-                var exp = node.Expression as ConstantExpression;
-                var value = exp.Value;
-                field = value.ToString();
-            }
-            else if (node.Expression is MethodCallExpression)
-            {
-                expression = node.Expression as MethodCallExpression;
-                //var value = exp.Value;
-                //field = value.ToString();
-            }
-            else 
-            {
-
-                var value = Expression.Lambda(node.Expression).Compile().DynamicInvoke();
-                field = value.ToString();
+                    field = GetFieldName(nodeMemberExpression.Member.CustomAttributes);
+                    break;
+                }
+                case ConstantExpression nodeExpression:
+                {
+                    var exp = nodeExpression;
+                    var value = exp.Value;
+                    field = value.ToString();
+                    break;
+                }
+                case MethodCallExpression nodeExpression:
+                    expression = nodeExpression;
+                    //var value = exp.Value;
+                    //field = value.ToString();
+                    break;
+                default:
+                {
+                    var value = Expression.Lambda(node.Expression).Compile().DynamicInvoke();
+                    field = value.ToString();
+                    break;
+                }
             }
 
             if (string.IsNullOrWhiteSpace(field))
@@ -198,5 +200,39 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         }
 
+
+        public static string VisitSqlFuc(MethodCallExpression expression, ISqlFuncVisit visit)
+        {
+            var sqlFunc = visit;
+
+            Type p = sqlFunc.GetType();
+
+            MethodInfo m = p.GetMethod(expression.Method.Name);
+
+            switch (m?.Name)
+            {
+                case "Like":
+
+                    var p1 = ProviderHelper.VisitMember(expression.Arguments[0] as MemberExpression).Express;
+                    var p2 = Expression.Lambda(expression.Arguments[1]).Compile().DynamicInvoke();
+
+                    return m.Invoke(sqlFunc, new[] { p1, p2 }).ToString();
+
+                case "IsNull":
+                    var parms = new List<object>();
+                    foreach (var expression1 in expression.Arguments)
+                    {
+                        var field = ProviderHelper.VisitMember(expression1 as MemberExpression);
+                        //var parameterExpression = (ParameterExpression) expression1;
+                        parms.Add(field.Express);
+                    }
+
+                    return m.Invoke(sqlFunc, parms.ToArray()).ToString();
+
+            }
+
+
+            return "";
+        }
     }
 }

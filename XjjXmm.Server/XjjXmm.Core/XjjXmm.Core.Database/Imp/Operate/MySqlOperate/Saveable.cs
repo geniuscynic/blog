@@ -3,7 +3,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
-    public class MySqlSaveable<T, TEntity>  : Saveable<T, TEntity>
+    internal class MySqlSaveable<T, TEntity>  : Saveable<T, TEntity>
     {
         public MySqlSaveable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {

@@ -3,6 +3,7 @@ using System.Data;
 using System.Text;
 using DoCare.Zkzx.Core.Database.Imp.Command.MySql;
 using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
@@ -19,6 +20,9 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
             return new MySqlReaderableCommand<TResult>(info, sql, sqlParameter);
         }
 
-        
+        protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)
+        {
+            return new MySqlWhereProvider(providerModel);
+        }
     }
 }

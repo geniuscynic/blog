@@ -29,7 +29,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public Queryable(DbInfo dbInfo) : base(dbInfo)
         {
-            whereCommand = new WhereCommand(_providerModel);
+            whereCommand = new WhereCommand(_providerModel, CreateWhereProvider(_providerModel));
 
             orderByCommand = new OrderByCommand<T>();
         }
@@ -187,5 +187,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             return await command.ToPageList(pageIndex, pageSize);
 
         }
+
+        protected abstract WhereProvider CreateWhereProvider(ProviderModel providerModel);
     }
 }

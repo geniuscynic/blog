@@ -9,7 +9,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Command
 {
-    internal class JoinCommand : IJoinCommand
+    internal abstract class JoinCommand : IJoinCommand
     {
         private readonly string _alias;
        // private readonly ProviderModel _providerModel;
@@ -22,8 +22,8 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             _alias = alias;
             //this._providerModel = _providerModel;
            // _sqlPamater = sqlPamater;
-            _joinProvider = new WhereProvider(providerModel);
-            _leftJoinProvider = new WhereProvider(providerModel);
+            _joinProvider = CreateWhereProvider(providerModel);
+            _leftJoinProvider = CreateWhereProvider(providerModel);
         }
 
 
@@ -87,7 +87,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             return sql;
         }
 
-       
+        protected abstract WhereProvider CreateWhereProvider(ProviderModel providerModel);
     }
 
 

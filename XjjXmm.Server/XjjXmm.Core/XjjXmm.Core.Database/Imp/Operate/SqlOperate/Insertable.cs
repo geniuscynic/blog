@@ -3,13 +3,13 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate
 {
-    public class SqlInsertable<T, TEntity> : Insertable<T, TEntity>
+    internal class MsSqlInsertable<T, TEntity> : Insertable<T, TEntity>
     {
 
         //private string sql = "insert into {0}  values ({1});";
 
 
-        public SqlInsertable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
+        public MsSqlInsertable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {
         }
     }

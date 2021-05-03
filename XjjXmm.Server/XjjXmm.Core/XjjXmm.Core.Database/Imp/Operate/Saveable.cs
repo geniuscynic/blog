@@ -15,7 +15,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public class Saveable<T, TEntity>  : BaseOperate, ISaveable<T>
+    internal class Saveable<T, TEntity>  : BaseOperate, ISaveable<T>
     {
        
         protected readonly TEntity _model;

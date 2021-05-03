@@ -13,7 +13,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public class Updateable<T> : BaseOperate, IUpdateable<T>
+    public abstract class Updateable<T> : BaseOperate, IUpdateable<T>
     {
         
         private readonly IWhereCommand whereCommand;
@@ -23,7 +23,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public Updateable(DbInfo info) : base(info)
         {
-            whereCommand = new WhereCommand(_providerModel);
+            whereCommand = new WhereCommand(_providerModel, CreateWhereProvider(_providerModel));
         }
 
         public IUpdateable<T> SetColumns<TResult>(Expression<Func<TResult>> predicate)
@@ -99,6 +99,6 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         }
 
 
-       
+        protected abstract WhereProvider CreateWhereProvider(ProviderModel providerModel);
     }
 }

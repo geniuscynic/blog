@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
@@ -7,6 +8,11 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
     {
         public MySqlDeleteable(DbInfo dbInfo) : base(dbInfo)
         {
+        }
+
+        protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)
+        {
+            return new MySqlWhereProvider(providerModel);
         }
     }
 }

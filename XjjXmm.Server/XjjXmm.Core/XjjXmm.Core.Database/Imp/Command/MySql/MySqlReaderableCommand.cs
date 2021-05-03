@@ -9,13 +9,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
 {
     public class MySqlReaderableCommand<T> : ReaderableCommand<T>
     {
-        private MySqlReaderableCommand()
-        {
-
-        }
-        //public MySqlReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter) : base(dbInfo, sql, sqlParameter)
+        //private MySqlReaderableCommand()
         //{
+
         //}
+        public MySqlReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter) : base(dbInfo, sql, sqlParameter)
+        {
+        }
 
 
         public override async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
@@ -36,17 +36,17 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.MySql
             //_sql.Append($"select * from ({_sql}) rn >= {pageIndex * pageSize}");
         }
 
-        internal class MySqlReaderableCommandBuilder : ReaderableCommandBuilder
-        {
-            public MySqlReaderableCommandBuilder(DbInfo dbInfo) : base(dbInfo)
-            {
-            }
+        //internal class MySqlReaderableCommandBuilder : ReaderableCommandBuilder
+        //{
+        //    public MySqlReaderableCommandBuilder(DbInfo dbInfo) : base(dbInfo)
+        //    {
+        //    }
 
-            protected override ReaderableCommand<T> GetReaderableCommand()
-            {
-                return new MySqlReaderableCommand<T>();
-            }
-        }
+        //    protected override ReaderableCommand<T1> GetReaderableCommand<T1>()
+        //    {
+        //        return new MySqlReaderableCommand<T1>();
+        //    }
+        //}
     }
 
     //public class MySqlReaderableCommand : ReaderableCommand

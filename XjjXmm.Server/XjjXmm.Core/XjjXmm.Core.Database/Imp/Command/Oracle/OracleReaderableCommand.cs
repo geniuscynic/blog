@@ -10,15 +10,14 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.Oracle
 {
     public class OracleReaderableCommand<T> : ReaderableCommand<T>
     {
-
-        private OracleReaderableCommand()
-        {
-
-        }
-
-        //public OracleReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter) : base(dbInfo, sql, sqlParameter)
+        //private OracleReaderableCommand()
         //{
+
         //}
+
+        public OracleReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter) : base(dbInfo, sql, sqlParameter)
+        {
+        }
 
 
         public override async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
@@ -44,17 +43,17 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command.Oracle
 
         }
 
-        internal class OracleReaderableCommandBuilder : ReaderableCommandBuilder
-        {
-            public OracleReaderableCommandBuilder(DbInfo dbInfo) : base(dbInfo)
-            {
-            }
+        //internal class OracleReaderableCommandBuilder : ReaderableCommandBuilder
+        //{
+        //    public OracleReaderableCommandBuilder(DbInfo dbInfo) : base(dbInfo)
+        //    {
+        //    }
 
-            protected override ReaderableCommand<T> GetReaderableCommand()
-            {
-                return new OracleReaderableCommand<T>();
-            }
-        }
+        //    protected override ReaderableCommand<T1> GetReaderableCommand<T1>()
+        //    {
+        //        return new OracleReaderableCommand<T1>();
+        //    }
+        //}
     }
 
     //public class OracleReaderableCommand : ReaderableCommand

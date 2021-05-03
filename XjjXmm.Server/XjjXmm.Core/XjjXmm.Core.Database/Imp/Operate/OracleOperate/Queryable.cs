@@ -3,6 +3,7 @@ using System.Data;
 using System.Text;
 using DoCare.Zkzx.Core.Database.Imp.Command.Oracle;
 using DoCare.Zkzx.Core.Database.Interface.Command;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
@@ -20,6 +21,9 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
             return new OracleReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
         }
 
-        
+        protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)
+        {
+            return new OracleWhereProvider(providerModel);
+        }
     }
 }

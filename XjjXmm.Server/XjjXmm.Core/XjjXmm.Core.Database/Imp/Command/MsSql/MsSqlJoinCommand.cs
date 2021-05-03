@@ -1,12 +1,12 @@
-﻿using System.Data;
+﻿using System;
 using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
-namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
+namespace DoCare.Zkzx.Core.Database.Imp.Command.MsSql
 {
-    public class MySqlUpdateable<T> : Updateable<T>
+    internal class MsSqlJoinCommand : JoinCommand
     {
-        public MySqlUpdateable(DbInfo info) : base(info)
+        public MsSqlJoinCommand(string alias, ProviderModel providerModel) : base(alias, providerModel)
         {
         }
 
@@ -15,4 +15,6 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
             return new MySqlWhereProvider(providerModel);
         }
     }
+
+
 }

@@ -1,12 +1,16 @@
 ﻿using System.Collections.Generic;
 using System.Linq.Expressions;
+using DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate;
+using DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate;
+using DoCare.Zkzx.Core.Database.Imp.Operate.SqlOperate;
+using DoCare.Zkzx.Core.Database.Interface.Operate;
 using DoCare.Zkzx.Core.Database.Utility;
 
 
 namespace DoCare.Zkzx.Core.Database.SqlProvider
 {
 
-    public class WhereProvider : ExpressionVisitor
+    public abstract class WhereProvider : ExpressionVisitor
     {
         private readonly ProviderModel _providerModel;
         //public List<WhereModel> Result = new List<WhereModel>();
@@ -79,11 +83,13 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
             return base.VisitConstant(node);
         }
 
+       
+
         protected override Expression VisitMethodCall(MethodCallExpression node)
         {
            // var expression = node.Expression as MethodCallExpression;
 
-            var sql = SqlFunVisit.Visit(node, _providerModel.DbInfo);
+            var sql = ProviderHelper.VisitSqlFuc(node, CreateSqlFunVisit());
 
             //var sqlFunc = DatabaseFactory.CreateSqlFunc(_providerModel.DbType);
 
@@ -126,7 +132,43 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
         }
 
 
-     
+        protected abstract ISqlFuncVisit CreateSqlFunVisit();
 
+    }
+
+    internal class MySqlWhereProvider : WhereProvider
+    {
+        public MySqlWhereProvider(ProviderModel providerModel) : base(providerModel)
+        {
+        }
+
+        protected override ISqlFuncVisit CreateSqlFunVisit()
+        {
+            return new MySqlSqlFunc();
+        }
+    }
+
+    internal class MsSqlWhereProvider : WhereProvider
+    {
+        public MsSqlWhereProvider(ProviderModel providerModel) : base(providerModel)
+        {
+        }
+
+        protected override ISqlFuncVisit CreateSqlFunVisit()
+        {
+            return new MsSqlSqlFunc();
+        }
+    }
+
+    internal class OracleWhereProvider : WhereProvider
+    {
+        public OracleWhereProvider(ProviderModel providerModel) : base(providerModel)
+        {
+        }
+
+        protected override ISqlFuncVisit CreateSqlFunVisit()
+        {
+            return new OracleSqlFunc();
+        }
     }
 }

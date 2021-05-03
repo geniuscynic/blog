@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
@@ -7,6 +8,11 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.OracleOperate
     {
         public OracleUpdateable(DbInfo info) : base(info)
         {
+        }
+
+        protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)
+        {
+            return new OracleWhereProvider(providerModel);
         }
     }
 }

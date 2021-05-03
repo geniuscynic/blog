@@ -13,7 +13,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    public class Insertable<T, TEntity> : BaseOperate, IInsertable<T>
+    internal class Insertable<T, TEntity> : BaseOperate, IInsertable<T>
     {
 
         protected readonly TEntity _model;

@@ -19,18 +19,18 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
         protected Aop Aop { get; set; }
 
 
-        protected ReaderableCommand()
-        {
-
-        }
-
-        //internal ReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
+        //protected ReaderableCommand()
         //{
-        //    Connection = dbInfo.Connection;
-        //    _sql = sql;
-        //    _sqlParameter = sqlParameter;
-        //    _aop = dbInfo.Aop;
+
         //}
+
+        protected ReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
+        {
+            Connection = dbInfo.Connection;
+            Sql = sql;
+            SqlParameter = sqlParameter;
+            Aop = dbInfo.Aop;
+        }
 
         //protected abstract ReaderableCommand<T> CrateReaderableCommand();
 
@@ -128,32 +128,57 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
         //    _sql.Append($"select * from ({_sql}) t t.rn >= {pageIndex * pageSize}");
         //}
 
-        internal abstract class ReaderableCommandBuilder : ICommandBuilder
-        {
-            private DbInfo dbInfo;
+        //internal abstract class ReaderableCommandBuilder : ICommandBuilder
+        //{
+        //    private DbInfo dbInfo;
 
 
-            internal ReaderableCommandBuilder(DbInfo dbInfo)
-            {
-                this.dbInfo = dbInfo;
-            }
+        //    internal ReaderableCommandBuilder(DbInfo dbInfo)
+        //    {
+        //        this.dbInfo = dbInfo;
+        //    }
 
-            protected abstract ReaderableCommand<T> GetReaderableCommand();
+        //    protected abstract ReaderableCommand<T1> GetReaderableCommand<T1>();
 
-            public IReaderableCommand<T1> Build<T1>(StringBuilder sql, Dictionary<string, object> sqlParameter)
-            {
-                var command = GetReaderableCommand();
-                command.Aop = dbInfo.Aop;
-                command.Connection = dbInfo.Connection;
-                command.Sql = sql;
-                command.SqlParameter = sqlParameter;
+        //    public IReaderableCommand<T1> Build<T1>(StringBuilder sql, Dictionary<string, object> sqlParameter)
+        //    {
+        //        var command = GetReaderableCommand<T1>();
+        //        command.Aop = dbInfo.Aop;
+        //        command.Connection = dbInfo.Connection;
+        //        command.Sql = sql;
+        //        command.SqlParameter = sqlParameter;
 
-                return command;
+        //        return command;
 
-            }
-        }
+        //    }
+        //}
 
     }
+
+    //internal abstract class ReaderableCommandBuilder : ICommandBuilder
+    //{
+    //    protected DbInfo dbInfo;
+
+
+    //    internal ReaderableCommandBuilder(DbInfo dbInfo)
+    //    {
+    //        this.dbInfo = dbInfo;
+    //    }
+
+    //    protected abstract ReaderableCommand<T> GetReaderableCommand<T>(StringBuilder sql, Dictionary<string, object> sqlParameter);
+
+    //    public IReaderableCommand<T> Build<T>(StringBuilder sql, Dictionary<string, object> sqlParameter)
+    //    {
+    //        var command = GetReaderableCommand<T>(sql,sqlParameter);
+    //        //command.Aop = dbInfo.Aop;
+    //        //command.Connection = dbInfo.Connection;
+    //        //command.Sql = sql;
+    //        //command.SqlParameter = sqlParameter;
+
+    //        return command;
+
+    //    }
+    //}
 
     //public abstract class ReaderableCommand : IReaderableCommand
     //{
