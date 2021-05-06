@@ -37,7 +37,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Permission", "Permission", 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmm.Core.SetUp", "XjjXmm.Core\XjjXmm.Core.SetUp\XjjXmm.Core.SetUp.csproj", "{8FD40087-D312-42AF-9234-5601C7D48911}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmm.Core.ToolKit", "XjjXmm.Core\XjjXmm.Core.ToolKit\XjjXmm.Core.ToolKit.csproj", "{B149CAE8-4F34-4549-B8F5-0A1892319226}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DoCare.Zkzx.Core.FrameWork.Tool", "XjjXmm.Core\XjjXmm.Core.ToolKit\DoCare.Zkzx.Core.FrameWork.Tool.csproj", "{B149CAE8-4F34-4549-B8F5-0A1892319226}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Permission.Api", "Service.Permission\Permission.Api\Permission.Api.csproj", "{6B8EA7DC-EFAE-41A2-B0B5-ADAF2703E1F7}"
 EndProject

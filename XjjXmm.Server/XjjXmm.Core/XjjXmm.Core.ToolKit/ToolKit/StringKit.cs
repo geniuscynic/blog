@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 
-namespace XjjXmm.Core.ToolKit
+namespace DoCare.Zkzx.Core.FrameWork.Tool.ToolKit
 {
     class StringKit
     {
@@ -27,7 +24,7 @@ namespace XjjXmm.Core.ToolKit
             catch (Exception e)
             {
                 
-                throw new BussinessException(new E);
+                throw BussinessException.CreateException(ExceptionCode.EmptyOrNullString, e);
             }
         }
     }

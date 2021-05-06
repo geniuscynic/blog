@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.RegularExpressions;
 
-namespace XjjXmm.Core.ToolKit
+namespace DoCare.Zkzx.Core.FrameWork.Tool.ToolKit
 {
     public static class DateKit
     {

@@ -20,6 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Remove="DataValidation\**" />
+    <EmbeddedResource Remove="DataValidation\**" />
+    <None Remove="DataValidation\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Utility\SqlFunc.cs" />
   </ItemGroup>
 
