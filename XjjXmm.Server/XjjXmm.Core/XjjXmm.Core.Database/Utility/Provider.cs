@@ -229,10 +229,12 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
                     return m.Invoke(sqlFunc, parms.ToArray()).ToString();
 
+                //default:
+                //    return Expression.Lambda(expression).Compile().DynamicInvoke().ToString();
             }
 
 
-            return "";
+            return null;
         }
     }
 }

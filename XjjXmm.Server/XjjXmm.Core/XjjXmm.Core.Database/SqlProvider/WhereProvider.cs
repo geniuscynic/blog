@@ -32,6 +32,7 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
             {ExpressionType.LessThanOrEqual, " <= "},
             {ExpressionType.AndAlso, " and "},
             {ExpressionType.OrElse, " or "},
+            {ExpressionType.NotEqual, " <> "},
         };
 
         protected override Expression VisitBinary(BinaryExpression node)
@@ -91,12 +92,22 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
 
             var sql = ProviderHelper.VisitSqlFuc(node, CreateSqlFunVisit());
 
+            if (sql == null)
+            {
+                var value = Expression.Lambda(node).Compile().DynamicInvoke();
+                AddConstant(value);
+                return Expression.Constant(value);
+            }
+            else
+            {
+                whereModel.Sql.Append(sql);
+            }
             //var sqlFunc = DatabaseFactory.CreateSqlFunc(_providerModel.DbType);
 
             //var member = ProviderHelper.VisitMember(node);
 
             //whereModel.Prefix = member.Prefix;
-            whereModel.Sql.Append(sql);
+            
             return node;
         }
 

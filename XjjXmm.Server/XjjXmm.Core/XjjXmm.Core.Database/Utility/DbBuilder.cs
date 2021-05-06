@@ -51,7 +51,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
                     Connection = new Lazy<IDbConnection>(() => new OracleConnection(connectionString));
                     DbType = provider;
 
-                    StatementPrefix = "@";
+                    StatementPrefix = ":";
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(provider), provider, null);
