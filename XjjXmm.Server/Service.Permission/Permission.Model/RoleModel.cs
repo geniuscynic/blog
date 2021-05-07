@@ -6,6 +6,11 @@
     public class RoleModel 
     {
         /// <summary>
+        /// 唯一Id
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// code
         /// </summary>
         public string Code { get; set; }

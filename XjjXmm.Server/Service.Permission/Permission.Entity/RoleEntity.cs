@@ -5,7 +5,7 @@ namespace Permission.Entity
     /// <summary>
     /// 角色
     /// </summary>
-    public class Role 
+    public class RoleEntity 
     {
         [Column( IsPrimaryKey = true)]
         public int Id { get; set; }

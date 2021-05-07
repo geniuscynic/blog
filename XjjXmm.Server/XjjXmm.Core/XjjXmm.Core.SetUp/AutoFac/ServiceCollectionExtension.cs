@@ -13,7 +13,12 @@ namespace XjjXmm.Core.SetUp.AutoFac
 {
     public static class ServiceCollectionExtension
     {
-
+         /// <summary>
+         /// aop 不起作用
+         /// </summary>
+         /// <param name="containerBuilder"></param>
+         /// <param name="assembly"></param>
+         /// <returns></returns>
         public static ContainerBuilder RegisterAssmblyAsSelf(this ContainerBuilder containerBuilder, Assembly assembly)
         {
             containerBuilder.RegisterAssemblyTypes(assembly)
