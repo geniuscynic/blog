@@ -4,6 +4,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using DoCare.Zkzx.Core.Database.Interface.Operate;
 using DoCare.Zkzx.Core.Database.Utility;
+using DoCare.Zkzx.Core.FrameWork.Tool.ToolKit;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
@@ -15,6 +16,11 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         }
 
         public static bool Like(string p1, string p2)
+        {
+            return true;
+        }
+
+        public static bool Contain(List<string> p1, string p2)
         {
             return true;
         }
@@ -36,6 +42,12 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public string Like(string p1, string p2)
         {
             return $"{p1} like '%{p2}%'";
+        }
+
+        public string Contain(List<string> p1, string p2)
+        {
+
+            return $"{p2} in ({p1.Concat(closure: "'")})";
         }
     }
 

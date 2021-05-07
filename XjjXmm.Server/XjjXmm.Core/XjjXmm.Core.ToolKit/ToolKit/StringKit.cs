@@ -27,5 +27,7 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.ToolKit
                 throw BussinessException.CreateException(ExceptionCode.EmptyOrNullString, e);
             }
         }
+
+       
     }
 }

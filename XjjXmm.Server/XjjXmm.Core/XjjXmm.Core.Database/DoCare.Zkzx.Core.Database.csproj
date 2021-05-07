@@ -29,4 +29,8 @@
     <Compile Remove="Utility\SqlFunc.cs" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\XjjXmm.Core.ToolKit\DoCare.Zkzx.Core.FrameWork.Tool.csproj" />
+  </ItemGroup>
+
 </Project>

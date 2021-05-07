@@ -212,11 +212,11 @@ namespace DoCare.Zkzx.Core.Database.Utility
             switch (m?.Name)
             {
                 case "Like":
+               
+                    var l1 = ProviderHelper.VisitMember(expression.Arguments[0] as MemberExpression).Express;
+                    var l2 = Expression.Lambda(expression.Arguments[1]).Compile().DynamicInvoke();
 
-                    var p1 = ProviderHelper.VisitMember(expression.Arguments[0] as MemberExpression).Express;
-                    var p2 = Expression.Lambda(expression.Arguments[1]).Compile().DynamicInvoke();
-
-                    return m.Invoke(sqlFunc, new[] { p1, p2 }).ToString();
+                    return m.Invoke(sqlFunc, new[] { l1, l2 }).ToString();
 
                 case "IsNull":
                     var parms = new List<object>();
@@ -228,9 +228,14 @@ namespace DoCare.Zkzx.Core.Database.Utility
                     }
 
                     return m.Invoke(sqlFunc, parms.ToArray()).ToString();
+                case "Contain":
+                    var c1 = Expression.Lambda(expression.Arguments[0]).Compile().DynamicInvoke();
+                    var c2 = ProviderHelper.VisitMember(expression.Arguments[1] as MemberExpression).Express;
+                   
 
-                //default:
-                //    return Expression.Lambda(expression).Compile().DynamicInvoke().ToString();
+                    return m.Invoke(sqlFunc, new[] { c1, c2 }).ToString();
+                    //default:
+                    //    return Expression.Lambda(expression).Compile().DynamicInvoke().ToString();
             }
 
 
