@@ -49,14 +49,9 @@ namespace Permission.Api
             var connectionString = ConfigurationManager.Appsetting($"ConnectionStrings:User:connectionString");
             var providerName = ConfigurationManager.Appsetting($"ConnectionStrings:User:providerName");
 
-            containerBuilder.Register<ILogger>(t =>
-            {
-                return Log.Logger;
-            });
+            containerBuilder.Register<ILogger>(t => Log.Logger);
 
-            containerBuilder.Register(c => new Dbclient(connectionString, providerName)
-                {
-                    Aop = new Aop()
+            containerBuilder.Register(c => new Dbclient(connectionString, providerName, new Aop()
                     {
                         OnError = (sql, paramter) =>
                         {
@@ -71,14 +66,14 @@ namespace Permission.Api
                         },
 
                     }
-                })
+                ))
                 .AsSelf()
                 .InstancePerLifetimeScope();
 
 
             containerBuilder
                 .RegisterAssmblyAsImplementedInterfaces(Assembly.Load("Permission.Repository"))
-                .RegisterAssmblyAsSelf(Assembly.Load("Permission.Service"));
+                .RegisterAssmblyAsImplementedInterfaces(Assembly.Load("Permission.Service"));
             // Services.AddAuthorization();
         }
 

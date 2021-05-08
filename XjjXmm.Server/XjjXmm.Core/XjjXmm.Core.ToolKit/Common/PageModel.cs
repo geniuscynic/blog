@@ -15,7 +15,7 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.Common
         /// <summary>
         /// 数据总数
         /// </summary>
-        public int DataCount { get; set; } = 0;
+        public int Total { get; set; } = 0;
         /// <summary>
         /// 每页大小
         /// </summary>
@@ -23,18 +23,12 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.Common
         /// <summary>
         /// 返回数据
         /// </summary>
-        public List<T> Data { get; set; }
+        public IEnumerable<T> Data { get; set; }
 
         /// <summary>
         /// 总页数
         /// </summary>
-        public int PageCount
-        {
-            get
-            {
-                return DataCount / PageSize + 1;
-            }
-        }
+        public int PageCount => Total / PageSize + 1;
         //public int PageCount { get; set; } = 6;
 
     }

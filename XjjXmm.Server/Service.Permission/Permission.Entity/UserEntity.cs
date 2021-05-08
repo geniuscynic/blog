@@ -11,7 +11,7 @@ namespace Permission.Entity
     /// 用户类
     /// </summary>
     [Table("BlogUser")]
-    public class User
+    public class UserEntity
     {
         [Column(IsPrimaryKey = true)]
         public string Id { get; set; }
