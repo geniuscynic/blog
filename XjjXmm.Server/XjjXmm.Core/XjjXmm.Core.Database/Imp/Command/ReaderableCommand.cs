@@ -59,9 +59,10 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
                 return result;
             }
-            catch
+            catch(Exception ex)
             {
-                Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter);
+               
+                Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter, ex);
                 throw;
             }
         }
@@ -78,9 +79,9 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
                 return result;
             }
-            catch
+            catch(Exception ex)
             {
-                Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter);
+                Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter, ex);
                 throw;
             }
         }

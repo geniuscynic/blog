@@ -8,6 +8,6 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public Action<string, object> OnExecuted { get; set; }
 
-        public Action<string, object> OnError { get; set; }
+        public Action<string, object, Exception> OnError { get; set; }
     }
 }

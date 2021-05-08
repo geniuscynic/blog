@@ -79,6 +79,7 @@ namespace DoCare.Zkzx.Core.Database
         
         public IDbTransaction BeginTransaction()
         {
+            _builder.Connection.Value.Open();
             return _builder.Connection.Value.BeginTransaction();
         }
 

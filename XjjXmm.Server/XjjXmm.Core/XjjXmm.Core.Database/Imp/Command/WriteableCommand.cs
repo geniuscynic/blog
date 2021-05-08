@@ -48,7 +48,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             }
             catch(Exception ex)
             {
-                _aop?.OnError?.Invoke(_sql, _sqlParameter);
+                _aop?.OnError?.Invoke(_sql, _sqlParameter, ex);
                 throw;
             }
         }
