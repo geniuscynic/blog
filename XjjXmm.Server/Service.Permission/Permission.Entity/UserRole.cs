@@ -14,7 +14,7 @@ namespace Permission.Entity
     public class UserRoleEntity
     {
         [Column(IsPrimaryKey = true)]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// 用户id

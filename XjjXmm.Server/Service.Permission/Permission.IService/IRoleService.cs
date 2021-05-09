@@ -10,7 +10,7 @@ namespace Permission.IService
     /// </summary>
     public interface IRoleService
     {
-        Task<BussinessModel<IEnumerable<RoleModel>>> GetRoleByUserId(string userId);
+        Task<IEnumerable<RoleModel>> GetRoleByUserId(string userId);
 
     }
 }

@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Formats.Asn1;
 using System.Linq;
 using System.Threading.Tasks;
+using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Permission.IService;
 using Permission.Model;
 using Permission.Service;
-using XjjXmm.Core.FrameWork.Common;
+
 using XjjXmm.Service.Permission;
 
 namespace Permission.Api.Controllers
@@ -16,36 +18,48 @@ namespace Permission.Api.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        public AccountService AccountService { get; set; }
+        public IUserService UserService { get; set; }
 
         [HttpGet]
-        public async Task<BussinessModel<IEnumerable<UserModel>>> Get()
+        public async Task<PageModel<UserModel>> Get(string name, int pageIndex = 1, int pageSize=10)
         {
-            return await AccountService.GetUser();
+            return await UserService.GetUsers(name, pageIndex, pageSize);
+        }
+
+        [HttpPost("/User/Login")]
+        public async Task<UserDetailModel> FindUser(LoginModel loginModel)
+        {
+            return await UserService.FindUser(loginModel);
+        }
+
+        [HttpGet("/User/Detail")]
+        public async Task<UserDetailModel> Detail(string id)
+        {
+            return await UserService.FindUser(id);
         }
 
         [HttpPost("/User/Add")]
-        public async Task<BussinessModel<UserModel>> Add(AddUserModel model)
+        public async Task<bool> Add(AddUserModel model)
         {
-            return await AccountService.AddUser(model);
+            return await UserService.AddUser(model);
         }
 
         [HttpPost("/User/Edit")]
-        public async Task<BussinessModel<UserModel>> Edit(EditUserModel model)
+        public async Task<bool> Edit(EditUserModel model)
         {
-            return await AccountService.EditUser(model);
+            return await UserService.EditUser(model);
         }
 
         [HttpPost("/User/Delete")]
-        public async Task<BussinessModel<bool>> Delete(string id)
+        public async Task<bool> Delete(string id)
         {
-            return await AccountService.SetUserStatus(id, Status.Delete);
+            return await UserService.SetUserStatus(id, Status.Delete);
         }
 
         [HttpPost("/User/Restore")]
-        public async Task<BussinessModel<bool>> Restore(string id)
+        public async Task<bool> Restore(string id)
         {
-            return await AccountService.SetUserStatus(id, Status.Active);
+            return await UserService.SetUserStatus(id, Status.Active);
         }
     }
 }

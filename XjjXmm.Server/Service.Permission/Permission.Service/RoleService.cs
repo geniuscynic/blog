@@ -22,9 +22,10 @@ namespace Permission.Service
         public IRoleRepository RoleRepository { get; set; }
 
 
-        public Task<BussinessModel<IEnumerable<RoleModel>>> GetRoleByUserId(string userId)
+        public async Task<IEnumerable<RoleModel>> GetRoleByUserId(string userId)
         {
-            throw new NotImplementedException();
+            var results = await RoleRepository.GetRoleByUserId(userId);
+            return results.MapTo<RoleEntity, RoleModel>();
         }
     }
 }

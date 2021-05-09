@@ -7,7 +7,8 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.Common
     public enum ExceptionCode
     {
         EmptyOrNullString = 1,
-        KeyNotExist
+        KeyNotExist = 2,
+        CustomException = 99
     }
 
     public class ExceptionModel
@@ -36,7 +37,8 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.Common
         private static Dictionary<ExceptionCode, ExceptionModel> errCodes = new Dictionary<ExceptionCode, ExceptionModel>()
         {
             { ExceptionCode.EmptyOrNullString, new ExceptionModel(ExceptionCode.EmptyOrNullString, "字符串不能为空", "空字符串异常")},
-            { ExceptionCode.KeyNotExist, new ExceptionModel(ExceptionCode.KeyNotExist, "key不存在", "key不存在异常")}
+            { ExceptionCode.KeyNotExist, new ExceptionModel(ExceptionCode.KeyNotExist, "key不存在", "key不存在异常")},
+            { ExceptionCode.CustomException, new ExceptionModel(ExceptionCode.CustomException, "自定义异常", "")},
         };
 
         public static BussinessException CreateException(ExceptionCode code, Exception innerException)

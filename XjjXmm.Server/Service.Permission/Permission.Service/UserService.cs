@@ -16,7 +16,7 @@ using XjjXmm.Core.FrameWork.Mapper;
 
 namespace Permission.Service
 {
-    
+
     public class UserService : IUserService
     {
 
@@ -24,7 +24,7 @@ namespace Permission.Service
 
         public IRoleService RoleService { get; set; }
 
-        public async Task<BussinessModel<PageModel<UserModel>>> GetUsers(string name, int pageIndex, int pageSize)
+        public async Task<PageModel<UserModel>> GetUsers(string name, int pageIndex, int pageSize)
         {
             if (pageIndex < 1)
             {
@@ -46,61 +46,53 @@ namespace Permission.Service
                 PageSize = pageSize
             };
 
-            return new BussinessModel<PageModel<UserModel>>(pageModel);
+            return pageModel;
         }
 
-        public async Task<BussinessModel<UserDetailModel>> FindUser(LoginModel loginModel)
+        public async Task<UserDetailModel> FindUser(LoginModel loginModel)
         {
             var user = await UserRepository.FirstOrDefault(t => t.Account == loginModel.Login && t.Password == loginModel.Password);
 
             if (user == null)
             {
-                return new BussinessModel<UserDetailModel>(null)
-                {
-                    Success = false,
-                    Message = "用户名或者密码错误"
-                };
+                throw BussinessException.CreateException(ExceptionCode.CustomException, "用户名或者密码错误");
             }
 
             var userModel = user.MapTo<UserEntity, UserDetailModel>();
 
             var roles = await RoleService.GetRoleByUserId(userModel.Id);
 
-            userModel.Roles = roles.Response.Select(t => t.Id);
+            userModel.Roles = roles.Select(t => t.Id);
 
-            return new BussinessModel<UserDetailModel>(userModel);
+            return userModel;
 
-           
+
         }
 
-        public async Task<BussinessModel<UserDetailModel>> FindUser(string id)
+        public async Task<UserDetailModel> FindUser(string id)
         {
-           
+
 
             var user = UserRepository.FirstOrDefault(t => t.Id == id).Result;
 
             if (user == null)
             {
-                return new BussinessModel<UserDetailModel>(null)
-                {
-                    Success = false,
-                    Message = "找不到用户"
-                };
+                throw BussinessException.CreateException(ExceptionCode.CustomException, "找不到用户");
             }
 
             var userModel = user.MapTo<UserEntity, UserDetailModel>();
 
 
-           
+
             var roles = await RoleService.GetRoleByUserId(userModel.Id);
 
-            userModel.Roles = roles.Response.Select(t=>t.Id);
-          
-            return new BussinessModel<UserDetailModel>(userModel);
+            userModel.Roles = roles.Select(t => t.Id);
+
+            return userModel;
         }
 
-        
-        public async Task<BussinessModel<string>> AddUser(AddUserModel userModel)
+
+        public async Task<bool> AddUser(AddUserModel userModel)
         {
             var user = userModel.MapTo<AddUserModel, UserEntity>();
             user.Id = GuidKit.Get();
@@ -110,36 +102,27 @@ namespace Permission.Service
             user.UpdatedTime = DateTime.Now;
             user.Status = (int)Status.Active;
 
-            var result = await UserRepository.Add(user) > 0 ? "" : "添加失败";
+            var result = await UserRepository.Add(user) > 0;
 
 
-            return new BussinessModel<string>(user.Id)
-            {
-                Message = result,
-                Success = result == ""
-
-            };
+            return result;
         }
 
-        public async Task<BussinessModel<bool>> EditUser(EditUserModel userModel)
+        public async Task<bool> EditUser(EditUserModel userModel)
         {
             var user = userModel.MapTo<EditUserModel, UserEntity>();
             user.UpdatedBy = "";
             user.UpdatedTime = DateTime.Now;
             //user.Status = (int)Status.Active;
 
-            var result = await UserRepository.Save(user) > 0 ? "" : "保存失败";
+            var result = await UserRepository.Save(user) > 0;
 
 
-            return new BussinessModel<bool>(result =="")
-            {
-                Message = result ,
-                Success = result == ""
-            };
+            return result;
 
         }
 
-        public async Task<BussinessModel<bool>> SetUserStatus(string id, Status status)
+        public async Task<bool> SetUserStatus(string id, Status status)
         {
 
             //user.Status = (int)Status.Active;
@@ -152,14 +135,11 @@ namespace Permission.Service
 
 
 
-            return new BussinessModel<bool>(result)
-            {
-                Success = result
-            };
+            return result;
 
         }
 
-        
+
 
 
 

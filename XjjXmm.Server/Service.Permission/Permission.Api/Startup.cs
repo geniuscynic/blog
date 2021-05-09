@@ -49,20 +49,22 @@ namespace Permission.Api
             var connectionString = ConfigurationManager.Appsetting($"ConnectionStrings:User:connectionString");
             var providerName = ConfigurationManager.Appsetting($"ConnectionStrings:User:providerName");
 
-            containerBuilder.Register<ILogger>(t => Log.Logger);
+            containerBuilder.Register<ILogger>(t => Log.Logger).PropertiesAutowired();
 
             containerBuilder.Register(c => new Dbclient(connectionString, providerName, new Aop()
                     {
-                        OnError = (sql, paramter) =>
+                        OnError = (sql, paramter, ex) =>
                         {
                             //Log.Information("Sql: \r\n{0}", sql);
                             Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                            Log.Logger.Error(ex, "sqlerror");
                             //Console.WriteLine(sql);
                         },
                         OnExecuting = (sql, paramter) =>
                         {
                             //Console.WriteLine(sql);
                             Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                           
                         },
 
                     }

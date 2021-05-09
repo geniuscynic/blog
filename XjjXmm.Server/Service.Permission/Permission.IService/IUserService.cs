@@ -18,35 +18,35 @@ namespace Permission.IService
         /// <param name="pageIndex"></param>
         /// <param name="pageSize"></param>
         /// <returns></returns>
-        public Task<BussinessModel<PageModel<UserModel>>> GetUsers(string name, int pageIndex, int pageSize);
+        public Task<PageModel<UserModel>> GetUsers(string name, int pageIndex, int pageSize);
 
         /// <summary>
         /// 登入验证
         /// </summary>
         /// <param name="loginModel"></param>
         /// <returns></returns>
-        Task<BussinessModel<UserDetailModel>> FindUser(LoginModel loginModel);
+        Task<UserDetailModel> FindUser(LoginModel loginModel);
 
         /// <summary>
         /// 获取用户详情
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<BussinessModel<UserDetailModel>> FindUser(string id);
+        Task<UserDetailModel> FindUser(string id);
 
         /// <summary>
         /// 添加用户
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        Task<BussinessModel<string>> AddUser(AddUserModel userModel);
+        Task<bool> AddUser(AddUserModel userModel);
 
         /// <summary>
         /// 修改用户
         /// </summary>
         /// <param name="userModel"></param>
         /// <returns></returns>
-        Task<BussinessModel<bool>> EditUser(EditUserModel userModel);
+        Task<bool> EditUser(EditUserModel userModel);
 
         /// <summary>
         ///  设置用户状态
@@ -54,7 +54,7 @@ namespace Permission.IService
         /// <param name="id"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        Task<BussinessModel<bool>> SetUserStatus(string id, Status status);
+        Task<bool> SetUserStatus(string id, Status status);
 
        
     }

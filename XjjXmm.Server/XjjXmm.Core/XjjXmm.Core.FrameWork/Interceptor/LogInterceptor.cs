@@ -13,7 +13,13 @@ namespace XjjXmm.Core.FrameWork.Interceptor
     /// </summary>
     public class LogInterceptor : AsyncInterceptorBase
     {
-        public ILogger logger { get; set; }
+        private readonly ILogger logger;
+
+        public LogInterceptor(ILogger logger)
+        {
+            this.logger = logger;
+        }
+       // public ILogger logger { get; set; }
 
         public StringBuilder LogMessage = new StringBuilder();
         protected override void BeforeProceed(IInvocation invocation)

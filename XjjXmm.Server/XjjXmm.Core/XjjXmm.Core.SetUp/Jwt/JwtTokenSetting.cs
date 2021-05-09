@@ -1,5 +1,5 @@
 ﻿using System;
-using XjjXmm.Core.FrameWork.ToolKit;
+using DoCare.Zkzx.Core.FrameWork.Tool.ToolKit;
 using XjjXmm.Core.SetUp.Configuration;
 
 namespace XjjXmm.Core.SetUp.Jwt
