@@ -25,7 +25,7 @@ namespace XjjXmm.Core.FrameWork.Interceptor
         protected override void BeforeProceed(IInvocation invocation)
         {
             LogMessage.Append(
-                                $"【当前执行方法】：{ invocation.Method.Name} \r\n" +
+                                $"【当前执行方法】： {invocation.TargetType.Name}.{ invocation.Method.Name} \r\n" +
                                 $"【携带的参数有】： {string.Join(", ", invocation.Arguments.Select(a => (a ?? "").ToString()).ToArray())} \r\n");
 
         }

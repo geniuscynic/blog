@@ -13,6 +13,14 @@
     <None Remove="ToolKit\**" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="Filter\GlobalExceptionFilter.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Filter\GlobalExceptionFilter.cs.bak" />
+  </ItemGroup>
+
 
 
   <ItemGroup>

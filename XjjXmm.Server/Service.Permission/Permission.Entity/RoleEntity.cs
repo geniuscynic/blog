@@ -5,10 +5,11 @@ namespace Permission.Entity
     /// <summary>
     /// 角色
     /// </summary>
+    [Table("Role")]
     public class RoleEntity 
     {
         [Column( IsPrimaryKey = true)]
-        public int Id { get; set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// code

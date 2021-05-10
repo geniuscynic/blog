@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using System;
+using System.Threading.Tasks;
 using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -9,44 +10,33 @@ using Serilog;
 
 namespace XjjXmm.Core.FrameWork.Filter
 {
-    //public class ResultExceptionsFilter : IResultFilter
-    //{
-    //    public void OnResultExecuting(ResultExecutingContext context)
-    //    {
-    //        throw new NotImplementedException();
-    //    }
 
-    //    public void OnResultExecuted(ResultExecutedContext context)
-    //    {
-    //        context.Result.
-    //    }
-    //}
-    /// <summary>
-    /// 全局异常错误日志
-    /// </summary>
-    public class GlobalExceptionsFilter : IActionFilter
+    public class MvcActionFilter : IAsyncActionFilter
     {
         //  private readonly IWebHostEnvironment _env;
         private readonly ILogger _loggerHelper;
 
-        public GlobalExceptionsFilter(ILogger loggerHelper)
+        public MvcActionFilter(ILogger loggerHelper)
         {
             //_env = env;
             _loggerHelper = loggerHelper;
         }
 
 
-        public void OnActionExecuting(ActionExecutingContext context)
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
-            var a = "";
-            //throw new NotImplementedException();
+            // throw new NotImplementedException();
+
+           var result =  await next();
+           OnActionExecuted(result);
+
         }
 
         public void OnActionExecuted(ActionExecutedContext context)
         {
             if (context.Exception != null)
             {
-                _loggerHelper.Error(context.Exception,"MVC Error");
+                _loggerHelper.Error(context.Exception, "MVC Error");
 
                 if (context.Exception is BussinessException bussinessException)
                 {
@@ -62,11 +52,13 @@ namespace XjjXmm.Core.FrameWork.Filter
             }
             else
             {
-                var result = (ObjectResult) context.Result;
+                var result = (ObjectResult)context.Result;
                 context.Result = new JsonResult(new BussinessModel<object>(result.Value));
             }
-           
+
             //throw new NotImplementedException();
         }
+
+
     }
 }

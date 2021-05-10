@@ -64,7 +64,6 @@ namespace Permission.Api
                         {
                             //Console.WriteLine(sql);
                             Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
-                           
                         },
 
                     }

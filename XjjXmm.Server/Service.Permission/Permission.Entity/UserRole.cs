@@ -11,6 +11,7 @@ namespace Permission.Entity
     /// <summary>
     /// 用户,角色关联类
     /// </summary>
+    [Table("UserRole")]
     public class UserRoleEntity
     {
         [Column(IsPrimaryKey = true)]
@@ -19,12 +20,12 @@ namespace Permission.Entity
         /// <summary>
         /// 用户id
         /// </summary>
-        public int UserId { get; set; }
+        public string UserId { get; set; }
 
         /// <summary>
         /// 角色id
         /// </summary>
-        public int RoleId { get; set; }
+        public string RoleId { get; set; }
 
         /// <summary>
         /// 对应的用户
