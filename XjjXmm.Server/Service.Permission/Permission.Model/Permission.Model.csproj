@@ -9,4 +9,8 @@
     <DocumentationFile>..\Blog.Admin\bin\Debug\netcoreapp3.1\Blog.Model.xml</DocumentationFile>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\XjjXmm.Core\XjjXmm.Core.ToolKit\DoCare.Zkzx.Core.FrameWork.Tool.csproj" />
+  </ItemGroup>
+
 </Project>

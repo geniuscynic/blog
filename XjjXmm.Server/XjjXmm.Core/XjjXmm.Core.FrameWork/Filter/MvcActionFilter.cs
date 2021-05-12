@@ -3,6 +3,7 @@
 using System;
 using System.Threading.Tasks;
 using DoCare.Zkzx.Core.FrameWork.Tool.Common;
+using DoCare.Zkzx.Core.FrameWork.Tool.DataValidation;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Serilog;
@@ -25,6 +26,16 @@ namespace XjjXmm.Core.FrameWork.Filter
 
         public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
         {
+            foreach (var actionArgumentsValue in context.ActionArguments.Values)
+            {
+                var validator = new DoCareValidator(actionArgumentsValue);
+                if (!validator.Validate())
+                {
+                    throw BussinessException.CreateException(ExceptionCode.CustomException,
+                        validator.FirstValidationResult.ErrorMessage);
+
+                }
+            }
             // throw new NotImplementedException();
 
            var result =  await next();
@@ -36,19 +47,19 @@ namespace XjjXmm.Core.FrameWork.Filter
         {
             if (context.Exception != null)
             {
-                _loggerHelper.Error(context.Exception, "MVC Error");
+                //_loggerHelper.Error(context.Exception, "MVC Error");
 
-                if (context.Exception is BussinessException bussinessException)
-                {
-                    context.Result = new JsonResult(new BussinessModel<string>(bussinessException.ExceptionModel.Name)
-                    {
-                        Success = false,
-                        Status = (int)bussinessException.ExceptionModel.Code,
-                        Message = bussinessException.ExceptionModel.Message
-                    });
+                //if (context.Exception is BussinessException bussinessException)
+                //{
+                //    context.Result = new JsonResult(new BussinessModel<string>(bussinessException.ExceptionModel.Name)
+                //    {
+                //        Success = false,
+                //        Status = (int)bussinessException.ExceptionModel.Code,
+                //        Message = bussinessException.ExceptionModel.Message
+                //    });
 
-                    context.Exception = null;
-                }
+                //    //context.Exception = null;
+                //}
             }
             else
             {

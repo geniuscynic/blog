@@ -21,6 +21,7 @@ namespace XjjXmm.Core.SetUp
             {
                 // 全局异常过滤
                 configure.Filters.Add(typeof(MvcActionFilter));
+                configure.Filters.Add(typeof(GlobalExceptionsFilter));
 
             }).AddControllersAsServices();//.AddNewtonsoftJson();
 

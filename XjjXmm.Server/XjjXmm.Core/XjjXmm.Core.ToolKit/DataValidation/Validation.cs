@@ -30,6 +30,11 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
             {
                 var validators = propertyInfo.GetCustomAttributes<AbstractValidator>();
 
+                if (!validators.Any())
+                {
+                    return true;
+                }
+
                 var val = propertyInfo.GetValue(_model);
 
                 foreach (var validator in validators)
