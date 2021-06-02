@@ -262,3 +262,5 @@ src/BookStore.DbMigrator/Logs/*
 ref/
 ConsoleApp1/
 Dao/
+
+share/

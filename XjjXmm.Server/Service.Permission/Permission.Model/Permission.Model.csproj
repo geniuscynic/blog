@@ -11,6 +11,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\XjjXmm.Core\XjjXmm.Core.ToolKit\DoCare.Zkzx.Core.FrameWork.Tool.csproj" />
+    <ProjectReference Include="..\Permission.IRepository\Permission.IRepository.csproj" />
   </ItemGroup>
 
 </Project>

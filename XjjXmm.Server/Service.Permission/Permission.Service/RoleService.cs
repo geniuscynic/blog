@@ -7,7 +7,6 @@ using DoCare.Zkzx.Core.FrameWork.Tool.ToolKit;
 using log4net.Util;
 using Permission.Entity;
 using Permission.IRepository;
-using Permission.IService;
 using Permission.Model;
 using Permission.Repository;
 using XjjXmm.Core.FrameWork.Interceptor;
@@ -16,7 +15,7 @@ using XjjXmm.Core.FrameWork.Mapper;
 namespace Permission.Service
 {
    
-    public class RoleService : IRoleService
+    public class RoleService //: IRoleService
     {
 
         public IRoleRepository RoleRepository { get; set; }

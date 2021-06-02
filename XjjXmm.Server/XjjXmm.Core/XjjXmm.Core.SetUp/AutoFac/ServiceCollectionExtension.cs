@@ -27,7 +27,8 @@ namespace XjjXmm.Core.SetUp.AutoFac
                 //.EnableInterfaceInterceptors()
                 // .UsingConstructor(new[] { typeof(IInterceptor[]) })
                 .EnableClassInterceptors()
-               // .InterceptedBy(typeof(CacheTestInterceptorBase))
+                .InterceptedBy(typeof(LogInterceptor))
+                // .InterceptedBy(typeof(CacheTestInterceptorBase))
                 .PropertiesAutowired();
 
             return containerBuilder;

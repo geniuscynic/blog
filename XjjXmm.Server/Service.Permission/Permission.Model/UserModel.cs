@@ -1,27 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using DoCare.Zkzx.Core.FrameWork.Tool.DataValidation;
+using Permission.IRepository;
 
 namespace Permission.Model
 {
     /// <summary>
     /// 添加用户的view model
     /// </summary>
+    [SameUserValidateForNew]
     public class AddUserModel
     {
 
         /// <summary>
         /// 账号
         /// </summary>
+        [Required]
         public string Account { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
+        [Required]
         public string Password { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
+        [Required]
         public string NickName { get; set; }
 
         
@@ -39,21 +45,25 @@ namespace Permission.Model
         /// <summary>
         /// 主键ID
         /// </summary>
+        [Required]
         public string Id { get; set; }
 
         /// <summary>
         /// 账号
         /// </summary>
-        public string Account { get; set; }
+        //[Required]
+        //public string Account { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-        public string Password { get; set; }
+       // [Required]
+       // public string Password { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
+        [Required]
         public string NickName { get; set; }
 
 
@@ -63,9 +73,30 @@ namespace Permission.Model
         public List<string> Roles { get; set; }
     }
 
-     /// <summary>
-     /// 查询返回
-     /// </summary>
+    public class SameUserValidateForNew : AbstractValidator
+    {
+        public IUserRepository UserRepository { get; set; }
+        public override string CustomMessage { get; set; } = "账号已经存在 ";
+
+        public override bool IsValid(object value, object model)
+        {
+            if (model is AddUserModel userModel)
+            {
+                var account = userModel.Account;
+
+
+                return UserRepository.FirstOrDefault(t => t.Account == account) != null;
+            }
+
+            throw new Exception("类型错误");
+        }
+    }
+
+   
+
+    /// <summary>
+    /// 查询返回
+    /// </summary>
     public class UserModel
     {
         /// <summary>
@@ -120,7 +151,9 @@ namespace Permission.Model
         //public int Status { get; set; } = 1;
     }
 
-
+     /// <summary>
+     /// 详细信息
+     /// </summary>
      public class UserDetailModel
      {
          /// <summary>

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Permission.IService;
 using Permission.Model;
 using Permission.Service;
 
@@ -18,7 +17,7 @@ namespace Permission.Api.Controllers
     [Route("[controller]")]
     public class AccountController : ControllerBase
     {
-        public IUserService UserService { get; set; }
+        public UserService UserService { get; set; }
 
         [HttpGet]
         public async Task<PageModel<UserModel>> Get(string name, int pageIndex = 1, int pageSize=10)

@@ -17,14 +17,70 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
 
         public ValidatonResult FirstValidationResult => ValidationResults.FirstOrDefault();
 
-        public bool Validate(bool needFullCheck = false)
+        private bool ValidateModel(bool needFullCheck = false, ValidateType validateType = ValidateType.CustomValdate)
+        {
+            var type = _model.GetType();
+
+            var validators = type.GetCustomAttributes<AbstractValidator>();
+
+          
+
+            if (!validators.Any())
+            {
+                return true;
+            }
+
+
+
+            var val = _model;
+
+            foreach (var validator in validators)
+            {
+                if (validator.ValdateType == ValidateType.CustomValdate && validateType == ValidateType.AutoValdate)
+                {
+                    continue;
+
+                }
+
+                var result = validator.IsValid(val, _model);
+
+                if (!result)
+                {
+                    ValidationResults.Add(new ValidatonResult()
+                    {
+                        CustomMessage = validator.CustomMessage,
+                        Description = validator.DisplayName,
+                        Field = "",
+                        FieldValue = val,
+                        DefaultMessage = validator.DefaultMessage
+                    });
+
+                    if (!needFullCheck)
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            return true;
+
+        }
+
+        public bool Validate(bool needFullCheck = false, ValidateType validateType = ValidateType.CustomValdate)
         {
             if (_model == null)
             {
                 return false;
             }
 
+            if(!ValidateModel(needFullCheck, validateType) && needFullCheck == false)
+            {
+                return false;
+            }
+
             var type = _model.GetType();
+
+           
 
             foreach (var propertyInfo in type.GetProperties())
             {
@@ -35,10 +91,18 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
                     return true;
                 }
 
+
+
                 var val = propertyInfo.GetValue(_model);
 
                 foreach (var validator in validators)
                 {
+                    if (validator.ValdateType == ValidateType.CustomValdate && validateType == ValidateType.AutoValdate)
+                    {
+                        continue;
+
+                    }
+
                     var result = validator.IsValid(val, _model);
 
                     if (!result)

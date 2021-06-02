@@ -8,7 +8,6 @@ using DoCare.Zkzx.Core.FrameWork.Tool.ToolKit;
 using log4net.Util;
 using Permission.Entity;
 using Permission.IRepository;
-using Permission.IService;
 using Permission.Model;
 using Permission.Repository;
 using XjjXmm.Core.FrameWork.Interceptor;
@@ -17,12 +16,12 @@ using XjjXmm.Core.FrameWork.Mapper;
 namespace Permission.Service
 {
 
-    public class UserService : IUserService
+    public class UserService// : IUserService
     {
 
         public IUserRepository UserRepository { get; set; }
 
-        public IRoleService RoleService { get; set; }
+        public RoleService RoleService { get; set; }
 
         public async Task<PageModel<UserModel>> GetUsers(string name, int pageIndex, int pageSize)
         {

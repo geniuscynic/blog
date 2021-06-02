@@ -20,6 +20,7 @@ namespace Permission.Entity
         /// 账号
         /// </summary>
         //[SugarColumn(Length = 20, ColumnDataType = "nvarchar")]
+        [Column(IgnoreSave = true)]
         public string Account { get; set; }
 
         /// <summary>

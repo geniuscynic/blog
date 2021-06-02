@@ -29,7 +29,7 @@ namespace XjjXmm.Core.FrameWork.Filter
             foreach (var actionArgumentsValue in context.ActionArguments.Values)
             {
                 var validator = new DoCareValidator(actionArgumentsValue);
-                if (!validator.Validate())
+                if (!validator.Validate(validateType:ValidateType.AutoValdate))
                 {
                     throw BussinessException.CreateException(ExceptionCode.CustomException,
                         validator.FirstValidationResult.ErrorMessage);

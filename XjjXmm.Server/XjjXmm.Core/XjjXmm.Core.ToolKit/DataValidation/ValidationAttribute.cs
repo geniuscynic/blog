@@ -3,14 +3,30 @@ using System.Collections;
 
 namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
 {
+    public enum ValidateType
+    {
+        AutoValdate,
+        CustomValdate,
+    }
     public abstract class AbstractValidator : Attribute
     {
-        public virtual  string CustomMessage { get; set; }
+        /// <summary>
+        /// 自定义错误
+        /// </summary>
+        public virtual string CustomMessage { get; set; }
 
         internal virtual string DefaultMessage { get; set; }
 
         public string DisplayName { get; set; } = "";
 
+        public ValidateType ValdateType { get; set; } = ValidateType.AutoValdate;
+
+        /// <summary>
+        /// 验证
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="model"></param>
+        /// <returns></returns>
         public abstract bool IsValid(object value, object model);
     }
 
@@ -29,7 +45,7 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
 
             return true;
 
-           
+
         }
     }
 

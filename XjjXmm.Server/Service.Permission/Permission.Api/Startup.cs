@@ -74,7 +74,8 @@ namespace Permission.Api
 
             containerBuilder
                 .RegisterAssmblyAsImplementedInterfaces(Assembly.Load("Permission.Repository"))
-                .RegisterAssmblyAsImplementedInterfaces(Assembly.Load("Permission.Service"));
+                .RegisterAssmblyAsSelf(Assembly.Load("Permission.Service"))
+                .RegisterAssmblyAsSelf(Assembly.Load("Permission.Model"));
             // Services.AddAuthorization();
         }
 
