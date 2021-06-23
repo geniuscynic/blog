@@ -15,6 +15,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
+    [Obsolete(message: "推荐使用：ComplexQueryable")]
     internal abstract class Queryable<T> : BaseOperate, IDoCareQueryable<T>
     {
         private readonly IWhereCommand whereCommand;
