@@ -1,4 +1,5 @@
-﻿using DoCare.Zkzx.Core.Database.Utility;
+﻿using System;
+using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 {
@@ -10,5 +11,9 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
             return $"nvl2({p1}， 1, 0)";
         }
 
+        //public override string IsNull(DateTime? p1)
+        //{
+        //    return $"nvl2({p1}， 1, 0)";
+        //}
     }
 }

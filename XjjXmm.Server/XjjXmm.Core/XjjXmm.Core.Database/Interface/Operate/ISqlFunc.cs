@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DoCare.Zkzx.Core.Database.Interface.Operate
 {
@@ -7,6 +8,8 @@ namespace DoCare.Zkzx.Core.Database.Interface.Operate
     public interface ISqlFuncVisit
     {
         string IsNull(string p1);
+
+        //string IsNull(DateTime? p1);
 
         string Like(string p1, string p2);
 

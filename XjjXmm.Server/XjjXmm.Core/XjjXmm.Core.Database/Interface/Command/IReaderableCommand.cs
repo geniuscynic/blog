@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Data;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,6 +18,8 @@ namespace DoCare.Zkzx.Core.Database.Interface.Command
         Task<T> ExecuteSingleOrDefault<T>();
 
         Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize);
+
+        Task<DataTable> ExecuteDataTable<T>();
     }
 
     public interface IReaderableCommand<T>
@@ -32,6 +35,8 @@ namespace DoCare.Zkzx.Core.Database.Interface.Command
         Task<T> ExecuteSingleOrDefault();
 
         Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize);
+
+        Task<DataTable> ExecuteDataTable();
     }
 
     public interface ICommandBuilder

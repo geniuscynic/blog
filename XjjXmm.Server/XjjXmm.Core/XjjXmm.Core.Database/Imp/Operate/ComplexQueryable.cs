@@ -119,6 +119,10 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         }
 
+        public async Task<DataTable> ExecuteDataTable()
+        {
+            return await _provider.ExecuteDataTable<T>();
+        }
     }
 
     internal class ComplexQueryable<T1, T2> : ComplexQueryable<T1>, IComplexQueryable<T1, T2>

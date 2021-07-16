@@ -321,6 +321,12 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         }
 
+        public async Task<DataTable> ExecuteDataTable<T>()
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+            return await command.ExecuteDataTable();
+        }
+
         protected abstract IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter);
 
         protected abstract ISqlFuncVisit CreateSqlFunVisit();

@@ -15,9 +15,14 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         /// </summary>
         /// <param name="val"></param>
         /// <returns></returns>
-        public static bool IsNull(string val)
+        public static string IsNull(string val)
         {
-            return true;
+            return "1";
+        }
+
+        public static string IsNull(DateTime? val)
+        {
+            return "1";
         }
 
         /// <summary>
@@ -89,6 +94,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         //    return $"{p1} like '%{p2}%'";
         //}
         public abstract string IsNull(string p1);
+        //public abstract string IsNull(DateTime? p1);
 
         public string Like(string p1, string p2)
         {
