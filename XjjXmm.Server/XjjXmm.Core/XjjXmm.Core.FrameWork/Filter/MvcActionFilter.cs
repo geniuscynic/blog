@@ -61,6 +61,10 @@ namespace XjjXmm.Core.FrameWork.Filter
                 //    //context.Exception = null;
                 //}
             }
+            else if (context.Result is FileResult)
+            {
+                
+            }
             else
             {
                 var result = (ObjectResult)context.Result;
