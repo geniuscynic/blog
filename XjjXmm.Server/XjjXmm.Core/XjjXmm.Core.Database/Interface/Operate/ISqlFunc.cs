@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace DoCare.Zkzx.Core.Database.Interface.Operate
 {
@@ -8,9 +9,17 @@ namespace DoCare.Zkzx.Core.Database.Interface.Operate
     {
         string IsNull(string p1);
 
+        //string IsNull(DateTime? p1);
+
         string Like(string p1, string p2);
 
         string Contain(List<string> p1, string p2);
+
+
+        string FormatDate(string date, string format);
+
+
+        string CovertDateToString(string date, string format);
     }
 
 

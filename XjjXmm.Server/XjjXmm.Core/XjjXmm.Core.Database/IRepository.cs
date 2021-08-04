@@ -14,7 +14,11 @@ namespace DoCare.Zkzx.Core.Database
 
         public Task<int> Save(T t);
 
+        public Task<int> Save<TResult>(T t, Expression<Func<T, TResult>> ignoreColunm);
+
         public Task<int> Save(IEnumerable<T> t);
+
+        public Task<int> Save<TResult>(IEnumerable<T> t, Expression<Func<T, TResult>> ignoreColunm);
 
         public Task<int> Update<TResult>(Expression<Func<TResult>> setColunmExpression, Expression<Func<T, bool>> whereExpression);
 

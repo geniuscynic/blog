@@ -234,8 +234,44 @@ namespace DoCare.Zkzx.Core.Database.Utility
                    
 
                     return m.Invoke(sqlFunc, new[] { c1, c2 }).ToString();
-                    //default:
-                    //    return Expression.Lambda(expression).Compile().DynamicInvoke().ToString();
+
+                case "FormatDate":
+                    var fd1 = "";
+
+                    if (expression.Arguments[0] is MemberExpression)
+                    {
+                        fd1 = ProviderHelper.VisitMember(expression.Arguments[0] as MemberExpression).Express;
+                    }
+                    else
+                    {
+                        fd1 = Expression.Lambda(expression.Arguments[0]).Compile().DynamicInvoke().ToString();
+
+                    }
+
+                    var fd2 = Expression.Lambda(expression.Arguments[1]).Compile().DynamicInvoke();
+
+
+                    return m.Invoke(sqlFunc, new[] { fd1, fd2 }).ToString();
+                //default:
+                //    return Expression.Lambda(expression).Compile().DynamicInvoke().ToString();
+                case "CovertDateToString":
+                    var cd1 = "";
+
+                    if (expression.Arguments[0] is MemberExpression)
+                    {
+                        cd1 = ProviderHelper.VisitMember(expression.Arguments[0] as MemberExpression).Express;
+                    }
+                    else
+                    {
+                        cd1 = Expression.Lambda(expression.Arguments[0]).Compile().DynamicInvoke().ToString();
+
+                    }
+
+                    var cd2 = Expression.Lambda(expression.Arguments[1]).Compile().DynamicInvoke();
+
+
+                    return m.Invoke(sqlFunc, new[] { cd1, cd2 }).ToString();
+
             }
 
 

@@ -33,9 +33,19 @@ namespace DoCare.Zkzx.Core.Database
             return await _dbclient.Saveable(t).Execute();
         }
 
+        public async Task<int> Save<TResult>(T t, Expression<Func<T, TResult>> ignoreColunm)
+        {
+            return await _dbclient.Saveable(t).IgnoreColumns(ignoreColunm).Execute();
+        }
+
         public async Task<int> Save(IEnumerable<T> t)
         {
             return await _dbclient.Saveable(t).Execute();
+        }
+
+        public async Task<int> Save<TResult>(IEnumerable<T> t, Expression<Func<T, TResult>> ignoreColunm)
+        {
+            return await _dbclient.Saveable(t).IgnoreColumns(ignoreColunm).Execute();
         }
 
         public async Task<int> Update<TResult>(Expression<Func<TResult>> setColunmExpression, Expression<Func<T, bool>> whereExpression)

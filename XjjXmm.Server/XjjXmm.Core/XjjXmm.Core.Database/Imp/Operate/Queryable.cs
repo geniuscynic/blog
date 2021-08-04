@@ -15,6 +15,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
+    [Obsolete(message: "推荐使用：ComplexQueryable")]
     internal abstract class Queryable<T> : BaseOperate, IDoCareQueryable<T>
     {
         private readonly IWhereCommand whereCommand;
@@ -186,6 +187,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
             return await command.ToPageList(pageIndex, pageSize);
 
+        }
+
+        public async Task<DataTable> ExecuteDataTable()
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
+
+            return await command.ExecuteDataTable();
         }
 
         protected abstract WhereProvider CreateWhereProvider(ProviderModel providerModel);

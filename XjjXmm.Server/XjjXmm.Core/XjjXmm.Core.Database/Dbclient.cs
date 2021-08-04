@@ -39,9 +39,9 @@ namespace DoCare.Zkzx.Core.Database
             return DatabaseFactory.CreateSaveable<T, T>(_builder, model);
         }
 
-        public ISaveable<T> Saveable<T>(List<T> model)
+        public ISaveable<T> Saveable<T>(IEnumerable<T> model)
         {
-            return DatabaseFactory.CreateSaveable<T, List<T>>(_builder, model);
+            return DatabaseFactory.CreateSaveable<T, IEnumerable<T>>(_builder, model);
         }
 
         public IUpdateable<T> Updateable<T>()

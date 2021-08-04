@@ -114,8 +114,36 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         public async Task<T> ExecuteSingleOrDefault()
         {
+
             return await SingleDelegate(async () =>
                 await Connection.Value.QuerySingleOrDefaultAsync<T>(Sql.ToString(), SqlParameter));
+        }
+
+
+        public async Task<DataTable> ExecuteDataTable()
+        {
+
+            try
+            {
+                Aop?.OnExecuting?.Invoke(Sql.ToString(), SqlParameter);
+
+                var reader = await Connection.Value.ExecuteReaderAsync(Sql.ToString(), SqlParameter);
+
+                Aop?.OnExecuted?.Invoke(Sql.ToString(), SqlParameter);
+
+                DataTable table = new DataTable();
+                table.Load(reader);
+
+                return table;
+            }
+            catch (Exception ex)
+            {
+
+                Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter, ex);
+                throw;
+            }
+
+           
         }
 
         public abstract Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize);

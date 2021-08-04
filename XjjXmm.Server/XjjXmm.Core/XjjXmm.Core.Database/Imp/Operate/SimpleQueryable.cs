@@ -89,5 +89,12 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             return await command.ToPageList(pageIndex, pageSize);
 
         }
+
+        public async Task<DataTable> ExecuteDataTable()
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+
+            return await command.ExecuteDataTable();
+        }
     }
 }
