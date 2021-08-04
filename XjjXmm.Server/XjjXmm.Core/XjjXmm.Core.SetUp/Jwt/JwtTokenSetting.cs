@@ -6,6 +6,18 @@ namespace XjjXmm.Core.SetUp.Jwt
 {
     public class JwtTokenSetting
     {
+        /*
+         *
+         *   iss (issuer)：签发人
+         *   exp (expiration time)：过期时间
+         *   sub (subject)：主题
+         *   aud (audience)：受众
+         *   nbf (Not Before)：生效时间
+         *   iat (Issued At)：签发时间
+         *   jti (JWT ID)：编号
+         *
+         *
+         */
         public string Issue { get; set; } = "xjjxmm Issue";
         
         public string Aud { get; set; } = "xjjxmm Aud";
@@ -19,9 +31,9 @@ namespace XjjXmm.Core.SetUp.Jwt
 
         public static JwtTokenSetting GetKey(string key)
         {
-            var jwtConfig = ConfigurationManager.GetSection<JwtTokenSetting>("JWT");
+            var jwtConfig = ConfigurationManager.GetSection<JwtTokenSetting>(key);
 
-            if (jwtConfig != null)
+            if (jwtConfig == null)
             {
                jwtConfig = new JwtTokenSetting();
             }
