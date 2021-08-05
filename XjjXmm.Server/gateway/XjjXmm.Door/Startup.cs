@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.Core.FrameWork.Cache;
 using XjjXmm.Core.SetUp;
 using XjjXmm.Core.SetUp.Jwt;
 using XjjXmm.Core.SetUp.Swagger;
@@ -31,6 +32,7 @@ namespace XjjXmm.Door
 
             services.AddSwaggerSetup();
 
+            services.AddSingleton<ICache, DoCareCache>();
             //services.AddJwtSetup("sdfyJWT");
             //services.AddControllers();
         }

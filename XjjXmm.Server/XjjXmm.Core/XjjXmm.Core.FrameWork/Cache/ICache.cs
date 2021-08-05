@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace XjjXmm.Core.FrameWork.Cache
 {
-    interface ICache
+    public interface ICache
     {
         /// <summary>
         /// 从缓存中获取对象

@@ -32,8 +32,7 @@ namespace XjjXmm.Door
                 {
                     //¥”appsettings.json÷–∂¡»°≈‰÷√
                     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
-                        .Enrich.FromLogContext()
-                        ;
+                        .Enrich.FromLogContext();
                 })
         ;
 

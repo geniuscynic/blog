@@ -15,10 +15,10 @@ namespace XjjXmm.Core.FrameWork.Cache
     {
         private static readonly MemoryCache Cache = new MemoryCache(new MemoryCacheOptions());
 
-        public DoCareCache(IMemoryCache cache)
-        {
-            // Cache = cache;
-        }
+        //public DoCareCache()
+        //{
+        //    // Cache = cache;
+        //}
 
         /// <summary>
         /// 验证缓存项是否存在
