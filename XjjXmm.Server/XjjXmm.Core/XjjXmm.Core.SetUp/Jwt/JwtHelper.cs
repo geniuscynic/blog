@@ -18,7 +18,7 @@ namespace XjjXmm.Core.SetUp.Jwt
 
             //var jwtConfig = ConfigurationManager.Appsetting("JWT");
 
-            var jwtConfig = JwtTokenSetting.GetKey(options.AppId);
+            var jwtConfig = JwtTokenSetting.GetKey(options.JwtKey);
 
 
             //var jwt1 = ;
@@ -40,12 +40,13 @@ namespace XjjXmm.Core.SetUp.Jwt
                 {
                     //下边为Claim的默认配置
                 new Claim(JwtRegisteredClaimNames.Jti, options.Id),
+                new Claim("clientId", options.AppId),
                 new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
-                new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
+                //new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                 //这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
-                new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.Add(expires)).ToUnixTimeSeconds()}"),
-                new Claim(JwtRegisteredClaimNames.Iss, jwtConfig.Issue),
-                new Claim(JwtRegisteredClaimNames.Aud, jwtConfig.Aud),
+               // new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.Add(expires)).ToUnixTimeSeconds()}"),
+               // new Claim(JwtRegisteredClaimNames.Iss, jwtConfig.Issue),
+                //new Claim(JwtRegisteredClaimNames.Aud, jwtConfig.Aud),
                 //这个Role是官方UseAuthentication要要验证的Role，我们就不用手动设置Role这个属性了
                 //new Claim(ClaimTypes.Role,tokenModel.Role),
                 //new Claim(ClaimTypes.Name, tokenModel.Name),
@@ -64,6 +65,8 @@ namespace XjjXmm.Core.SetUp.Jwt
             var jwt = new JwtSecurityToken
             (
                 issuer: jwtConfig.Issue,
+                audience: jwtConfig.Aud,
+                expires: DateTime.Now.Add(expires),
                 claims: claims,
                 signingCredentials: creds
 
