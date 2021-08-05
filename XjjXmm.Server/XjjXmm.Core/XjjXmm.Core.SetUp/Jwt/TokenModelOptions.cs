@@ -16,7 +16,7 @@
         /// </summary>
         public string AppId { get; set; }
 
-        public string JwtKey { get; set; }
+        //public string JwtKey { get; set; }
 
     }
 }

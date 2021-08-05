@@ -15,34 +15,46 @@ namespace XjjXmm.Door.Controllers
     [ApiController]
     public class AccountController : ControllerBase
     {
-        [HttpPost]
-        public string Login(string name, string password, string clientId)
+        [HttpPost("login")]
+        public string Login(string name, string password)
         {
-            var setting = ConfigurationManager.GetSection<ClientSetting>(clientId);
+            var setting = ConfigurationManager.GetSection<ClientSetting>("sdfy:authorize");
             if (setting == null)
             {
                 throw BussinessException.CreateException(ExceptionCode.KeyNotExist, "未授权的客户端");
             }
 
+            //做登入认证
+            var jwtTokenSetting = ConfigurationManager.GetSection<JwtTokenSetting>("sdfy:JWT");
             //访问url
-
-            return JwtHelper.IssueJwt(new TokenModelOptions()
+            return JwtHelper.IssueToken(jwtTokenSetting, new TokenModelOptions()
             {
                 Id = "1",
-                AppId = clientId,
-                JwtKey = "JWT"
+                AppId = "sdf"
             });
         }
 
-        public string GetAccessToken(string authorizationCode, string clientSecret)
+        [HttpPost("GetAccessToken")]
+        public string GetAccessToken(string authorizationCode)
         {
-            var clientId = "";
+            //做登入认证
+            var jwtTokenSetting = ConfigurationManager.GetSection<JwtTokenSetting>("sdfy:JWT");
 
-            var setting = ConfigurationManager.GetSection<ClientSetting>(clientId);
+            var setting = ConfigurationManager.GetSection<ClientSetting>("sdfy:authorize");
             if (setting == null)
             {
                 throw BussinessException.CreateException(ExceptionCode.KeyNotExist, "未授权的客户端");
             }
+
+
+
+            var options = JwtHelper.DecryptToken(jwtTokenSetting, authorizationCode);
+
+            return JwtHelper.IssueToken(jwtTokenSetting, new TokenModelOptions()
+            {
+                Id = "1",
+                AppId = "sdfy:JWT"
+            });
         }
 
 

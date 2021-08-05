@@ -30,7 +30,8 @@ namespace XjjXmm.Door
             services.AddCommonSetup(Configuration);
 
             services.AddSwaggerSetup();
-            services.AddJwtSetup("JWT");
+
+            //services.AddJwtSetup("sdfyJWT");
             //services.AddControllers();
         }
 
