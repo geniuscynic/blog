@@ -88,7 +88,6 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
-
             return await EnumerableDelegate(async () =>
                 await Connection.Value.QueryAsync<T>(Sql.ToString(), SqlParameter));
 
