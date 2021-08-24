@@ -13,6 +13,7 @@ using XjjXmm.Core.FrameWork.Cache;
 using XjjXmm.Core.SetUp;
 using XjjXmm.Core.SetUp.Jwt;
 using XjjXmm.Core.SetUp.Swagger;
+using XjjXmm.Door.Middleware;
 
 namespace XjjXmm.Door
 {
@@ -33,6 +34,11 @@ namespace XjjXmm.Door
             services.AddSwaggerSetup();
 
             services.AddSingleton<ICache, DoCareCache>();
+
+            //services.AddHttpClient();
+            services.AddHttpClient();
+            
+            services.AddSingleton<IUrlRewriter>(new PrefixRewriter("/webapp", "http://localhost:63445"));//这里填写前缀与需要转发的地址
             //services.AddJwtSetup("sdfyJWT");
             //services.AddControllers();
         }
@@ -44,6 +50,8 @@ namespace XjjXmm.Door
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseMiddleware<ProxyMiddleware>();
 
             app.UseSwaggerMiddlewares();
 

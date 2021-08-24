@@ -8,6 +8,7 @@ using System.Text;
 using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.IdentityModel.Tokens;
 using Serilog;
+using XjjXmm.Core.FrameWork.Cache;
 
 namespace XjjXmm.Core.SetUp.Jwt
 {
@@ -125,6 +126,8 @@ namespace XjjXmm.Core.SetUp.Jwt
 
             var jwtHandler = new JwtSecurityTokenHandler();
             var encodedJwt = jwtHandler.WriteToken(jwt);
+
+
 
             return encodedJwt;
         }
