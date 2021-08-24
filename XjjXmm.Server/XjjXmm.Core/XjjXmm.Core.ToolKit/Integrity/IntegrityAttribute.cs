@@ -47,7 +47,7 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.Integrity
         public int Total { get; internal set; }
 
         private int _ok = 0;
-        public int OK
+        public int Ok
         {
             get => _ok;
 
@@ -80,7 +80,7 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.Integrity
                     return 100;
                 }
 
-                return decimal.Divide(OK, Total) * 100;
+                return decimal.Divide(Ok, Total) * 100;
             }
         }
 
