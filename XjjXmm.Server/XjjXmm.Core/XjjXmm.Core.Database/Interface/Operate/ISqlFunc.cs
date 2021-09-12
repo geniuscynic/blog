@@ -20,6 +20,10 @@ namespace DoCare.Zkzx.Core.Database.Interface.Operate
 
 
         string CovertDateToString(string date, string format);
+
+        string Lower(string p1);
+
+        string Upper(string p1);
     }
 
 

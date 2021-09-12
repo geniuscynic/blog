@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
+using Serilog;
+
 
 namespace XjjXmm.Door.Middleware
 {
@@ -14,11 +17,11 @@ namespace XjjXmm.Door.Middleware
         private const string CDN_HEADER_NAME = "Cache-Control";
         private static readonly string[] NotForwardedHttpHeaders = new[] {"Connection", "Host"};
         private readonly RequestDelegate _next;
-        private readonly ILogger<ProxyMiddleware> _logger;
+        private readonly ILogger _logger;
 
         public ProxyMiddleware(
             RequestDelegate next,
-            ILogger<ProxyMiddleware> logger
+            ILogger logger
 
         )
         {
@@ -35,17 +38,54 @@ namespace XjjXmm.Door.Middleware
         /// <returns></returns>
         public async Task Invoke(HttpContext context, IUrlRewriter urlRewriter, IHttpClientFactory httpClientFactory)
         {
-            var targetUri = await urlRewriter.RewriteUri(context);
-
-            if (targetUri != null)
+            try
             {
-                var requestMessage = GenerateProxifiedRequest(context, targetUri);
-                await SendAsync(context, requestMessage, httpClientFactory);
+                var targetUri = await urlRewriter.RewriteUri(context);
 
-                return;
+               
+
+                if (targetUri != null)
+                {
+                    _logger.Information("转发的URL:" + targetUri.AbsoluteUri);
+
+                    var requestMessage = GenerateProxifiedRequest(context, targetUri, urlRewriter);
+                    await SendAsync(context, requestMessage, httpClientFactory);
+
+                    return;
+                }
+
+                await _next(context);
             }
+            catch (BussinessException ex1)
+            {
+                _logger.Error(ex1, "proxy");
+                context.Response.ContentType = "application/json; charset=utf-8";
 
-            await _next(context);
+                var result = new BussinessModel<string>(ex1.Message)
+                {
+                    Success = false,
+                    //Status = (int)bussinessException.ExceptionModel.Code,
+                    Message = ex1.Message
+                };
+
+                //context.Response.StatusCode = 401;
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, "proxy");
+                context.Response.ContentType = "application/json; charset=utf-8";
+                context.Response.StatusCode = 401;
+
+                var result = new BussinessModel<string>(ex.Message)
+                {
+                    Success = false,
+                    //Status = (int)bussinessException.ExceptionModel.Code,
+                    Message = ex.Message
+                };
+
+                await context.Response.WriteAsync(JsonConvert.SerializeObject(result));
+            }
         }
 
         private async Task SendAsync(HttpContext context, HttpRequestMessage requestMessage,
@@ -79,13 +119,14 @@ namespace XjjXmm.Door.Middleware
             }
         }
 
-        private static HttpRequestMessage GenerateProxifiedRequest(HttpContext context, Uri targetUri)
+        private static HttpRequestMessage GenerateProxifiedRequest(HttpContext context, Uri targetUri, IUrlRewriter urlRewriter)
         {
             var requestMessage = new HttpRequestMessage();
             CopyRequestContentAndHeaders(context, requestMessage);
             requestMessage.RequestUri = targetUri;
             requestMessage.Headers.Host = targetUri.Host;
             requestMessage.Method = GetMethod(context.Request.Method);
+            requestMessage.Headers.Add("uid",urlRewriter.Id);
             return requestMessage;
         }
 

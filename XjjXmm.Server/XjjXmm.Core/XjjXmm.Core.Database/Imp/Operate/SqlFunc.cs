@@ -80,6 +80,17 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         {
             return "";
         }
+
+
+        public static string Lower(string p1)
+        {
+            return "";
+        }
+
+        public static string Upper(string p1)
+        {
+            return "";
+        }
     }
 
     internal abstract class SqlFuncVisit : ISqlFuncVisit
@@ -116,6 +127,16 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         public string CovertDateToString(string date, string format)
         {
             return $"to_char({date}, '{format}')";
+        }
+
+        public string Lower(string p1)
+        {
+            return $"LOWER({p1})";
+        }
+
+        public string Upper(string p1)
+        {
+            return $"UPPER({p1})";
         }
     }
 

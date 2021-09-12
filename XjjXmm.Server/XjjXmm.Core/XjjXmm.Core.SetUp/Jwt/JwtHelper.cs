@@ -93,6 +93,7 @@ namespace XjjXmm.Core.SetUp.Jwt
                 //下边为Claim的默认配置
                 new Claim(JwtRegisteredClaimNames.Jti, options.Id),
                 new Claim("AppId", options.AppId),
+                new Claim("ClientId", options.ClientId),
                 new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
                 //new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                 //这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
@@ -127,12 +128,10 @@ namespace XjjXmm.Core.SetUp.Jwt
             var jwtHandler = new JwtSecurityTokenHandler();
             var encodedJwt = jwtHandler.WriteToken(jwt);
 
-
-
             return encodedJwt;
         }
 
-        public static TokenModelOptions DecryptToken(JwtTokenSetting jwtConfig, string jwtStr)
+        public static TokenModelOptions DecryptToken(string jwtStr)
         {
             //var jwtConfig = JwtTokenSetting.GetKey(options.JwtKey);
             //var jwtConfig = JwtTokenSetting.GetKey(options.JwtKey);
@@ -147,6 +146,39 @@ namespace XjjXmm.Core.SetUp.Jwt
                     return null;
                 }
 
+                return new TokenModelOptions()
+                {
+                    Id = jwtToken.Id,
+                    AppId = jwtToken.Claims.FirstOrDefault(t => t.Type == "AppId")?.Value ?? "",
+                    ClientId = jwtToken.Claims.FirstOrDefault(t => t.Type == "ClientId")?.Value ?? "",
+                };
+
+            }
+            catch (Exception ex)
+            {
+                logger.Error(ex, "jwt 解析错误");
+            }
+
+            return null;
+        }
+
+      
+        public static TokenModelOptions DecryptToken(JwtTokenSetting jwtConfig, string jwtStr)
+        {
+            //var jwtConfig = JwtTokenSetting.GetKey(options.JwtKey);
+            //var jwtConfig = JwtTokenSetting.GetKey(options.JwtKey);
+            try
+            {
+
+
+                var jwtHandler = new JwtSecurityTokenHandler();
+                //JwtSecurityToken jwtToken = jwtHandler.ReadJwtToken(jwtStr);
+                //if (jwtToken == null)
+                //{
+                //    return null;
+                //}
+
+                
                 var keyByteArray = System.Text.Encoding.ASCII.GetBytes(jwtConfig.Secret);
                 var signingKey = new SymmetricSecurityKey(keyByteArray);
 
@@ -180,7 +212,8 @@ namespace XjjXmm.Core.SetUp.Jwt
                     return new TokenModelOptions()
                     {
                         Id = sercutityToken.Id,
-                        AppId = principal.Claims.FirstOrDefault(t=>t.Type == "AppId")?.Value??""
+                        AppId = principal.Claims.FirstOrDefault(t=>t.Type == "AppId")?.Value??"",
+                        ClientId = principal.Claims.FirstOrDefault(t => t.Type == "ClientId")?.Value ?? "",
                     };
                 }
             }
@@ -192,6 +225,7 @@ namespace XjjXmm.Core.SetUp.Jwt
             return null;
 
         }
+
         public static TokenModelJwt SerializeJwt(string jwtStr)
         {
             var jwtHandler = new JwtSecurityTokenHandler();
@@ -216,6 +250,10 @@ namespace XjjXmm.Core.SetUp.Jwt
             };
             return tm;
         }
+
+
+       
+
     }
 
 

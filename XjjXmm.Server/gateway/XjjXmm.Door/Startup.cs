@@ -38,9 +38,20 @@ namespace XjjXmm.Door
             //services.AddHttpClient();
             services.AddHttpClient();
             
-            services.AddSingleton<IUrlRewriter>(new PrefixRewriter("/webapp", "http://localhost:63445"));//这里填写前缀与需要转发的地址
+            services.AddSingleton<IUrlRewriter, TokenRewriter>();//这里填写前缀与需要转发的地址
             //services.AddJwtSetup("sdfyJWT");
             //services.AddControllers();
+
+            services.AddCors(option => option.AddPolicy("cors", 
+                policy => policy.WithMethods("GET", "POST", "HEAD", "OPTIONS")
+                    .AllowAnyHeader()
+                    //.AllowCredentials()
+                    .AllowAnyOrigin()
+                    
+                
+                )
+            
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +61,8 @@ namespace XjjXmm.Door
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("cors");
 
             app.UseMiddleware<ProxyMiddleware>();
 
