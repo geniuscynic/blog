@@ -59,6 +59,31 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             _joinSql.Append(joinCommand.Build<T4>());
         }
 
+
+        public void Join<T1, T2, T3, T4, T5>(string alias, Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
+        {
+            var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
+            joinCommand.Join(predicate);
+
+            _joinSql.Append(joinCommand.Build<T5>());
+        }
+
+        public void Join<T1, T2, T3, T4, T5, T6>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
+        {
+            var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
+            joinCommand.Join(predicate);
+
+            _joinSql.Append(joinCommand.Build<T6>());
+        }
+
+        public void Join<T1, T2, T3, T4, T5, T6, T7>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
+        {
+            var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
+            joinCommand.Join(predicate);
+
+            _joinSql.Append(joinCommand.Build<T7>());
+        }
+
         public void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
         {
             var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
@@ -83,6 +108,31 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             _joinSql.Append(joinCommand.Build<T4>());
         }
 
+
+        public void LeftJoin<T1, T2, T3, T4, T5>(string alias, Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
+        {
+            var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
+            joinCommand.LeftJoin(predicate);
+
+            _joinSql.Append(joinCommand.Build<T5>());
+        }
+
+        public void LeftJoin<T1, T2, T3, T4, T5, T6>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
+        {
+            var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
+            joinCommand.LeftJoin(predicate);
+
+            _joinSql.Append(joinCommand.Build<T6>());
+        }
+
+        public void LeftJoin<T1, T2, T3, T4, T5, T6, T7>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
+        {
+            var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
+            joinCommand.LeftJoin(predicate);
+
+            _joinSql.Append(joinCommand.Build<T7>());
+        }
+
         public void Where<T>(Expression<Func<T, bool>> predicate)
         {
             _whereCommand.Where(predicate);
@@ -99,6 +149,21 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         }
 
         public void Where<T1, T2, T3, T4>(Expression<Func<T1, T2, T3, T4, bool>> predicate)
+        {
+            _whereCommand.Where(predicate);
+        }
+
+        public void Where<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4,T5, bool>> predicate)
+        {
+            _whereCommand.Where(predicate);
+        }
+
+        public void Where<T1, T2, T3, T4, T5, T6>(Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
+        {
+            _whereCommand.Where(predicate);
+        }
+
+        public void Where<T1, T2, T3, T4, T5, T6, T7>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
         {
             _whereCommand.Where(predicate);
         }
@@ -133,6 +198,21 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             _orderByCommand.AscBy(predicate);
         }
 
+        public void OrderBy<T1, T2, T3, T4, T5, TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> predicate)
+        {
+            _orderByCommand.AscBy(predicate);
+        }
+
+        public void OrderBy<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate)
+        {
+            _orderByCommand.AscBy(predicate);
+        }
+
+        public void OrderBy<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate)
+        {
+            _orderByCommand.AscBy(predicate);
+        }
+
         public void OrderByDesc<T, TResult>(Expression<Func<T, TResult>> predicate)
         {
             _orderByCommand.DescBy(predicate);
@@ -153,7 +233,22 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
             _orderByCommand.DescBy(predicate);
         }
 
-       
+        public void OrderByDesc<T1, T2, T3, T4, T5, TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> predicate)
+        {
+            _orderByCommand.DescBy(predicate);
+        }
+
+        public void OrderByDesc<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate)
+        {
+            _orderByCommand.DescBy(predicate);
+        }
+
+        public void OrderByDesc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate)
+        {
+            _orderByCommand.DescBy(predicate);
+        }
+
+
         private IReaderableCommand<TResult> VisitSelect<T, TResult>(Expression predicate)
         {
             var provider = new SelectProvider();
@@ -202,6 +297,22 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
         }
 
         public IReaderableCommand<TResult> Select<T1, T2, T3, T4, TResult>(Expression<Func<T1, T2, T3, T4, TResult>> predicate)
+        {
+            return VisitSelect<T1, TResult>(predicate);
+        }
+
+
+        public IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> predicate)
+        {
+            return VisitSelect<T1, TResult>(predicate);
+        }
+
+        public IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5,T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate)
+        {
+            return VisitSelect<T1, TResult>(predicate);
+        }
+
+        public IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate)
         {
             return VisitSelect<T1, TResult>(predicate);
         }

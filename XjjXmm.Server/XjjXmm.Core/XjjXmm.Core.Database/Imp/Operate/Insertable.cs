@@ -13,7 +13,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    internal class Insertable<T, TEntity> : BaseOperate, IInsertable<T>
+    internal abstract class Insertable<T, TEntity> : BaseOperate, IInsertable<T>
     {
 
         protected readonly TEntity _model;
@@ -64,12 +64,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _model);
+            //var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _model);
           
+            var command = CreateWriteableCommand(_providerModel.DbInfo, Build().ToString(), _model);
             return await command.Execute();
         }
 
+        protected abstract IWriteableCommand CreateWriteableCommand(DbInfo dbInfo, string sql, object sqlParameter);
 
-        
     }
 }

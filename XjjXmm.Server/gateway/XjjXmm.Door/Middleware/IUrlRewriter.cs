@@ -75,7 +75,7 @@ namespace XjjXmm.Door.Middleware
 
                 if (code.ToString().Length <= 7 || !code.ToString().StartsWith("Bearer"))
                 {
-                    return Task.FromResult((Uri)null);
+                    return Task.FromResult((Uri) null);
                 }
 
 
@@ -87,7 +87,7 @@ namespace XjjXmm.Door.Middleware
                     //return Task.FromResult((Uri)null);
                 }
 
-               
+
 
                 var option = JwtTool.DecryptAndValidationToken(code);
                 if (option == null)
@@ -97,9 +97,21 @@ namespace XjjXmm.Door.Middleware
 
                 Id = option.Id;
 
+                var appId = option.AppId;
+
+                var module = context.Request.Headers["module"];
+
+                if (context.Request.Headers.ContainsKey("module"))  {
+                    if (module.ToString()  == "SIE")
+                    {
+                        appId = module.ToString();
+                    }
+                }
+
+           
                 //_cache.Set($"user_{option.Id}", responseObject["Data"], TimeSpan.FromDays(1), true);
 
-                var url = ConfigurationManager.GetSection<string>($"{option.ClientId}:{option.AppId}:url");
+                var url = ConfigurationManager.GetSection<string>($"{option.ClientId}:{appId}:url");
 
                 var newUri = context.Request.Path.Value + context.Request.QueryString;
 

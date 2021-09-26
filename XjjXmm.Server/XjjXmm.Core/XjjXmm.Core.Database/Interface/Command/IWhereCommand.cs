@@ -14,6 +14,13 @@ namespace DoCare.Zkzx.Core.Database.Interface.Command
 
         void Where<T1, T2, T3, T4>(Expression<Func<T1, T2, T3, T4, bool>> predicate);
 
+        void Where<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4, T5, bool>> predicate);
+
+        void Where<T1, T2, T3, T4, T5, T6>(Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate);
+
+        void Where<T1, T2, T3, T4, T5, T6, T7>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate);
+
+
         void Where(string whereExpression);
 
         void Where<TResult>(string whereExpression, Expression<Func<TResult>> predicate);

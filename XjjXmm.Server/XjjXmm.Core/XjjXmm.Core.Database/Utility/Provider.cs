@@ -81,6 +81,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
                 member.IsIdentity = customAttribute.IsIdentity;
                 member.IsPrimaryKey = customAttribute.IsPrimaryKey;
                 member.IgnoreSave = customAttribute.IgnoreSave;
+                member.IsBigText = customAttribute.IsBigText;
             }
 
             return member;

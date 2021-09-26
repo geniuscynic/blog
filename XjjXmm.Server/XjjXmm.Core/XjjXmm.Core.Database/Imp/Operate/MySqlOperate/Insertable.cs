@@ -1,4 +1,6 @@
 ﻿using System.Data;
+using DoCare.Zkzx.Core.Database.Imp.Command.MySql;
+using DoCare.Zkzx.Core.Database.Interface.Command;
 using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
@@ -11,6 +13,11 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate.MySqlOperate
 
         public MySqlInsertable(DbInfo dbInfo, TEntity model) : base(dbInfo, model)
         {
+        }
+
+        protected override IWriteableCommand CreateWriteableCommand(DbInfo dbInfo, string sql, object sqlParameter)
+        {
+            return new MysqlWriteableCommand(dbInfo,sql,sqlParameter);
         }
     }
 }
