@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <NoWarn>1701;1702;1759</NoWarn>
+    <DocumentationFile>..\Blog.Admin\bin\Debug\netcoreapp3.1\Blog.Model.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\XjjXmm.Core\XjjXmm.Core.ToolKit\DoCare.Zkzx.Core.FrameWork.Tool.csproj" />
+    <ProjectReference Include="..\Permission.IRepository\Permission.IRepository.csproj" />
+  </ItemGroup>
+
+</Project>

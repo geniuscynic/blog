@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\XjjXmm.Core\XjjXmm.Core.FrameWork\XjjXmm.Core.FrameWork.csproj" />
+    <ProjectReference Include="..\Permission.Model\Permission.Model.csproj" />
+  </ItemGroup>
+
+</Project>
