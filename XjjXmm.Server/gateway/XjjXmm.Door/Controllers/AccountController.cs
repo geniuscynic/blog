@@ -6,10 +6,12 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Castle.Core.Internal;
 using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.SignalR;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using XjjXmm.Core.FrameWork.Cache;
@@ -25,11 +27,13 @@ namespace XjjXmm.Door.Controllers
     {
         private readonly ICache _cache;
         private readonly IHttpClientFactory _httpClientFactory;
+        private readonly IHubContext<NotificationHub> _hubContext;
 
-        public AccountController(ICache cache, IHttpClientFactory httpClientFactory)
+        public AccountController(ICache cache, IHttpClientFactory httpClientFactory, IHubContext<NotificationHub> hubContext)
         {
             _cache = cache;
             _httpClientFactory = httpClientFactory;
+            _hubContext = hubContext;
         }
 
         [HttpPost("login")]
@@ -179,19 +183,47 @@ namespace XjjXmm.Door.Controllers
             return accessToken;
         }
 
-       
-
-        [HttpGet("test1")]
-        public string Test1()
+        [HttpPost("RefreshToken")]
+        public string RefreshToken(RefreshTokenModel refreshToken)
         {
-            return "test1";
+            var token = refreshToken.code;
+            if (!_cache.Contain($"at_{token}"))
+            {
+                throw BussinessException.CreateException(ExceptionCode.KeyNotExist, "未授权的客户端");
+                //return Task.FromResult((Uri)null);
+            }
+
+            var option = JwtTool.DecryptAndValidationToken(token);
+            if (option == null)
+            {
+                throw BussinessException.CreateException(ExceptionCode.KeyNotExist, "未授权的客户端");
+            }
+
+            var jwtTokenSetting = ConfigurationManager.GetSection<JwtTokenSetting>($"{option.ClientId}:JWT");
+            if (jwtTokenSetting == null)
+            {
+                throw BussinessException.CreateException(ExceptionCode.KeyNotExist, "未授权的客户端");
+            }
+
+            //Thread.Sleep(500);
+
+            var accessToken = JwtHelper.IssueToken(jwtTokenSetting, option);
+            _cache.Set($"at_{accessToken}", accessToken, jwtTokenSetting.GetExpires());
+            _cache.Remove($"at_{token}");
+
+            return accessToken;
+
         }
 
-        [HttpGet("test2")]
-        [Authorize]
-        public string Test2()
+
+        [HttpGet("SendNotification")]
+        public async Task<string> SendNotification()
         {
-            return "test2";
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage", $"hello world");
+
+            return "yes";
         }
+
+
     }
 }

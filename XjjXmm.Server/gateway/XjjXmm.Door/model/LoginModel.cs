@@ -17,4 +17,10 @@ namespace XjjXmm.Door.model
         public string authorizationCode { get; set; }
         public string secret { get; set; }
     }
+
+    public class RefreshTokenModel
+    {
+        public string code { get; set; }
+     
+    }
 }

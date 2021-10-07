@@ -13,6 +13,7 @@ using XjjXmm.Core.FrameWork.Cache;
 using XjjXmm.Core.SetUp;
 using XjjXmm.Core.SetUp.Jwt;
 using XjjXmm.Core.SetUp.Swagger;
+using XjjXmm.Door.Controllers;
 using XjjXmm.Door.Middleware;
 
 namespace XjjXmm.Door
@@ -37,21 +38,27 @@ namespace XjjXmm.Door
 
             //services.AddHttpClient();
             services.AddHttpClient();
-            
-            services.AddSingleton<IUrlRewriter, TokenRewriter>();//这里填写前缀与需要转发的地址
-            //services.AddJwtSetup("sdfyJWT");
-            //services.AddControllers();
 
-            services.AddCors(option => option.AddPolicy("cors", 
-                policy => policy.WithMethods("GET", "POST", "HEAD", "OPTIONS")
+            services.AddSingleton<IUrlRewriter, TokenRewriter>();//这里填写前缀与需要转发的地址
+                                                                 //services.AddJwtSetup("sdfyJWT");
+                                                                 //services.AddControllers();
+
+            services.AddSignalR();
+
+            services.AddCors(option => option.AddPolicy("cors",
+                policy => //policy.WithMethods("GET", "POST", "HEAD", "OPTIONS")
+                    policy.AllowAnyMethod()
                     .AllowAnyHeader()
-                    //.AllowCredentials()
-                    .AllowAnyOrigin()
-                    
-                
+                    .AllowCredentials()
+                    .SetIsOriginAllowed(_=>true)
+                    //.AllowAnyOrigin()
+
+
                 )
-            
+
             );
+
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -75,10 +82,18 @@ namespace XjjXmm.Door
 
             app.UseAuthorization();
 
-           
+            // app.UseWebSockets();
+
+            //app.UseSignalR(routes =>
+            //{
+            //    routes.MapHub<NotificationHub>("/notificationHub");
+            //});
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapHub<NotificationHub>("/event");
+                endpoints.MapHub<NotificationHub>("/notificationHub");
+
                 endpoints.MapControllers();
             });
         }

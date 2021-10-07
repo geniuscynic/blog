@@ -32,6 +32,8 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
            
             var (tableName, properties) = ProviderHelper.GetMetas(type);
 
+         
+
             foreach (var p in properties)
             {
                 if (p.IsIdentity)
@@ -41,6 +43,7 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
                 columnList.Add(p.ColumnName);
                 parameterList.Add($"{_providerModel.DbInfo.StatementPrefix}{p.Parameter}");
+
 
                 //if (_model is IEnumerable<>)
                 //{
@@ -60,6 +63,68 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
             return sql;
         }
+
+        /*
+        private void buildParamter()
+        {
+            var type = _model.GetType();
+
+
+            if (type.IsArray || type.IsGenericType)
+            {
+                var res = (IEnumerable)_sqlParameter;
+                foreach (var re in res)
+                {
+                    DynamicParameters parameter = new DynamicParameters();
+                    BuildSingleParamter(parameter, re);
+                    parameters.Add(parameter);
+                }
+            }
+            else
+            {
+                DynamicParameters parameter = new DynamicParameters();
+                BuildSingleParamter(parameter, _sqlParameter);
+                parameters.Add(parameter);
+            }
+        }
+
+        private void BuildSingleParamter(DynamicParameters parameter, object model)
+        {
+            var type = model.GetType();
+            var (tableName, properties) = ProviderHelper.GetMetas(type);
+
+            foreach (var member in properties)
+            {
+                var name = member.Parameter;
+                var val = member.PropertyInfo.GetValue(model);
+
+                //var customAttribute = propertyInfo.GetCustomAttribute<ColumnAttribute>();
+
+                if (member.IsBigText)
+                {
+                    //byte[] newValue = Encoding.Unicode.GetBytes(val.ToString()); //这里一定要使用 Unicode 字符编码
+                    //OracleClob p_content = new OracleClob((OracleConnection)_connection.Value);
+                    //p_content.Write(newValue, 0, newValue.Length);
+
+                    //parameter.Add(name, p_content);
+
+                    //OracleClobParameter parameter1 = new OracleClobParameter(val.ToString());
+
+                    parameter.Add(name, BuildBigTextParamter(val.ToString()));
+
+
+                }
+                else
+                {
+
+                    //return (name, val);
+                    parameter.Add(name, val);
+                }
+
+
+            }
+        }
+        */
 
 
         public async Task<int> Execute()
