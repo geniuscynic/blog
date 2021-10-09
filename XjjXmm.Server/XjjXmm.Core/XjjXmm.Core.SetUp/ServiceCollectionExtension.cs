@@ -12,7 +12,7 @@ namespace XjjXmm.Core.SetUp
 
         public static IServiceCollection AddCommonSetup(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddSingleton(new ConfigurationManager(configuration));
+            //services.AddSingleton(new ConfigurationManager(configuration));
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 
