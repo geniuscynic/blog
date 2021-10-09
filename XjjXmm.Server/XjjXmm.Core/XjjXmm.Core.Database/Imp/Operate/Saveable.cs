@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dapper;
 using DoCare.Zkzx.Core.Database.Imp.Command;
+using DoCare.Zkzx.Core.Database.Interface.Command;
 using DoCare.Zkzx.Core.Database.Interface.Operate;
 using DoCare.Zkzx.Core.Database.SqlProvider;
 using DoCare.Zkzx.Core.Database.Utility;
@@ -15,7 +16,7 @@ using DoCare.Zkzx.Core.Database.Utility;
 
 namespace DoCare.Zkzx.Core.Database.Imp.Operate
 {
-    internal class Saveable<T, TEntity>  : BaseOperate, ISaveable<T>
+    internal abstract class Saveable<T, TEntity>  : BaseOperate, ISaveable<T>
     {
        
         protected readonly TEntity _model;
@@ -90,9 +91,13 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
+            //var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
+
+            var command = CreateWriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
 
             return await command.Execute();
         }
+
+        protected abstract IWriteableCommand CreateWriteableCommand(DbInfo dbInfo, string sql, object sqlParameter);
     }
 }

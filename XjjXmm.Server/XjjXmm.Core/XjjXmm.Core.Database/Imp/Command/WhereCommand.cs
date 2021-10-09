@@ -56,6 +56,20 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             VisitPredicate(predicate);
         }
 
+        public void Where<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
+        {
+            VisitPredicate(predicate);
+        }
+
+        public void Where<T1, T2, T3, T4, T5, T6>(Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
+        {
+            VisitPredicate(predicate);
+        }
+
+        public void Where<T1, T2, T3, T4, T5, T6, T7>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
+        {
+            VisitPredicate(predicate);
+        }
 
         public void Where(string whereExpression)
         {

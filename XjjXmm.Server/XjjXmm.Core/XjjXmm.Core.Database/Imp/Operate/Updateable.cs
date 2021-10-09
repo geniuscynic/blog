@@ -93,12 +93,14 @@ namespace DoCare.Zkzx.Core.Database.Imp.Operate
 
         public async Task<int> Execute()
         {
-            var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
+            //var command = new WriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
 
+            var command = CreateWriteableCommand(_providerModel.DbInfo, Build().ToString(), _providerModel.Parameter);
             return await command.Execute();
         }
 
 
         protected abstract WhereProvider CreateWhereProvider(ProviderModel providerModel);
+        protected abstract IWriteableCommand CreateWriteableCommand(DbInfo dbInfo, string sql, object sqlParameter);
     }
 }

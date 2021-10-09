@@ -21,8 +21,8 @@ namespace XjjXmm.Door
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
                 {
-                   // builder.ClearProviders();
-                   // builder.AddSerilog();
+                  // builder.ClearProviders();
+                  // builder.AddSerilog();
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
@@ -32,7 +32,7 @@ namespace XjjXmm.Door
                 {
                     //¥”appsettings.json÷–∂¡»°≈‰÷√
                     loggerConfiguration.ReadFrom.Configuration(hostingContext.Configuration)
-                        .Enrich.FromLogContext()
+                       // .Enrich.FromLogContext()
                         ;
                 })
         ;

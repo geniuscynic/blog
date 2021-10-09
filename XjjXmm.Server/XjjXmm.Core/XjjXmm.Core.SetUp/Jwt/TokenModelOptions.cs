@@ -10,13 +10,17 @@
         /// Id
         /// </summary>
         public string Id { get; set; }
-        
+
+
+        public string ClientId { get; set; }
+
         /// <summary>
         /// 模块
         /// </summary>
-        public string AppId { get; set; }
+        public string AppId { get; set; } = "";
 
-        public string JwtKey { get; set; }
+        //public string JwtKey { get; set; }
+
 
     }
 }

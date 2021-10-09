@@ -14,6 +14,14 @@ namespace DoCare.Zkzx.Core.Database.Interface.Command
 
         void AscBy<T1, T2, T3, T4, TResult>(Expression<Func<T1, T2, T3, T4, TResult>> predicate);
 
+        void AscBy<T1, T2, T3, T4, T5, TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> predicate);
+
+        void AscBy<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate);
+
+        void AscBy<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
+
+
+
         void DescBy<T, TResult>(Expression<Func<T, TResult>> predicate);
 
         void DescBy<T1, T2, TResult>(Expression<Func<T1, T2, TResult>> predicate);
@@ -21,6 +29,14 @@ namespace DoCare.Zkzx.Core.Database.Interface.Command
         void DescBy<T1, T2, T3, TResult>(Expression<Func<T1, T2, T3, TResult>> predicate);
 
         void DescBy<T1, T2, T3, T4, TResult>(Expression<Func<T1, T2, T3, T4, TResult>> predicate);
+
+        void DescBy<T1, T2, T3, T4, T5, TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> predicate);
+
+        void DescBy<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate);
+
+        void DescBy<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
+
+
 
         StringBuilder Build(bool ignorePrefix = true);
     }

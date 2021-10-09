@@ -81,6 +81,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
                 member.IsIdentity = customAttribute.IsIdentity;
                 member.IsPrimaryKey = customAttribute.IsPrimaryKey;
                 member.IgnoreSave = customAttribute.IgnoreSave;
+                member.IsBigText = customAttribute.IsBigText;
             }
 
             return member;
@@ -271,6 +272,18 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
 
                     return m.Invoke(sqlFunc, new[] { cd1, cd2 }).ToString();
+
+                case "Lower":
+                case "Upper":
+                    var tlp = new List<object>();
+                    foreach (var expression1 in expression.Arguments)
+                    {
+                        var field = ProviderHelper.VisitMember(expression1 as MemberExpression);
+                        //var parameterExpression = (ParameterExpression) expression1;
+                        tlp.Add(field.Express);
+                    }
+
+                    return m.Invoke(sqlFunc, tlp.ToArray()).ToString();
 
             }
 

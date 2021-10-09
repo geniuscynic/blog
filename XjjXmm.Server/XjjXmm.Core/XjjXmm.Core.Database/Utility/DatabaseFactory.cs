@@ -27,7 +27,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
                 DatabaseProvider.MsSql => new MsSqlInsertable<T, TEntity>(builder, model),
                 DatabaseProvider.MySql => new MySqlInsertable<T, TEntity>(builder, model),
                 DatabaseProvider.Oracle => new OracleInsertable<T, TEntity>(builder, model),
-                _ => new Insertable<T, TEntity>(builder, model)
+                _ => new OracleInsertable<T, TEntity>(builder, model)
             };
         }
 
@@ -38,7 +38,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
                 DatabaseProvider.MsSql => new SqlSaveable<T, TEntity>(builder, model),
                 DatabaseProvider.MySql => new MySqlSaveable<T, TEntity>(builder, model),
                 DatabaseProvider.Oracle => new OracleSqlSaveable<T, TEntity>(builder, model),
-                _ => new Saveable<T, TEntity>(builder, model)
+                _ => new OracleSqlSaveable<T, TEntity>(builder, model)
             };
         }
 

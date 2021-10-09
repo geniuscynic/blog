@@ -1,11 +1,94 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using Dapper;
+using Oracle.ManagedDataAccess.Client;
+using Oracle.ManagedDataAccess.Types;
 
 namespace DoCare.Zkzx.Core.Database.Utility
 {
+
+    internal class OracleClobParameter : SqlMapper.ICustomQueryParameter
+    {
+        private readonly string value;
+
+        public OracleClobParameter(string value)
+        {
+            this.value = value;
+        }
+
+        public void AddParameter(IDbCommand command, string name)
+        {
+
+
+            // accesing the connection in open state.
+            //var clob = new OracleClob(command.Connection as OracleConnection);
+
+            //// It should be Unicode oracle throws an exception when
+            //// the length is not even.
+            //var bytes = System.Text.Encoding.Unicode.GetBytes(value);
+            //var length = System.Text.Encoding.Unicode.GetByteCount(value);
+
+            //int pos = 0;
+            //int chunkSize = 1024; // Oracle does not allow large chunks.
+
+            //while (pos < length)
+            //{
+            //    chunkSize = chunkSize > (length - pos) ? chunkSize = length - pos : chunkSize;
+            //    clob.Write(bytes, pos, chunkSize);
+            //    pos += chunkSize;
+            //}
+
+            //var param = new OracleParameter(name, OracleDbType.Clob);
+            //param.Value = clob;
+
+            //command.Parameters.Add(param);
+
+
+            command.Parameters.Add(new OracleParameter(name, OracleDbType.Clob, value, ParameterDirection.Input));
+        }
+    }
+
+    //    sealed class BigString : Dapper.SqlMapper.ICustomQueryParameter
+    //    {
+    //        public void AddParameter(IDbCommand command, string name)
+    //        {
+
+    //            bool add = !command.Parameters.Contains(name);
+    //            IDbDataParameter param;
+    //            if (add)
+    //            {
+    //                param = command.CreateParameter();
+    //                param.ParameterName = name;
+    //            }
+    //            else
+    //            {
+    //                param = (IDbDataParameter)command.Parameters[name];
+    //            }
+
+    //            param.Value = SqlMapper.SanitizeParameterValue(Value);
+    //#
+    //            if (Length == -1 && Value != null && Value.Length <= DefaultLength)
+    //            {
+    //                param.Size = DefaultLength;
+    //            }
+    //            else
+    //            {
+    //                param.Size = Length;
+    //            }
+
+    //            param.DbType = OracleDbType.Clob; IsAnsi ? (IsFixedLength ? DbType.AnsiStringFixedLength : DbType.AnsiString) : (IsFixedLength ? DbType.StringFixedLength : DbType.String);
+    //            if (add)
+    //            {
+    //                command.Parameters.Add(param);
+    //            }
+
+    //            //OracleClob
+    //        }
+    //    }
 
     public enum DatabaseProvider
     {
@@ -83,6 +166,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public bool IgnoreSave { get; set; }
 
+        public bool IsBigText { get; set; }
     }
 
     public class Member
@@ -96,6 +180,7 @@ namespace DoCare.Zkzx.Core.Database.Utility
 
         public string Parameter { get; set; }
 
+        public bool IsBigText { get; set; }
 
         public PropertyInfo PropertyInfo { get; set; }
 

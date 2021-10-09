@@ -42,6 +42,22 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             _joinProvider.Visit(predicate);
         }
 
+        public void Join<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
+        {
+            _joinProvider.Visit(predicate);
+        }
+
+        public void Join<T1, T2, T3, T4, T5, T6>(Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
+        {
+            _joinProvider.Visit(predicate);
+        }
+
+        public void Join<T1, T2, T3, T4, T5, T6, T7>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
+        {
+            _joinProvider.Visit(predicate);
+        }
+
+
         public void LeftJoin<T1, T2>(Expression<Func<T1, T2, bool>> predicate)
         {
             _leftJoinProvider.Visit(predicate);
@@ -57,7 +73,23 @@ namespace DoCare.Zkzx.Core.Database.Imp.Command
             _leftJoinProvider.Visit(predicate);
         }
 
-        
+
+        public void LeftJoin<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
+        {
+            _leftJoinProvider.Visit(predicate);
+        }
+
+        public void LeftJoin<T1, T2, T3, T4, T5, T6>(Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
+        {
+            _leftJoinProvider.Visit(predicate);
+        }
+
+        public void LeftJoin<T1, T2, T3, T4, T5, T6, T7>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
+        {
+            _leftJoinProvider.Visit(predicate);
+        }
+
+
         public StringBuilder Build<TJoin>()
         {
             var (tableName, _) = ProviderHelper.GetMetas(typeof(TJoin));
