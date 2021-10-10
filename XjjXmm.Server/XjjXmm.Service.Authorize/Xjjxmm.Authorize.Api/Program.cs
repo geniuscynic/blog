@@ -20,13 +20,20 @@ namespace XjjXmm.Authorize.Api
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(builder =>
+                {
+                    builder.ClearProviders().AddConsole();
+
+                    //builder.SetMinimumLevel(LogLevel.Debug);
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    webBuilder.Inject()
-                    .UseStartup<Startup>()
-                        .UseSerilogDefault();
 
-                    
+                    webBuilder.Inject()
+                        .UseStartup<Startup>()
+                    .UseSerilogDefault();
+
+
                 });
     }
 }

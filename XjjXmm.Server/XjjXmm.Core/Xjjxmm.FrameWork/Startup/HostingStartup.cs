@@ -7,14 +7,18 @@
 // See the Mulan PSL v2 for more details.
 
 
+using System.Reflection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
+using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Filter;
 using XjjXmm.FrameWork.Startup;
 using XjjXmm.FrameWork.Swagger;
+using XjjXmm.FrameWork.ToolKit;
 
 [assembly: HostingStartup(typeof(XjjXmm.FrameWork.Startup.HostingStartup))]
 namespace XjjXmm.FrameWork.Startup
@@ -42,7 +46,10 @@ namespace XjjXmm.FrameWork.Startup
                 // 注册 HttpContextAccessor 服务
                 services.AddHttpContextAccessor();
 
+                services.AddDependencyInjection();
 
+               // var a = DependencyContext.Default.RuntimeLibraries;
+                //var b = ReflectKit.AllAssemblies();
                 services.Configure<MvcOptions>(option =>
                 {
                     option.Filters.Add(typeof(MvcActionFilter));

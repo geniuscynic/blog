@@ -7,16 +7,19 @@
 // See the Mulan PSL v2 for more details.
 
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Runtime.Loader;
+using Microsoft.Extensions.DependencyModel;
 
-namespace XjjXmm.FrameWork.Reflection
+namespace XjjXmm.FrameWork.ToolKit
 {
     /// <summary>
     /// 内部反射静态类
     /// </summary>
-    internal static class Reflect
+    internal static class ReflectKit
     {
         /// <summary>
         /// 获取入口程序集
@@ -25,6 +28,19 @@ namespace XjjXmm.FrameWork.Reflection
         internal static Assembly GetEntryAssembly()
         {
             return Assembly.GetEntryAssembly();
+        }
+
+        internal static IEnumerable<Assembly> AllAssemblies()
+        {
+           return DependencyContext.Default.RuntimeLibraries
+                .Where(u =>
+                {
+                    //Serilog.Log.Debug(u.Type);
+                    Console.WriteLine(u.Type);
+                    return u.Type == "project";
+                })
+                .Select(u => ReflectKit.GetAssembly(u.Name));
+          // return AssemblyLoadContext.Default.Assemblies;
         }
 
         /// <summary>

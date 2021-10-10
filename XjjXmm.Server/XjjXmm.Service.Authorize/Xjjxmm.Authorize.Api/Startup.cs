@@ -13,6 +13,8 @@ using DoCare.Zkzx.Core.Database;
 using DoCare.Zkzx.Core.Database.Utility;
 using Newtonsoft.Json;
 using Serilog;
+using XjjXmm.Authorize.Repository;
+using XjjXmm.Authorize.Service;
 using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Swagger;
 
@@ -35,26 +37,33 @@ namespace XjjXmm.Authorize.Api
 
             // services.AddSwaggerSetup();
 
-            var connectionString = App.GetConfig("ConnectionStrings:connectionString");
-            var providerName = App.GetConfig("ConnectionStrings:providerName");
+            var connectionString = App.GetConfig("ConnectionString:connectionString");
+            var providerName = App.GetConfig("ConnectionString:dbType");
 
-            services.AddTransient(_ => new Dbclient(connectionString, providerName, new Aop()
+            services.AddScoped(_ => new Dbclient(connectionString, providerName, new Aop()
                 {
                     OnError = (sql, paramter, ex) =>
                     {
                         //Log.Information("Sql: \r\n{0}", sql);
-                        Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
-                        Log.Logger.Error(ex, "sqlerror");
+                        Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                        Log.Error(ex, "sqlerror");
                         //Console.WriteLine(sql);
                     },
                     OnExecuting = (sql, paramter) =>
                     {
                         //Console.WriteLine(sql);
-                        Log.Logger.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                        Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                        
                     },
 
                 })
             );
+
+            //services.AddTransient<UserService>();
+            //services.AddTransient<RoleService>();
+
+            //services.AddTransient<UserRepository>();
+            //services.AddTransient<RoleRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

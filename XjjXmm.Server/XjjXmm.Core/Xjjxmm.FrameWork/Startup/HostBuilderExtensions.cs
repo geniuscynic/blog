@@ -9,8 +9,7 @@
 
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
-
-using XjjXmm.FrameWork.Reflection;
+using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.FrameWork.Startup
 {
@@ -27,7 +26,7 @@ namespace XjjXmm.FrameWork.Startup
         /// <returns>IWebHostBuilder</returns>
         public static IWebHostBuilder Inject(this IWebHostBuilder hostBuilder, string assemblyName = default)
         {
-            var frameworkPackageName = assemblyName ?? Reflect.GetAssemblyName(typeof(HostBuilderExtensions));
+            var frameworkPackageName = assemblyName ?? ReflectKit.GetAssemblyName(typeof(HostBuilderExtensions));
             hostBuilder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, frameworkPackageName);
 
             return hostBuilder;
