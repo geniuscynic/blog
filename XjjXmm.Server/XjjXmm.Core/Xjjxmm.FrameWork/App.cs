@@ -1,12 +1,23 @@
 ﻿using System;
 using System.Linq;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace XjjXmm.FrameWork
 {
     public static class App
     {
+        /// <summary>
+        /// 配置类
+        /// </summary>
         public static IConfiguration Configuration { get; set; }
+
+
+        /// <summary>
+        /// 服务提供其
+        /// </summary>
+        public static IServiceProvider ServiceProvider { get; set; }
+
 
         public static string GetConfig(params string[] sections)
         {

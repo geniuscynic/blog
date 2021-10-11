@@ -8,6 +8,8 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
         AutoValdate,
         CustomValdate,
     }
+
+    [AttributeUsage(AttributeTargets.Property )]
     public abstract class AbstractValidator : Attribute
     {
         /// <summary>

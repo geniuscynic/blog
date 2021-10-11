@@ -55,7 +55,12 @@ namespace XjjXmm.FrameWork.Startup
                     option.Filters.Add(typeof(MvcActionFilter));
                     option.Filters.Add(typeof(GlobalExceptionsFilter));
                 });
+
+
+                //App.ServiceProvider = services.BuildServiceProvider();
             });
+
+            
 
             //builder.Configure((context, applicationBuilder) =>
             //{

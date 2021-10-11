@@ -6,8 +6,10 @@ namespace XjjXmm.FrameWork.DataValidation
     public enum ValidateType
     {
         AutoValdate,
-        CustomValdate,
+        ManualValdate,
     }
+
+    //[AttributeUsage(AttributeTargets.Property | AttributeTargets.Class)]
     public abstract class AbstractValidator : Attribute
     {
         /// <summary>

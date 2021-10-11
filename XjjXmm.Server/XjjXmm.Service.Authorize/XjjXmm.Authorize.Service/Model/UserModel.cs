@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using DoCare.Zkzx.Core.FrameWork.Tool.DataValidation;
+using Microsoft.Extensions.DependencyInjection;
 using XjjXmm.Authorize.Repository;
+using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Service.Model
 {
     /// <summary>
     /// 添加用户的view model
     /// </summary>
-    [SameUserValidateForNew]
     public class AddUserModel
     {
 
@@ -16,6 +18,7 @@ namespace XjjXmm.Authorize.Service.Model
         /// 账号
         /// </summary>
         [Required]
+        [SameUserValidateForNew]
         public string Account { get; set; }
 
         /// <summary>
@@ -72,26 +75,35 @@ namespace XjjXmm.Authorize.Service.Model
         /// </summary>
         public List<string> Roles { get; set; }
     }
-
+    
+    //[Injection]
     public class SameUserValidateForNew : AbstractValidator
     {
+        //private readonly UserRepository _userRepository;
         //public IUserRepository UserRepository { get; set; }
 
-        public UserRepository UserRepository { get; set; }
+        public SameUserValidateForNew()
+        {
+            //_userRepository = App.ServiceProvider.GetService<UserRepository>();
+        }
+
+       
+       
 
         public override string CustomMessage { get; set; } = "账号已经存在 ";
 
         public override bool IsValid(object value, object model)
         {
-            if (model is AddUserModel userModel)
-            {
-                var account = userModel.Account;
+           var _userRepository = App.ServiceProvider.GetService<UserRepository>();
+
+            if (!(model is AddUserModel userModel)) throw new Exception("类型错误");
 
 
-                return UserRepository.FirstOrDefault(t => t.Account == account) != null;
-            }
+            var account = userModel.Account;
 
-            throw new Exception("类型错误");
+
+            return _userRepository?.FirstOrDefault(t => t.Account == account).Result != null;
+
         }
     }
 

@@ -40,7 +40,7 @@ namespace XjjXmm.Authorize.Api
             var connectionString = App.GetConfig("ConnectionString:connectionString");
             var providerName = App.GetConfig("ConnectionString:dbType");
 
-            services.AddScoped(_ => new Dbclient(connectionString, providerName, new Aop()
+            services.AddTransient(_ => new Dbclient(connectionString, providerName, new Aop()
                 {
                     OnError = (sql, paramter, ex) =>
                     {

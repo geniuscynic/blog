@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Log;
 using XjjXmm.FrameWork.Startup;
 
@@ -15,7 +16,10 @@ namespace XjjXmm.Authorize.Api
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+           var build = CreateHostBuilder(args).Build()     ;
+           App.ServiceProvider = build.Services;
+
+              build .Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

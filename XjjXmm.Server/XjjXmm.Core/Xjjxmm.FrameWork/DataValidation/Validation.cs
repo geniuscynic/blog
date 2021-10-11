@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 
@@ -17,12 +18,18 @@ namespace XjjXmm.FrameWork.DataValidation
 
         public ValidatonResult FirstValidationResult => ValidationResults.FirstOrDefault();
 
-        private bool ValidateModel(bool needFullCheck = false, ValidateType validateType = ValidateType.CustomValdate)
+        /// <summary>
+        /// 验证class
+        /// </summary>
+        /// <param name="needFullCheck"></param>
+        /// <param name="validateType"></param>
+        /// <returns></returns>
+        private bool ValidateModel(bool needFullCheck = false, ValidateType validateType = ValidateType.ManualValdate)
         {
             var type = _model.GetType();
 
-            var validators = type.GetCustomAttributes<AbstractValidator>();
-
+            var validators = GetValidators(type.GetCustomAttributes());
+                                             
           
 
             if (!validators.Any())
@@ -36,7 +43,7 @@ namespace XjjXmm.FrameWork.DataValidation
 
             foreach (var validator in validators)
             {
-                if (validator.ValdateType == ValidateType.CustomValdate && validateType == ValidateType.AutoValdate)
+                if (validator.ValdateType == ValidateType.ManualValdate && validateType == ValidateType.AutoValdate)
                 {
                     continue;
 
@@ -66,7 +73,13 @@ namespace XjjXmm.FrameWork.DataValidation
 
         }
 
-        public bool Validate(bool needFullCheck = false, ValidateType validateType = ValidateType.CustomValdate)
+        /// <summary>
+        /// 验证property
+        /// </summary>
+        /// <param name="needFullCheck">false:一个未通过就返回，true:全部验证完在返回</param>
+        /// <param name="validateType"></param>
+        /// <returns></returns>
+        public bool Validate(bool needFullCheck = false, ValidateType validateType = ValidateType.ManualValdate)
         {
             if (_model == null)
             {
@@ -84,20 +97,18 @@ namespace XjjXmm.FrameWork.DataValidation
 
             foreach (var propertyInfo in type.GetProperties())
             {
-                var validators = propertyInfo.GetCustomAttributes<AbstractValidator>();
+                var validators = GetValidators(propertyInfo.GetCustomAttributes());
 
                 if (!validators.Any())
                 {
                     return true;
                 }
 
-
-
                 var val = propertyInfo.GetValue(_model);
 
                 foreach (var validator in validators)
                 {
-                    if (validator.ValdateType == ValidateType.CustomValdate && validateType == ValidateType.AutoValdate)
+                    if (validator.ValdateType == ValidateType.ManualValdate && validateType == ValidateType.AutoValdate)
                     {
                         continue;
 
@@ -129,6 +140,36 @@ namespace XjjXmm.FrameWork.DataValidation
             return ValidationResults.Count == 0;
         }
 
+
+        private IEnumerable<AbstractValidator> GetValidators(IEnumerable<Attribute> attributes)
+        {
+            //var attributes = type.GetCustomAttributes();
+
+            foreach (var attribute in attributes)
+            {
+                var baseName = typeof(AbstractValidator).FullName;
+                var baseName2 = typeof(Attribute).FullName;
+                var t = attribute.GetType();
+                //var isInherit = false;
+                while (t.FullName != baseName && t.FullName != baseName2)
+                {
+                    t = t.BaseType;
+
+                    // isInherit = true;
+                    // break;
+                }
+                // attribute.GetType().FullName;
+               // if (attribute.GetType().IsAssignableFrom(typeof(AbstractValidator)))
+                //{
+                if (t.FullName == baseName)
+                {
+                    var validator = (AbstractValidator) attribute;
+                    yield return validator;
+                }
+                // }
+               
+            }
+        }
         public void AddCustomMessage(string message)
         {
             ValidationResults.Add(new ValidatonResult()

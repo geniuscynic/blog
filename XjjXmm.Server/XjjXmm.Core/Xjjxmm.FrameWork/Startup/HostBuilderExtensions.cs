@@ -29,6 +29,7 @@ namespace XjjXmm.FrameWork.Startup
             var frameworkPackageName = assemblyName ?? ReflectKit.GetAssemblyName(typeof(HostBuilderExtensions));
             hostBuilder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, frameworkPackageName);
 
+            
             return hostBuilder;
         }
 

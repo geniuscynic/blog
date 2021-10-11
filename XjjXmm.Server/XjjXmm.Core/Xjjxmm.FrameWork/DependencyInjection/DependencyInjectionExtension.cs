@@ -28,18 +28,36 @@ namespace XjjXmm.FrameWork.DependencyInjection
                         break;
 
                     case InjectionType.Scoped:
-                        services.AddScoped(type);
+                        services.AddTransient(type);
                         break;
 
                     case InjectionType.Singleton:
-                        services.AddSingleton(type);
+                        services.AddTransient(type);
                         break;
                    
                 }
                 //var b = type.GetMethods();
-                //var c = type.GetInterfaces();
+                
+                var types = type.GetInterfaces();
 
+                foreach (var type1 in types)
+                {
+                    switch (attr.Type)
+                    {
+                        case InjectionType.Transient:
+                            services.AddTransient(type1, type);
+                            break;
 
+                        case InjectionType.Scoped:
+                            services.AddScoped(type1, type);
+                            break;
+
+                        case InjectionType.Singleton:
+                            services.AddSingleton(type1, type);
+                            break;
+
+                    }
+                }
                 
             }
             
