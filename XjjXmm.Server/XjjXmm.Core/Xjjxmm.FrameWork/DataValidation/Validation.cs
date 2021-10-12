@@ -28,9 +28,9 @@ namespace XjjXmm.FrameWork.DataValidation
         {
             var type = _model.GetType();
 
-            var validators = GetValidators(type.GetCustomAttributes());
-                                             
-          
+            //var validators = GetValidators(type.GetCustomAttributes());
+            var validators = type.GetCustomAttributes<AbstractValidator>();
+
 
             if (!validators.Any())
             {
@@ -97,7 +97,8 @@ namespace XjjXmm.FrameWork.DataValidation
 
             foreach (var propertyInfo in type.GetProperties())
             {
-                var validators = GetValidators(propertyInfo.GetCustomAttributes());
+                //var validators2 = GetValidators(propertyInfo.GetCustomAttributes());
+                var validators = propertyInfo.GetCustomAttributes<AbstractValidator>();
 
                 if (!validators.Any())
                 {
@@ -151,19 +152,18 @@ namespace XjjXmm.FrameWork.DataValidation
                 var baseName2 = typeof(Attribute).FullName;
                 var t = attribute.GetType();
                 //var isInherit = false;
-                while (t.FullName != baseName && t.FullName != baseName2)
-                {
-                    t = t.BaseType;
+                //while (t.FullName != baseName && t.FullName != baseName2)
+               // {
+                    //t = t.BaseType;
 
                     // isInherit = true;
                     // break;
-                }
+               // }
                 // attribute.GetType().FullName;
-               // if (attribute.GetType().IsAssignableFrom(typeof(AbstractValidator)))
-                //{
-                if (t.FullName == baseName)
+                if (attribute is AbstractValidator validator)
+               //{
+               // if (t.FullName == baseName)
                 {
-                    var validator = (AbstractValidator) attribute;
                     yield return validator;
                 }
                 // }

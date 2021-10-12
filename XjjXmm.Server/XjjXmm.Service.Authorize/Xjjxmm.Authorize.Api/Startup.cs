@@ -9,12 +9,12 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using DoCare.Zkzx.Core.Database;
-using DoCare.Zkzx.Core.Database.Utility;
 using Newtonsoft.Json;
 using Serilog;
 using XjjXmm.Authorize.Repository;
 using XjjXmm.Authorize.Service;
+using XjjXmm.DataBase;
+using XjjXmm.DataBase.Utility;
 using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Swagger;
 
@@ -40,7 +40,7 @@ namespace XjjXmm.Authorize.Api
             var connectionString = App.GetConfig("ConnectionString:connectionString");
             var providerName = App.GetConfig("ConnectionString:dbType");
 
-            services.AddTransient(_ => new Dbclient(connectionString, providerName, new Aop()
+            services.AddTransient(_ => new DbClient(connectionString, providerName, new Aop()
                 {
                     OnError = (sql, paramter, ex) =>
                     {

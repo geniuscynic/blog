@@ -1,4 +1,4 @@
-﻿using DoCare.Zkzx.Core.FrameWork.Tool.DataValidation;
+﻿using XjjXmm.FrameWork.DataValidation;
 
 namespace XjjXmm.Authorize.Service.Model
 {

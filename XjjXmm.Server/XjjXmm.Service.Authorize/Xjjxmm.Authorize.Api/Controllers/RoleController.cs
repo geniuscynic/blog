@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using DoCare.Zkzx.Core.FrameWork.Tool.Common;
 using Microsoft.AspNetCore.Mvc;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;

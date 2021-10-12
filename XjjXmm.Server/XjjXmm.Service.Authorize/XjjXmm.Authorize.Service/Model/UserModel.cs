@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using DoCare.Zkzx.Core.FrameWork.Tool.DataValidation;
 using Microsoft.Extensions.DependencyInjection;
 using XjjXmm.Authorize.Repository;
 using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.DataValidation;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Service.Model
@@ -102,7 +102,7 @@ namespace XjjXmm.Authorize.Service.Model
             var account = userModel.Account;
 
 
-            return _userRepository?.FirstOrDefault(t => t.Account == account).Result != null;
+            return _userRepository?.FirstOrDefault(t => t.Account == account).Result == null;
 
         }
     }

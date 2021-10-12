@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DoCare.Zkzx.Core.Database;
 using XjjXmm.Authorize.Repository.Entity;
+using XjjXmm.DataBase;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Repository
@@ -9,7 +9,7 @@ namespace XjjXmm.Authorize.Repository
     [Injection]
     public class RoleRepository: Repository<RoleEntity>
     {
-        public RoleRepository(Dbclient dbclient) : base(dbclient)
+        public RoleRepository(DbClient dbclient) : base(dbclient)
         {
         }
 

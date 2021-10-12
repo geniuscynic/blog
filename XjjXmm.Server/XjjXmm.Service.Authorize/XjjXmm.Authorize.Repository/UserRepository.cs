@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using DoCare.Zkzx.Core.Database;
-using DoCare.Zkzx.Core.Database.Imp.Operate;
 using XjjXmm.Authorize.Repository.Entity;
+using XjjXmm.DataBase;
+using XjjXmm.DataBase.Imp.Operate;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Repository
@@ -10,7 +10,7 @@ namespace XjjXmm.Authorize.Repository
     [Injection]
     public class UserRepository: Repository<UserEntity>
     {
-        public UserRepository(Dbclient dbclient) : base(dbclient)
+        public UserRepository(DbClient dbclient) : base(dbclient)
         {
         }
 

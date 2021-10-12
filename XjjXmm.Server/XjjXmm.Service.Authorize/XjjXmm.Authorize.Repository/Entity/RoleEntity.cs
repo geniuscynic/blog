@@ -1,4 +1,6 @@
-﻿using DoCare.Zkzx.Core.Database.Utility;
+﻿
+
+using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.Authorize.Repository.Entity
 {

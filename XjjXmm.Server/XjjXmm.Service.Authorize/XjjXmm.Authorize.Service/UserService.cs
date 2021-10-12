@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using DoCare.Zkzx.Core.FrameWork.Tool.Common;
-using DoCare.Zkzx.Core.FrameWork.Tool.ToolKit;
 using XjjXmm.Authorize.Repository;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service.Model;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Mapper;
+using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.Authorize.Service
 {
