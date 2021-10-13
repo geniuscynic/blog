@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Serilog;
 using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.LogExtension;
 using XjjXmm.FrameWork.Startup;
 
 namespace XjjXmm.Authorize.Api
@@ -35,8 +36,8 @@ namespace XjjXmm.Authorize.Api
 
                     webBuilder.Inject()
                         .UseStartup<Startup>()
-                        .UseSerilog();
-                    //.UseSerilogDefault();
+                        
+                    .UseSerilogDefault();
 
 
                 });

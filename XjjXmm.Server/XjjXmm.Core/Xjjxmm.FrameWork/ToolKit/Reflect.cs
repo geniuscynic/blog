@@ -36,7 +36,7 @@ namespace XjjXmm.FrameWork.ToolKit
                 .Where(u =>
                 {
                     //Serilog.Log.Debug(u.Type);
-                    Console.WriteLine(u.Type);
+                    //Console.WriteLine(u.Type);
                     return u.Type == "project";
                 })
                 .Select(u => ReflectKit.GetAssembly(u.Name));

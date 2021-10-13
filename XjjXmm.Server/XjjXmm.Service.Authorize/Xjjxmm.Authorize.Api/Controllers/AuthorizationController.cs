@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Buffers.Text;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -20,13 +21,20 @@ namespace XjjXmm.Authorize.Api.Controllers
         ///  获取验证码
         /// </summary>
         /// <returns></returns>
-        [HttpPost("code")]
-        public async Task<FileStreamResult> GetCode()
+        [HttpGet("code")]
+        public async Task<object> GetCode()
         {
             var result = await CaptchaKit.GenerateCaptcha();
+            var id = GuidKit.Get();
 
-
-             return new FileStreamResult(result.CaptchaMemoryStream, "image/png");
+            var base64 = Convert.ToBase64String(result.CaptchaMemoryStream.GetBuffer());
+          
+             return  new
+             {
+                 img = "data:image/png;base64," + base64  ,
+                 uuid = "captch_" + id
+             };
+             
         }
 
     }

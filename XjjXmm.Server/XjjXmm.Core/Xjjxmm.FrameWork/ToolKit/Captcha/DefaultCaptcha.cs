@@ -63,6 +63,7 @@ namespace XjjXmm.FrameWork.ToolKit.Captcha
 
             var ms = new MemoryStream();
             image.Save(ms, ImageFormat.Png);
+            ms.Position = 0;
 
             g.Dispose();
             image.Dispose();

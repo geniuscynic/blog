@@ -14,10 +14,4 @@
     <ProjectReference Include="..\XjjXmm.Authorize.Service\XjjXmm.Authorize.Service.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="XjjXmm.Authorize.Api.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
-
 </Project>
