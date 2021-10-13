@@ -4,9 +4,20 @@
     <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>D:\soucecode\my\blog\XjjXmm.Server\XjjXmm.Service.Authorize\Xjjxmm.Authorize.Api\XjjXmm.Authorize.Api.Swagger.xml</DocumentationFile>
+    <OutputPath></OutputPath>
+  </PropertyGroup>
+
   <ItemGroup>
     <ProjectReference Include="..\..\XjjXmm.Core\Xjjxmm.FrameWork\XjjXmm.FrameWork.csproj" />
     <ProjectReference Include="..\XjjXmm.Authorize.Service\XjjXmm.Authorize.Service.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="XjjXmm.Authorize.Api.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

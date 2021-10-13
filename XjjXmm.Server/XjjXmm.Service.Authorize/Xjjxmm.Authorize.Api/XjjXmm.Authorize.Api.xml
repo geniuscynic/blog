@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XjjXmm.Authorize.Api</name>
+    </assembly>
+    <members>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.AuthorizationController.GetCode">
+            <summary>
+             获取验证码
+            </summary>
+            <returns></returns>
+        </member>
+    </members>
+</doc>
