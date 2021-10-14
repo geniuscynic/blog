@@ -94,15 +94,16 @@ namespace XjjXmm.Authorize.Service.Model
 
         public override bool IsValid(object value, object model)
         {
-           var _userRepository = App.ServiceProvider.GetService<UserRepository>();
+            //var _userRepository = App.ServiceProvider.GetService<UserRepository>();
 
-            if (!(model is AddUserModel userModel)) throw new Exception("类型错误");
-
-
-            var account = userModel.Account;
+            // if (!(model is AddUserModel userModel)) throw new Exception("类型错误");
 
 
-            return _userRepository?.FirstOrDefault(t => t.Account == account).Result == null;
+            // var account = userModel.Account;
+
+
+            // return _userRepository?.FirstOrDefault(t => t.Account == account).Result == null;
+            throw new NotImplementedException();
 
         }
     }

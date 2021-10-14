@@ -23,74 +23,81 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// </summary>
         /// <param name=""></param>
         [Column(ColumnName = "title")]
-        private string Title { get; set; }
+        public string Title { get; set; }
 
         /// <summary>
         ///  菜单组件名称
         /// </summary>
         [Column(ColumnName = "name")]
-        private string componentName { get; set; }
+        public string ComponentName { get; set; }
 
         /// <summary>
         ///  排序
         /// </summary>
         [Column(ColumnName = "menuSort")]
-        private int menuSort = 999;
+        public int MenuSort { get; set; } = 999;
 
         /// <summary>
         ///  组件路径
         /// </summary>
         [Column(ColumnName = "menuSort")]
-        private string component;
+        public string Component { get; set; }
 
-        @ApiModelProperty(value = "路由地址")
-    private string path;
+        /// <summary>
+        ///  路由地址
+        /// </summary>
+        [Column(ColumnName = "path")]
+        public string Path { get; set; }
 
-        @ApiModelProperty(value = "菜单类型，目录、菜单、按钮")
-    private Integer type;
 
-        @ApiModelProperty(value = "权限标识")
-    private string permission;
+        /// <summary>
+        ///  菜单类型，目录、菜单、按钮
+        /// </summary>
+        [Column(ColumnName = "type")]
+        public int Type { get; set; }
 
-        @ApiModelProperty(value = "菜单图标")
-    private string icon;
+        /// <summary>
+        ///  权限标识
+        /// </summary>
+        [Column(ColumnName = "permission")]
+        public string Permission { get; set; }
 
-        @Column(columnDefinition = "bit(1) default 0")
-    @ApiModelProperty(value = "缓存")
-    private Boolean cache;
+        /// <summary>
+        ///  菜单图标
+        /// </summary>
+        [Column(ColumnName = "icon")]
+        public string Icon { get; set; }
 
-        @Column(columnDefinition = "bit(1) default 0")
-    @ApiModelProperty(value = "是否隐藏")
-    private Boolean hidden;
+        /// <summary>
+        ///  缓存
+        /// </summary>
+        [Column(ColumnName = "cache")]
+        public bool Cache { get; set; }
 
-        @ApiModelProperty(value = "上级菜单")
-    private Long pid;
+        /// <summary>
+        ///  是否隐藏
+        /// </summary>
+        [Column(ColumnName = "cache")]
+        public bool Hidden { get; set; }
 
-        @ApiModelProperty(value = "子节点数目", hidden = true)
-    private Integer subCount = 0;
+        /// <summary>
+        ///  上级菜单
+        /// </summary>
+        [Column(ColumnName = "pid")]
+        public long Pid { get; set; }
 
-        @ApiModelProperty(value = "外链菜单")
-    private Boolean iFrame;
+        /// <summary>
+        ///  子节点数目
+        /// </summary>
+        [Column(ColumnName = "subCount")]
+        public int SubCount { get; set; }
 
-        @Override
-    public boolean equals(Object o)
-        {
-            if (this == o)
-            {
-                return true;
-            }
-            if (o == null || getClass() != o.getClass())
-            {
-                return false;
-            }
-            Menu menu = (Menu)o;
-            return Objects.equals(id, menu.id);
-        }
+        /// <summary>
+        ///  外链菜单
+        /// </summary>
+        [Column(ColumnName = "iFrame")]
+        public bool Frame { get; set; }
 
-        @Override
-    public int hashCode()
-        {
-            return Objects.hash(id);
-        }
+
     }
 }

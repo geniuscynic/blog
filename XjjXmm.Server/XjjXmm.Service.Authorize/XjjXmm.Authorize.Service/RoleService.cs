@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository;
 using XjjXmm.Authorize.Repository.Entity;
@@ -30,22 +31,24 @@ namespace XjjXmm.Authorize.Service
 
         public async Task<bool> Add(AddRoleModel model)
         {
-            var entity = model.MapTo<AddRoleModel, RoleEntity>();
-            entity.Id = GuidKit.Get();
+            //var entity = model.MapTo<AddRoleModel, RoleEntity>();
+            //entity.Id = GuidKit.Get();
 
 
-            var result = await _roleRepository.Add(entity) > 0;
+            //var result = await _roleRepository.Add(entity) > 0;
 
 
 
-            return result;
+            //return result;
+            throw new NotImplementedException();
         }
 
 
         public async Task<IEnumerable<RoleModel>> GetRoleByUserId(string userId)
         {
-            var results = await _roleRepository.GetRoleByUserId(userId);
-            return results.MapTo<RoleEntity, RoleModel>();
+            //var results = await _roleRepository.GetRoleByUserId(userId);
+            //return results.MapTo<RoleEntity, RoleModel>();
+            throw new NotImplementedException();
         }
     }
 }

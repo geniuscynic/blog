@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.DataBase;
@@ -15,10 +16,11 @@ namespace XjjXmm.Authorize.Repository
 
         public async Task<IEnumerable<RoleEntity>> GetRoleByUserId(string userId)
         {
-           return await _dbclient.ComplexQueryable<RoleEntity>("r")
-                .Join<UserRoleEntity>("ur", (r, ur) => r.Id == ur.RoleId)
-                .Where((r, ur) => ur.Id == userId)
-                .ExecuteQuery();
+            //return await _dbclient.ComplexQueryable<RoleEntity>("r")
+            //     .Join<UserRoleEntity>("ur", (r, ur) => r.Id == ur.RoleId)
+            //     .Where((r, ur) => ur.Id == userId)
+            //     .ExecuteQuery();
+            throw new NotImplementedException();
         }
     }
 }

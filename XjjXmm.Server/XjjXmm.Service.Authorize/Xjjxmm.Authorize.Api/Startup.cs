@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Caching.Memory;
 using Newtonsoft.Json;
 using Serilog;
 using XjjXmm.Authorize.Repository;
@@ -16,6 +17,7 @@ using XjjXmm.Authorize.Service;
 using XjjXmm.DataBase;
 using XjjXmm.DataBase.Utility;
 using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Swagger;
 
 namespace XjjXmm.Authorize.Api
@@ -58,6 +60,9 @@ namespace XjjXmm.Authorize.Api
 
                 })
             );
+
+            
+            services.AddSingleton<ICache, XjjxmmMemoryCache>();
 
             //services.AddTransient<UserService>();
             //services.AddTransient<RoleService>();
