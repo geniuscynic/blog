@@ -33,6 +33,18 @@ namespace XjjXmm.FrameWork.Startup
             return hostBuilder;
         }
 
-       
+        /// <summary>
+        /// Web 主机注入
+        /// </summary>
+        /// <param name="host">Web主机构建器</param>
+        /// <returns>IWebHostBuilder</returns>
+        public static IHost SetUp(this IHost host)
+        {
+            App.ServiceProvider = host.Services;
+            
+            return host;
+        }
+
+
     }
 }

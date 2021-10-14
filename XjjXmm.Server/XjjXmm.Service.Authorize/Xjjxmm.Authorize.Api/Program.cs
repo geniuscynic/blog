@@ -17,10 +17,10 @@ namespace XjjXmm.Authorize.Api
     {
         public static void Main(string[] args)
         {
-           var build = CreateHostBuilder(args).Build()     ;
-           App.ServiceProvider = build.Services;
-
-              build .Run();
+           CreateHostBuilder(args)
+               .Build()
+               .SetUp()
+                .Run();
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

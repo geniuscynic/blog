@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.DataBase;
@@ -21,17 +22,18 @@ namespace XjjXmm.Authorize.Repository
 
         public async Task<(IEnumerable<UserEntity> users, int total)> GetUsers(SearchUserModel model)
         {
-            var query = _dbclient.ComplexQueryable<UserEntity>("u");
-               
+            //var query = _dbclient.ComplexQueryable<UserEntity>("u");
 
-            if (!string.IsNullOrWhiteSpace(model.Name))
-            {
-                query = query.Where((u) => SqlFunc.Like(u.Account, model.Name) || SqlFunc.Like(u.NickName, model.Name));
-            }
 
-            query = query.OrderByDesc((u) => u.CreateTime);
+            //if (!string.IsNullOrWhiteSpace(model.Name))
+            //{
+            //    query = query.Where((u) => SqlFunc.Like(u.Account, model.Name) || SqlFunc.Like(u.NickName, model.Name));
+            //}
 
-            return await query.ToPageList(model.PageIndex, model.PageSize);
+            //query = query.OrderByDesc((u) => u.CreateTime);
+
+            //return await query.ToPageList(model.PageIndex, model.PageSize);
+            throw new NotImplementedException();
         }
     }
 }

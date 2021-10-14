@@ -6,58 +6,81 @@ namespace XjjXmm.Authorize.Repository.Entity
     /// <summary>
     /// 用户类
     /// </summary>
-    [Table("xjjxmm_user")]
-    public class UserEntity
+    [Table("sys_user")]
+    public class UserEntity : BaseEntity
     {
-        [Column(IsPrimaryKey = true)]
-        public string Id { get; set; }
+        /// <summary>
+        ///  ID
+        /// </summary>
+        [Column(ColumnName = "user_id", IsPrimaryKey = true, IsIdentity = true)]
+        public long Id { get; set; }
 
         /// <summary>
-        /// 账号
+        /// 用户名称
         /// </summary>
-        [Column(IgnoreSave = true)]
-        public string Account { get; set; }
-
-        /// <summary>
-        /// 密码
-        /// </summary>
-        public string Password { get; set; }
+        [Column(ColumnName = "username")]
+        public string UserName { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
+        [Column(ColumnName = "nickName")]
         public string NickName { get; set; }
 
-
         /// <summary>
-        /// 创建时间
+        /// 邮箱
         /// </summary>
-        [Column(IgnoreSave = true)]
-        public DateTime CreateTime { get; set; }
-
-        /// <summary>
-        /// 创建人
-        /// </summary>
-        [Column(IgnoreSave = true)]
-        public string CreateBy { get; set; }
-
-        /// <summary>
-        /// 修改时间
-        /// </summary>
-        public DateTime UpdatedTime { get; set; }
-
-        /// <summary>
-        /// 修改人
-        /// </summary>
-        public string UpdatedBy { get; set; }
+        [Column(ColumnName = "email")]
+        public string Email { get; set; }
 
 
         /// <summary>
-        ///  0 删除， 1 正常状态
+        /// 电话号码
         /// </summary>
-        [Column(IgnoreSave = true)]
-        public int Status { get; set; } = 1;
+        [Column(ColumnName = "phone")]
+        public string Phone { get; set; }
 
-        
+
+        /// <summary>
+        /// 用户性别
+        /// </summary>
+        [Column(ColumnName = "gender")]
+        public string Gender { get; set; }
+
+        /// <summary>
+        /// 头像真实名称
+        /// </summary>
+        [Column(ColumnName = "avatarName")]
+        public string AvatarName { get; set; }
+
+        /// <summary>
+        /// 头像存储的路径
+        /// </summary>
+        [Column(ColumnName = "avatarPath")]
+        public string AvatarPath { get; set; }
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        [Column(ColumnName = "password")]
+        public string Password { get; set; }
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        [Column(ColumnName = "enabled")]
+        public bool Enabled { get; set; }
+
+        /// <summary>
+        /// 是否为admin账号
+        /// </summary>
+        [Column(ColumnName = "isAdmin")]
+        public bool IsAdmin { get; set; }
+
+        /// <summary>
+        /// 最后修改密码的时间
+        /// </summary>
+        [Column(ColumnName = "pwd_reset_time")]
+        public DateTime PwdResetTime { get; set; }
     }
 }

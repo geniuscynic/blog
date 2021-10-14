@@ -27,11 +27,11 @@ namespace XjjXmm.Authorize.Api.Controllers
             var result = await CaptchaKit.GenerateCaptcha();
             var id = GuidKit.Get();
 
-            var base64 = Convert.ToBase64String(result.CaptchaMemoryStream.GetBuffer());
+            //var base64 = Convert.ToBase64String(result.CaptchaMemoryStream.GetBuffer());
           
              return  new
              {
-                 img = "data:image/png;base64," + base64  ,
+                 img = result.Base64,
                  uuid = "captch_" + id
              };
              

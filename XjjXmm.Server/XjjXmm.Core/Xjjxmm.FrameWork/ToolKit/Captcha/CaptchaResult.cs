@@ -23,5 +23,7 @@ namespace XjjXmm.FrameWork.ToolKit.Captcha
         /// Timestamp
         /// </summary>
         public DateTime Timestamp { get; set; }
+
+        public string Base64 => "data:image/png;base64," + Convert.ToBase64String(CaptchaMemoryStream.GetBuffer());
     }
 }

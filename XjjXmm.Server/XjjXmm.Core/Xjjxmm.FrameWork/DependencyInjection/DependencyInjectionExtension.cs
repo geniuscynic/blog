@@ -28,11 +28,11 @@ namespace XjjXmm.FrameWork.DependencyInjection
                         break;
 
                     case InjectionType.Scoped:
-                        services.AddTransient(type);
+                        services.AddScoped(type);
                         break;
 
                     case InjectionType.Singleton:
-                        services.AddTransient(type);
+                        services.AddSingleton(type);
                         break;
                    
                 }
