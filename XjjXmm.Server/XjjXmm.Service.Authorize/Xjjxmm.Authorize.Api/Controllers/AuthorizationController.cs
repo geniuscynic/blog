@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using XjjXmm.Authorize.Service;
 using XjjXmm.Authorize.Service.Model;
+using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.ToolKit;
+using XjjXmm.FrameWork.ToolKit.DataEncryption.Extensions;
 
 namespace XjjXmm.Authorize.Api.Controllers
 {
@@ -53,6 +55,9 @@ namespace XjjXmm.Authorize.Api.Controllers
             {
                 throw BussinessException.CreateException(ExceptionCode.CustomException, "验证码错误");
             }
+
+            var rsaKey = App.GetConfig()
+            var password = authUser.Password.ToRSADecrypt()
 
            var userModel = await _userService.FindUser(authUser);
 
