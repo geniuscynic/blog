@@ -10,6 +10,7 @@ using XjjXmm.Authorize.Service.Model;
 using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Common;
+using XjjXmm.FrameWork.Jwt;
 using XjjXmm.FrameWork.ToolKit;
 using XjjXmm.FrameWork.ToolKit.DataEncryption.Extensions;
 
@@ -62,6 +63,7 @@ namespace XjjXmm.Authorize.Api.Controllers
 
            var userModel = await _userService.FindUser(authUser);
 
+           //JwtHelper.IssueToken()
 
            return userModel;
         }
