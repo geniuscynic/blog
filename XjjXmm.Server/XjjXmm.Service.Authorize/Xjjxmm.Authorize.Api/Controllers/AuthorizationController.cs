@@ -56,8 +56,9 @@ namespace XjjXmm.Authorize.Api.Controllers
                 throw BussinessException.CreateException(ExceptionCode.CustomException, "验证码错误");
             }
 
-            var rsaKey = App.GetConfig()
-            var password = authUser.Password.ToRSADecrypt()
+            var rsaKey = App.GetConfig("rsa:private_key");
+            var password = authUser.Password.ToRSADecrypt(rsaKey);
+            authUser.Password = password;
 
            var userModel = await _userService.FindUser(authUser);
 

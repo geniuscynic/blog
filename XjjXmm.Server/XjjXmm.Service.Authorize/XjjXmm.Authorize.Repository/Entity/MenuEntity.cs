@@ -8,7 +8,7 @@ using XjjXmm.DataBase.Utility;
 namespace XjjXmm.Authorize.Repository.Entity
 {
     [Table("sys_menu")]
-    public class Menu : BaseEntity
+    public class MenuEntity : BaseEntity
     {
 
 

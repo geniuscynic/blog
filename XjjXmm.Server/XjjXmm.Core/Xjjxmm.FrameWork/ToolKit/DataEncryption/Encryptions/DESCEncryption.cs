@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Security.Cryptography;
 using System.Text;
-using Furion.DataEncryption;
 
 namespace XjjXmm.FrameWork.ToolKit.DataEncryption.Encryptions
 {
