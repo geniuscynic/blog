@@ -1,18 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Dao\visitor\SetColunmExpressionVisitor.cs.bak" />
-    <None Remove="Dao\visitor\WhereExpressionVisitor.cs.bak" />
+    <Compile Remove="Dao\**" />
+    <EmbeddedResource Remove="Dao\**" />
+    <None Remove="Dao\**" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Dapper" Version="2.0.78" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.3.0" />
+    <ProjectReference Include="..\..\XjjXmm.Server\XjjXmm.Core\Xjjxmm.DataBase\Xjjxmm.DataBase.csproj" />
   </ItemGroup>
 
 </Project>

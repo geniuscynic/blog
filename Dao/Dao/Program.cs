@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using ConsoleApp1.Dao;
+using XjjXmm.DataBase;
+using XjjXmm.DataBase.Utility;
+
 
 namespace ConsoleApp1
 {
@@ -12,7 +14,10 @@ namespace ConsoleApp1
         {
             var connectionString =
                 "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
-            var dbContext = new Dbclient(connectionString);
+            var dbContext = new DbClient(connectionString, DatabaseProvider.MsSql, new Aop()
+            {
+
+            });
 
             var result = new List<BlogArticle>()
             {
@@ -74,14 +79,24 @@ namespace ConsoleApp1
             //    .Execute();
 
 
-            var now = DateTime.Now.AddYears(-2);
-            var result1 = await dbContext.Queryable<BlogArticle>()
-                //.Where(t=> t.Author1 == c && (t.PublishDate > DateTime.Now || 4 < t.Id) )
-                .Where(t => t.PublishDate > now )
-                .Where(t => t.Id > 1 )
-                .Select(t=> t)
-                //.Where("id > @id", () => new {id = 4})
-                .ToList();
+            //var now = DateTime.Now.AddYears(-2);
+            //var result1 = await dbContext.Queryable<BlogArticle>()
+            //    //.Where(t=> t.Author1 == c && (t.PublishDate > DateTime.Now || 4 < t.Id) )
+            //    .Where(t => t.PublishDate > now )
+            //    .Where(t => t.Id > 1 )
+            //    .Select(t=> t)
+            //    //.Where("id > @id", () => new {id = 4})
+            //    .ToList();
+
+           var result1 = await dbContext.ComplexQueryable<BlogArticle>("b")
+                .Join<Category>("c", (b, c) => b.CategoryId == c.Id)
+                .Select((b, c) =>  new
+                {
+                    blog = b,
+                    category = c
+                }).ExecuteQuery();
+
+
 
             Console.WriteLine("Hello World!");
 

@@ -318,7 +318,7 @@ namespace XjjXmm.DataBase.Imp.Operate
         }
 
 
-        private StringBuilder Build<T>()
+        private StringBuilder Build<T>(bool isMulti = false)
         {
             //prefix = whereCommand.prefix;
 
@@ -331,6 +331,10 @@ namespace XjjXmm.DataBase.Imp.Operate
             if (_selectField.Length > 0)
             {
                 selectSql.Append(_selectField);
+            }
+            else if (isMulti)
+            {
+                selectSql.Append("*");
             }
             else
             {
@@ -373,19 +377,19 @@ namespace XjjXmm.DataBase.Imp.Operate
       
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn)
         {
-            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
         }
 
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, params string[] splitOn)
         {
-            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
         }
 
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, params string[] splitOn)
         {
-            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
         }
 
@@ -393,20 +397,20 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, params string[] splitOn)
         {
-            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
         }
 
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, params string[] splitOn)
         {
-            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
         }
 
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func,
             params string[] splitOn)
         {
-            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
         }
 

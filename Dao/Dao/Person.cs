@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using ConsoleApp1.Dao.Common;
+using XjjXmm.DataBase.Utility;
 
 
 namespace ConsoleApp1
@@ -11,6 +11,15 @@ namespace ConsoleApp1
         public int ID { get; set; }
         public string Name { get; set; }
         public int Age { get; set; }
+    }
+
+    [Table("Category")]
+    public class Category
+    {
+        [Column(IsPrimaryKey = true, IsIdentity = true)]
+        public int Id { get; set; }
+        
+        public string Name { get; set; }
     }
 
     [Table("BlogArticle")]
