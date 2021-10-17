@@ -1,0 +1,7 @@
+diff a/XjjXmm.Client/eladmin-web/src/views/login.vue b/XjjXmm.Client/eladmin-web/src/views/login.vue	(rejected hunks)
+@@ -142 +142 @@ export default {
+-           // debugger
++            // debugger
+@@ -146 +146 @@ export default {
+-           // debugger
++            // debugger

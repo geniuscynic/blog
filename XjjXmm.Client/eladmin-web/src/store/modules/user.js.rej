@@ -1,0 +1,3 @@
+diff a/XjjXmm.Client/eladmin-web/src/store/modules/user.js b/XjjXmm.Client/eladmin-web/src/store/modules/user.js	(rejected hunks)
+@@ -34 +33,0 @@ const user = {
+-          
