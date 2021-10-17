@@ -37,11 +37,11 @@ namespace XjjXmm.Authorize.Api.Controllers
             return await _userService.GetUsers(model);
         }
 
-        [HttpPost("/user/login")]
-        public async Task<UserDetailModel> Login(LoginModel loginModel)
-        {
-            return await _userService.FindUser(loginModel);
-        }
+        //[HttpPost("/user/login")]
+        //public async Task<UserDetailModel> Login(LoginModel loginModel)
+        //{
+        //    return await _userService.FindUser(loginModel);
+        //}
 
         [HttpGet("/user/detail")]
         public async Task<UserDetailModel> GetUserById(string id)

@@ -2,9 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using Org.BouncyCastle.Crypto.Modes.Gcm;
 using XjjXmm.DataBase.Imp.Command.Oracle;
 using XjjXmm.DataBase.Interface.Command;
 using XjjXmm.DataBase.Utility;
@@ -59,9 +61,9 @@ namespace XjjXmm.DataBase.Imp.Command
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               
+
                 Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter, ex);
                 throw;
             }
@@ -79,7 +81,7 @@ namespace XjjXmm.DataBase.Imp.Command
 
                 return result;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Aop?.OnError?.Invoke(Sql.ToString(), SqlParameter, ex);
                 throw;
@@ -88,9 +90,52 @@ namespace XjjXmm.DataBase.Imp.Command
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
+
             return await EnumerableDelegate(async () =>
                 await Connection.Value.QueryAsync<T>(Sql.ToString(), SqlParameter));
 
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: tmp));
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: tmp));
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: tmp));
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: tmp));
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: tmp));
+        }
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: tmp));
         }
 
         public async Task<T> ExecuteFirst()
@@ -142,7 +187,7 @@ namespace XjjXmm.DataBase.Imp.Command
                 throw;
             }
 
-           
+
         }
 
         public abstract Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize);

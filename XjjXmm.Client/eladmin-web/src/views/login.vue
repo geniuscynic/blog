@@ -139,9 +139,11 @@ export default {
             Cookies.remove('rememberMe')
           }
           this.$store.dispatch('Login', user).then(() => {
+            // debugger
             this.loading = false
             this.$router.push({ path: this.redirect || '/' })
           }).catch(() => {
+            // debugger
             this.loading = false
             this.getCode()
           })

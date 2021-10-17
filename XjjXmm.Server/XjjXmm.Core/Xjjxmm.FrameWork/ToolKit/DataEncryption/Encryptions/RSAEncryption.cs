@@ -9,6 +9,9 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using Org.BouncyCastle.Crypto.Generators;
+using Org.BouncyCastle.Crypto.Parameters;
+using Org.BouncyCastle.Security;
 
 namespace XjjXmm.FrameWork.ToolKit.DataEncryption.Encryptions
 {
@@ -60,7 +63,10 @@ namespace XjjXmm.FrameWork.ToolKit.DataEncryption.Encryptions
             CheckRSAKeySize(keySize);
 
             using var rsa = new RSACryptoServiceProvider(keySize);
-            rsa.FromXmlString(privateKey);
+
+            var xmlKey = RSAPrivateKeyJava2DotNet(privateKey);
+            rsa.FromXmlString(xmlKey);
+                    
 
             var decryptedData = rsa.Decrypt(Convert.FromBase64String(text), false);
             return Encoding.Default.GetString(decryptedData);
@@ -74,6 +80,31 @@ namespace XjjXmm.FrameWork.ToolKit.DataEncryption.Encryptions
         {
             if (keySize < 2048 || keySize > 16384 || keySize % 8 != 0)
                 throw new ArgumentException("The keySize must be between 2048 and 16384 in size and must be divisible by 8.", nameof(keySize));
+        }
+
+
+        /// <summary>
+        /// RSA私钥格式转换，java->.net
+        /// </summary>
+        /// <param name="privateKey">java生成的RSA私钥</param>
+        /// <returns></returns>
+        public static string RSAPrivateKeyJava2DotNet(string privateKey)
+        {
+            RsaPrivateCrtKeyParameters privateKeyParam = (RsaPrivateCrtKeyParameters)PrivateKeyFactory.CreateKey(Convert.FromBase64String(privateKey));
+
+            
+            return
+                $"<RSAKeyValue>" +
+                $"<Modulus>{Convert.ToBase64String(privateKeyParam.Modulus.ToByteArrayUnsigned())}</Modulus>" +
+                $"<Exponent>{Convert.ToBase64String(privateKeyParam.PublicExponent.ToByteArrayUnsigned())}</Exponent>" +
+                $"<P>{Convert.ToBase64String(privateKeyParam.P.ToByteArrayUnsigned())}</P>" +
+                $"<Q>{Convert.ToBase64String(privateKeyParam.Q.ToByteArrayUnsigned())}</Q>" +
+                $"<DP>{Convert.ToBase64String(privateKeyParam.DP.ToByteArrayUnsigned())}</DP>" +
+                $"<DQ>{Convert.ToBase64String(privateKeyParam.DQ.ToByteArrayUnsigned())}</DQ>" +
+                $"<InverseQ>{Convert.ToBase64String(privateKeyParam.QInv.ToByteArrayUnsigned())}</InverseQ>" +
+                $"<D>{Convert.ToBase64String(privateKeyParam.Exponent.ToByteArrayUnsigned())}</D>" +
+                $"</RSAKeyValue>";
+
         }
     }
 }

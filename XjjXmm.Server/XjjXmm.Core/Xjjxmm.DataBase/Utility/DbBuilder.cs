@@ -45,7 +45,7 @@ namespace XjjXmm.DataBase.Utility
                     Connection = new Lazy<IDbConnection>(() => new MySqlConnection(connectionString));
                     DbType = provider;
 
-                    StatementPrefix = ":";
+                    StatementPrefix = "?";
                     break;
                 case DatabaseProvider.Oracle:
                     Connection = new Lazy<IDbConnection>(() => new OracleConnection(connectionString));

@@ -27,7 +27,7 @@ namespace XjjXmm.Authorize.Api
             Host.CreateDefaultBuilder(args)
                 .ConfigureLogging(builder =>
                 {
-                    builder.ClearProviders().AddConsole();
+                    builder.ClearProviders().AddSerilog();
 
                     //builder.SetMinimumLevel(LogLevel.Debug);
                 })

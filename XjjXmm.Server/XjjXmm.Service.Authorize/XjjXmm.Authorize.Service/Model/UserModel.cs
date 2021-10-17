@@ -172,62 +172,74 @@ namespace XjjXmm.Authorize.Service.Model
      /// </summary>
      public class UserDetailModel
      {
-         /// <summary>
-         /// 主键
-         /// </summary>
-         public string Id { get; set; }
-
-         /// <summary>
-         /// 账号
-         /// </summary>
-         public string Account { get; set; }
-
-         /// <summary>
-         /// 密码
-         /// </summary>
-         public string Password { get; set; }
-
-         /// <summary>
-         /// 昵称
-         /// </summary>
-         public string NickName { get; set; }
-
-         /// <summary>
-         /// 最后登入时间
-         /// </summary>
-         public DateTime? LoginTime { get; set; }
-
-         /// <summary>
-         /// 创建时间
-         /// </summary>
-         public string CreateTime { get; set; }
-
-         /// <summary>
-         /// 创建人
-         /// </summary>
-         public string CreateBy { get; set; }
-
-         /// <summary>
-         /// 修改时间
-         /// </summary>
-         public string UpdatedTime { get; set; }
-
-         /// <summary>
-         /// 修改人
-         /// </summary>
-         public string UpdatedBy { get; set; }
-
-         /// <summary>
-         /// 所属的role id
-         /// </summary>
-         public IEnumerable<string> Roles { get; set; }
+        /// <summary>
+        ///  ID
+        /// </summary>
+        public long Id { get; set; }
 
         /// <summary>
-        ///  0 删除， 1 正常状态
+        /// 部门Id
         /// </summary>
-        //public int Status { get; set; } = 1;
+        public string DeptId { get; set; }
+
+        /// <summary>
+        /// 用户名称
+        /// </summary>
+        public string UserName { get; set; }
+
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public string NickName { get; set; }
+
+        /// <summary>
+        /// 用户性别
+        /// </summary>
+        public string Gender { get; set; }
+
+        /// <summary>
+        /// 电话号码
+        /// </summary>
+        public string Phone { get; set; }
 
 
+        /// <summary>
+        /// 邮箱
+        /// </summary>
+        public string Email { get; set; }
+
+
+        /// <summary>
+        /// 头像真实名称
+        /// </summary>
+        public string AvatarName { get; set; }
+
+        /// <summary>
+        /// 头像存储的路径
+        /// </summary>
+        public string AvatarPath { get; set; }
+
+        /// <summary>
+        /// 密码
+        /// </summary>
+        public string Password { get; set; }
+
+        /// <summary>
+        /// 是否为admin账号
+        /// </summary>
+        public bool IsAdmin { get; set; }
+
+        /// <summary>
+        /// 是否启用
+        /// </summary>
+        public bool IsEnabled { get; set; }
+
+
+
+        /// <summary>
+        /// 最后修改密码的时间
+        /// </summary>
+        public DateTime PwdResetTime { get; set; }
     }
 
 

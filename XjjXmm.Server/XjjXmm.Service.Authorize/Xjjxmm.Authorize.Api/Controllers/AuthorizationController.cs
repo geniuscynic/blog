@@ -49,23 +49,36 @@ namespace XjjXmm.Authorize.Api.Controllers
 
             if (string.IsNullOrEmpty(code))
             {
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "验证码不存在或者已过期");
+               // throw BussinessException.CreateException(ExceptionCode.CustomException, "验证码不存在或者已过期");
             }
 
-            if (authUser.Code != code)
+            if (!string.Equals(authUser.Code, code, StringComparison.CurrentCultureIgnoreCase))
             {
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "验证码错误");
+               // throw BussinessException.CreateException(ExceptionCode.CustomException, "验证码错误");
             }
+
+            _cache.Remove(authUser.UUID);
 
             var rsaKey = App.GetConfig("rsa:private_key");
             var password = authUser.Password.ToRSADecrypt(rsaKey);
             authUser.Password = password;
 
-           var userModel = await _userService.FindUser(authUser);
+            var userModel = await _userService.FindUser(authUser);
 
-           //JwtHelper.IssueToken()
+            //做登入认证
+            var jwtTokenSetting = App.GetSection<JwtTokenSetting>("JWT");
+            var jwtStr = JwtHelper.IssueToken(jwtTokenSetting, new TokenModelOptions()
+            {
+                AppId = "xjjxmm",
+                ClientId = "admin",
+                Id = userModel.Id.ToString()
+            });
 
-           return userModel;
+            return new
+            {
+                token = $"Bearer {jwtStr}",
+                user = (JwtUserDto)userModel
+            };
         }
 
         /// <summary>
@@ -76,16 +89,16 @@ namespace XjjXmm.Authorize.Api.Controllers
         public async Task<object> GetCode()
         {
             var result = await CaptchaKit.GenerateCaptcha();
-            var id = GuidKit.Get();
+            var id = "captch_" + GuidKit.Get();
             _cache.Set(id, result.CaptchaCode, TimeSpan.FromMinutes(1));
             //var base64 = Convert.ToBase64String(result.CaptchaMemoryStream.GetBuffer());
 
-            return  new
-             {
-                 img = result.Base64,
-                 uuid = "captch_" + id
-             };
-             
+            return new
+            {
+                img = result.Base64,
+                uuid = id
+            };
+
         }
 
     }

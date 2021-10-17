@@ -1,4 +1,5 @@
 ﻿using System;
+using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.FrameWork.Jwt
 {
@@ -29,7 +30,7 @@ namespace XjjXmm.FrameWork.Jwt
 
         public static JwtTokenSetting GetKey(string key)
         {
-            var jwtConfig = ConfigurationManager.GetSection<JwtTokenSetting>(key);
+            var jwtConfig = App.GetSection<JwtTokenSetting>(key);
 
             if (jwtConfig == null)
             {

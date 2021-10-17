@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.Authorize.Repository.Entity
@@ -16,6 +17,12 @@ namespace XjjXmm.Authorize.Repository.Entity
         public long Id { get; set; }
 
         /// <summary>
+        /// 部门Id
+        /// </summary>
+        [Column(ColumnName = "dept_id")]
+        public string DeptId { get; set; }
+
+        /// <summary>
         /// 用户名称
         /// </summary>
         [Column(ColumnName = "username")]
@@ -24,15 +31,14 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         /// 昵称
         /// </summary>
-        [Column(ColumnName = "nickName")]
+        [Column(ColumnName = "nick_name")]
         public string NickName { get; set; }
 
         /// <summary>
-        /// 邮箱
+        /// 用户性别
         /// </summary>
-        [Column(ColumnName = "email")]
-        public string Email { get; set; }
-
+        [Column(ColumnName = "gender")]
+        public string Gender { get; set; }
 
         /// <summary>
         /// 电话号码
@@ -42,21 +48,22 @@ namespace XjjXmm.Authorize.Repository.Entity
 
 
         /// <summary>
-        /// 用户性别
+        /// 邮箱
         /// </summary>
-        [Column(ColumnName = "gender")]
-        public string Gender { get; set; }
+        [Column(ColumnName = "email")]
+        public string Email { get; set; }
+
 
         /// <summary>
         /// 头像真实名称
         /// </summary>
-        [Column(ColumnName = "avatarName")]
+        [Column(ColumnName = "avatar_name")]
         public string AvatarName { get; set; }
 
         /// <summary>
         /// 头像存储的路径
         /// </summary>
-        [Column(ColumnName = "avatarPath")]
+        [Column(ColumnName = "avatar_path")]
         public string AvatarPath { get; set; }
 
         /// <summary>
@@ -66,21 +73,30 @@ namespace XjjXmm.Authorize.Repository.Entity
         public string Password { get; set; }
 
         /// <summary>
+        /// 是否为admin账号
+        /// </summary>
+        [Column(ColumnName = "is_admin")]
+        public bool IsAdmin { get; set; }
+
+        /// <summary>
         /// 是否启用
         /// </summary>
         [Column(ColumnName = "enabled")]
-        public bool Enabled { get; set; }
+        public bool IsEnabled { get; set; }
 
-        /// <summary>
-        /// 是否为admin账号
-        /// </summary>
-        [Column(ColumnName = "isAdmin")]
-        public bool IsAdmin { get; set; }
+      
 
         /// <summary>
         /// 最后修改密码的时间
         /// </summary>
         [Column(ColumnName = "pwd_reset_time")]
         public DateTime PwdResetTime { get; set; }
+
+
+        /// <summary>
+        /// 对应的角色
+        /// </summary>
+        [Column(Ignore = true)]
+        public List<RoleEntity> Roles { get; set; }
     }
 }

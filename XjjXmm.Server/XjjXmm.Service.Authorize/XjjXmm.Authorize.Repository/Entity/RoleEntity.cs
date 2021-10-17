@@ -13,9 +13,6 @@ namespace XjjXmm.Authorize.Repository.Entity
         [Column(IsPrimaryKey = true, ColumnName = "role_id", IsIdentity = true)]
         public long Id { get; set; }
 
-
-      
-
         /// <summary>
         /// 名称
         /// </summary>

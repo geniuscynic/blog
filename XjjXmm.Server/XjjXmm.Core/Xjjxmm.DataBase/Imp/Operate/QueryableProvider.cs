@@ -14,10 +14,10 @@ using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Imp.Operate
 {
-    internal abstract class QueryableProvider :  BaseOperate, IQueryableProvider
+    internal abstract class QueryableProvider : BaseOperate, IQueryableProvider
     {
         protected readonly string _alias;
-       
+
         private readonly WhereCommand _whereCommand;
         private readonly IOrderByCommand _orderByCommand;
 
@@ -26,9 +26,9 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public QueryableProvider(DbInfo dbInfo, string alias) : base(dbInfo)
         {
-            
+
             _alias = alias;
-           
+
             _whereCommand = new WhereCommand(_providerModel, CreateWhereProvider());
 
             _orderByCommand = new OrderByCommand();
@@ -153,7 +153,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _whereCommand.Where(predicate);
         }
 
-        public void Where<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4,T5, bool>> predicate)
+        public void Where<T1, T2, T3, T4, T5>(Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
         {
             _whereCommand.Where(predicate);
         }
@@ -270,7 +270,7 @@ namespace XjjXmm.DataBase.Imp.Operate
                     _selectField.Append($"{t.Prefix}.{t.ColumnName} as {t.Parameter},");
                 }
 
-                
+
 
                 //prefix = t.Prefix;
             });
@@ -282,13 +282,13 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public IReaderableCommand<TResult> Select<T, TResult>(Expression<Func<T, TResult>> predicate)
         {
-            return VisitSelect<T,TResult>(predicate);
+            return VisitSelect<T, TResult>(predicate);
         }
 
 
         public IReaderableCommand<TResult> Select<T1, T2, TResult>(Expression<Func<T1, T2, TResult>> predicate)
         {
-            return VisitSelect<T1,TResult>(predicate);
+            return VisitSelect<T1, TResult>(predicate);
         }
 
         public IReaderableCommand<TResult> Select<T1, T2, T3, TResult>(Expression<Func<T1, T2, T3, TResult>> predicate)
@@ -307,7 +307,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             return VisitSelect<T1, TResult>(predicate);
         }
 
-        public IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5,T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate)
+        public IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate)
         {
             return VisitSelect<T1, TResult>(predicate);
         }
@@ -342,7 +342,7 @@ namespace XjjXmm.DataBase.Imp.Operate
                 selectSql.Remove(selectSql.Length - 1, 1);
             }
 
-            if (tableName.Length>10 && tableName.Substring(0,10).ToLower().StartsWith("select"))
+            if (tableName.Length > 10 && tableName.Substring(0, 10).ToLower().StartsWith("select"))
             {
                 tableName = $"({tableName})";
             }
@@ -367,6 +367,47 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
             return await command.ExecuteQuery();
+        }
+
+      
+      
+        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            return await command.ExecuteQuery(func, splitOn);
+        }
+
+        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            return await command.ExecuteQuery(func, splitOn);
+        }
+
+        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            return await command.ExecuteQuery(func, splitOn);
+        }
+
+
+
+        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            return await command.ExecuteQuery(func, splitOn);
+        }
+
+        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            return await command.ExecuteQuery(func, splitOn);
+        }
+
+        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func,
+            params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T1>(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter);
+            return await command.ExecuteQuery(func, splitOn);
         }
 
         public async Task<T> ExecuteFirst<T>()
@@ -440,6 +481,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         protected abstract IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter);
 
+       
         protected abstract ISqlFuncVisit CreateSqlFunVisit();
 
 

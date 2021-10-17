@@ -8,6 +8,7 @@ using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Mapper;
 using XjjXmm.FrameWork.ToolKit;
+using XjjXmm.FrameWork.ToolKit.DataEncryption.Encryptions;
 
 namespace XjjXmm.Authorize.Service
 {
@@ -96,7 +97,7 @@ namespace XjjXmm.Authorize.Service
                 throw BussinessException.CreateException(ExceptionCode.CustomException, "用户名错误");
             }
 
-            if (user.Password != model.Password)
+            if (BCryptPasswordEncoder.Compare(user.Password , model.Password))
             {
                 throw BussinessException.CreateException(ExceptionCode.CustomException, "密码错误");
             }
