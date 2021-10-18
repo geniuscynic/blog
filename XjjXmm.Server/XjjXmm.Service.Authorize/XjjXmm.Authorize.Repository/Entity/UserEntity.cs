@@ -90,7 +90,7 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// 最后修改密码的时间
         /// </summary>
         [Column(ColumnName = "pwd_reset_time")]
-        public DateTime PwdResetTime { get; set; }
+        public DateTime? PwdResetTime { get; set; }
 
 
         /// <summary>

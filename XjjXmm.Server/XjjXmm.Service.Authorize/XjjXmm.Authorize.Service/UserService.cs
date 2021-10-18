@@ -88,9 +88,9 @@ namespace XjjXmm.Authorize.Service
             throw new NotImplementedException();
         }
 
-        public async Task<UserDetailModel> FindUser(AuthUserDto model)
+        public async Task<JwtUserDto> FindUser(AuthUserDto model)
         {
-            var user = await _userRepository.FirstOrDefault(t => t.UserName == model.UserName);
+            var user = await _userRepository.FindByLoginName(model.UserName);
 
             if (user == null)
             {
@@ -102,7 +102,7 @@ namespace XjjXmm.Authorize.Service
                 throw BussinessException.CreateException(ExceptionCode.CustomException, "密码错误");
             }
 
-            var userModel = user.MapTo<UserEntity, UserDetailModel>();
+            var userModel = user.MapTo<UserEntity, JwtUserDto>();
 
             //var roles = await _roleService.GetRoleByUserId(userModel.Id);
 

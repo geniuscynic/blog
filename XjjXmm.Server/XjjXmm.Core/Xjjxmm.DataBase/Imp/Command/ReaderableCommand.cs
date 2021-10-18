@@ -144,10 +144,156 @@ namespace XjjXmm.DataBase.Imp.Command
                 await Connection.Value.QueryFirstAsync<T>(Sql.ToString(), SqlParameter));
         }
 
+        public async Task<T> ExecuteFirst<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.First();
+            });
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.First();
+            });
+
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.First();
+            });
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.First();
+            });
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.First();
+            });
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.First();
+            });
+        }
+
+
         public async Task<T> ExecuteFirstOrDefault()
         {
             return await SingleDelegate(async () =>
                 await Connection.Value.QueryFirstOrDefaultAsync<T>(Sql.ToString(), SqlParameter));
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.FirstOrDefault();
+            });
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.FirstOrDefault();
+            });
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.FirstOrDefault();
+            });
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.FirstOrDefault();
+            });
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.FirstOrDefault();
+            });
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+            var tmp = string.Join(',', splitOn);
+            return await SingleDelegate(async () =>
+            {
+                var res = await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func,
+                    splitOn: tmp);
+
+                return res.FirstOrDefault();
+            });
         }
 
         public async Task<T> ExecuteSingle()

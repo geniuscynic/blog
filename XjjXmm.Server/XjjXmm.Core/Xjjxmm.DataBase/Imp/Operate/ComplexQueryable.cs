@@ -127,9 +127,69 @@ namespace XjjXmm.DataBase.Imp.Operate
             return await _provider.ExecuteFirst<T>();
         }
 
+        public async Task<T> ExecuteFirst<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+           return await _provider.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+           return await _provider.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+           return await _provider.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+           return await _provider.ExecuteFirst(func, splitOn);
+        }
+
         public async Task<T> ExecuteFirstOrDefault()
         {
             return await _provider.ExecuteFirstOrDefault<T>();
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+            return await _provider.ExecuteFirstOrDefault(func, splitOn);
         }
 
         public async Task<T> ExecuteSingle()

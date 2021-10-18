@@ -77,7 +77,7 @@ namespace XjjXmm.Authorize.Api.Controllers
             return new
             {
                 token = $"Bearer {jwtStr}",
-                user = (JwtUserDto)userModel
+                user = userModel
             };
         }
 

@@ -79,6 +79,42 @@ namespace XjjXmm.DataBase.Imp.Operate
             return await command.ExecuteFirst();
         }
 
+        public async Task<T> ExecuteFirst<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirst(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirst(func, splitOn);
+        }
+
         public async Task<T> ExecuteFirstOrDefault()
         {
             //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
@@ -86,6 +122,42 @@ namespace XjjXmm.DataBase.Imp.Operate
             var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
 
             return await command.ExecuteFirstOrDefault();
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2>(Func<T, T2, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault(func, splitOn);
+        }
+
+        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn)
+        {
+            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, new StringBuilder(_sql), _providerModel.Parameter);
+            return await command.ExecuteFirstOrDefault(func, splitOn);
         }
 
         public async Task<T> ExecuteSingle()

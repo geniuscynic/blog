@@ -7,22 +7,66 @@ using Newtonsoft.Json;
 
 namespace XjjXmm.Authorize.Service.Model
 {
-    public class JwtUserDto : UserDetailModel
+    public class JwtUserDto
     {
+        /// <summary>
+        ///  ID
+        /// </summary>
+        public long Id { get; set; }
 
-        public List<string> Roles { get; set; } = new List<string>();
+        /// <summary>
+        /// 部门Id
+        /// </summary>
+        public string DeptId { get; set; }
 
-           [JsonIgnore]
         
-        public new string Password { get; set; }
+        /// <summary>
+        /// 昵称
+        /// </summary>
+        public string NickName { get; set; }
 
-        [JsonIgnore]
+        /// <summary>
+        /// 用户性别
+        /// </summary>
+        public string Gender { get; set; }
 
-        public new string UserName { get; set; }
+        /// <summary>
+        /// 电话号码
+        /// </summary>
+        public string Phone { get; set; }
 
-        [JsonIgnore]
 
-        public new bool IsEnabled { get; set; }
-      
+        /// <summary>
+        /// 邮箱
+        /// </summary>
+        public string Email { get; set; }
+
+
+        /// <summary>
+        /// 头像真实名称
+        /// </summary>
+        public string AvatarName { get; set; }
+
+        /// <summary>
+        /// 头像存储的路径
+        /// </summary>
+        public string AvatarPath { get; set; }
+
+        
+        /// <summary>
+        /// 是否为admin账号
+        /// </summary>
+        public bool IsAdmin { get; set; }
+
+        
+        /// <summary>
+        /// 最后修改密码的时间
+        /// </summary>
+        public DateTime? PwdResetTime { get; set; }
+
+
+        public List<RoleModel> Roles { get; set; } = new List<RoleModel>();
+
+        
     }
 }

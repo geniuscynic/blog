@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.DataBase;
@@ -36,7 +37,7 @@ namespace XjjXmm.Authorize.Repository
             throw new NotImplementedException();
         }
 
-        public async Task<IEnumerable<UserEntity>> FindByLoginName(string loginName)
+        public async Task<UserEntity> FindByLoginName(string loginName)
         {
 
             var dictionary = new Dictionary<long, UserEntity>();
@@ -45,7 +46,7 @@ namespace XjjXmm.Authorize.Repository
                 .Join<UserRoleEntity>("ur", (u, ur) => u.Id == ur.UserId)
                 .Join<RoleEntity>("r", (u, ur, r) => ur.RoleId == r.Id)
                 .Where((u)=>u.UserName == loginName)
-                .ExecuteQuery<RoleEntity>((entity, roleEntity) =>
+                .ExecuteFirstOrDefault<RoleEntity>((entity, roleEntity) =>
                 {
                     if (!dictionary.TryGetValue(entity.Id, out var userEntity))
                     {
@@ -56,7 +57,9 @@ namespace XjjXmm.Authorize.Repository
 
                     userEntity.Roles.Add(roleEntity);
                     return userEntity;
-                }, "roleId");
+                }, "role_id");
+
+           
         }
     }
 }

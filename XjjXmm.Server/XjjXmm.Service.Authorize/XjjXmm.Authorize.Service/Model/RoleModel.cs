@@ -29,24 +29,24 @@
     public class RoleModel 
     {
         /// <summary>
-        /// 唯一Id
-        /// </summary>
-        public string Id { get; set; }
-
-        /// <summary>
-        /// code
-        /// </summary>
-        public string Code { get; set; }
-
-        /// <summary>
         /// 名称
         /// </summary>
-        //[Column(Length = 10, ColumnDataType = "nvarchar")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// 数据权限，全部 、 本级 、 自定义
+        /// </summary>
+        private int DataScope { get; set; }
+
+
+        /// <summary>
+        /// 级别，数值越小，级别越大
+        /// </summary>
+        public int Level { get; set; }
 
         /// <summary>
         /// 描述
         /// </summary>
-        public string Description { get; set; } = "";
+        public string Description { get; set; }
     }
 }

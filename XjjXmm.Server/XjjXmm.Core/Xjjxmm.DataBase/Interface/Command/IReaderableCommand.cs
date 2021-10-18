@@ -26,9 +26,39 @@ namespace XjjXmm.DataBase.Interface.Command
 
         Task<T> ExecuteFirst<T>();
 
+        Task<T1> ExecuteFirst<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirst<T1, T2, T3>(Func<T1, T2, T3, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirst<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirst<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirst<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirst<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, params string[] splitOn);
+
+
+
         Task<T> ExecuteFirstOrDefault<T>();
 
+        Task<T1> ExecuteFirstOrDefault<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirstOrDefault<T1, T2, T3>(Func<T1, T2, T3, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, params string[] splitOn);
+
+        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, params string[] splitOn);
+
+
+
         Task<T> ExecuteSingle<T>();
+
+
 
         Task<T> ExecuteSingleOrDefault<T>();
 
@@ -58,7 +88,35 @@ namespace XjjXmm.DataBase.Interface.Command
 
         Task<T> ExecuteFirst();
 
+        Task<T> ExecuteFirst< T2>(Func<T, T2, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirst< T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirst< T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirst< T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirst< T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirst< T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn);
+
+
+
+
         Task<T> ExecuteFirstOrDefault();
+        Task<T> ExecuteFirstOrDefault<T2>(Func<T, T2, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirstOrDefault<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn);
+
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn);
+
+
 
         Task<T> ExecuteSingle();
 
