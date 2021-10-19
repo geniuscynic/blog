@@ -15,9 +15,9 @@ namespace XjjXmm.DataBase.Imp.Operate.MySqlOperate
         }
 
 
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo info, StringBuilder sql, Dictionary<string, object> sqlParameter)
+        protected override IReaderableCommand CreateReaderableCommand(DbInfo info, StringBuilder sql, Dictionary<string, object> sqlParameter)
         {
-            return new MySqlReaderableCommand<TResult>(info, sql, sqlParameter);
+            return new MySqlReaderableCommand(info, sql, sqlParameter);
         }
 
         protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)

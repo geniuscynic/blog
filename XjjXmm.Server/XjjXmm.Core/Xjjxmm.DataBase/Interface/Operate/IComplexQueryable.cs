@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Text;
 using XjjXmm.DataBase.Interface.Command;
+using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Interface.Operate
 {
-    public interface IQueryableProvider : IReaderableCommand
+    internal interface IQueryableProvider
     {
         void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate);
 
@@ -95,6 +98,9 @@ namespace XjjXmm.DataBase.Interface.Operate
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate);
 
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
+
+
+        IReaderableCommand<TResult> CreateReaderableCommand<TResult>(bool isMulti);
     }
 
     public interface IComplexQueryable<T> : IReaderableCommand<T>

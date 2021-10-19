@@ -18,9 +18,9 @@ namespace XjjXmm.DataBase.Imp.Operate.MySqlOperate
         {
         }
 
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
+        protected override IReaderableCommand CreateReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
         {
-            return new MySqlReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
+            return new MySqlReaderableCommand(dbInfo, sql, sqlParameter);
         }
 
         protected override ISqlFuncVisit CreateSqlFunVisit()

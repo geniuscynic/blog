@@ -15,9 +15,9 @@ namespace XjjXmm.DataBase.Imp.Operate.SqlOperate
         {
         }
 
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
+        protected override IReaderableCommand CreateReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
         {
-            return new MsSqlReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
+            return new MsSqlReaderableCommand(dbInfo, sql, sqlParameter);
         }
 
         protected override ISqlFuncVisit CreateSqlFunVisit()

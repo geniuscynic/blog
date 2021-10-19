@@ -57,14 +57,14 @@ namespace XjjXmm.DataBase.Utility
         {
             return info.DbType switch
             {
-                DatabaseProvider.MsSql => new SqlSimpleQueryable<T>(info, fullSql, sqlParameter),
+                DatabaseProvider.MsSql => new MsSqlSimpleQueryable<T>(info, fullSql, sqlParameter),
                 DatabaseProvider.MySql => new MySqlSimpleQueryable<T>(info,  fullSql, sqlParameter),
                 _ => new OracleSimpleQueryable<T>(info, fullSql, sqlParameter),
 
             };
         }
 
-        public static IDoCareQueryable<T> CreateQueryable<T>(DbInfo info)
+        public static IXjjXmmQueryable<T> CreateQueryable<T>(DbInfo info)
         {
             return info.DbType switch
             {

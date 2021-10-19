@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace XjjXmm.DataBase.Interface.Command
 {
-    public interface IReaderableCommand
+    internal interface IReaderableCommand
     {
         Task<IEnumerable<T>> ExecuteQuery<T>();
 
@@ -69,52 +70,53 @@ namespace XjjXmm.DataBase.Interface.Command
         Task<DataTable> ExecuteDataTable<T>();
     }
 
+
     public interface IReaderableCommand<T>
     {
         Task<IEnumerable<T>> ExecuteQuery();
 
-        Task<IEnumerable<T>> ExecuteQuery<T2>(Func<T, T2, T> func, params string[] splitOn);
+        Task<IEnumerable<T>> ExecuteQuery<T2, TResult>(Func<T, T2, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<IEnumerable<T>> ExecuteQuery<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn);
+        Task<IEnumerable<T>> ExecuteQuery<T2, T3, TResult>(Func<T, T2, T3, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn);
+        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, TResult>(Func<T, T2, T3, T4, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn);
+        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, TResult>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn);
+        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, TResult>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn);
+        Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, T7, TResult>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TResult>> splitOnPredicate);
 
 
         Task<T> ExecuteFirst();
 
-        Task<T> ExecuteFirst< T2>(Func<T, T2, T> func, params string[] splitOn);
+        Task<T> ExecuteFirst<T2, TResult>(Func<T, T2, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirst< T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn);
+        Task<T> ExecuteFirst<T2, T3, TResult>(Func<T, T2, T3, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirst< T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn);
+        Task<T> ExecuteFirst<T2, T3, T4, TResult>(Func<T, T2, T3, T4, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirst< T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn);
+        Task<T> ExecuteFirst<T2, T3, T4, T5, TResult>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirst< T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn);
+        Task<T> ExecuteFirst<T2, T3, T4, T5, T6, TResult>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirst< T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn);
+        Task<T> ExecuteFirst<T2, T3, T4, T5, T6, T7, TResult>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TResult>> splitOnPredicate);
 
 
 
 
         Task<T> ExecuteFirstOrDefault();
-        Task<T> ExecuteFirstOrDefault<T2>(Func<T, T2, T> func, params string[] splitOn);
+        Task<T> ExecuteFirstOrDefault<T2, TResult>(Func<T, T2, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirstOrDefault<T2, T3>(Func<T, T2, T3, T> func, params string[] splitOn);
+        Task<T> ExecuteFirstOrDefault<T2, T3, TResult>(Func<T, T2, T3, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirstOrDefault<T2, T3, T4>(Func<T, T2, T3, T4, T> func, params string[] splitOn);
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, TResult>(Func<T, T2, T3, T4, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5>(Func<T, T2, T3, T4, T5, T> func, params string[] splitOn);
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, TResult>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6>(Func<T, T2, T3, T4, T5, T6, T> func, params string[] splitOn);
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, TResult>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TResult>> splitOnPredicate);
 
-        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7>(Func<T, T2, T3, T4, T5, T6, T7, T> func, params string[] splitOn);
+        Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7, TResult>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TResult>> splitOnPredicate);
 
 
 

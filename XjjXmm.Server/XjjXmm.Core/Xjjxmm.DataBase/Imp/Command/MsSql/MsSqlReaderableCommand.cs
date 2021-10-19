@@ -10,7 +10,7 @@ using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Imp.Command.MsSql
 {
-    internal class MsSqlReaderableCommand<T> : ReaderableCommand<T>
+    internal class MsSqlReaderableCommand : InnerReaderableCommand
     {
         //protected MsSqlReaderableCommand()
         //{
@@ -22,7 +22,7 @@ namespace XjjXmm.DataBase.Imp.Command.MsSql
         }
 
 
-        public override async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
+        public override async Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize)
         {
             var tempSql = Sql.ToString().Insert(6, " TOP 100 PERCENT");
             var countSql = $"select count(1) from ({tempSql}) t";

@@ -15,10 +15,10 @@ namespace XjjXmm.DataBase.Imp.Operate.SqlOperate
         }
 
 
-        protected override IReaderableCommand<TResult> CreateReaderableCommand<TResult>(DbInfo dbInfo, StringBuilder sql,
+        protected override IReaderableCommand CreateReaderableCommand(DbInfo dbInfo, StringBuilder sql,
             Dictionary<string, object> sqlParameter)
         {
-            return new MsSqlReaderableCommand<TResult>(dbInfo, sql, sqlParameter);
+            return new MsSqlReaderableCommand(dbInfo, sql, sqlParameter);
         }
 
         protected override WhereProvider CreateWhereProvider(ProviderModel providerModel)

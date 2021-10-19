@@ -8,7 +8,7 @@ using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Imp.Command.Oracle
 {
-    internal class OracleReaderableCommand<T> : ReaderableCommand<T>
+    internal class OracleReaderableCommand : InnerReaderableCommand
     {
         //private OracleReaderableCommand()
         //{
@@ -20,7 +20,7 @@ namespace XjjXmm.DataBase.Imp.Command.Oracle
         }
 
 
-        public override async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
+        public override async Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize)
         {
 
 

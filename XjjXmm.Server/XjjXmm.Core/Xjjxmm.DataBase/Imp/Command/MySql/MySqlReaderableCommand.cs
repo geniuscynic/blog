@@ -7,7 +7,7 @@ using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Imp.Command.MySql
 {
-    internal class MySqlReaderableCommand<T> : ReaderableCommand<T>
+    internal class MySqlReaderableCommand : InnerReaderableCommand
     {
         //private MySqlReaderableCommand()
         //{
@@ -18,7 +18,7 @@ namespace XjjXmm.DataBase.Imp.Command.MySql
         }
 
 
-        public override async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
+        public override async Task<(IEnumerable<T> data, int total)> ToPageList<T>(int pageIndex, int pageSize)
         {
             var countSql = $"select count(1) from ({Sql}) t";
 

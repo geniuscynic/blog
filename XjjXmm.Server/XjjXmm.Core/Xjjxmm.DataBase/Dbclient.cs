@@ -50,7 +50,7 @@ namespace XjjXmm.DataBase
         }
 
 
-        public IDoCareQueryable<T> Queryable<T>()
+        public IXjjXmmQueryable<T> Queryable<T>()
         {
             return DatabaseFactory.CreateQueryable<T>(_builder);
         }
