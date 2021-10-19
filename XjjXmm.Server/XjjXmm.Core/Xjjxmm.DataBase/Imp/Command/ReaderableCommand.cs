@@ -18,18 +18,18 @@ namespace XjjXmm.DataBase.Imp.Command
     internal class ReaderableCommand<T> : IReaderableCommand<T>
     {
         protected readonly IReaderableCommand _readerableCommand;
-        
+
         public ReaderableCommand(IReaderableCommand readerableCommand)
         {
             _readerableCommand = readerableCommand;
         }
 
-        protected string[] Visit(Expression splitOnPredicate)
+        protected string Visit(Expression splitOnPredicate)
         {
             var provider = new SplitOnProvider();
             provider.Visit(splitOnPredicate);
-            
-            return new string[] { };
+            return string.Join(',', provider.SelectFields.Select(t => t.ColumnName));
+
         }
 
 
@@ -70,7 +70,7 @@ namespace XjjXmm.DataBase.Imp.Command
         }
     }
 
-    internal class ReaderableCommand<T1,T2> : ReaderableCommand<T1>, IReaderableCommand<T1, T2>
+    internal class ReaderableCommand<T1, T2> : ReaderableCommand<T1>, IReaderableCommand<T1, T2>
     {
         public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
         {
@@ -98,7 +98,7 @@ namespace XjjXmm.DataBase.Imp.Command
         }
     }
 
-    internal class ReaderableCommand<T1, T2, T3> : ReaderableCommand<T1,T2>, IReaderableCommand<T1, T2,T3>
+    internal class ReaderableCommand<T1, T2, T3> : ReaderableCommand<T1, T2>, IReaderableCommand<T1, T2, T3>
     {
         public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
         {

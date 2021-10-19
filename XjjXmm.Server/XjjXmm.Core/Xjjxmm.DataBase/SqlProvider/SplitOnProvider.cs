@@ -8,29 +8,49 @@ namespace XjjXmm.DataBase.SqlProvider
     internal class SplitOnProvider : ExpressionVisitor
     {
 
-        public List<Field> UpdatedFields = new List<Field>();
+        public List<Field> SelectFields { get; set; } = new List<Field>();
 
+        //protected override MemberAssignment VisitMemberAssignment(MemberAssignment node)
+        //{
+        //    var member = ProviderHelper.VisitMember(node);
+        //    SelectFields.Add(member);
 
+        //    return node;
+        //}
 
-        protected override MemberAssignment VisitMemberAssignment(MemberAssignment node)
+        //protected override MemberBinding VisitMemberBinding(MemberBinding node)
+        //{
+        //    return base.VisitMemberBinding(node);
+        //}
+        protected override Expression VisitNew(NewExpression node)
         {
-            var field = ProviderHelper.VisitMember(node.Member);
 
-            UpdatedFields.Add(field);
+            foreach (var nodeArgument in node.Arguments)
+            {
+                var member = ProviderHelper.VisitMember((nodeArgument as MemberExpression));
+
+                SelectFields.Add(member);
+
+            }
 
             return node;
         }
 
-        protected override Expression VisitNew(NewExpression node)
+        protected override Expression VisitMember(MemberExpression node)
         {
-            if (node.Members == null) return base.VisitNew(node);
 
-            foreach (var nodeMember in node.Members)
-            {
-                var field = ProviderHelper.VisitMember(nodeMember);
 
-                UpdatedFields.Add(field);
-            }
+            var member = ProviderHelper.VisitMember(node);
+
+            SelectFields.Add(member);
+
+
+            return node;
+        }
+
+
+        protected override Expression VisitParameter(ParameterExpression node)
+        {
 
             return node;
         }
