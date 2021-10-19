@@ -376,7 +376,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
       
       
-        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn)
+     /*   public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn)
         {
             var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
@@ -413,7 +413,7 @@ namespace XjjXmm.DataBase.Imp.Operate
         {
             var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
             return await command.ExecuteQuery(func, splitOn);
-        }
+        }*/
 
         /*
         public async Task<T> ExecuteFirst<T>()

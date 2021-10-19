@@ -45,21 +45,33 @@ namespace XjjXmm.Authorize.Repository
             return await _dbclient.ComplexQueryable<UserEntity>("u")
                 .Join<UserRoleEntity>("ur", (u, ur) => u.Id == ur.UserId)
                 .Join<RoleEntity>("r", (u, ur, r) => ur.RoleId == r.Id)
-                .Where((u)=>u.UserName == loginName)
-                .ExecuteFirstOrDefault<RoleEntity>((entity, roleEntity) =>
+                .Where((u, ur, r)=>u.UserName == loginName)
+                .ExecuteFirstOrDefault((u, ur, r) =>
                 {
-                    if (!dictionary.TryGetValue(entity.Id, out var userEntity))
+                    if (!dictionary.TryGetValue(u.Id, out var userEntity))
                     {
-                        userEntity = entity;
+                        userEntity = u;
                         userEntity.Roles = new List<RoleEntity>();
                         dictionary.Add(userEntity.Id, userEntity);
                     }
 
-                    userEntity.Roles.Add(roleEntity);
+                    userEntity.Roles.Add(r);
                     return userEntity;
-                }, "role_id");
+                }, (u, ur, r)=>r.Id);
+            //.ExecuteFirstOrDefault((user, userRole, role) =>
+            //{
+            //    if (!dictionary.TryGetValue(entity.Id, out var userEntity))
+            //    {
+            //        userEntity = entity;
+            //        userEntity.Roles = new List<RoleEntity>();
+            //        dictionary.Add(userEntity.Id, userEntity);
+            //    }
 
-           
+            //    userEntity.Roles.Add(roleEntity);
+            //    return userEntity;
+            //}, "role_id");
+
+
         }
     }
 }
