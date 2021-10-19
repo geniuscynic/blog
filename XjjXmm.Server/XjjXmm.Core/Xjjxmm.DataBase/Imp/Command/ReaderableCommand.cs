@@ -10,6 +10,7 @@ using Dapper;
 using Org.BouncyCastle.Crypto.Modes.Gcm;
 using XjjXmm.DataBase.Imp.Command.Oracle;
 using XjjXmm.DataBase.Interface.Command;
+using XjjXmm.DataBase.SqlProvider;
 using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Imp.Command
@@ -25,6 +26,9 @@ namespace XjjXmm.DataBase.Imp.Command
 
         protected string[] Visit(Expression splitOnPredicate)
         {
+            var provider = new SplitOnProvider();
+            provider.Visit(splitOnPredicate);
+            
             return new string[] { };
         }
 
