@@ -16,63 +16,22 @@ namespace XjjXmm.DataBase.Imp.Command
 {
     internal class ReaderableCommand<T> : IReaderableCommand<T>
     {
-        private readonly IReaderableCommand _readerableCommand;
+        protected readonly IReaderableCommand _readerableCommand;
         
         public ReaderableCommand(IReaderableCommand readerableCommand)
         {
             _readerableCommand = readerableCommand;
         }
 
+        protected string[] Visit(Expression splitOnPredicate)
+        {
+            return new string[] { };
+        }
+
+
         public Task<IEnumerable<T>> ExecuteQuery()
         {
             return _readerableCommand.ExecuteQuery<T>();
-        }
-
-        private string[] Visit<TSplit>(Expression<Func<TSplit>> splitOnPredicate)
-        {
-            return new string[] {};
-        }
-
-        public Task<IEnumerable<T>> ExecuteQuery<T2, TResult>(Func<T, T2, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(func, splitOn);
-        }
-
-        public Task<IEnumerable<T>> ExecuteQuery<T2, T3, TResult>(Func<T, T2, T3, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(func, splitOn);
-        }
-
-        public Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, TResult>(Func<T, T2, T3, T4, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(func, splitOn);
-        }
-
-        public Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, TResult>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(func, splitOn);
-        }
-
-        public Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, TResult>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(func, splitOn);
-        }
-
-        public Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, T7, TResult>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(func, splitOn);
         }
 
         public Task<T> ExecuteFirst()
@@ -81,87 +40,9 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst<T>();
         }
 
-        public Task<T> ExecuteFirst<T2, TResult>(Func<T, T2, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteFirst(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirst<T2, T3, TResult>(Func<T, T2, T3, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteFirst(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirst<T2, T3, T4, TResult>(Func<T, T2, T3, T4, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteFirst(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirst<T2, T3, T4, T5, TResult>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteFirst(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirst<T2, T3, T4, T5, T6, TResult>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteFirst(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirst<T2, T3, T4, T5, T6, T7, TResult>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteFirst(func, splitOn);
-        }
-
         public Task<T> ExecuteFirstOrDefault()
         {
             return _readerableCommand.ExecuteFirstOrDefault<T>();
-        }
-
-        public Task<T> ExecuteFirstOrDefault<T2, TResult>(Func<T, T2, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirstOrDefault<T2, T3, TResult>(Func<T, T2, T3, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirstOrDefault<T2, T3, T4, TResult>(Func<T, T2, T3, T4, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, TResult>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, TResult>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
-        }
-
-        public Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7, TResult>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TResult>> splitOnPredicate)
-        {
-            var splitOn = Visit(splitOnPredicate);
-            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
         }
 
         public Task<T> ExecuteSingle()
@@ -182,6 +63,175 @@ namespace XjjXmm.DataBase.Imp.Command
         public Task<DataTable> ExecuteDataTable()
         {
             return _readerableCommand.ExecuteDataTable<T>();
+        }
+    }
+
+    internal class ReaderableCommand<T1,T2> : ReaderableCommand<T1>, IReaderableCommand<T1, T2>
+    {
+        public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
+        {
+        }
+
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T1> func, Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteQuery(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T1> func, Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirst(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T1> func, Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
+        }
+    }
+
+    internal class ReaderableCommand<T1, T2, T3> : ReaderableCommand<T1,T2>, IReaderableCommand<T1, T2,T3>
+    {
+        public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
+        {
+        }
+
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T1> func, Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteQuery(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T1> func, Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirst(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T1> func, Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
+        }
+    }
+
+    internal class ReaderableCommand<T1, T2, T3, T4> : ReaderableCommand<T1, T2, T3>, IReaderableCommand<T1, T2, T3, T4>
+    {
+        public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
+        {
+        }
+
+
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T1> func, Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteQuery(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T1> func, Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirst(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T1> func, Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
+        }
+    }
+
+    internal class ReaderableCommand<T1, T2, T3, T4, T5> : ReaderableCommand<T1, T2, T3, T4>, IReaderableCommand<T1, T2, T3, T4, T5>
+    {
+        public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
+        {
+        }
+
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T5, T1> func, Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteQuery(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T5, T1> func, Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirst(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T5, T1> func, Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
+        }
+    }
+
+    internal class ReaderableCommand<T1, T2, T3, T4, T5, T6> : ReaderableCommand<T1, T2, T3, T4, T5>, IReaderableCommand<T1, T2, T3, T4, T5, T6>
+    {
+        public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
+        {
+        }
+
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T5, T6, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteQuery(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T5, T6, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirst(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T5, T6, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
+        }
+    }
+
+    internal class ReaderableCommand<T1, T2, T3, T4, T5, T6, T7> : ReaderableCommand<T1, T2, T3, T4, T5, T6>, IReaderableCommand<T1, T2, T3, T4, T5, T6, T7>
+    {
+        public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
+        {
+        }
+
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteQuery(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirst(func, splitOn);
+        }
+
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        {
+            var splitOn = Visit(splitOnPredicate);
+
+            return _readerableCommand.ExecuteFirstOrDefault(func, splitOn);
         }
     }
 }

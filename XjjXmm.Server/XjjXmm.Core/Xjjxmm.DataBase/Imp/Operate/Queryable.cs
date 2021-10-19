@@ -145,41 +145,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             return await command.ExecuteQuery();
         }
 
-        public async Task<IEnumerable<T>> ExecuteQuery<T2, TSelect>(Func<T, T2, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOnPredicate);
-        }
-
-        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, TSelect>(Func<T, T2, T3, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOnPredicate);
-        }
-
-        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, TSelect>(Func<T, T2, T3, T4, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOnPredicate);
-        }
-
-        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, TSelect>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOnPredicate);
-        }
-
-        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, TSelect>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOnPredicate);
-        }
-
-        public async Task<IEnumerable<T>> ExecuteQuery<T2, T3, T4, T5, T6, T7, TSelect>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOnPredicate);
-        }
+       
 
         public async Task<T> ExecuteFirst()
         {
@@ -189,41 +155,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             return await command.ExecuteFirst();
         }
 
-        public async Task<T> ExecuteFirst<T2, TSelect>(Func<T, T2, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirst(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirst<T2, T3, TSelect>(Func<T, T2, T3, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirst(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirst<T2, T3, T4, TSelect>(Func<T, T2, T3, T4, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirst(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirst<T2, T3, T4, T5, TSelect>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirst(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6, TSelect>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirst(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirst<T2, T3, T4, T5, T6, T7, TSelect>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirst(func, splitOnPredicate);
-        }
+       
 
         public async Task<T> ExecuteFirstOrDefault()
         {
@@ -233,41 +165,6 @@ namespace XjjXmm.DataBase.Imp.Operate
             return await command.ExecuteFirstOrDefault();
         }
 
-        public async Task<T> ExecuteFirstOrDefault<T2, TSelect>(Func<T, T2, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirstOrDefault(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirstOrDefault<T2, T3, TSelect>(Func<T, T2, T3, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirstOrDefault(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, TSelect>(Func<T, T2, T3, T4, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirstOrDefault(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, TSelect>(Func<T, T2, T3, T4, T5, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirstOrDefault(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, TSelect>(Func<T, T2, T3, T4, T5, T6, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirstOrDefault(func, splitOnPredicate);
-        }
-
-        public async Task<T> ExecuteFirstOrDefault<T2, T3, T4, T5, T6, T7, TSelect>(Func<T, T2, T3, T4, T5, T6, T7, T> func, Expression<Func<TSelect>> splitOnPredicate)
-        {
-            var command = CreateReaderableCommand<T>(_providerModel.DbInfo, Build(), _providerModel.Parameter);
-            return await command.ExecuteFirstOrDefault(func, splitOnPredicate);
-        }
 
         public async Task<T> ExecuteSingle()
         {

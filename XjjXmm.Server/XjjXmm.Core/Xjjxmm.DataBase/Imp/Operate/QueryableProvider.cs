@@ -565,6 +565,36 @@ namespace XjjXmm.DataBase.Imp.Operate
               return new ReaderableCommand<TResult>(CreateReaderableCommand(_providerModel.DbInfo, Build<TResult>(isMulti), _providerModel.Parameter));
         }
 
+        public IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>(bool isMulti)
+        {
+            return new ReaderableCommand<T1, T2>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+        }
+
+        public IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>(bool isMulti)
+        {
+            return new ReaderableCommand<T1, T2, T3>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+        }
+
+        public IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>(bool isMulti)
+        {
+            return new ReaderableCommand<T1, T2, T3, T4>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+        }
+
+        public IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>(bool isMulti)
+        {
+            return new ReaderableCommand<T1, T2, T3, T4, T5>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+        }
+
+        public IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(bool isMulti)
+        {
+            return new ReaderableCommand<T1, T2, T3, T4, T5, T6>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+        }
+
+        public IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(bool isMulti)
+        {
+            return new ReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+        }
+
         protected abstract ISqlFuncVisit CreateSqlFunVisit();
 
 

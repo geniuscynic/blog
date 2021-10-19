@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Text;
+using Org.BouncyCastle.Crypto.Modes.Gcm;
 using XjjXmm.DataBase.Interface.Command;
 using XjjXmm.DataBase.Utility;
 
@@ -100,7 +101,19 @@ namespace XjjXmm.DataBase.Interface.Operate
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
 
 
-        IReaderableCommand<TResult> CreateReaderableCommand<TResult>(bool isMulti);
+        IReaderableCommand<T> CreateReaderableCommand<T>(bool isMulti);
+
+        IReaderableCommand<T1,T2> CreateReaderableCommand<T1, T2>(bool isMulti);
+
+        IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>(bool isMulti);
+
+        IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>(bool isMulti);
+
+        IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>(bool isMulti);
+
+        IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(bool isMulti);
+
+        IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(bool isMulti);
     }
 
     public interface IComplexQueryable<T> : IReaderableCommand<T>
@@ -124,7 +137,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
     }
 
-    public interface IComplexQueryable<T1, T2>  : IComplexQueryable<T1>
+    public interface IComplexQueryable<T1, T2>  : IComplexQueryable<T1>, IReaderableCommand<T1,T2>
     {
         IComplexQueryable<T1, T2, T3> Join<T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate);
 
@@ -144,9 +157,10 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T1, T2, TResult>> predicate);
 
+
     }
 
-    public interface IComplexQueryable<T1, T2, T3> : IComplexQueryable<T1, T2>
+    public interface IComplexQueryable<T1, T2, T3> : IComplexQueryable<T1, T2>, IReaderableCommand<T1, T2,T3>
     {
 
         IComplexQueryable<T1, T2, T3, T4> Join<T4>(string alias, Expression<Func<T1, T2, T3, T4, bool>> predicate);
@@ -169,7 +183,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
     }
 
-    public interface IComplexQueryable<T1, T2, T3, T4> : IComplexQueryable<T1, T2, T3>
+    public interface IComplexQueryable<T1, T2, T3, T4> : IComplexQueryable<T1, T2, T3>, IReaderableCommand<T1, T2, T3,T4>
     {
         IComplexQueryable<T1, T2, T3, T4, T5> Join<T5>(string alias, Expression<Func<T1, T2, T3, T4, T5, bool>> predicate);
 
@@ -191,7 +205,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
     }
 
-    public interface IComplexQueryable<T1, T2, T3, T4, T5> : IComplexQueryable<T1, T2, T3, T4>
+    public interface IComplexQueryable<T1, T2, T3, T4, T5> : IComplexQueryable<T1, T2, T3, T4>, IReaderableCommand<T1, T2, T3, T4,T5>
     {
 
         IComplexQueryable<T1, T2, T3, T4, T5, T6> Join<T6>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate);
@@ -216,7 +230,7 @@ namespace XjjXmm.DataBase.Interface.Operate
     }
 
 
-    public interface IComplexQueryable<T1, T2, T3, T4, T5, T6> : IComplexQueryable<T1, T2, T3, T4, T5>
+    public interface IComplexQueryable<T1, T2, T3, T4, T5, T6> : IComplexQueryable<T1, T2, T3, T4, T5>, IReaderableCommand<T1, T2, T3, T4, T5, T6>
     {
         IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> Join<T7>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate);
 
@@ -239,7 +253,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
     }
 
-    public interface IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> : IComplexQueryable<T1, T2, T3, T4, T5, T6>
+    public interface IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> : IComplexQueryable<T1, T2, T3, T4, T5, T6> , IReaderableCommand<T1, T2, T3, T4, T5, T6, T7>
     {
         new IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> Where(string whereExpression);
 
