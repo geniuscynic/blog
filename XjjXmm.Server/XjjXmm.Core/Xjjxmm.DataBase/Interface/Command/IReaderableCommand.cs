@@ -92,64 +92,64 @@ namespace XjjXmm.DataBase.Interface.Command
     public interface IReaderableCommand<T1, T2> : IReaderableCommand<T1>
     {
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate);
+        //Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate);
 
     }
 
     public interface IReaderableCommand<T1, T2, T3> : IReaderableCommand<T1, T2>
     {
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
+        //Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
 
 
     }
 
     public interface IReaderableCommand<T1, T2, T3, T4> : IReaderableCommand<T1,T2,T3>
     {
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
+        //Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
 
     }
 
 
     public interface IReaderableCommand<T1, T2, T3, T4, T5> : IReaderableCommand<T1, T2, T3, T4>
     {
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
+        //Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
 
     }
 
     public interface IReaderableCommand<T1, T2, T3, T4, T5, T6> : IReaderableCommand<T1, T2, T3, T4, T5>
     {
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
+        //Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
 
     }
 
     public interface IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> : IReaderableCommand<T1, T2, T3, T4, T5, T6>
     {
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
+        //Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
+        //Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
 
     }
 

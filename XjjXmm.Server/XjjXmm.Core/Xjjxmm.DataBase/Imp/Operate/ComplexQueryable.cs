@@ -186,9 +186,9 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>()
         {
-            return await _provider.CreateReaderableCommand<T1,T2>(true).ExecuteQuery( splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1,T2>(true).ExecuteQuery();
         }
 
         public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)

@@ -17,6 +17,7 @@ namespace XjjXmm.DataBase.Imp.Command
 {
     internal abstract class InnerReaderableCommand : IReaderableCommand
     {
+        protected readonly List<string> _splitList;
         protected Lazy<IDbConnection> Connection { get; set; }
         protected StringBuilder Sql { get; set; }
         protected Dictionary<string, object> SqlParameter { get; set; }
@@ -28,8 +29,9 @@ namespace XjjXmm.DataBase.Imp.Command
 
         //}
 
-        protected InnerReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
+        protected InnerReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter, List<string> splitList)
         {
+            _splitList = splitList;
             Connection = dbInfo.Connection;
             Sql = sql;
             SqlParameter = sqlParameter;
@@ -92,6 +94,7 @@ namespace XjjXmm.DataBase.Imp.Command
 
         public async Task<IEnumerable<T>> ExecuteQuery<T>()
         {
+
             return await EnumerableDelegate(async () =>
                 await Connection.Value.QueryAsync<T>(Sql.ToString(), SqlParameter));
         }
