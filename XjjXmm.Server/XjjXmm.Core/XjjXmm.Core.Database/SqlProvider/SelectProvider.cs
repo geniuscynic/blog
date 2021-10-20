@@ -10,7 +10,16 @@ namespace DoCare.Zkzx.Core.Database.SqlProvider
 
         public List<Field> SelectFields { get; set; } = new List<Field>();
 
+        protected override Expression VisitMember(MemberExpression node)
+        {
 
+            var member = ProviderHelper.VisitMember(node);
+
+            SelectFields.Add(member);
+
+
+            return node;
+        }
 
         protected override MemberAssignment VisitMemberAssignment(MemberAssignment node)
         {
