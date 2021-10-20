@@ -27,16 +27,16 @@ namespace XjjXmm.DataBase.Imp.Operate
         }
 
 
-        public IComplexQueryable<T, T2> Join<T2>(string alias, Expression<Func<T, T2, bool>> predicate)
+        public IComplexQueryable<T, T2> Join<T2>(string alias, Expression<Func<T, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate = null)
         {
-            _provider.Join(alias, predicate);
+            _provider.Join(alias, predicate, splitOnPredicate);
 
             return new ComplexQueryable<T, T2>(_provider);
         }
 
-        public IComplexQueryable<T, T2> LeftJoin<T2>(string alias, Expression<Func<T, T2, bool>> predicate)
+        public IComplexQueryable<T, T2> LeftJoin<T2>(string alias, Expression<Func<T, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate = null)
         {
-            _provider.LeftJoin(alias, predicate);
+            _provider.LeftJoin(alias, predicate, splitOnPredicate);
 
             return new ComplexQueryable<T, T2>(_provider);
         }
@@ -82,11 +82,6 @@ namespace XjjXmm.DataBase.Imp.Operate
         public IReaderableCommand<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate)
         {
             return _provider.Select(predicate);
-        }
-
-        private string[] Visit<TSplit>(Expression<Func<TSplit>> splitOnPredicate)
-        {
-            return new string[] { };
         }
 
 

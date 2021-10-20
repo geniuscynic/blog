@@ -10,7 +10,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 {
     internal interface IQueryableProvider
     {
-        void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate);
+        void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate);
 
         void Join<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate);
 
@@ -24,7 +24,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
 
 
-        void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate);
+        void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate);
         void LeftJoin<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate);
         void LeftJoin<T1, T2, T3, T4>(string alias, Expression<Func<T1, T2, T3, T4, bool>> predicate);
 
@@ -118,9 +118,9 @@ namespace XjjXmm.DataBase.Interface.Operate
 
     public interface IComplexQueryable<T> : IReaderableCommand<T>
     {
-        IComplexQueryable<T, T2> Join<T2>(string alias, Expression<Func<T, T2, bool>> predicate);
+        IComplexQueryable<T, T2> Join<T2>(string alias, Expression<Func<T, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate = null);
 
-        IComplexQueryable<T, T2> LeftJoin<T2>(string alias, Expression<Func<T, T2, bool>> predicate);
+        IComplexQueryable<T, T2> LeftJoin<T2>(string alias, Expression<Func<T, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate = null);
 
         IComplexQueryable<T> Where(Expression<Func<T, bool>> predicate);
 

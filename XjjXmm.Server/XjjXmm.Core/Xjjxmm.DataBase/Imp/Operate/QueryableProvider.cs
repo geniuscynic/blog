@@ -25,6 +25,8 @@ namespace XjjXmm.DataBase.Imp.Operate
         private readonly StringBuilder _selectField = new StringBuilder();
         private StringBuilder _joinSql = new StringBuilder();
 
+        private readonly StringBuilder _selectField2 = new StringBuilder();
+        private readonly List<string> _splitList = new List<string>();
         public QueryableProvider(DbInfo dbInfo, string alias) : base(dbInfo)
         {
 
@@ -36,12 +38,35 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         }
 
-        public void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
+        protected void VisitSplitOnPredicate<T>(string alias, Expression<Func<T, string>> splitOnPredicate)
+        {
+            if (splitOnPredicate == null)
+            {
+                return;
+            }
+
+            var provider = new SplitOnProvider();
+            provider.Visit(splitOnPredicate);
+            _splitList.AddRange(provider.SelectFields.Select(t => t.ColumnName));
+
+            
+            var type = typeof(T);
+            var (_, properties) = ProviderHelper.GetMetas(type);
+
+            foreach (var property in properties)
+            {
+                _selectField2.Append($"{alias}.{property.ColumnName} as {property.Parameter},");
+            }
+        }
+
+        public void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate)
         {
             var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
             joinCommand.Join(predicate);
 
             _joinSql.Append(joinCommand.Build<T2>());
+
+            VisitSplitOnPredicate(alias, splitOnPredicate);
         }
 
         public void Join<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
@@ -85,12 +110,14 @@ namespace XjjXmm.DataBase.Imp.Operate
             _joinSql.Append(joinCommand.Build<T7>());
         }
 
-        public void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
+        public void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate)
         {
             var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
             joinCommand.LeftJoin(predicate);
 
             _joinSql.Append(joinCommand.Build<T2>());
+
+            VisitSplitOnPredicate(alias, splitOnPredicate);
         }
 
         public void LeftJoin<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
@@ -333,9 +360,18 @@ namespace XjjXmm.DataBase.Imp.Operate
             {
                 selectSql.Append(_selectField);
             }
-            else if (isMulti)
+            else if (_splitList.Count > 0)
             {
-                selectSql.Append("*");
+                //selectSql.Append("*");
+                foreach (var property in properties)
+                {
+                    selectSql.Append($"{_alias}.{property.ColumnName} as {property.Parameter},");
+                }
+
+                selectSql.Append(_selectField2);
+
+                selectSql.Remove(selectSql.Length - 1, 1);
+
             }
             else
             {
@@ -362,58 +398,57 @@ namespace XjjXmm.DataBase.Imp.Operate
             return sql;
         }
 
+        //public async Task<IEnumerable<T>> ExecuteQuery<T>()
+        //{
+        //    //var command =  _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
+        //    //return await command.ExecuteQuery<T>();
 
-        public async Task<IEnumerable<T>> ExecuteQuery<T>()
-        {
-            //var command =  _readerableCommandBuilder.Build(Build<T>(), _providerModel.Parameter);
-            //return await command.ExecuteQuery<T>();
+        //    //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
 
-            //var command = DatabaseFactory.CreateReaderableCommand<T>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
-
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
-            return await command.ExecuteQuery<T>();
-        }
-
-      
-      
-     /*   public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn)
-        {
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOn);
-        }
-
-        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, params string[] splitOn)
-        {
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOn);
-        }
-
-        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, params string[] splitOn)
-        {
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOn);
-        }
+        //    var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
+        //    return await command.ExecuteQuery<T>();
+        //}
 
 
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, params string[] splitOn)
-        {
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOn);
-        }
+        /*   public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, params string[] splitOn)
+           {
+               var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
+               return await command.ExecuteQuery(func, splitOn);
+           }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, params string[] splitOn)
-        {
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOn);
-        }
+           public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, params string[] splitOn)
+           {
+               var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
+               return await command.ExecuteQuery(func, splitOn);
+           }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func,
-            params string[] splitOn)
-        {
-            var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
-            return await command.ExecuteQuery(func, splitOn);
-        }*/
+           public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, params string[] splitOn)
+           {
+               var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
+               return await command.ExecuteQuery(func, splitOn);
+           }
+
+
+
+           public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, params string[] splitOn)
+           {
+               var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
+               return await command.ExecuteQuery(func, splitOn);
+           }
+
+           public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, params string[] splitOn)
+           {
+               var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
+               return await command.ExecuteQuery(func, splitOn);
+           }
+
+           public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func,
+               params string[] splitOn)
+           {
+               var command = CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(true), _providerModel.Parameter);
+               return await command.ExecuteQuery(func, splitOn);
+           }*/
 
         /*
         public async Task<T> ExecuteFirst<T>()
@@ -562,7 +597,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public IReaderableCommand<TResult> CreateReaderableCommand<TResult>(bool isMulti)
         {
-              return new ReaderableCommand<TResult>(CreateReaderableCommand(_providerModel.DbInfo, Build<TResult>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<TResult>(CreateReaderableCommand(_providerModel.DbInfo, Build<TResult>(isMulti), _providerModel.Parameter));
         }
 
         public IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>(bool isMulti)
