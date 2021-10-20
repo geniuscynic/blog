@@ -191,19 +191,19 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T1> func, Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1,T2>(true).ExecuteQuery(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1,T2>(true).ExecuteQuery( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T1> func, Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2>(true).ExecuteFirst(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2>(true).ExecuteFirst( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T1> func, Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2>(true).ExecuteFirstOrDefault(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2>(true).ExecuteFirstOrDefault( splitOnPredicate);
         }
     }
 
@@ -273,19 +273,19 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T1> func, Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteQuery(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteQuery( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T1> func, Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteFirst(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteFirst( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T1> func, Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteFirstOrDefault(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteFirstOrDefault( splitOnPredicate);
         }
     }
 
@@ -349,19 +349,19 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T1> func, Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteQuery(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteQuery( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T1> func, Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteFirst(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteFirst( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T1> func, Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteFirstOrDefault(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteFirstOrDefault( splitOnPredicate);
         }
     }
 
@@ -425,19 +425,19 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T5, T1> func, Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5>(true).ExecuteQuery(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5>(true).ExecuteQuery( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T5, T1> func, Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5>(true).ExecuteFirst(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5>(true).ExecuteFirst( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T5, T1> func, Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5>(true).ExecuteFirstOrDefault(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5>(true).ExecuteFirstOrDefault( splitOnPredicate);
         }
     }
 
@@ -503,19 +503,19 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T5, T6, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5,T6>(true).ExecuteQuery(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5,T6>(true).ExecuteQuery( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T5, T6, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(true).ExecuteFirst(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(true).ExecuteFirst( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T5, T6, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(true).ExecuteFirstOrDefault(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(true).ExecuteFirstOrDefault( splitOnPredicate);
         }
     }
 
@@ -564,19 +564,19 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(true).ExecuteQuery(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(true).ExecuteQuery( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TResult>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(true).ExecuteFirst(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(true).ExecuteFirst( splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirstOrDefault<TResult>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        public async Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(true).ExecuteFirstOrDefault(func, splitOnPredicate);
+            return await _provider.CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(true).ExecuteFirstOrDefault( splitOnPredicate);
         }
     }
 }

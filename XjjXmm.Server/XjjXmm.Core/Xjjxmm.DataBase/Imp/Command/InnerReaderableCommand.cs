@@ -9,7 +9,9 @@ using Dapper;
 using Org.BouncyCastle.Crypto.Modes.Gcm;
 using XjjXmm.DataBase.Imp.Command.Oracle;
 using XjjXmm.DataBase.Interface.Command;
+using Xjjxmm.DataBase.Utility;
 using XjjXmm.DataBase.Utility;
+using Xjjxmm.DataBase.Utility.MappingCache;
 
 namespace XjjXmm.DataBase.Imp.Command
 {
@@ -97,6 +99,8 @@ namespace XjjXmm.DataBase.Imp.Command
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, string splitOn)
         {
             //var tmp = string.Join(',', splitOn);
+            //var map = MappingCache<T1, T2>.Map;
+
             return await EnumerableDelegate(async () =>
                 await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: splitOn));
         }
@@ -106,6 +110,7 @@ namespace XjjXmm.DataBase.Imp.Command
         public async Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn)
         {
            // var tmp = string.Join(',', splitOn);
+
             return await EnumerableDelegate(async () =>
                 await Connection.Value.QueryAsync(sql: Sql.ToString(), param: SqlParameter, map: func, splitOn: splitOn));
         }

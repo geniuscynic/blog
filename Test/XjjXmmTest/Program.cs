@@ -12,14 +12,10 @@ namespace XjjXmmTest
             var provider = "Oracle";
             var dbClient = new DbClient(connectString, provider);
 
-            dbClient.ComplexQueryable<PlanEntity>("p")
-                .Join<FormDefaultEntity>("f", (p, e) => p.PlanId == e.FormId)
-                .ExecuteQuery((p, e) => p, (p, e) => 
-                    new
-                    {
-                        aa= e.FormId,
-                        bb=e.Id
-                    });
+            var res = dbClient.ComplexQueryable<FormEntity>("p")
+                .Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)
+                .ExecuteQuery( (p, e) => e.Id)
+                .Result;
 
             Console.WriteLine("Hello World!");
         }
