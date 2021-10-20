@@ -17,7 +17,7 @@ namespace XjjXmm.DataBase.Imp.Command
 {
     internal abstract class InnerReaderableCommand : IReaderableCommand
     {
-        protected readonly List<string> _splitList;
+        //protected readonly List<string> _splitList;
         protected Lazy<IDbConnection> Connection { get; set; }
         protected StringBuilder Sql { get; set; }
         protected Dictionary<string, object> SqlParameter { get; set; }
@@ -29,9 +29,9 @@ namespace XjjXmm.DataBase.Imp.Command
 
         //}
 
-        protected InnerReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter, List<string> splitList)
+        protected InnerReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter)
         {
-            _splitList = splitList;
+            //_splitList = splitList;
             Connection = dbInfo.Connection;
             Sql = sql;
             SqlParameter = sqlParameter;

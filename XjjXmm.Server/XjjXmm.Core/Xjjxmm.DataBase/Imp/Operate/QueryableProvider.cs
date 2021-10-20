@@ -27,6 +27,8 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         private readonly StringBuilder _selectField2 = new StringBuilder();
         private readonly List<string> _splitList = new List<string>();
+        private readonly List<Type>  _selectType = new List<Type>();
+
         public QueryableProvider(DbInfo dbInfo, string alias) : base(dbInfo)
         {
 
@@ -57,16 +59,18 @@ namespace XjjXmm.DataBase.Imp.Operate
             {
                 _selectField2.Append($"{alias}.{property.ColumnName} as {property.Parameter},");
             }
+
+            _selectType.Add(typeof(T));
         }
 
-        public void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate)
+        public void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
         {
             var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
             joinCommand.Join(predicate);
 
             _joinSql.Append(joinCommand.Build<T2>());
 
-            VisitSplitOnPredicate(alias, splitOnPredicate);
+            //VisitSplitOnPredicate(alias, splitOnPredicate);
         }
 
         public void Join<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
@@ -110,14 +114,14 @@ namespace XjjXmm.DataBase.Imp.Operate
             _joinSql.Append(joinCommand.Build<T7>());
         }
 
-        public void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate, Expression<Func<T2, string>> splitOnPredicate)
+        public void LeftJoin<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
         {
             var joinCommand = CreateJoinCommand(alias, _providerModel); // new JoinCommand(alias, _providerModel);
             joinCommand.LeftJoin(predicate);
 
             _joinSql.Append(joinCommand.Build<T2>());
 
-            VisitSplitOnPredicate(alias, splitOnPredicate);
+            //VisitSplitOnPredicate(alias, splitOnPredicate);
         }
 
         public void LeftJoin<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
@@ -304,7 +308,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             });
             _selectField.Remove(_selectField.Length - 1, 1);
 
-            return CreateReaderableCommand<TResult>(false);
+            return CreateReaderableCommand<TResult>();
             //return DatabaseFactory.CreateReaderableCommand<TResult>(_providerModel.DbInfo, Build<T>(), _providerModel.Parameter);
         }
 
@@ -346,7 +350,7 @@ namespace XjjXmm.DataBase.Imp.Operate
         }
 
 
-        private StringBuilder Build<T>(bool isMulti = false)
+        private StringBuilder Build<T>()
         {
             //prefix = whereCommand.prefix;
 
@@ -595,39 +599,39 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         protected abstract IReaderableCommand CreateReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter);
 
-        public IReaderableCommand<TResult> CreateReaderableCommand<TResult>(bool isMulti)
+        public IReaderableCommand<TResult> CreateReaderableCommand<TResult>()
         {
-            return new ReaderableCommand<TResult>(CreateReaderableCommand(_providerModel.DbInfo, Build<TResult>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<TResult>(CreateReaderableCommand(_providerModel.DbInfo, Build<TResult>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>(bool isMulti)
+        public IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>()
         {
-            return new ReaderableCommand<T1, T2>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<T1, T2>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>(bool isMulti)
+        public IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>()
         {
-            return new ReaderableCommand<T1, T2, T3>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<T1, T2, T3>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>(bool isMulti)
+        public IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>()
         {
-            return new ReaderableCommand<T1, T2, T3, T4>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<T1, T2, T3, T4>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>(bool isMulti)
+        public IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>()
         {
-            return new ReaderableCommand<T1, T2, T3, T4, T5>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<T1, T2, T3, T4, T5>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>(bool isMulti)
+        public IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>()
         {
-            return new ReaderableCommand<T1, T2, T3, T4, T5, T6>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<T1, T2, T3, T4, T5, T6>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(bool isMulti)
+        public IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>()
         {
-            return new ReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(isMulti), _providerModel.Parameter));
+            return new ReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
         }
 
         protected abstract ISqlFuncVisit CreateSqlFunVisit();

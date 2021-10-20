@@ -77,7 +77,7 @@ namespace XjjXmm.DataBase.Imp.Command
         {
         }
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -85,7 +85,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteQuery(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -93,13 +93,14 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2>.Map;
             var splitOn = Visit(splitOnPredicate);
 
             return _readerableCommand.ExecuteFirstOrDefault(map, splitOn);
         }
+
     }
 
     internal class ReaderableCommand<T1, T2, T3> : ReaderableCommand<T1, T2>, IReaderableCommand<T1, T2, T3>
@@ -108,15 +109,15 @@ namespace XjjXmm.DataBase.Imp.Command
         {
         }
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
         {
-            var map = MappingCache<T1, T2,T3>.Map;
+            var map = MappingCache<T1, T2, T3>.Map;
             var splitOn = Visit(splitOnPredicate);
 
             return _readerableCommand.ExecuteQuery(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -124,7 +125,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -140,7 +141,7 @@ namespace XjjXmm.DataBase.Imp.Command
         }
 
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -148,7 +149,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteQuery(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -156,7 +157,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -171,7 +172,7 @@ namespace XjjXmm.DataBase.Imp.Command
         {
         }
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -179,7 +180,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteQuery(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -187,7 +188,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -202,7 +203,7 @@ namespace XjjXmm.DataBase.Imp.Command
         {
         }
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5, T6>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -210,7 +211,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteQuery(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5, T6>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -218,7 +219,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5, T6>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -233,15 +234,15 @@ namespace XjjXmm.DataBase.Imp.Command
         {
         }
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
         {
-            var map = MappingCache<T1, T2, T3, T4, T5, T6,T7>.Map;
+            var map = MappingCache<T1, T2, T3, T4, T5, T6, T7>.Map;
             var splitOn = Visit(splitOnPredicate);
 
             return _readerableCommand.ExecuteQuery(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirst<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5, T6, T7>.Map;
             var splitOn = Visit(splitOnPredicate);
@@ -249,7 +250,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteFirst(map, splitOn);
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>( Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
+        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate)
         {
             var map = MappingCache<T1, T2, T3, T4, T5, T6, T7>.Map;
 

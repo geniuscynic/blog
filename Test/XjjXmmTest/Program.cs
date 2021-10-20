@@ -13,8 +13,13 @@ namespace XjjXmmTest
             var dbClient = new DbClient(connectString, provider);
 
             var res = dbClient.ComplexQueryable<FormEntity>("p")
-                .Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId, entity => entity.Id)
-                .ExecuteQuery( (p, e) => e.Id)
+                .Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)
+                .ExecuteQuery<FormDefaultEntity,object>((p, e) => new
+                {
+                    id = e.Id
+                })
+
+                //.ExecuteQuery( (p, e) => e.Id)
                 .Result;
 
             Console.WriteLine("Hello World!");
