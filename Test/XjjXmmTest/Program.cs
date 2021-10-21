@@ -14,7 +14,7 @@ namespace XjjXmmTest
 
             var res = dbClient.ComplexQueryable<FormEntity>("p")
                 .Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)
-                .ExecuteQuery<FormDefaultEntity,object>((p, e) => new
+                .ExecuteQuery<FormDefaultEntity>((p, e) => new
                 {
                     id = e.Id
                 })
