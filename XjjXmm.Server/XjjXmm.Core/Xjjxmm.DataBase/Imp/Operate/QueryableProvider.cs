@@ -349,6 +349,11 @@ namespace XjjXmm.DataBase.Imp.Operate
             return VisitSelect<T1, TResult>(predicate);
         }
 
+        public IReaderableCommand<T1, T2> Include<T1, T2, TSplit>(Func<T1, T2, T1> map, Expression<Func<T1, T2, TSplit>> splitOnPredicate)
+        {
+            throw new NotImplementedException();
+        }
+
 
         private StringBuilder Build<T>()
         {

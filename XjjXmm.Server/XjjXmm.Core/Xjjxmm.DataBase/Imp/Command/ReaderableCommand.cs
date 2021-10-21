@@ -25,6 +25,7 @@ namespace XjjXmm.DataBase.Imp.Command
             _readerableCommand = readerableCommand;
         }
 
+
         protected string Visit(Expression splitOnPredicate)
         {
             var provider = new SplitOnProvider();
@@ -32,7 +33,6 @@ namespace XjjXmm.DataBase.Imp.Command
             return string.Join(',', provider.SelectFields.Select(t => t.ColumnName));
 
         }
-
 
         public Task<IEnumerable<T>> ExecuteQuery()
         {
@@ -73,33 +73,53 @@ namespace XjjXmm.DataBase.Imp.Command
 
     internal class ReaderableCommand<T1, T2> : ReaderableCommand<T1>, IReaderableCommand<T1, T2>
     {
+        private readonly Func<T1, T2, T1> _map;
+        private readonly Expression _splitOnPredicate;
+
         public ReaderableCommand(IReaderableCommand readerableCommand) : base(readerableCommand)
         {
         }
 
-        public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public ReaderableCommand(IReaderableCommand readerableCommand, Func<T1, T2, T1> map, Expression splitOnPredicate) : base(readerableCommand)
         {
-            var map = MappingCache<T1, T2>.Map;
-            var splitOn = Visit(splitOnPredicate);
-
-            return _readerableCommand.ExecuteQuery(map, splitOn);
+            _map = map;
+            _splitOnPredicate = splitOnPredicate;
         }
 
-        public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        public async Task<IEnumerable<T1>> ExecuteQuery()
         {
-            var map = MappingCache<T1, T2>.Map;
-            var splitOn = Visit(splitOnPredicate);
+            if (_map != null && _splitOnPredicate != null)
+            {
+                var splitOn = Visit(_splitOnPredicate);
+                return await _readerableCommand.ExecuteQuery(_map, splitOn);
+            }
 
-            return _readerableCommand.ExecuteFirst(map, splitOn);
+            return await base.ExecuteQuery();
         }
 
-        public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
-        {
-            var map = MappingCache<T1, T2>.Map;
-            var splitOn = Visit(splitOnPredicate);
+        //public Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        //{
+        //    var map = MappingCache<T1, T2>.Map;
+        //    var splitOn = Visit(splitOnPredicate);
 
-            return _readerableCommand.ExecuteFirstOrDefault(map, splitOn);
-        }
+        //    return _readerableCommand.ExecuteQuery(map, splitOn);
+        //}
+
+        //public Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        //{
+        //    var map = MappingCache<T1, T2>.Map;
+        //    var splitOn = Visit(splitOnPredicate);
+
+        //    return _readerableCommand.ExecuteFirst(map, splitOn);
+        //}
+
+        //public Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, TResult>> splitOnPredicate)
+        //{
+        //    var map = MappingCache<T1, T2>.Map;
+        //    var splitOn = Visit(splitOnPredicate);
+
+        //    return _readerableCommand.ExecuteFirstOrDefault(map, splitOn);
+        //}
 
     }
 
