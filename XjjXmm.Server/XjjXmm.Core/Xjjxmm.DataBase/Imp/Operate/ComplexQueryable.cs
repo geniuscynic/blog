@@ -186,12 +186,6 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public IReaderableCommand<T1,T2> Include<TSplit>(Func<T1, T2, T1> map, Expression<Func<T1, T2, TSplit>> splitOnPredicate)
-        {
-            return _provider.Include(map, splitOnPredicate);
-            //return _provider.CreateReaderableCommand<T1, T2>().(map, splitOnPredicate);
-        }
-
         //public async Task<IEnumerable<T1>> ExecuteQuery<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
         //{
         //    return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteQuery();
@@ -290,6 +284,8 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
+
+        
         /*     public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
              {
                  return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteQuery( splitOnPredicate);
@@ -380,6 +376,7 @@ namespace XjjXmm.DataBase.Imp.Operate
           {
               return await _provider.CreateReaderableCommand<T1, T2, T3, T4>(true).ExecuteFirstOrDefault( splitOnPredicate);
           }*/
+
     }
 
     internal class ComplexQueryable<T1, T2, T3, T4, T5> : ComplexQueryable<T1, T2, T3, T4>, IComplexQueryable<T1, T2, T3, T4, T5>

@@ -27,16 +27,17 @@ namespace XjjXmmTest
 
             var types = new Type[] { typeof(FormEntity), typeof(FormDefaultEntity) };
 
-            var first = Expression.Parameter(types[0], "first");
-            var second = Expression.Parameter(types[1], "second");
+            var first = Expression.Parameter(types[0], "first1");
+            var second = Expression.Parameter(types[1], "second1");
 
+            var p1 = Expression.Parameter(typeof(object[]));
             var secondSetExpression = MappingCache.GetSetExpression(second, first);
 
             // var blockExpression = Expression.Block(first, second, secondSetExpression, first);
-            //var blockExpression = Expression.Block(first, second, secondSetExpression, first);
-            //var map = Expression.Lambda<Func<FormEntity, Object, FormEntity>>(blockExpression, first, second).Compile();
+            var blockExpression = Expression.Block(p1, secondSetExpression, first);
+            var map = Expression.Lambda<Func<object[], FormEntity>>(blockExpression,  p1).Compile();
 
-            Expression.Lambda<Func<object, FormEntity>>(secondSetExpression, first, second).Compile();
+            Expression.Lambda<Func<object[], FormEntity>>(secondSetExpression, first, second).Compile();
             //var res = dbClient.GetConnection().Query<FormEntity>(sql,
             //    map);
             //(o) =>

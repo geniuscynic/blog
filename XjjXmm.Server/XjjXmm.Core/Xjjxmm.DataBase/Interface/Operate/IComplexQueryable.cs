@@ -84,8 +84,6 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         void OrderByDesc<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
 
-
-
         IReaderableCommand<TResult> Select<T, TResult>(Expression<Func<T, TResult>> predicate);
 
         IReaderableCommand<TResult> Select<T1, T2,TResult>(Expression<Func<T1,T2, TResult>> predicate);
@@ -100,9 +98,6 @@ namespace XjjXmm.DataBase.Interface.Operate
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> predicate);
 
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
-
-
-        IReaderableCommand<T1, T2> Include<T1,T2, TSplit>(Func<T1, T2, T1> map, Expression<Func<T1, T2, TSplit>> splitOnPredicate);
 
         IReaderableCommand<T> CreateReaderableCommand<T>();
 
@@ -161,7 +156,6 @@ namespace XjjXmm.DataBase.Interface.Operate
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T1, T2, TResult>> predicate);
 
 
-        IReaderableCommand<T1, T2> Include<TType, TSplit>(Func<T1, T2, T1> map, Expression<Func<T1, T2, TSplit>> splitOnPredicate, params Type[] includeType);
         //Task<IEnumerable<T1>> ExecuteQuery<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate);
 
         //Task<T1> ExecuteFirst<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate);
