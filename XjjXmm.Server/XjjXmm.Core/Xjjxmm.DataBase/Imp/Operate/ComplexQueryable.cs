@@ -186,20 +186,26 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
-        public async Task<IEnumerable<T1>> ExecuteQuery<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
+        public IReaderableCommand<T1,T2> Include<TSplit>(Func<T1, T2, T1> map, Expression<Func<T1, T2, TSplit>> splitOnPredicate)
         {
-            return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteQuery();
+            return _provider.Include(map, splitOnPredicate);
+            //return _provider.CreateReaderableCommand<T1, T2>().(map, splitOnPredicate);
         }
 
-        public async Task<T1> ExecuteFirst<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
-        {
-            return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteFirst();
-        }
+        //public async Task<IEnumerable<T1>> ExecuteQuery<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
+        //{
+        //    return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteQuery();
+        //}
 
-        public async Task<T1> ExecuteFirstOrDefault<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
-        {
-            return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteFirstOrDefault();
-        }
+        //public async Task<T1> ExecuteFirst<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
+        //{
+        //    return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteFirst();
+        //}
+
+        //public async Task<T1> ExecuteFirstOrDefault<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate)
+        //{
+        //    return await _provider.CreateReaderableCommand<T1, TSecond>().ExecuteFirstOrDefault();
+        //}
 
         /*        public async Task<IEnumerable<T1>> ExecuteQuery<TResult>()
                 {

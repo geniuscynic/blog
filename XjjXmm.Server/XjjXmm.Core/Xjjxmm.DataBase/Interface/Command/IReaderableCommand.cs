@@ -105,11 +105,11 @@ namespace XjjXmm.DataBase.Interface.Command
 
         //Task<T1> ExecuteFirstOrDefault<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate);
 
-        Task<IEnumerable<T1>> ExecuteQuery<TSplit>(Expression<Func<T1, T2, TSplit>> splitOnPredicate);
+   /*     Task<IEnumerable<T1>> ExecuteQuery<TSplit>(Expression<Func<T1, T2, TSplit>> splitOnPredicate);
 
         Task<T1> ExecuteFirst<TSplit>(Expression<Func<T1, T2, TSplit>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TSplit>(Expression<Func<T1, T2, TSplit>> splitOnPredicate);
+        Task<T1> ExecuteFirstOrDefault<TSplit>(Expression<Func<T1, T2, TSplit>> splitOnPredicate);*/
 
     }
 
@@ -122,11 +122,11 @@ namespace XjjXmm.DataBase.Interface.Command
 
         //Task<T1> ExecuteFirstOrDefault<TSecond, TThird, TSplit>(Expression<Func<T1, TSecond, TThird, TSplit>> splitOnPredicate);
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
+       /* Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
 
         Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);
+        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, TResult>> splitOnPredicate);*/
 
 
     }
@@ -139,11 +139,11 @@ namespace XjjXmm.DataBase.Interface.Command
 
         //Task<T1> ExecuteFirstOrDefault<TSecond, TThird, TFourth, TSplit>(Expression<Func<T1, TSecond, TThird, TFourth, TSplit>> splitOnPredicate);
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
+      /*  Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
 
         Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);
+        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, TResult>> splitOnPredicate);*/
 
     }
 
@@ -156,11 +156,11 @@ namespace XjjXmm.DataBase.Interface.Command
 
         //Task<T1> ExecuteFirstOrDefault<TSecond, TThird, TFourth, TFifth, TSplit>(Expression<Func<T1, TSecond, TThird, TFourth, TFifth, TSplit>> splitOnPredicate);
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
+     /*   Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
 
         Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);
+        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, TResult>> splitOnPredicate);*/
 
     }
 
@@ -172,11 +172,11 @@ namespace XjjXmm.DataBase.Interface.Command
 
         //Task<T1> ExecuteFirstOrDefault<TSecond, TThird, TFourth, TFifth, TSixth, TSplit>(Expression<Func<T1, TSecond, TThird, TFourth, TFifth, TSixth, TSplit>> splitOnPredicate);
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
+      /*  Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
 
         Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);
+        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, TResult>> splitOnPredicate);*/
 
     }
 
@@ -189,11 +189,11 @@ namespace XjjXmm.DataBase.Interface.Command
         //Task<T1> ExecuteFirstOrDefault<TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TSplit>(Expression<Func<T1, TSecond, TThird, TFourth, TFifth, TSixth, TSeventh, TSplit>> splitOnPredicate);
 
 
-        Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
+      /*  Task<IEnumerable<T1>> ExecuteQuery<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
 
         Task<T1> ExecuteFirst<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
 
-        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);
+        Task<T1> ExecuteFirstOrDefault<TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> splitOnPredicate);*/
 
     }
 
