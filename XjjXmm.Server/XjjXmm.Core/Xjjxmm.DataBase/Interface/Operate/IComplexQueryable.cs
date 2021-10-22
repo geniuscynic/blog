@@ -133,7 +133,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
 
-        IEnumerable<T> ExecuteMultiQuery<T2>(Mapping<T, T2> mappings);
+        IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mappings);
 
         //IReaderableCommand<T> Include<T2>(Expression<Func<T, string>> predicate1, Expression<Func<T2, string>> predicate2, Expression<Func<T, T2>> mappingFunc);
 

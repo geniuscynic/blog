@@ -95,7 +95,7 @@ namespace XjjXmm.DataBase.Imp.Operate
         //    throw new NotImplementedException();
         //}
 
-        public IEnumerable<T> ExecuteMultiQuery<T2>(Mapping<T,T2> mapping)
+        public IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T,T2> mapping)
         {
             //var provider = new SplitOnProvider();
             //provider.Visit(predicate1);
@@ -135,7 +135,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         }
 
-        public IEnumerable<T> ExecuteMultiQuery<T2,T3>(Mapping<T, T2> mapping1, Mapping<T, T3> mapping2)
+        public IEnumerable<T> ExecuteMultiQuery<T2,T3>(MappingEntity<T, T2> mapping1, MappingEntity<T, T3> mapping2)
         {
            // var mappintList = new[] {mapping1, mapping2};
 
