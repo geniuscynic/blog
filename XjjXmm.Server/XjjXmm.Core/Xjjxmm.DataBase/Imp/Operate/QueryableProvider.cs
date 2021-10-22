@@ -603,35 +603,35 @@ namespace XjjXmm.DataBase.Imp.Operate
             return new ReaderableCommand<TResult>(CreateReaderableCommand(_providerModel.DbInfo, Build<TResult>(), _providerModel.Parameter));
         }
 
-        public IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>()
-        {
-            return new ReaderableCommand<T1, T2>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>()
+        //{
+        //    return new ReaderableCommand<T1, T2>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
+        //}
 
-        public IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>()
-        {
-            return new ReaderableCommand<T1, T2, T3>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>()
+        //{
+        //    return new ReaderableCommand<T1, T2, T3>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
+        //}
 
-        public IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>()
-        {
-            return new ReaderableCommand<T1, T2, T3, T4>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>()
+        //{
+        //    return new ReaderableCommand<T1, T2, T3, T4>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
+        //}
 
-        public IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>()
-        {
-            return new ReaderableCommand<T1, T2, T3, T4, T5>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>()
+        //{
+        //    return new ReaderableCommand<T1, T2, T3, T4, T5>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
+        //}
 
-        public IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>()
-        {
-            return new ReaderableCommand<T1, T2, T3, T4, T5, T6>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>()
+        //{
+        //    return new ReaderableCommand<T1, T2, T3, T4, T5, T6>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
+        //}
 
-        public IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>()
-        {
-            return new ReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>()
+        //{
+        //    return new ReaderableCommand<T1, T2, T3, T4, T5, T6, T7>(CreateReaderableCommand(_providerModel.DbInfo, Build<T1>(), _providerModel.Parameter));
+        //}
 
         protected abstract ISqlFuncVisit CreateSqlFunVisit();
 
@@ -641,6 +641,10 @@ namespace XjjXmm.DataBase.Imp.Operate
         protected abstract JoinCommand CreateJoinCommand(string alias, ProviderModel providerModel);
 
 
+        public object Clone()
+        {
+            return DatabaseFactory.CreateQueryableProvider(this._providerModel.DbInfo, _alias);
+        }
     }
 
 }

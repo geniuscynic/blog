@@ -42,7 +42,7 @@ namespace XjjXmm.DataBase.Imp.Operate
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public static bool Contain(List<string> p1, string p2)
+        public static bool Contain(IEnumerable<string> p1, string p2)
         {
             return true;
         }
@@ -112,7 +112,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             return $"{p1} like '%{p2}%'";
         }
 
-        public string Contain(List<string> p1, string p2)
+        public string Contain(IEnumerable<string> p1, string p2)
         {
 
             return $"{p2} in ({p1.Concat(closure: "'")})";

@@ -91,7 +91,23 @@ namespace XjjXmm.DataBase.Utility
            
         }
 
-       
+        internal static IQueryableProvider CreateQueryableProvider(DbInfo info, string alias)
+        {
+            // var provider = new QueryableProvider(info, alias);
+
+            IQueryableProvider provider = info.DbType switch
+            {
+                DatabaseProvider.MsSql => new MsSqlQueryableProvider(info, alias),
+                DatabaseProvider.MySql => new MySqlQueryableProvider(info, alias),
+                _ => new OracleQueryableProvider(info, alias),
+
+            };
+
+            return provider;
+
+        }
+
+
 
         public static IDeleteable<T> CreateDeleteable<T>(DbInfo info)
         {

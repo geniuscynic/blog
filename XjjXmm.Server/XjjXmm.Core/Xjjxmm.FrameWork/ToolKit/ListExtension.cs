@@ -4,9 +4,9 @@ using System.Text;
 
 namespace XjjXmm.FrameWork.ToolKit
 {
-    public static class ListKit
+    public static class EnumerableKit
     {
-        public static string Concat(this List<string> src, string separator = ",", string closure = "", bool needWrap = false)
+        public static string Concat(this IEnumerable<string> src, string separator = ",", string closure = "", bool needWrap = false)
         {
             if (src == null || !src.Any()) return string.Empty;
 

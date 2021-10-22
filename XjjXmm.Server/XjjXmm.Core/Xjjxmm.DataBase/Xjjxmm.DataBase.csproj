@@ -5,6 +5,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Utility\MappingCache\**" />
+    <EmbeddedResource Remove="Utility\MappingCache\**" />
+    <None Remove="Utility\MappingCache\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Imp\Command\ReaderableCommand - 复制.cs.back" />
   </ItemGroup>
 

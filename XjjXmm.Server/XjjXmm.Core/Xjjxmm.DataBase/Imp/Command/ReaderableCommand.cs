@@ -12,7 +12,7 @@ using XjjXmm.DataBase.Imp.Command.Oracle;
 using XjjXmm.DataBase.Interface.Command;
 using XjjXmm.DataBase.SqlProvider;
 using XjjXmm.DataBase.Utility;
-using Xjjxmm.DataBase.Utility.MappingCache;
+
 
 namespace XjjXmm.DataBase.Imp.Command
 {
@@ -70,7 +70,7 @@ namespace XjjXmm.DataBase.Imp.Command
             return _readerableCommand.ExecuteDataTable<T>();
         }
     }
-
+/*
     internal class ReaderableCommand<T1, T2> : ReaderableCommand<T1>, IReaderableCommand<T1, T2>
     {
         private readonly Func<T1, T2, T1> _map;
@@ -278,5 +278,5 @@ namespace XjjXmm.DataBase.Imp.Command
 
             return _readerableCommand.ExecuteFirstOrDefault(map, splitOn);
         }
-    }
+    }*/
 }

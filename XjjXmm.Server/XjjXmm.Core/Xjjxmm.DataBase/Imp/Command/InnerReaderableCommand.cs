@@ -11,7 +11,6 @@ using XjjXmm.DataBase.Imp.Command.Oracle;
 using XjjXmm.DataBase.Interface.Command;
 using Xjjxmm.DataBase.Utility;
 using XjjXmm.DataBase.Utility;
-using Xjjxmm.DataBase.Utility.MappingCache;
 
 namespace XjjXmm.DataBase.Imp.Command
 {

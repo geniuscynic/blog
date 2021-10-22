@@ -5,11 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using Org.BouncyCastle.Crypto.Modes.Gcm;
 using XjjXmm.DataBase.Interface.Command;
+using Xjjxmm.DataBase.Utility;
 using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Interface.Operate
 {
-    internal interface IQueryableProvider
+    internal interface IQueryableProvider : ICloneable
     {
         void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate);
 
@@ -101,17 +102,17 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<T> CreateReaderableCommand<T>();
 
-        IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>();
+        //IReaderableCommand<T1, T2> CreateReaderableCommand<T1, T2>();
 
-        IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>();
+        //IReaderableCommand<T1, T2, T3> CreateReaderableCommand<T1, T2, T3>();
 
-        IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>();
+        //IReaderableCommand<T1, T2, T3, T4> CreateReaderableCommand<T1, T2, T3, T4>();
 
-        IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>();
+        //IReaderableCommand<T1, T2, T3, T4, T5> CreateReaderableCommand<T1, T2, T3, T4, T5>();
 
-        IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>();
+        //IReaderableCommand<T1, T2, T3, T4, T5, T6> CreateReaderableCommand<T1, T2, T3, T4, T5, T6>();
 
-        IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>();
+        //IReaderableCommand<T1, T2, T3, T4, T5, T6, T7> CreateReaderableCommand<T1, T2, T3, T4, T5, T6, T7>();
     }
 
     public interface IComplexQueryable<T> : IReaderableCommand<T>
@@ -132,7 +133,15 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
 
+        IEnumerable<T> ExecuteMultiQuery<T2>(Mapping<T, T2> mappings);
 
+        //IReaderableCommand<T> Include<T2>(Expression<Func<T, string>> predicate1, Expression<Func<T2, string>> predicate2, Expression<Func<T, T2>> mappingFunc);
+
+        //IReaderableCommand<T> Include<T2>(Expression<Func<T, int>> predicate1, Expression<Func<T2, int>> predicate2, Expression<Func<T, T2>> mappingFunc);
+
+        //IReaderableCommand<T> Include<T2>(Expression<Func<T, long>> predicate1, Expression<Func<T2, long>> predicate2, Expression<Func<T, T2>> mappingFunc);
+
+        //IReaderableCommand<T> Include<T2, TMiddle>(Expression<Func<T, T2, TMiddle, bool>> predicate);
     }
 
     public interface IComplexQueryable<T1, T2>  : IComplexQueryable<T1>//, IReaderableCommand<T1,T2>
@@ -155,7 +164,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T1, T2, TResult>> predicate);
 
-
+      
         //Task<IEnumerable<T1>> ExecuteQuery<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate);
 
         //Task<T1> ExecuteFirst<TSecond, TSplit>(Expression<Func<T1, TSecond, TSplit>> splitOnPredicate);

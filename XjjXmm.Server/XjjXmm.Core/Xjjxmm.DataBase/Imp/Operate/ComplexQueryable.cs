@@ -10,6 +10,7 @@ using XjjXmm.DataBase.Imp.Command;
 using XjjXmm.DataBase.Interface.Command;
 using XjjXmm.DataBase.Interface.Operate;
 using XjjXmm.DataBase.SqlProvider;
+using Xjjxmm.DataBase.Utility;
 using XjjXmm.DataBase.Utility;
 
 namespace XjjXmm.DataBase.Imp.Operate
@@ -84,9 +85,100 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
+        //public IReaderableCommand<T> Include<T2>(Expression<Func<T, int>> predicate1, Expression<Func<T2, int>> predicate2, Expression<Func<T, T2>> mappingFunc)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        //public IReaderableCommand<T> Include<T2>(Expression<Func<T, long>> predicate1, Expression<Func<T2, long>> predicate2, Expression<Func<T, T2>> mappingFunc)
+        //{
+        //    throw new NotImplementedException();
+        //}
+
+        public IEnumerable<T> ExecuteMultiQuery<T2>(Mapping<T,T2> mapping)
+        {
+            //var provider = new SplitOnProvider();
+            //provider.Visit(predicate1);
+            //var id1 = provider.SelectFields.Select(t => t.Parameter).First();
+
+            //provider = new SplitOnProvider();
+            //provider.Visit(predicate2);
+            //var id2 = provider.SelectFields.Select(t => t.ColumnName).First();
+
+            //var includeProvider = (IQueryableProvider)_provider.Clone();
+
+            //var includeCOmplexQUertyable = new ComplexQueryable<T2>(includeProvider);
+
+            var results = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
+            // var results = resultsENumerable.ToList();
+
+
+            var property = typeof(T).GetProperty(mapping.MainClassKey);
+            var ids = new StringBuilder();
+            foreach (var res in results)
+            {
+                ids.Append($"'{property.GetValue(res)}',");
+            }
+
+            ids.Remove(ids.Length - 1, 1);
+
+            var includeProvider = (IQueryableProvider)_provider.Clone();
+            includeProvider.Where($"{mapping.SubClassKey} in ({ids})");
+            var resT2 = includeProvider.CreateReaderableCommand<T2>().ExecuteQuery().Result;
+
+            foreach (var result in results)
+            {
+                yield return (T)mapping.MapExpression(result, resT2);
+            }
+
+            //return results;
+
+        }
+
+        public IEnumerable<T> ExecuteMultiQuery<T2,T3>(Mapping<T, T2> mapping1, Mapping<T, T3> mapping2)
+        {
+           // var mappintList = new[] {mapping1, mapping2};
+
+            var results = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
+
+            var property1 = typeof(T).GetProperty(mapping1.MainClassKey);
+            var property2 = typeof(T).GetProperty(mapping2.MainClassKey);
+
+            var ids1 = new StringBuilder();
+            var ids2 = new StringBuilder();
+            foreach (var res in results)
+            {
+                ids1.Append($"'{property1.GetValue(res)}',");
+                ids2.Append($"'{property2.GetValue(res)}',");
+            }
+
+            ids1.Remove(ids1.Length - 1, 1);
+            ids2.Remove(ids2.Length - 1, 1);
+
+            var includeProvider1 = (IQueryableProvider)_provider.Clone();
+            includeProvider1.Where($"{mapping1.SubClassKey} in ({ids1})");
+            var resT2 = includeProvider1.CreateReaderableCommand<T2>().ExecuteQuery().Result;
+
+            var includeProvider2 = (IQueryableProvider)_provider.Clone();
+            includeProvider2.Where($"{mapping2.SubClassKey} in ({ids2})");
+            var resT3 = includeProvider2.CreateReaderableCommand<T3>().ExecuteQuery().Result;
+
+            foreach (var result in results)
+            {
+                var tmp1 = mapping1.MapExpression(result, resT2);
+                var tmp2 = mapping2.MapExpression(tmp1, resT3);
+
+                yield return (T)tmp2;
+            }
+
+            //return results;
+
+        }
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
+
+
             return await _provider.CreateReaderableCommand<T>().ExecuteQuery();
         }
 
@@ -215,7 +307,7 @@ namespace XjjXmm.DataBase.Imp.Operate
                 {
                     return await _provider.CreateReaderableCommand<T1, T2>(true).ExecuteFirstOrDefault( splitOnPredicate);
                 }*/
-       
+
     }
 
 
@@ -285,7 +377,7 @@ namespace XjjXmm.DataBase.Imp.Operate
         }
 
 
-        
+
         /*     public async Task<IEnumerable<T1>> ExecuteQuery<TResult>( Expression<Func<T1, T2, T3, TResult>> splitOnPredicate)
              {
                  return await _provider.CreateReaderableCommand<T1, T2, T3>(true).ExecuteQuery( splitOnPredicate);

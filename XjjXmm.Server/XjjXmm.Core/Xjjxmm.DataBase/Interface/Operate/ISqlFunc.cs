@@ -13,7 +13,7 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         string Like(string p1, string p2);
 
-        string Contain(List<string> p1, string p2);
+        string Contain(IEnumerable<string> p1, string p2);
 
 
         string FormatDate(string date, string format);
