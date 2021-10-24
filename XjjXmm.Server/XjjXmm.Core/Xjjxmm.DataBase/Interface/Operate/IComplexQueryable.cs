@@ -135,6 +135,10 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mappings);
 
+        IEnumerable<T> ExecuteMultiQuery<T2,T3>(MappingEntity<T, T2> mappings1, MappingEntity<T, T3> mappings2);
+
+        IEnumerable<T> ExecuteMultiQuery<T2, T3, T4>(MappingEntity<T, T2> mappings1, MappingEntity<T, T3> mappings2, MappingEntity<T, T4> mappings3);
+
         //IReaderableCommand<T> Include<T2>(Expression<Func<T, string>> predicate1, Expression<Func<T2, string>> predicate2, Expression<Func<T, T2>> mappingFunc);
 
         //IReaderableCommand<T> Include<T2>(Expression<Func<T, int>> predicate1, Expression<Func<T2, int>> predicate2, Expression<Func<T, T2>> mappingFunc);

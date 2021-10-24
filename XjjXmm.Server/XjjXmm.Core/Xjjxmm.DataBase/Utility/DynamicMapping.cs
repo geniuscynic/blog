@@ -18,33 +18,61 @@ namespace Xjjxmm.DataBase.Utility
     //    LambdaExpression MapExpression { get; }
     //}
 
-    internal abstract class Mapping<T> {
+    internal class MappingHelper<T>
+    {
         private readonly IQueryableProvider _provider;
 
-        private StringBuilder ids1 = new StringBuilder();
-        public Mapping(IQueryableProvider provider)
+        internal List<T> resultsList;
+
+        private List<PropertyInfo> _propertyInfos = new List<PropertyInfo>();
+        private List<StringBuilder> _ids = new List<StringBuilder>();
+        internal List<IQueryableProvider> cloneProviders = new List<IQueryableProvider>();
+
+        public MappingHelper(IQueryableProvider provider)
         {
             _provider = provider;
+
+            resultsList = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
         }
 
-        public PropertyInfo GetMainKeysProperty(string mainClassKey)
+        public MappingHelper<T> AddProperty(string mainClassKey)
         {
-            return typeof(T).GetProperty(mainClassKey);
+            _propertyInfos.Add(typeof(T).GetProperty(mainClassKey));
+            _ids.Add(new StringBuilder());
+            cloneProviders.Add((IQueryableProvider)_provider.Clone());
+
+            return this;
         }
 
-        public void BuildKey(T res, PropertyInfo property)
+        public MappingHelper<T> BuildKey()
         {
-            ids1.Append($"'{property.GetValue(res)}',");
+            foreach (var res in resultsList)
+            {
+                for (var i = 0; i < _propertyInfos.Count; i++)
+                {
+                    _ids[i].Append($"'{_propertyInfos[i].GetValue(res)}',");
+                }
+            }
+
+            foreach (var sb in _ids)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+
+            return this;
         }
 
-        public StringBuilder GetIds()
+        public MappingHelper<T> BuilderProvider(params string[] subClassKeys)
         {
-            ids1.Remove(ids1.Length - 1, 1);
-            return ids1;
+            for (var i = 0; i < subClassKeys.Length; i++)
+            {
+                cloneProviders[i].Where($"{subClassKeys[i]} in ({_ids[i]})");
+            }
+
+            return this;
         }
 
-        public abstract IEnumerable<T2> GetSubEnumerable<T2>(string subKey);
-  
+
     }
 
 

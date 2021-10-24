@@ -95,8 +95,24 @@ namespace XjjXmm.DataBase.Imp.Operate
         //    throw new NotImplementedException();
         //}
 
-        public IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T,T2> mapping)
+        public IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mapping1)
         {
+            var mapHelper = new MappingHelper<T>(_provider);
+            mapHelper
+                .AddProperty(mapping1.MainClassKey)
+                .BuildKey()
+                .BuilderProvider(mapping1.SubClassKey);
+
+            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result;
+
+            foreach (var result in mapHelper.resultsList)
+            {
+                var tmp1 = mapping1.MapExpression(result, resT2);
+
+
+                yield return tmp1;
+            }
+
             //var provider = new SplitOnProvider();
             //provider.Visit(predicate1);
             //var id1 = provider.SelectFields.Select(t => t.Parameter).First();
@@ -109,71 +125,117 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             //var includeCOmplexQUertyable = new ComplexQueryable<T2>(includeProvider);
 
-            var results = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
-            // var results = resultsENumerable.ToList();
+            //var results = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
+            //// var results = resultsENumerable.ToList();
 
 
-            var property = typeof(T).GetProperty(mapping.MainClassKey);
-            var ids = new StringBuilder();
-            foreach (var res in results)
-            {
-                ids.Append($"'{property.GetValue(res)}',");
-            }
+            //var property = typeof(T).GetProperty(mapping.MainClassKey);
+            //var ids = new StringBuilder();
+            //foreach (var res in results)
+            //{
+            //    ids.Append($"'{property.GetValue(res)}',");
+            //}
 
-            ids.Remove(ids.Length - 1, 1);
+            //ids.Remove(ids.Length - 1, 1);
 
-            var includeProvider = (IQueryableProvider)_provider.Clone();
-            includeProvider.Where($"{mapping.SubClassKey} in ({ids})");
-            var resT2 = includeProvider.CreateReaderableCommand<T2>().ExecuteQuery().Result;
+            //var includeProvider = (IQueryableProvider)_provider.Clone();
+            //includeProvider.Where($"{mapping.SubClassKey} in ({ids})");
+            //var resT2 = includeProvider.CreateReaderableCommand<T2>().ExecuteQuery().Result;
 
-            foreach (var result in results)
-            {
-                yield return (T)mapping.MapExpression(result, resT2);
-            }
+            //foreach (var result in results)
+            //{
+            //    yield return (T)mapping.MapExpression(result, resT2);
+            //}
 
             //return results;
 
         }
 
-        public IEnumerable<T> ExecuteMultiQuery<T2,T3>(MappingEntity<T, T2> mapping1, MappingEntity<T, T3> mapping2)
+        public IEnumerable<T> ExecuteMultiQuery<T2, T3>(MappingEntity<T, T2> mapping1, MappingEntity<T, T3> mapping2)
         {
-           // var mappintList = new[] {mapping1, mapping2};
 
-            var results = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
+            var mapHelper = new MappingHelper<T>(_provider);
+            mapHelper.AddProperty(mapping1.MainClassKey)
+            .AddProperty(mapping2.MainClassKey)
+            .BuildKey()
+            .BuilderProvider(mapping1.SubClassKey, mapping2.SubClassKey);
 
-            var property1 = typeof(T).GetProperty(mapping1.MainClassKey);
-            var property2 = typeof(T).GetProperty(mapping2.MainClassKey);
+            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result;
+            var resT3 = mapHelper.cloneProviders[1].CreateReaderableCommand<T3>().ExecuteQuery().Result;
 
-            var ids1 = new StringBuilder();
-            var ids2 = new StringBuilder();
-            foreach (var res in results)
-            {
-                ids1.Append($"'{property1.GetValue(res)}',");
-                ids2.Append($"'{property2.GetValue(res)}',");
-            }
-
-            ids1.Remove(ids1.Length - 1, 1);
-            ids2.Remove(ids2.Length - 1, 1);
-
-            var includeProvider1 = (IQueryableProvider)_provider.Clone();
-            includeProvider1.Where($"{mapping1.SubClassKey} in ({ids1})");
-            var resT2 = includeProvider1.CreateReaderableCommand<T2>().ExecuteQuery().Result;
-
-            var includeProvider2 = (IQueryableProvider)_provider.Clone();
-            includeProvider2.Where($"{mapping2.SubClassKey} in ({ids2})");
-            var resT3 = includeProvider2.CreateReaderableCommand<T3>().ExecuteQuery().Result;
-
-            foreach (var result in results)
+            foreach (var result in mapHelper.resultsList)
             {
                 var tmp1 = mapping1.MapExpression(result, resT2);
                 var tmp2 = mapping2.MapExpression(tmp1, resT3);
 
-                yield return (T)tmp2;
+                yield return tmp2;
             }
+
+            // var mappintList = new[] {mapping1, mapping2};
+
+            //var results = _provider.CreateReaderableCommand<T>().ExecuteQuery().Result.ToList();
+
+            //var property1 = typeof(T).GetProperty(mapping1.MainClassKey);
+            //var property2 = typeof(T).GetProperty(mapping2.MainClassKey);
+
+            //var ids1 = new StringBuilder();
+            //var ids2 = new StringBuilder();
+            //foreach (var res in results)
+            //{
+            //    ids1.Append($"'{property1.GetValue(res)}',");
+            //    ids2.Append($"'{property2.GetValue(res)}',");
+            //}
+
+            //ids1.Remove(ids1.Length - 1, 1);
+            //ids2.Remove(ids2.Length - 1, 1);
+
+            //var includeProvider1 = (IQueryableProvider)_provider.Clone();
+            //includeProvider1.Where($"{mapping1.SubClassKey} in ({ids1})");
+            //var resT2 = includeProvider1.CreateReaderableCommand<T2>().ExecuteQuery().Result;
+
+            //var includeProvider2 = (IQueryableProvider)_provider.Clone();
+            //includeProvider2.Where($"{mapping2.SubClassKey} in ({ids2})");
+            //var resT3 = includeProvider2.CreateReaderableCommand<T3>().ExecuteQuery().Result;
+
+            //foreach (var result in results)
+            //{
+            //    var tmp1 = mapping1.MapExpression(result, resT2);
+            //    var tmp2 = mapping2.MapExpression(tmp1, resT3);
+
+            //    yield return (T)tmp2;
+            //}
 
             //return results;
 
         }
+
+        public IEnumerable<T> ExecuteMultiQuery<T2, T3, T4>(MappingEntity<T, T2> mapping1, MappingEntity<T, T3> mapping2, MappingEntity<T, T4> mapping3)
+        {
+
+            var mapHelper = new MappingHelper<T>(_provider);
+            mapHelper
+                .AddProperty(mapping1.MainClassKey)
+            .AddProperty(mapping2.MainClassKey)
+                .AddProperty(mapping3.MainClassKey)
+            .BuildKey()
+            .BuilderProvider(mapping1.SubClassKey, mapping2.SubClassKey, mapping3.SubClassKey);
+
+            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result;
+            var resT3 = mapHelper.cloneProviders[1].CreateReaderableCommand<T3>().ExecuteQuery().Result;
+            var resT4 = mapHelper.cloneProviders[2].CreateReaderableCommand<T3>().ExecuteQuery().Result;
+
+            foreach (var result in mapHelper.resultsList)
+            {
+                var tmp1 = mapping1.MapExpression(result, resT2);
+                var tmp2 = mapping2.MapExpression(tmp1, resT3);
+                var tmp3 = mapping2.MapExpression(tmp2, resT4);
+
+                yield return tmp3;
+            }
+
+
+        }
+
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
