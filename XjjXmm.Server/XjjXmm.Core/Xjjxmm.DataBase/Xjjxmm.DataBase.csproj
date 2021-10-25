@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <None Remove="Imp\Command\ReaderableCommand - 复制.cs.back" />
+    <None Remove="Utility\DynamicMapping.cs.bak" />
   </ItemGroup>
 
 
