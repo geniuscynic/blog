@@ -9,6 +9,7 @@ namespace XjjXmm.DataBase.Interface.Command
 {
     internal interface IReaderableCommand
     {
+        Task<IEnumerable<object>> ExecuteQuery(Type type);
         Task<IEnumerable<T>> ExecuteQuery<T>();
 
         Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, string splitOn);

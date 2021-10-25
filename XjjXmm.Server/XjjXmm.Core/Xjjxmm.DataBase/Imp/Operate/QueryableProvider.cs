@@ -349,13 +349,21 @@ namespace XjjXmm.DataBase.Imp.Operate
             return VisitSelect<T1, TResult>(predicate);
         }
 
-        private StringBuilder Build<T>()
+       
+
+
+        private StringBuilder Build<T>(Type returnType = null)
         {
             //prefix = whereCommand.prefix;
 
             var sql = new StringBuilder();
 
             var type = typeof(T);
+            if (returnType != null)
+            {
+                type = returnType;
+            }
+
             var (tableName, properties) = ProviderHelper.GetMetas(type);
 
             var selectSql = new StringBuilder();
@@ -597,6 +605,18 @@ namespace XjjXmm.DataBase.Imp.Operate
         */
 
         protected abstract IReaderableCommand CreateReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter);
+
+        public async Task<IEnumerable<object>> ExecuteQuery(Type type)
+        {
+           var command =  CreateReaderableCommand(_providerModel.DbInfo, Build<object>(type), _providerModel.Parameter);
+
+           return await command.ExecuteQuery(type);
+        }
+
+        public IReaderableCommand<T> CreateReaderableCommand<T>(Type type)
+        {
+            return new ReaderableCommand<T>(CreateReaderableCommand(_providerModel.DbInfo, Build<T>(type), _providerModel.Parameter));
+        }
 
         public IReaderableCommand<TResult> CreateReaderableCommand<TResult>()
         {

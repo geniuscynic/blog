@@ -67,17 +67,34 @@ namespace XjjXmmTest
             //        }));
 
             var res = dbClient.ComplexQueryable<FormEntity>("p")
-                .ExecuteMultiQuery<FormDefaultEntity>(new MappingEntity<FormEntity, FormDefaultEntity>(
+                .Include<FormDefaultEntity>(new MappingEntity<FormEntity, FormDefaultEntity>(
                     p => p.Id,
-                    e => e.FormId ,
+                    e => e.FormId,
                     (t, e) =>
                     {
-                        var form = e.FirstOrDefault(r => r.FormId == t.Id);
+                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
 
-                        t.FormDefaultEntity = form;
+                        t.FormDefaultEntity = e;
                         return t;
                     }
-                ));
+                ))
+                .ExecuteMultiQuery().Result;
+
+
+            //var res = dbClient.ComplexQueryable<UserEntity>("u")
+            //    .ExecuteMultiQuery(new MappingEntity<UserEntity,T2>())
+            //var res = dbClient.ComplexQueryable<FormEntity>("p")
+            //    .ExecuteMultiQuery<FormDefaultEntity>(new MappingEntity<FormEntity, FormDefaultEntity>(
+            //        p => p.Id,
+            //        e => e.FormId ,
+            //        (t, e) =>
+            //        {
+            //            var form = e.FirstOrDefault(r => r.FormId == t.Id);
+
+            //            t.FormDefaultEntity = form;
+            //            return t;
+            //        }
+            //    ));
 
             var tmp = res.ToList();
                 //.Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)

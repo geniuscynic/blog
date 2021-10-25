@@ -19,12 +19,13 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         private readonly IQueryableProvider _provider;
 
-
+        private MappingHelper2<T> _mapHelper;
         //private readonly  StringBuilder _sortSql = new StringBuilder();
 
         public ComplexQueryable(IQueryableProvider provider)
         {
             _provider = provider;
+            _mapHelper = new MappingHelper2<T>(_provider);
         }
 
 
@@ -95,7 +96,30 @@ namespace XjjXmm.DataBase.Imp.Operate
         //    throw new NotImplementedException();
         //}
 
-        public IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mapping1)
+        
+        public IComplexQueryable<T> Include<T2>(MappingEntity<T, T2> mapping1)
+        {
+
+            _mapHelper
+                .AddMapping(mapping1);
+            // .BuildKey()
+            // .BuilderProvider(mapping1.SubClassKey);
+
+            return this;
+        }
+
+
+        public async Task<IEnumerable<T>> ExecuteMultiQuery()
+        {
+            //var resulsts = await _provider.CreateReaderableCommand<T>().ExecuteQuery();
+
+            //_mapHelper.Build(resulsts);
+
+            return await _mapHelper.Exec();
+
+        }
+
+     /*   public IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mapping1)
         {
             var mapHelper = new MappingHelper<T>(_provider);
             mapHelper
@@ -103,7 +127,7 @@ namespace XjjXmm.DataBase.Imp.Operate
                 .BuildKey()
                 .BuilderProvider(mapping1.SubClassKey);
 
-            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result;
+            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result.ToList();
 
             foreach (var result in mapHelper.resultsList)
             {
@@ -150,8 +174,8 @@ namespace XjjXmm.DataBase.Imp.Operate
             //return results;
 
         }
-
-        public IEnumerable<T> ExecuteMultiQuery<T2, T3>(MappingEntity<T, T2> mapping1, MappingEntity<T, T3> mapping2)
+*/
+       /* public IEnumerable<T> ExecuteMultiQuery<T2, T3>(MappingEntity<T, T2> mapping1, MappingEntity<T, T3> mapping2)
         {
 
             var mapHelper = new MappingHelper<T>(_provider);
@@ -160,8 +184,8 @@ namespace XjjXmm.DataBase.Imp.Operate
             .BuildKey()
             .BuilderProvider(mapping1.SubClassKey, mapping2.SubClassKey);
 
-            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result;
-            var resT3 = mapHelper.cloneProviders[1].CreateReaderableCommand<T3>().ExecuteQuery().Result;
+            var resT2 = mapHelper.cloneProviders[0].CreateReaderableCommand<T2>().ExecuteQuery().Result.ToList();
+            var resT3 = mapHelper.cloneProviders[1].CreateReaderableCommand<T3>().ExecuteQuery().Result.ToList();
 
             foreach (var result in mapHelper.resultsList)
             {
@@ -235,7 +259,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
 
         }
-
+*/
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
