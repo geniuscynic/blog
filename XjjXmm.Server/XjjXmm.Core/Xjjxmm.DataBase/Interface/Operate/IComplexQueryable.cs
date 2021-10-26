@@ -137,7 +137,9 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
 
-        IComplexQueryable<T> Include<T2>(MappingEntity<T, T2> mapping1);
+        IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
+
+        IComplexQueryable<T> Include<T2>(MappingOneToManyEntity<T, T2> mapping1);
 
         Task<IEnumerable<T>> ExecuteMultiQuery();
         //IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mappings);

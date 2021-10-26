@@ -86,6 +86,8 @@ namespace XjjXmm.DataBase.Imp.Operate
             return _provider.Select(predicate);
         }
 
+
+
         //public IReaderableCommand<T> Include<T2>(Expression<Func<T, int>> predicate1, Expression<Func<T2, int>> predicate2, Expression<Func<T, T2>> mappingFunc)
         //{
         //    throw new NotImplementedException();
@@ -96,8 +98,16 @@ namespace XjjXmm.DataBase.Imp.Operate
         //    throw new NotImplementedException();
         //}
 
-        
-        public IComplexQueryable<T> Include<T2>(MappingEntity<T, T2> mapping1)
+
+        public IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1)
+        {
+            _mapHelper
+                .AddMapping(mapping1);
+
+            return this;
+        }
+
+        public IComplexQueryable<T> Include<T2>(MappingOneToManyEntity<T, T2> mapping1)
         {
 
             _mapHelper

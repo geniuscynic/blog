@@ -16,49 +16,46 @@ namespace XjjXmmTest
     {
         static void Main(string[] args)
         {
-            var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
-            var provider = "MsSql";
-            var dbClient = new DbClient(connectString, provider);
-
-            var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
-                .Include<BlogUserEntity>(new MappingEntity<BlogUserRoleEntity, BlogUserEntity>(
-                    p => p.UserId,
-                    e => e.Id,
-                    (t, e) =>
-                    {
-                        t.User = e.FirstOrDefault(a=>a.Id == t.UserId);
-                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
-
-                        //t.FormDefaultEntity = e;
-                        return t;
-                    }
-                ))
-                .Include<BlogRoleEntity>(new MappingEntity<BlogUserRoleEntity, BlogRoleEntity>(
-                    p => p.RoleId,
-                    e => e.Id,
-                    (t, e) =>
-                    {
-                        t.Role = e.FirstOrDefault(a => a.Id == t.RoleId);
-                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
-
-                        //t.FormDefaultEntity = e;
-                        return t;
-                    }
-                ))
-                .ExecuteMultiQuery().Result;
-
-            var res = blog.ToList();
-            //var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
-            //var provider = "Oracle";
+            //var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
+            //var provider = "MsSql";
             //var dbClient = new DbClient(connectString, provider);
 
+            //var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
+            //    .Include<BlogUserEntity>(new MappingOneToManyEntity<BlogUserRoleEntity, BlogUserEntity>(
+            //        p => p.UserId,
+            //        e => e.Id,
+            //        (t, e) =>
+            //        {
+            //            t.User = e.FirstOrDefault(a=>a.Id == t.UserId);
+            //            //var form = e.FirstOrDefault(r => r.FormId == t.Id);
 
-            //var res = dbClient.ComplexQueryable<FormEntity>("p")
-            //    .Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)
-            //    .ExecuteQuery<FormDefaultEntity>((p, e) => new
-            //    {
-            //        id = e.Id
-            //    })
+            //            //t.FormDefaultEntity = e;
+            //            return t;
+            //        }
+            //    ))
+            //    .Include<BlogRoleEntity>(new MappingOneToManyEntity<BlogUserRoleEntity, BlogRoleEntity>(
+            //        p => p.RoleId,
+            //        e => e.Id,
+            //        (t, e) =>
+            //        {
+            //            t.Role = e.FirstOrDefault(a => a.Id == t.RoleId);
+            //            //var form = e.FirstOrDefault(r => r.FormId == t.Id);
+
+            //            //t.FormDefaultEntity = e;
+            //            return t;
+            //        }
+            //    ))
+            //    .ExecuteMultiQuery().Result;
+
+            //var res = blog.ToList();
+
+
+            var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
+            var provider = "Oracle";
+            var dbClient = new DbClient(connectString, provider);
+
+
+
 
             //var sql = "select * from med_fum_form m join MED_FUM_FORM_DEFAULT t on m.id = t.form_id";
 
@@ -99,19 +96,19 @@ namespace XjjXmmTest
             //            return t;
             //        }));
 
-            //var res = dbClient.ComplexQueryable<FormEntity>("p")
-            //    .Include<FormDefaultEntity>(new MappingEntity<FormEntity, FormDefaultEntity>(
-            //        p => p.Id,
-            //        e => e.FormId,
-            //        (t, e) =>
-            //        {
-            //            //var form = e.FirstOrDefault(r => r.FormId == t.Id);
+            var res = dbClient.ComplexQueryable<FormEntity>("p")
+                .Include<FormDefaultEntity>(new MappingOneToOneEntity<FormEntity, FormDefaultEntity>(
+                    p => p.Id,
+                    e => e.FormId,
+                    (t, e) =>
+                    {
+                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
 
-            //            t.FormDefaultEntity = e;
-            //            return t;
-            //        }
-            //    ))
-            //  .ExecuteMultiQuery().Result;
+                        t.FormDefaultEntity = e;
+                        return t;
+                    }
+                ))
+              .ExecuteMultiQuery().Result;
 
 
             //var res = dbClient.ComplexQueryable<UserEntity>("u")
