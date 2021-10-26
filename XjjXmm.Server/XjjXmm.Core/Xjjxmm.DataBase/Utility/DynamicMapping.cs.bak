@@ -15,9 +15,238 @@ namespace Xjjxmm.DataBase.Utility
     {
         string MainKey { get; }
         string SubKey { get; }
+<<<<<<< HEAD:XjjXmm.Server/XjjXmm.Core/Xjjxmm.DataBase/Utility/DynamicMapping.cs
 
         T Invoice();
     }
+=======
+
+        T Mapping(T t, IEnumerable<object> t2);
+    }
+
+    public interface IMapping2<T1, in T2> where T2:class
+    {
+        string MainKey { get; }
+        string SubKey { get; }
+
+        T1 Mapping(T1 t, IEnumerable<T2> t2);
+    }
+    public class MappingEntity2<T1, T2> : IMapping2<T1,T2> where T2:class
+    {
+        private readonly Func<T1, IEnumerable<T2>, T1> _mappingFunc;
+
+        public MappingEntity2(Expression<Func<T1, string>> predicateMain, Expression<Func<T2, string>> predicateSub, Func<T1, IEnumerable<T2>, T1> mappingFunc)
+        {
+            _mappingFunc = mappingFunc;
+            // this.MainClassKeyPredicate = predicateMain;
+            //this.SubClassPredicate = predicateSub;
+            // this.MappingFunc = mappingFunc;
+
+            var provider = new SplitOnProvider();
+            provider.Visit(predicateMain);
+
+            MainKey = provider.SelectFields.Select(t => t.Parameter).First();
+
+            provider = new SplitOnProvider();
+            provider.Visit(predicateSub);
+            SubKey = provider.SelectFields.Select(t => t.ColumnName).First();
+
+
+            
+
+
+            //mappingFunc.Compile().in
+        }
+
+        public string MainKey { get; }
+        public string SubKey { get; }
+        public T1 Mapping(T1 t, IEnumerable<T2> t2)
+        {
+            return _mappingFunc(t, t2);
+        }
+
+        public T1 Mapping(T1 t, IEnumerable<object> t2)
+        {
+            var res = new List<T2>();
+            foreach (var o in t2)
+            {
+                res.Add((T2)o);
+            }
+
+            var tmp = (IEnumerable<T2>)t2;
+            return _mappingFunc(t, res);
+        }
+    }
+
+    internal class MappingHelper3<T>
+    {
+
+        private readonly IQueryableProvider _provider;
+
+        // internal List<T> resultsList;
+
+        private List<PropertyInfo> _propertyInfos = new List<PropertyInfo>();
+        private List<StringBuilder> _ids = new List<StringBuilder>();
+        internal List<IQueryableProvider> cloneProviders = new List<IQueryableProvider>();
+
+        //List<Delegate> mappingFuncs = new List<Delegate>();
+        List<string> subKeyList = new List<string>();
+
+        List<T> resultsList = new List<T>();
+        List<IEnumerable<object>> otherResult = new List<IEnumerable<object>>();
+        List<Type> types = new List<Type>();
+
+        List<IMapping2<T, object>> mappings = new List<IMapping2<T, object>>();
+
+        public MappingHelper3(IQueryableProvider provider)
+        {
+            _provider = provider;
+
+        }
+
+        public MappingHelper3<T> AddMapping<T2>(MappingEntity2<T, T2> mappingEntity) where T2:class
+        {
+            _propertyInfos.Add(typeof(T).GetProperty(mappingEntity.MainKey));
+            _ids.Add(new StringBuilder());
+            cloneProviders.Add((IQueryableProvider)_provider.Clone());
+
+            subKeyList.Add(mappingEntity.SubKey);
+
+            // mappingFuncs.Add(mappingEntity.MapExpression);
+            mappings.Add(mappingEntity);
+            types.Add(typeof(T2));
+            return this;
+        }
+
+        private async Task Build()
+        {
+            resultsList = (await _provider.CreateReaderableCommand<T>().ExecuteQuery()).ToList();
+
+            foreach (var res in resultsList)
+            {
+                for (var i = 0; i < _propertyInfos.Count; i++)
+                {
+                    _ids[i].Append($"'{_propertyInfos[i].GetValue(res)}',");
+                }
+            }
+
+            foreach (var sb in _ids)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
+
+
+            for (var i = 0; i < subKeyList.Count; i++)
+            {
+                cloneProviders[i].Where($"{subKeyList[i]} in ({_ids[i]})");
+            }
+        }
+
+        public async Task<IEnumerable<T>> Exec()
+        {
+            await this.Build();
+            //foreach (var queryableProvider in cloneProviders)
+            //{
+            //    otherResult.Add(await queryableProvider.CreateReaderableCommand<dynamic>().ExecuteQuery());
+            //}
+
+            for (var i = 0; i < cloneProviders.Count; i++)
+            {
+                // var tmp1 = await cloneProviders[i].CreateReaderableCommand<object>(types[i]).ExecuteQuery(types[i]);
+
+                var tmp1 = await cloneProviders[i].ExecuteQuery(types[i]);
+                // tmp1.Select(m => (T2)m);
+                //var tmp2 = new List<dynamic>();
+
+
+                //var top = tmp1.GetType().GetProperties();
+
+                //foreach (var o in tmp1)
+                //{
+                //    var p = Activator.CreateInstance(types[i]);
+                //    foreach (var propertyInfo in types[i].GetProperties())
+                //    {
+                //       var pp = top.FirstOrDefault(t => t.Name.ToLower() == propertyInfo.Name.ToLower());
+                //       var val = pp.GetValue(o);
+                //        propertyInfo.SetValue(p, val);
+                //    }
+                //    tmp2.Add(GetValue(types[i], o));
+                //}
+
+                otherResult.Add(tmp1);
+            }
+
+            foreach (var result in resultsList)
+            {
+                var tmp = result;
+                for (var i = 0; i < mappings.Count; i++)
+                {
+                    var res2 = otherResult[i]; //GetValue(types[i], otherResult[i]);
+
+                    //var top = tmp1.GetType().GetProperties();
+
+                    //foreach (var o in res2)
+                    //{
+                    //    var p = Activator.CreateInstance(types[i]);
+                    //    foreach (var propertyInfo in types[i].GetProperties())
+                    //    {
+                    //        var pp = propertyInfo;
+                    //        var val = pp.GetValue(o);
+                    //        propertyInfo.SetValue(p, val);
+                    //    }
+                    //    tmp2.Add(GetValue(types[i], o));
+                    //}
+
+                    //(DDD)
+
+
+                    var func = mappings[i];
+                    //tmp = func.DynamicInvoke(tmp,  res2);
+
+                    tmp = func.Mapping(result, res2);
+                }
+
+            }
+
+
+
+
+
+            return resultsList;
+        }
+
+        private static object GetValue(Type effectiveType, object val)
+        {
+            if (val == null && (!effectiveType.IsValueType || Nullable.GetUnderlyingType(effectiveType) != null))
+            {
+                return default;
+            }
+            else if (val is Array array && typeof(T).IsArray)
+            {
+                var elementType = typeof(T).GetElementType();
+                var result = Array.CreateInstance(elementType, array.Length);
+                for (int i = 0; i < array.Length; i++)
+                    result.SetValue(Convert.ChangeType(array.GetValue(i), elementType, CultureInfo.InvariantCulture), i);
+                return result;
+            }
+
+            else
+            {
+                try
+                {
+                    var convertToType = Nullable.GetUnderlyingType(effectiveType) ?? effectiveType;
+                    return Convert.ChangeType(val, convertToType, CultureInfo.InvariantCulture);
+                }
+                catch (Exception ex)
+                {
+
+                    return default; // For the compiler - we've already thrown
+                }
+            }
+        }
+    }
+
+>>>>>>> origin/v6:XjjXmm.Server/XjjXmm.Core/Xjjxmm.DataBase/Utility/DynamicMapping.cs.bak
 
     public delegate T1 MappingFunction<T1, in T2>(T1 p1, T2 p2);
     internal class MappingHelper2<T>

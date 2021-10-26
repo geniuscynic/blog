@@ -7,6 +7,7 @@ using Microsoft.VisualBasic;
 using XjjXmm.DataBase;
 using XjjXmm.DataBase.Imp.Operate;
 using Xjjxmm.DataBase.Utility;
+using XjjXmmTest.blog;
 using XjjXmmTest.entity;
 
 namespace XjjXmmTest
@@ -15,9 +16,41 @@ namespace XjjXmmTest
     {
         static void Main(string[] args)
         {
-            var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
-            var provider = "Oracle";
+            var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var provider = "MsSql";
             var dbClient = new DbClient(connectString, provider);
+
+            var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
+                .Include<BlogUserEntity>(new MappingEntity<BlogUserRoleEntity, BlogUserEntity>(
+                    p => p.UserId,
+                    e => e.Id,
+                    (t, e) =>
+                    {
+                        t.User = e.FirstOrDefault(a=>a.Id == t.UserId);
+                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
+
+                        //t.FormDefaultEntity = e;
+                        return t;
+                    }
+                ))
+                .Include<BlogRoleEntity>(new MappingEntity<BlogUserRoleEntity, BlogRoleEntity>(
+                    p => p.RoleId,
+                    e => e.Id,
+                    (t, e) =>
+                    {
+                        t.Role = e.FirstOrDefault(a => a.Id == t.RoleId);
+                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
+
+                        //t.FormDefaultEntity = e;
+                        return t;
+                    }
+                ))
+                .ExecuteMultiQuery().Result;
+
+            var res = blog.ToList();
+            //var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
+            //var provider = "Oracle";
+            //var dbClient = new DbClient(connectString, provider);
 
 
             //var res = dbClient.ComplexQueryable<FormEntity>("p")
@@ -66,19 +99,19 @@ namespace XjjXmmTest
             //            return t;
             //        }));
 
-            var res = dbClient.ComplexQueryable<FormEntity>("p")
-                .Include<FormDefaultEntity>(new MappingEntity<FormEntity, FormDefaultEntity>(
-                    p => p.Id,
-                    e => e.FormId,
-                    (t, e) =>
-                    {
-                        //var form = e.FirstOrDefault(r => r.FormId == t.Id);
+            //var res = dbClient.ComplexQueryable<FormEntity>("p")
+            //    .Include<FormDefaultEntity>(new MappingEntity<FormEntity, FormDefaultEntity>(
+            //        p => p.Id,
+            //        e => e.FormId,
+            //        (t, e) =>
+            //        {
+            //            //var form = e.FirstOrDefault(r => r.FormId == t.Id);
 
-                        t.FormDefaultEntity = e;
-                        return t;
-                    }
-                ))
-                .ExecuteMultiQuery().Result;
+            //            t.FormDefaultEntity = e;
+            //            return t;
+            //        }
+            //    ))
+            //  .ExecuteMultiQuery().Result;
 
 
             //var res = dbClient.ComplexQueryable<UserEntity>("u")
@@ -96,39 +129,39 @@ namespace XjjXmmTest
             //        }
             //    ));
 
-            var tmp = res.ToList();
-                //.Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)
-               //.Include<FormDefaultEntity>(p => p.Id,
-               //     e => e.FormId,
-               //     p=>p.FormDefaultEntity )
-                    //(t, e) =>
-                    //{
-                    //    var form = e.FirstOrDefault(r => r.FormId == t.Id);
-                       
-                    //    t.FormDefaultEntity = form;
-                    //     return t;
-                    //})
-                // .ExecuteQuery()
+            //  var tmp = res.ToList();
+            //.Join<FormDefaultEntity>("e", (p, e) => p.Id == e.FormId)
+            //.Include<FormDefaultEntity>(p => p.Id,
+            //     e => e.FormId,
+            //     p=>p.FormDefaultEntity )
+            //(t, e) =>
+            //{
+            //    var form = e.FirstOrDefault(r => r.FormId == t.Id);
 
-                //.ExecuteQuery( (p, e) => e.Id)
-               // .Result;
+            //    t.FormDefaultEntity = form;
+            //     return t;
+            //})
+            // .ExecuteQuery()
 
-           // var formIds = res.Select(t => t.Id);
-           // var res2 = dbClient.ComplexQueryable<FormDefaultEntity>("p")
-           //     .Where(p => SqlFunc.Contain(formIds, p.FormId))
-           //     .ExecuteQuery().Result;
+            //.ExecuteQuery( (p, e) => e.Id)
+            // .Result;
 
-           //var res3 = res.Select(t =>
-           // {
-           //     var form = res2.FirstOrDefault(r => r.FormId == t.Id);
-           //     if (form != null)
-           //     {
-           //         t.FormDefaultEntity = form;
-           //         return t;
-           //     }
+            // var formIds = res.Select(t => t.Id);
+            // var res2 = dbClient.ComplexQueryable<FormDefaultEntity>("p")
+            //     .Where(p => SqlFunc.Contain(formIds, p.FormId))
+            //     .ExecuteQuery().Result;
 
-           //     return null;
-           // }).Where(t=>t != null);
+            //var res3 = res.Select(t =>
+            // {
+            //     var form = res2.FirstOrDefault(r => r.FormId == t.Id);
+            //     if (form != null)
+            //     {
+            //         t.FormDefaultEntity = form;
+            //         return t;
+            //     }
+
+            //     return null;
+            // }).Where(t=>t != null);
 
             Console.WriteLine("Hello World!");
         }

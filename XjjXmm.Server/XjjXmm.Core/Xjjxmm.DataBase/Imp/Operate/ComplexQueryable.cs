@@ -19,13 +19,13 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         private readonly IQueryableProvider _provider;
 
-        private MappingHelper2<T> _mapHelper;
+        private MappingHelper<T> _mapHelper;
         //private readonly  StringBuilder _sortSql = new StringBuilder();
 
         public ComplexQueryable(IQueryableProvider provider)
         {
             _provider = provider;
-            _mapHelper = new MappingHelper2<T>(_provider);
+            _mapHelper = new MappingHelper<T>(_provider);
         }
 
 
