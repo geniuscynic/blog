@@ -11,13 +11,13 @@ using XjjXmm.DataBase.SqlProvider;
 
 namespace Xjjxmm.DataBase.Utility
 {
-    //internal interface IMapping
-    //{
-    //    string MainClassKey { get; }
-    //    string SubClassKey { get; }
+    internal interface IMapping<T>
+    {
+        string MainKey { get; }
+        string SubKey { get; }
 
-    //    LambdaExpression MapExpression { get; }
-    //}
+        T Invoice();
+    }
 
     public delegate T1 MappingFunction<T1, in T2>(T1 p1, T2 p2);
     internal class MappingHelper2<T>
