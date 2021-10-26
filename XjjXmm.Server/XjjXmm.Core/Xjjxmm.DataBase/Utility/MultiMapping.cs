@@ -198,6 +198,11 @@ namespace Xjjxmm.DataBase.Utility
 
         public MappingHelper<T> AddMapping<T2>(MappingOneToOneEntity<T, T2> mappingEntity)
         {
+            Action<List<T>> action = entities=>
+            {
+                entities.ForEach();
+            }
+
             mappingInfos.Add(new MappingInfo<T>()
             {
                 MappingMeta = mappingEntity,

@@ -16,10 +16,13 @@ namespace XjjXmmTest
     {
         static void Main(string[] args)
         {
-            //var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
-            //var provider = "MsSql";
-            //var dbClient = new DbClient(connectString, provider);
+            var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var provider = "MsSql";
+            var dbClient = new DbClient(connectString, provider);
 
+            var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
+                .Include<BlogUserEntity>(p => p.User, p => p.UserId, p => p.Id)
+                .ExecuteMultiQuery().Result;
             //var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
             //    .Include<BlogUserEntity>(new MappingOneToManyEntity<BlogUserRoleEntity, BlogUserEntity>(
             //        p => p.UserId,
@@ -50,9 +53,9 @@ namespace XjjXmmTest
             //var res = blog.ToList();
 
 
-            var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
-            var provider = "Oracle";
-            var dbClient = new DbClient(connectString, provider);
+            //var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
+            //var provider = "Oracle";
+            //var dbClient = new DbClient(connectString, provider);
 
 
 

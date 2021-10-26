@@ -137,6 +137,8 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
 
+        IComplexQueryable<T> Include<T2>(Expression<Func<T, T2>> mapperObject, Expression<Func<T, object>> predicateMain, Expression<Func<T2, object>> predicateSub);
+
         IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
 
         IComplexQueryable<T> Include<T2>(MappingOneToManyEntity<T, T2> mapping1);
