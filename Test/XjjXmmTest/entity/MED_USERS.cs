@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using XjjXmm.DataBase.Utility;
 
 namespace XjjXmmTest.entity {
@@ -85,5 +86,12 @@ namespace XjjXmmTest.entity {
         ///// </summary>
         [Column(Ignore = true)]
         public string HospitalName { get; set; }
+
+
+        ///// <summary>
+        ///// 医院ID
+        ///// </summary>
+        [Column(Ignore = true)]
+        public IEnumerable<GroupEntity> Groups { get; set; }
     }
 }

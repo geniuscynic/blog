@@ -88,6 +88,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
 
 
+
         //public IReaderableCommand<T> Include<T2>(Expression<Func<T, int>> predicate1, Expression<Func<T2, int>> predicate2, Expression<Func<T, T2>> mappingFunc)
         //{
         //    throw new NotImplementedException();
@@ -98,6 +99,21 @@ namespace XjjXmm.DataBase.Imp.Operate
         //    throw new NotImplementedException();
         //}
 
+        public IComplexQueryable<T> Include<T2>(Expression<Func<T, IEnumerable<T2>>> mapperObject, Expression<Func<T, object>> predicateMain, Expression<Func<T2, object>> predicateSub)
+        {
+            _mapHelper
+                .AddMapping(mapperObject, predicateMain, predicateSub);
+
+            return this;
+        }
+
+        public IComplexQueryable<T> Include<T2>(Expression<Func<T, T2>> mapperObject, Expression<Func<T, object>> predicateMain, Expression<Func<T2, object>> predicateSub)
+        {
+            _mapHelper
+                .AddMapping(mapperObject, predicateMain, predicateSub);
+
+            return this;
+        }
 
         public IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1)
         {
@@ -121,11 +137,14 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public async Task<IEnumerable<T>> ExecuteMultiQuery()
         {
-            //var resulsts = await _provider.CreateReaderableCommand<T>().ExecuteQuery();
+            var resulsts = await _provider.CreateReaderableCommand<T>().ExecuteQuery();
 
+            var tmp = resulsts.ToList();
             //_mapHelper.Build(resulsts);
 
-            return await _mapHelper.Exec();
+            _mapHelper.Exec2(tmp);
+
+            return tmp;
 
         }
 

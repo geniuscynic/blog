@@ -12,6 +12,8 @@ namespace XjjXmm.DataBase.Interface.Operate
 {
     internal interface IQueryableProvider : ICloneable
     {
+        //void Join<T1, T2>(string joinExpression);
+
         void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate);
 
         void Join<T1, T2, T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate);
@@ -137,7 +139,14 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<TResult>(Expression<Func<T, TResult>> predicate);
 
+        IComplexQueryable<T> Include<T2>(Expression<Func<T, IEnumerable<T2>>> mapperObject, Expression<Func<T, object>> predicateMain, Expression<Func<T2, object>> predicateSub);
+
         IComplexQueryable<T> Include<T2>(Expression<Func<T, T2>> mapperObject, Expression<Func<T, object>> predicateMain, Expression<Func<T2, object>> predicateSub);
+
+        IComplexQueryable<T> Include<T2, T3>(Expression<Func<T, IEnumerable<T3>>> mapperObject,
+            Expression<Func<T, object>> predicateMain,
+            Expression<Func<T2, object>> predicateLeft,
+            Expression<Func<T2, T3, bool>> predicateMap);
 
         IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
 

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using XjjXmm.DataBase.Utility;
 
 namespace XjjXmmTest.entity
@@ -128,7 +129,7 @@ namespace XjjXmmTest.entity
 
 
         [Column(Ignore = true)]
-        public FormDefaultEntity FormDefaultEntity
+        public IEnumerable<FormDefaultEntity> FormDefaultEntity
         {
             get;
             set;
