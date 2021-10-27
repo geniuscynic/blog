@@ -134,7 +134,46 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
         }
     }
 
+    public class WhenValueRequiredAttribute : AbstractValidator
+    {
+        private readonly string _ifName;
+        private readonly string _ifValue;
 
+
+        public WhenValueRequiredAttribute(string ifName, string ifValue)
+        {
+            _ifName = ifName;
+            _ifValue = ifValue;
+        }
+
+
+        internal override string DefaultMessage { get; set; } = "必填";
+
+        public override bool IsValid(object value, object model)
+        {
+            try
+            {
+                var val = model.GetType().GetProperty(_ifName).GetValue(model).ToString();
+                if (val != _ifValue)
+                {
+                    return true;
+                }
+
+                if (value == null) return false;
+
+                if (value is ICollection array && array.Count == 0) return false;
+
+                if (string.IsNullOrEmpty(value.ToString())) return false;
+            }
+            catch
+            {
+
+            }
+           
+
+            return true;
+        }
+    }
     public class ValidatonResult
     {
         public string Field { get; set; }
