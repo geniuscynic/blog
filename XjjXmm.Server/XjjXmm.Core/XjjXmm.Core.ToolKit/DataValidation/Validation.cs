@@ -88,7 +88,7 @@ namespace DoCare.Zkzx.Core.FrameWork.Tool.DataValidation
 
                 if (!validators.Any())
                 {
-                    return true;
+                    continue;
                 }
 
 
