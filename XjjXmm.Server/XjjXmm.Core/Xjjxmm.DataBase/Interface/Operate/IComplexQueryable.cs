@@ -104,6 +104,8 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         Task<IEnumerable<object>> ExecuteQuery(Type type);
 
+        Task<IEnumerable<T>> ExecuteQuery<T>(string sql);
+
         IReaderableCommand<T> CreateReaderableCommand<T>(Type type);
 
         IReaderableCommand<T> CreateReaderableCommand<T>();
@@ -143,10 +145,12 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IComplexQueryable<T> Include<T2>(Expression<Func<T, T2>> mapperObject, Expression<Func<T, object>> predicateMain, Expression<Func<T2, object>> predicateSub);
 
-        IComplexQueryable<T> Include<T2, T3>(Expression<Func<T, IEnumerable<T3>>> mapperObject,
-            Expression<Func<T, object>> predicateMain,
+        IComplexQueryable<T> Include<T2, T3>(
+            Expression<Func<T, IEnumerable<T3>>> mapperObject,
+            Expression<Func<T,  object>> predicateMain,
             Expression<Func<T2, object>> predicateLeft,
-            Expression<Func<T2, T3, bool>> predicateMap);
+            Expression<Func<T2, object>> predicateRight,
+            Expression<Func<T3, object>> predicateSub);
 
         IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
 

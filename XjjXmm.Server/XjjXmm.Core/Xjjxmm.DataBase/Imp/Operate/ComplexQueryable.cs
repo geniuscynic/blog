@@ -115,6 +115,17 @@ namespace XjjXmm.DataBase.Imp.Operate
             return this;
         }
 
+        public IComplexQueryable<T> Include<T2, T3>(Expression<Func<T, object>> predicateMain,
+            Expression<Func<T2, object>> predicateLeft,
+            Expression<Func<T2, object>> predicateRight,
+            Expression<Func<T3, object>> predicateSub)
+        {
+            _mapHelper
+                .AddMapping(mapperObject, predicateMain, predicateLeft, predicateMap);
+
+            return this;
+        }
+
         public IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1)
         {
             _mapHelper

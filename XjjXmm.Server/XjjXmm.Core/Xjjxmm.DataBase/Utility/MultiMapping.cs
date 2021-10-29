@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using XjjXmm.DataBase.Interface.Operate;
 using XjjXmm.DataBase.SqlProvider;
 using Xjjxmm.DataBase.Utility;
+using XjjXmm.DataBase.Utility;
 
 namespace Xjjxmm.DataBase.Utility
 {
@@ -324,31 +325,52 @@ namespace Xjjxmm.DataBase.Utility
         }
 
 
-        public void AddMapping<T2, T3>(Expression<Func<T, IEnumerable<T3>>> mapperObject,
+        public void AddMapping<T2, T3>(
+            Expression<Func<T, IEnumerable<T2>>> mapperObject,
             Expression<Func<T, object>> predicateMain,
             Expression<Func<T2, object>> predicateLeft,
-            Expression<Func<T2, T3, bool>> predicateMap)
+            Expression<Func<T2, object>> predicateRight,
+            Expression<Func<T3, object>> predicateSub)
         {
             Action<List<T>> action = async entities =>
             {
+                var mapperObjectKey = GetMainKey(mapperObject);
 
                 var mainKey = GetMainKey(predicateMain);
 
                 var subKey = GetSubKey(predicateLeft);
                 var subKey2 = GetMainKey(predicateLeft);
 
-                var mapperObjectKey = GetMainKey(mapperObject);
+                
 
 
-                var sql = GetMainKeySql(mainKey, entities);
+                //var sql = GetMainKeySql(mainKey, entities);
 
                 var subProvider = (IQueryableProvider)_provider.Clone();
-                subProvider.Join<T2, T3>("t", predicateMap);
+                //var sql = "select * from t3 a join t2 b on t3.id = t2.id where t2.id in ('')";
+
+                var sql = new StringBuilder();
+                sql.Append("select ");
+
+                var (t2TableName, _) = ProviderHelper.GetMetas(typeof(T2));
+
+                var (t3TableName, properties) = ProviderHelper.GetMetas(typeof(T3));
+                foreach (var property in properties)
+                {
+                    sql.Append($"t3.{property.ColumnName} as {property.Parameter},");
+                }
+
+                selectSql.Append(_selectField2);
+
+                selectSql.Remove(selectSql.Length - 1, 1);
+                //subProvider.Join<T2, T3>("t", predicateMap);
                 //subProvider.Join<T,T2>("a",);
-                subProvider.Where($"{subKey} in ({sql})");
+                //subProvider.Where($"{subKey} in ({sql})");
 
 
-                var subs = await subProvider.CreateReaderableCommand<T2>().ExecuteQuery();
+
+
+                var subs = await subProvider.CreateReaderableCommand<T3>().ExecuteQuery();
 
                 //var subs = await Query<T2>(subKey, sql);
 
