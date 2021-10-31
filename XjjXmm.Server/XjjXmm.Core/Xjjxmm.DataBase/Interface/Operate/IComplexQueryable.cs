@@ -156,11 +156,11 @@ namespace XjjXmm.DataBase.Interface.Operate
             Expression<Func<T2, object>> predicateRight,
             Expression<Func<T3, object>> predicateSub) where T3:new();
 
-        IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
+        //IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
 
-        IComplexQueryable<T> Include<T2>(MappingOneToManyEntity<T, T2> mapping1);
+       // IComplexQueryable<T> Include<T2>(MappingOneToManyEntity<T, T2> mapping1);
 
-        Task<IEnumerable<T>> ExecuteMultiQuery();
+        //Task<IEnumerable<T>> ExecuteMultiQuery();
         //IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mappings);
 
         //IEnumerable<T> ExecuteMultiQuery<T2,T3>(MappingEntity<T, T2> mappings1, MappingEntity<T, T3> mappings2);
