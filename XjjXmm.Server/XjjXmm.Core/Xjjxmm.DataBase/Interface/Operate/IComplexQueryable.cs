@@ -102,15 +102,15 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
 
-        Task<IEnumerable<dynamic>> ExecuteQuery(StringBuilder sql);
+        //Task<IEnumerable<dynamic>> ExecuteQuery(StringBuilder sql);
 
         //Task<IEnumerable<dynamic>> ExecuteQuery();
 
-        Task<IEnumerable<object>> ExecuteQuery(Type type);
+       // Task<IEnumerable<object>> ExecuteQuery(Type type);
 
         Task<IEnumerable<T>> ExecuteQuery<T>(StringBuilder sql);
 
-        IReaderableCommand<T> CreateReaderableCommand<T>(Type type);
+       // IReaderableCommand<T> CreateReaderableCommand<T>(Type type);
 
         IReaderableCommand<T> CreateReaderableCommand<T>();
 

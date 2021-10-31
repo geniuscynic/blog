@@ -9,53 +9,53 @@ namespace XjjXmm.DataBase.Interface.Command
 {
     internal interface IReaderableCommand
     {
-        Task<IEnumerable<dynamic>> ExecuteQuery();
-        Task<IEnumerable<object>> ExecuteQuery(Type type);
+        //Task<IEnumerable<dynamic>> ExecuteQuery();
+      //  Task<IEnumerable<object>> ExecuteQuery(Type type);
         Task<IEnumerable<T>> ExecuteQuery<T>();
 
-        Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, string splitOn);
+        //Task<IEnumerable<T1>> ExecuteQuery<T1, T2>(Func<T1, T2, T1> func, string splitOn);
 
-        Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn);
+        //Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn);
 
-        Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, string splitOn);
+        //Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, string splitOn);
 
-        Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, string splitOn);
+        //Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, string splitOn);
 
-        Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, string splitOn);
+        //Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, string splitOn);
 
-        Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, string splitOn);
+        //Task<IEnumerable<T1>> ExecuteQuery<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, string splitOn);
 
 
 
         Task<T> ExecuteFirst<T>();
 
-        Task<T1> ExecuteFirst<T1, T2>(Func<T1, T2, T1> func, string splitOn);
+        //Task<T1> ExecuteFirst<T1, T2>(Func<T1, T2, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirst<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn);
+        //Task<T1> ExecuteFirst<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirst<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, string splitOn);
+        //Task<T1> ExecuteFirst<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirst<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, string splitOn);
+        //Task<T1> ExecuteFirst<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirst<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, string splitOn);
+        //Task<T1> ExecuteFirst<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirst<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, string splitOn);
+        //Task<T1> ExecuteFirst<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, string splitOn);
 
 
 
         Task<T> ExecuteFirstOrDefault<T>();
 
-        Task<T1> ExecuteFirstOrDefault<T1, T2>(Func<T1, T2, T1> func, string splitOn);
+        //Task<T1> ExecuteFirstOrDefault<T1, T2>(Func<T1, T2, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirstOrDefault<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn);
+        //Task<T1> ExecuteFirstOrDefault<T1, T2, T3>(Func<T1, T2, T3, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, string splitOn);
+        //Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4>(Func<T1, T2, T3, T4, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, string splitOn);
+        //Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5>(Func<T1, T2, T3, T4, T5, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, string splitOn);
+        //Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5, T6>(Func<T1, T2, T3, T4, T5, T6, T1> func, string splitOn);
 
-        Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, string splitOn);
+        //Task<T1> ExecuteFirstOrDefault<T1, T2, T3, T4, T5, T6, T7>(Func<T1, T2, T3, T4, T5, T6, T7, T1> func, string splitOn);
 
 
 

@@ -522,8 +522,9 @@ namespace Xjjxmm.DataBase.Utility
                 mappingInfo.Provider.Where($"{mappingInfo.MappingMeta.SubKey} in ({mappingInfo.Sql})");
 
 
-                var tmp = await mappingInfo.Provider.ExecuteQuery(mappingInfo.Type);
+               // var tmp = await mappingInfo.Provider.ExecuteQuery(mappingInfo.Type);
 
+               var tmp = new List<object>();
                 mappingInfo.Result = tmp;
 
             }

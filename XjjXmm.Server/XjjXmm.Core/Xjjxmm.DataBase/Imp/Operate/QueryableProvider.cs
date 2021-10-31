@@ -610,17 +610,17 @@ namespace XjjXmm.DataBase.Imp.Operate
         {
             var command = CreateReaderableCommand(_providerModel.DbInfo, sql, _providerModel.Parameter);
 
-            return await command.ExecuteQuery();
+            return await command.ExecuteQuery<dynamic>();
         }
 
       
 
-        public async Task<IEnumerable<object>> ExecuteQuery(Type type)
-        {
-           var command =  CreateReaderableCommand(_providerModel.DbInfo, Build<object>(type), _providerModel.Parameter);
+        //public async Task<IEnumerable<object>> ExecuteQuery(Type type)
+        //{
+        //   var command =  CreateReaderableCommand(_providerModel.DbInfo, Build<object>(type), _providerModel.Parameter);
 
-           return await command.ExecuteQuery(type);
-        }
+        //   return await command.ExecuteQuery(type);
+        //}
 
     
 
@@ -632,10 +632,10 @@ namespace XjjXmm.DataBase.Imp.Operate
             return await command.ExecuteQuery<T>();
         }
 
-        public IReaderableCommand<T> CreateReaderableCommand<T>(Type type)
-        {
-            return new ReaderableCommand<T>(CreateReaderableCommand(_providerModel.DbInfo, Build<T>(type), _providerModel.Parameter));
-        }
+        //public IReaderableCommand<T> CreateReaderableCommand<T>(Type type)
+        //{
+        //    return new ReaderableCommand<T>(CreateReaderableCommand(_providerModel.DbInfo, Build<T>(type), _providerModel.Parameter));
+        //}
 
         public IReaderableCommand<TResult> CreateReaderableCommand<TResult>()
         {
