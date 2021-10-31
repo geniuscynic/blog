@@ -9,6 +9,7 @@ namespace XjjXmm.DataBase.Interface.Command
 {
     internal interface IReaderableCommand
     {
+        Task<IEnumerable<dynamic>> ExecuteQuery();
         Task<IEnumerable<object>> ExecuteQuery(Type type);
         Task<IEnumerable<T>> ExecuteQuery<T>();
 

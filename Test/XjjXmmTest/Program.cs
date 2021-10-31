@@ -16,9 +16,19 @@ namespace XjjXmmTest
     {
         static void Main(string[] args)
         {
-            //var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
-            //var provider = "MsSql";
-            //var dbClient = new DbClient(connectString, provider);
+            var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
+            var provider = "MsSql";
+            var dbClient = new DbClient(connectString, provider);
+
+           
+                var blog = dbClient.ComplexQueryable<BlogUserEntity>("p")
+                    .Include<BlogUserRoleEntity, BlogRoleEntity>(p => p.BlogRoles,
+                        p => p.Id,
+                        p => p.UserId,
+                        p => p.RoleId,
+                        p => p.Id)
+                    .ExecuteMultiQuery().Result;
+           
 
             //var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
             //    .Include<BlogUserEntity>(p => p.User, p => p.UserId, p => p.Id)
@@ -53,9 +63,9 @@ namespace XjjXmmTest
             //var res = blog.ToList();
 
 
-            var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
-            var provider = "Oracle";
-            var dbClient = new DbClient(connectString, provider);
+            //var connectString = "Data Source=ZKZX;Persist Security Info=True;User ID=medcomm;Password=medcomm";
+            //var provider = "Oracle";
+            //var dbClient = new DbClient(connectString, provider);
 
 
             //var res = dbClient.ComplexQueryable<FormEntity>("p")
@@ -65,12 +75,12 @@ namespace XjjXmmTest
             //    )
             //  .ExecuteMultiQuery().Result;
 
-            var res = dbClient.ComplexQueryable<UserEntity>("u")
-                .Include<GroupUserEntity, GroupEntity>(t => t.Groups,
-                    t => t.Id,
-                    t => t.UserId,
-                    (gu, g) => gu.GroupId == g.Id)
-                .ExecuteMultiQuery();
+            //var res = dbClient.ComplexQueryable<UserEntity>("u")
+            //    .Include<GroupUserEntity, GroupEntity>(t => t.Groups,
+            //        t => t.Id,
+            //        t => t.UserId,
+            //        (gu, g) => gu.GroupId == g.Id)
+            //    .ExecuteMultiQuery();
 
             //var sql = "select * from med_fum_form m join MED_FUM_FORM_DEFAULT t on m.id = t.form_id";
 

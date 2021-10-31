@@ -102,9 +102,13 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         IReaderableCommand<TResult> Select<T1, T2, T3, T4, T5, T6, T7, TResult>(Expression<Func<T1, T2, T3, T4, T5, T6, T7, TResult>> predicate);
 
+        Task<IEnumerable<dynamic>> ExecuteQuery(StringBuilder sql);
+
+        //Task<IEnumerable<dynamic>> ExecuteQuery();
+
         Task<IEnumerable<object>> ExecuteQuery(Type type);
 
-        Task<IEnumerable<T>> ExecuteQuery<T>(string sql);
+        Task<IEnumerable<T>> ExecuteQuery<T>(StringBuilder sql);
 
         IReaderableCommand<T> CreateReaderableCommand<T>(Type type);
 
@@ -150,7 +154,7 @@ namespace XjjXmm.DataBase.Interface.Operate
             Expression<Func<T,  object>> predicateMain,
             Expression<Func<T2, object>> predicateLeft,
             Expression<Func<T2, object>> predicateRight,
-            Expression<Func<T3, object>> predicateSub);
+            Expression<Func<T3, object>> predicateSub) where T3:new();
 
         IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1);
 

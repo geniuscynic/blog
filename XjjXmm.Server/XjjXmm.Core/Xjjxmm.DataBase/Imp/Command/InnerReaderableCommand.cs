@@ -91,6 +91,12 @@ namespace XjjXmm.DataBase.Imp.Command
             }
         }
 
+        public async Task<IEnumerable<dynamic>> ExecuteQuery()
+        {
+            return await EnumerableDelegate(async () =>
+                await Connection.Value.QueryAsync(Sql.ToString(), SqlParameter));
+        }
+
         public async Task<IEnumerable<object>> ExecuteQuery(Type type)
         {
             return await EnumerableDelegate(async () =>
