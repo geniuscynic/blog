@@ -115,49 +115,34 @@ namespace XjjXmm.DataBase.Imp.Operate
             return this;
         }
 
-        public IComplexQueryable<T> Include<T2, T3>(Expression<Func<T, object>> predicateMain,
+        public IComplexQueryable<T> Include<T2, T3>(
+            Expression<Func<T, IEnumerable<T3>>> mapperObject,
+            Expression<Func<T, object>> predicateMain,
             Expression<Func<T2, object>> predicateLeft,
             Expression<Func<T2, object>> predicateRight,
-            Expression<Func<T3, object>> predicateSub)
+            Expression<Func<T3, object>> predicateSub) where T3:new()
         {
             _mapHelper
-                .AddMapping(mapperObject, predicateMain, predicateLeft, predicateMap);
+                .AddMapping(mapperObject, predicateMain, predicateLeft, predicateRight, predicateSub);
 
             return this;
         }
 
-        public IComplexQueryable<T> Include<T2>(MappingOneToOneEntity<T, T2> mapping1)
-        {
-            _mapHelper
-                .AddMapping(mapping1);
-
-            return this;
-        }
-
-        public IComplexQueryable<T> Include<T2>(MappingOneToManyEntity<T, T2> mapping1)
-        {
-
-            _mapHelper
-                .AddMapping(mapping1);
-            // .BuildKey()
-            // .BuilderProvider(mapping1.SubClassKey);
-
-            return this;
-        }
+      
 
 
-        public async Task<IEnumerable<T>> ExecuteMultiQuery()
-        {
-            var resulsts = await _provider.CreateReaderableCommand<T>().ExecuteQuery();
+        //public async Task<IEnumerable<T>> ExecuteMultiQuery()
+        //{
+        //    var resulsts = await _provider.CreateReaderableCommand<T>().ExecuteQuery();
 
-            var tmp = resulsts.ToList();
-            //_mapHelper.Build(resulsts);
+        //    var tmp = resulsts.ToList();
+        //    //_mapHelper.Build(resulsts);
 
-            _mapHelper.Exec2(tmp);
+        //    _mapHelper.Exec2(tmp);
 
-            return tmp;
+        //    return tmp;
 
-        }
+        //}
 
      /*   public IEnumerable<T> ExecuteMultiQuery<T2>(MappingEntity<T, T2> mapping1)
         {
@@ -303,36 +288,81 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public async Task<IEnumerable<T>> ExecuteQuery()
         {
+            var results = await _provider.CreateReaderableCommand<T>().ExecuteQuery();
 
+            var tmp = results.ToList();
+          
+            _mapHelper.Exec2(tmp);
 
-            return await _provider.CreateReaderableCommand<T>().ExecuteQuery();
+            return tmp;
+          
         }
 
         public async Task<T> ExecuteFirst()
         {
-            return await _provider.CreateReaderableCommand<T>().ExecuteFirst();
+            var results = await _provider.CreateReaderableCommand<T>().ExecuteFirst();
+
+            var tmp = new List<T>() {results};
+
+            _mapHelper.Exec2(tmp);
+
+            return results;
+
+            // return await _provider.CreateReaderableCommand<T>().ExecuteFirst();
         }
 
         public async Task<T> ExecuteFirstOrDefault()
         {
-            return await _provider.CreateReaderableCommand<T>().ExecuteFirstOrDefault();
+            var results = await _provider.CreateReaderableCommand<T>().ExecuteFirstOrDefault();
+
+            var tmp = new List<T>() { results };
+
+            _mapHelper.Exec2(tmp);
+
+            return results;
+
+            //return await _provider.CreateReaderableCommand<T>().ExecuteFirstOrDefault();
         }
 
         public async Task<T> ExecuteSingle()
         {
-            return await _provider.CreateReaderableCommand<T>().ExecuteSingle();
+            var results = await _provider.CreateReaderableCommand<T>().ExecuteSingle();
+
+            var tmp = new List<T>() { results };
+
+            _mapHelper.Exec2(tmp);
+
+            return results;
+            // return await _provider.CreateReaderableCommand<T>().ExecuteSingle();
 
         }
 
         public async Task<T> ExecuteSingleOrDefault()
         {
-            return await _provider.CreateReaderableCommand<T>().ExecuteSingleOrDefault();
+            var results = await _provider.CreateReaderableCommand<T>().ExecuteSingleOrDefault();
+
+            var tmp = new List<T>() { results };
+
+            _mapHelper.Exec2(tmp);
+
+            return results;
+
+            //return await _provider.CreateReaderableCommand<T>().ExecuteSingleOrDefault();
 
         }
 
         public async Task<(IEnumerable<T> data, int total)> ToPageList(int pageIndex, int pageSize)
         {
-            return await _provider.CreateReaderableCommand<T>().ToPageList(pageIndex, pageSize);
+            // return await _provider.CreateReaderableCommand<T>().ToPageList(pageIndex, pageSize);
+
+            var results = await _provider.CreateReaderableCommand<T>().ToPageList(pageIndex, pageSize);
+
+            var tmp = results.data.ToList();
+
+            _mapHelper.Exec2(tmp);
+
+            return (tmp, results.total);
+
         }
 
         public async Task<DataTable> ExecuteDataTable()

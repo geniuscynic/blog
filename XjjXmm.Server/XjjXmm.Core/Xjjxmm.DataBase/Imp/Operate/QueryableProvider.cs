@@ -606,17 +606,36 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         protected abstract IReaderableCommand CreateReaderableCommand(DbInfo dbInfo, StringBuilder sql, Dictionary<string, object> sqlParameter);
 
-        public async Task<IEnumerable<object>> ExecuteQuery(Type type)
+        public async Task<IEnumerable<dynamic>> ExecuteQuery(StringBuilder sql)
         {
-           var command =  CreateReaderableCommand(_providerModel.DbInfo, Build<object>(type), _providerModel.Parameter);
+            var command = CreateReaderableCommand(_providerModel.DbInfo, sql, _providerModel.Parameter);
 
-           return await command.ExecuteQuery(type);
+            return await command.ExecuteQuery<dynamic>();
         }
 
-        public IReaderableCommand<T> CreateReaderableCommand<T>(Type type)
+      
+
+        //public async Task<IEnumerable<object>> ExecuteQuery(Type type)
+        //{
+        //   var command =  CreateReaderableCommand(_providerModel.DbInfo, Build<object>(type), _providerModel.Parameter);
+
+        //   return await command.ExecuteQuery(type);
+        //}
+
+    
+
+        public async Task<IEnumerable<T>> ExecuteQuery<T>(StringBuilder sql)
         {
-            return new ReaderableCommand<T>(CreateReaderableCommand(_providerModel.DbInfo, Build<T>(type), _providerModel.Parameter));
+
+            var command = CreateReaderableCommand(_providerModel.DbInfo, sql, _providerModel.Parameter);
+
+            return await command.ExecuteQuery<T>();
         }
+
+        //public IReaderableCommand<T> CreateReaderableCommand<T>(Type type)
+        //{
+        //    return new ReaderableCommand<T>(CreateReaderableCommand(_providerModel.DbInfo, Build<T>(type), _providerModel.Parameter));
+        //}
 
         public IReaderableCommand<TResult> CreateReaderableCommand<TResult>()
         {

@@ -70,6 +70,9 @@ namespace XjjXmmTest.blog
         [Column(Ignore = true)]
         public IEnumerable<BlogUserRoleEntity> BlogUserRoles { get; set; }
 
+        [Column(Ignore = true)]
+        public IEnumerable<BlogRoleEntity> BlogRoles { get; set; }
+
 
     }
 }
