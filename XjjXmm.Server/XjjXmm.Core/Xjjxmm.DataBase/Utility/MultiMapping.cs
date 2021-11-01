@@ -338,10 +338,13 @@ namespace Xjjxmm.DataBase.Utility
 
                 var mainKey = GetMainKey(predicateMain);
 
+                var t2SubKey = GetSubKey(predicateLeft);
+              
+
                 var subKey = GetSubKey(predicateLeft);
                 var subKey2 = GetMainKey(predicateLeft);
 
-                
+
 
 
                 //var sql = GetMainKeySql(mainKey, entities);
@@ -360,9 +363,9 @@ namespace Xjjxmm.DataBase.Utility
                     sql.Append($"t3.{property.ColumnName} as {property.Parameter},");
                 }
 
-                selectSql.Append(_selectField2);
+                sql.Remove(sql.Length - 1, 1);
+                sql.Append($"from {t3TableName} t3 join {t2TableName} t2 on t3.{subKey} = t2.{t2SubKey}");
 
-                selectSql.Remove(selectSql.Length - 1, 1);
                 //subProvider.Join<T2, T3>("t", predicateMap);
                 //subProvider.Join<T,T2>("a",);
                 //subProvider.Where($"{subKey} in ({sql})");
