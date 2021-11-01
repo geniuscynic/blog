@@ -40,7 +40,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         }
 
-        protected void VisitSplitOnPredicate<T>(string alias, Expression<Func<T, string>> splitOnPredicate)
+      /*  protected void VisitSplitOnPredicate<T>(string alias, Expression<Func<T, string>> splitOnPredicate)
         {
             if (splitOnPredicate == null)
             {
@@ -61,7 +61,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             }
 
             _selectType.Add(typeof(T));
-        }
+        }*/
 
         public void Join<T1, T2>(string alias, Expression<Func<T1, T2, bool>> predicate)
         {

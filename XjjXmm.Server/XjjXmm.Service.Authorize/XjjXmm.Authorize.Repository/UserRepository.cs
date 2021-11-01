@@ -40,24 +40,32 @@ namespace XjjXmm.Authorize.Repository
         public async Task<UserEntity> FindByLoginName(string loginName)
         {
 
-            var dictionary = new Dictionary<long, UserEntity>();
+            //var dictionary = new Dictionary<long, UserEntity>();
 
             return await _dbclient.ComplexQueryable<UserEntity>("u")
-                .Join<UserRoleEntity>("ur", (u, ur) => u.Id == ur.UserId)
-                .Join<RoleEntity>("r", (u, ur, r) => ur.RoleId == r.Id)
-                .Where((u, ur, r)=>u.UserName == loginName)
-                .ExecuteFirstOrDefault((u, ur, r) =>
-                {
-                    if (!dictionary.TryGetValue(u.Id, out var userEntity))
-                    {
-                        userEntity = u;
-                        userEntity.Roles = new List<RoleEntity>();
-                        dictionary.Add(userEntity.Id, userEntity);
-                    }
+                //.Join<UserRoleEntity>("ur", (u, ur) => u.Id == ur.UserId)
+                .Include<UserRoleEntity, RoleEntity>(
+                    p => p.Roles,
+                    p => p.Id,
+                    p => p.UserId,
+                    p => p.RoleId,
+                    p => p.Id)
+                .Where(u => u.UserName == loginName)
+                .ExecuteFirstOrDefault();
+            //.Join<RoleEntity>("r", (u, ur, r) => ur.RoleId == r.Id)
+            //.Where((u, ur, r)=>u.UserName == loginName)
+            //.ExecuteFirstOrDefault((u, ur, r) =>
+            //{
+            //    if (!dictionary.TryGetValue(u.Id, out var userEntity))
+            //    {
+            //        userEntity = u;
+            //        userEntity.Roles = new List<RoleEntity>();
+            //        dictionary.Add(userEntity.Id, userEntity);
+            //    }
 
-                    userEntity.Roles.Add(r);
-                    return userEntity;
-                }, (u, ur, r)=>r.Id);
+            //    userEntity.Roles.Add(r);
+            //    return userEntity;
+            //}, (u, ur, r)=>r.Id);
             //.ExecuteFirstOrDefault((user, userRole, role) =>
             //{
             //    if (!dictionary.TryGetValue(entity.Id, out var userEntity))
