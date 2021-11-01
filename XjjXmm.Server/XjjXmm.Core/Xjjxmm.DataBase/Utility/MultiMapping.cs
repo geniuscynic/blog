@@ -195,7 +195,7 @@ namespace Xjjxmm.DataBase.Utility
                 //var sql = "select * from t3 a join t2 b on t3.id = t2.id where t2.id in ('')";
 
                 var sql = new StringBuilder();
-                sql.Append($"select t2.{leftKey2} as {leftKey},");
+                sql.Append($"select t2.{leftKey} as {leftKey2},");
 
                 var (t2TableName, _) = ProviderHelper.GetMetas(typeof(T2));
 
@@ -229,14 +229,14 @@ namespace Xjjxmm.DataBase.Utility
 
                     foreach (var tmpKey in tmp.Keys)
                     {
-                        if (tmpKey == leftKey) continue;
+                        if (tmpKey == leftKey2) continue;
 
                         subPropertyInfo.GetProperty(tmpKey).SetValue(t3, tmp[tmpKey]);
                     }
 
 
                     var resultSub = new Dictionary<string, T3>();
-                    resultSub.Add(tmp[leftKey].ToString(), t3);
+                    resultSub.Add(tmp[leftKey2].ToString(), t3);
 
                     return resultSub;
 
@@ -265,7 +265,7 @@ namespace Xjjxmm.DataBase.Utility
 
 
                     var sub = subresult.Where(t =>
-                       t.ContainsKey(mainId)).SelectMany(t => t.Values);//.ToList();
+                       t.ContainsKey(mainId)).SelectMany(t => t.Values).ToList();
                                                                         //obj = sub;
 
                     mapPropertyInfo.SetValue(entity, sub);

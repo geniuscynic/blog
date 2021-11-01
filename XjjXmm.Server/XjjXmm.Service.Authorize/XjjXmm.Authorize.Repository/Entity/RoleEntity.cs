@@ -35,7 +35,7 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         /// 描述
         /// </summary>
-        [Column(ColumnName = "描述")]
+        [Column(ColumnName = "description")]
         public string Description { get; set; }
     }
 }
