@@ -27,7 +27,7 @@ namespace XjjXmmTest
                         p => p.UserId,
                         p => p.RoleId,
                         p => p.Id)
-                    .ExecuteMultiQuery().Result;
+                    .ExecuteQuery().Result;
            
 
             //var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")

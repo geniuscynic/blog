@@ -92,6 +92,11 @@ namespace XjjXmm.Authorize.Repository.Entity
         [Column(ColumnName = "pwd_reset_time")]
         public DateTime? PwdResetTime { get; set; }
 
+        /// <summary>
+        /// 对应的部门
+        /// </summary>
+        [Column(Ignore = true)]
+        public List<DeptEntity> Dept { get; set; }
 
         /// <summary>
         /// 对应的角色

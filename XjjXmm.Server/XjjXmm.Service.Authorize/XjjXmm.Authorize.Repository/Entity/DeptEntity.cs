@@ -21,14 +21,14 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         ///  排序
         /// </summary>
-        [Column(ColumnName = "deptSort")]
+        [Column(ColumnName = "dept_sort")]
         public int DeptSort { get; set; }
 
         /// <summary>
         ///  部门名称
         /// </summary>
         [Column(ColumnName = "name")]
-        public string ComponentName { get; set; }
+        public string Name { get; set; }
 
 
         /// <summary>
@@ -46,7 +46,7 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         ///  子节点数目
         /// </summary>
-        [Column(ColumnName = "subCount")]
+        [Column(ColumnName = "sub_count")]
         public long SubCount { get; set; }
 
 

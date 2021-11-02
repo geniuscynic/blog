@@ -8,6 +8,8 @@ using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Service.Model
 {
+    
+
     /// <summary>
     /// 添加用户的view model
     /// </summary>

@@ -22,8 +22,8 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         /// 数据权限，全部 、 本级 、 自定义
         /// </summary>
-        [Column(ColumnName = "dataScope")]
-        private int DataScope { get; set; }
+        [Column(ColumnName = "data_scope")]
+        public string DataScope { get; set; }
 
 
         /// <summary>

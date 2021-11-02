@@ -149,7 +149,7 @@ namespace Xjjxmm.DataBase.Utility
 
                     var mainId = mainPropertyInfo.GetValue(entity).ToString();
 
-                    var sub = subs.Where(t => subPropertyInfo.GetValue(t).ToString() == mainId);
+                    var sub = subs.Where(t => subPropertyInfo.GetValue(t).ToString() == mainId).ToList();
                     //obj = sub;
 
                     mapPropertyInfo.SetValue(entity, sub);

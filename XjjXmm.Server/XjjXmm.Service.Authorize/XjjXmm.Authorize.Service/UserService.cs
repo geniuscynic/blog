@@ -102,14 +102,15 @@ namespace XjjXmm.Authorize.Service
                 throw BussinessException.CreateException(ExceptionCode.CustomException, "密码错误");
             }
 
-            var userModel = user.MapTo<UserEntity, JwtUserDto>();
-
+            var jwtUserDto = new JwtUserDto();
+            var userModel = user.MapTo<UserEntity, UserDto>();
+            jwtUserDto.User = userModel;
             //var roles = await _roleService.GetRoleByUserId(userModel.Id);
 
             //userModel.Roles = roles.Select(t => t.Id);
 
             //return userModel;
-            return userModel;
+            return jwtUserDto;
 
 
         }

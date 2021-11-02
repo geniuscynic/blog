@@ -28,6 +28,8 @@
     /// </summary>
     public class RoleModel 
     {
+        public string Id { get; set; }
+
         /// <summary>
         /// 名称
         /// </summary>
@@ -36,7 +38,7 @@
         /// <summary>
         /// 数据权限，全部 、 本级 、 自定义
         /// </summary>
-        private int DataScope { get; set; }
+        public string DataScope { get; set; }
 
 
         /// <summary>
@@ -47,6 +49,6 @@
         /// <summary>
         /// 描述
         /// </summary>
-        public string Description { get; set; }
+        //public string Description { get; set; }
     }
 }

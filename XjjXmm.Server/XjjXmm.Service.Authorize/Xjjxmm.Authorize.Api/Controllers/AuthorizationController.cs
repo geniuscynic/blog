@@ -71,7 +71,7 @@ namespace XjjXmm.Authorize.Api.Controllers
             {
                 AppId = "xjjxmm",
                 ClientId = "admin",
-                Id = userModel.Id.ToString()
+                Id = userModel.User.Id.ToString()
             });
 
             return new
