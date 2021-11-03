@@ -16,19 +16,26 @@ namespace XjjXmmTest
     {
         static void Main(string[] args)
         {
-            var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
-            var provider = "MsSql";
-            var dbClient = new DbClient(connectString, provider);
+            DMC dmc = new DMC();
+            var tv = new TV();
+            dmc.Add(tv);
+            tv.ButtonName = "11";
 
-           
-                var blog = dbClient.ComplexQueryable<BlogUserEntity>("p")
-                    .Include<BlogUserRoleEntity, BlogRoleEntity>(p => p.BlogRoles,
-                        p => p.Id,
-                        p => p.UserId,
-                        p => p.RoleId,
-                        p => p.Id)
-                    .ExecuteQuery().Result;
-           
+            dmc.Add(new TV());
+
+            //var connectString = "Server=localhost;Database=blog;Trusted_Connection=True;MultipleActiveResultSets=true";
+            //var provider = "MsSql";
+            //var dbClient = new DbClient(connectString, provider);
+
+
+            //    var blog = dbClient.ComplexQueryable<BlogUserEntity>("p")
+            //        .Include<BlogUserRoleEntity, BlogRoleEntity>(p => p.BlogRoles,
+            //            p => p.Id,
+            //            p => p.UserId,
+            //            p => p.RoleId,
+            //            p => p.Id)
+            //        .ExecuteQuery().Result;
+
 
             //var blog = dbClient.ComplexQueryable<BlogUserRoleEntity>("p")
             //    .Include<BlogUserEntity>(p => p.User, p => p.UserId, p => p.Id)
