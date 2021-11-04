@@ -51,6 +51,12 @@ namespace XjjXmm.Authorize.Repository
                     p => p.RoleId,
                     p => p.Id)
                 .Include<DeptEntity>(p=>p.Dept, p=>p.DeptId, p=>p.Id)
+                .Include<UserJobEntity, JobEntity>(
+                    p=>p.Jobs,
+                    p=>p.Id, 
+                    p=>p.UserId,
+                    p=>p.JobId,
+                    p=>p.Id)
                 .Where(u => u.UserName == loginName)
                 .ExecuteFirstOrDefault();
             //.Join<RoleEntity>("r", (u, ur, r) => ur.RoleId == r.Id)

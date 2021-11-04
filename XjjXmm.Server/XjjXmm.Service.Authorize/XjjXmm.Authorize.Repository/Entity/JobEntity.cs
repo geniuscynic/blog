@@ -25,7 +25,7 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         ///  岗位排序
         /// </summary>
-        [Column(ColumnName = "jobSort")]
+        [Column(ColumnName = "job_sort")]
         public long JobSort { get; set; }
 
         /// <summary>

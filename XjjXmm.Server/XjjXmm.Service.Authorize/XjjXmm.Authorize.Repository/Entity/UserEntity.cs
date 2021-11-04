@@ -103,5 +103,11 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// </summary>
         [Column(Ignore = true)]
         public List<RoleEntity> Roles { get; set; }
+
+        /// <summary>
+        /// 用户岗位
+        /// </summary>
+        [Column(Ignore = true)]
+        public List<JobEntity> Jobs { get; set; }
     }
 }
