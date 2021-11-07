@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;
@@ -11,21 +12,31 @@ namespace XjjXmm.Authorize.Api.Controllers
     [Route("api/menus")]
     public class MenuController : ControllerBase
     {
-        private MenuService menuService;
+        private readonly MenuService _menuService;
+
+        public MenuController(MenuService menuService)
+        {
+            _menuService = menuService;
+        }
 
         /// <summary>
         ///   获取前端所需菜单
         /// </summary>
         /// <param name=""></param>
-        [HttpGet("/build")]
-   
-    public ResponseEntity<Object> buildMenus()
-    {
-        List<MenuDto> menuDtoList = menuService.findByUser(SecurityUtils.getCurrentUserId());
-        List<MenuDto> menuDtos = menuService.buildTree(menuDtoList);
-        return new ResponseEntity<>(menuService.buildMenus(menuDtos), HttpStatus.OK);
-    }
+        [HttpGet("build")]
+        [Authorize]
+        public async Task<dynamic> BuildMenus()
+        {
+            var id = HttpContext?.User?.Identity?.Name ?? "0";
+            var ids = int.Parse(id);
 
-   
+            var menuDtoList = await _menuService.FindByUser(ids);
+            var menuDtos = _menuService.BuildTree(menuDtoList);
+            // List<MenuDto> menuDtos = menuService.buildTree(menuDtoList);
+            //return menuDtoList;
+            return menuDtos;
+        }
+
+
     }
 }

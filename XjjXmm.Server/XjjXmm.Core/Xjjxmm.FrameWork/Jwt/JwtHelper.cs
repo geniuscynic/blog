@@ -23,7 +23,8 @@ namespace XjjXmm.FrameWork.Jwt
             var claims = new List<Claim>
             {
                 //下边为Claim的默认配置
-                new Claim(JwtRegisteredClaimNames.Jti, options.Id),
+               // new Claim(JwtRegisteredClaimNames.Name, options.Id),
+               new Claim(ClaimTypes.Name, options.Id),
                 new Claim("AppId", options.AppId),
                 new Claim("ClientId", options.ClientId),
                 new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),

@@ -66,7 +66,7 @@ namespace XjjXmm.Authorize.Api.Controllers
             var userModel = await _userService.FindUser(authUser);
 
             //做登入认证
-            var jwtTokenSetting = App.GetSection<JwtTokenSetting>("JWT");
+            var jwtTokenSetting = App.GetJwtConfig();
             var jwtStr = JwtHelper.IssueToken(jwtTokenSetting, new TokenModelOptions()
             {
                 AppId = "xjjxmm",

@@ -14,13 +14,15 @@ namespace XjjXmm.Authorize.Repository
         {
         }
 
-        public async Task<IEnumerable<RoleEntity>> GetRoleByUserId(string userId)
+        public async Task<IEnumerable<RoleEntity>> FindByUserId(long userId)
         {
-            //return await _dbclient.ComplexQueryable<RoleEntity>("r")
-            //     .Join<UserRoleEntity>("ur", (r, ur) => r.Id == ur.RoleId)
-            //     .Where((r, ur) => ur.Id == userId)
-            //     .ExecuteQuery();
-            throw new NotImplementedException();
+            return await _dbclient.ComplexQueryable<RoleEntity>("r")
+                 .Join<UserRoleEntity>("ur", (r, ur) => r.Id == ur.RoleId)
+                 .Where((r, ur) => ur.UserId == userId)
+                 .ExecuteQuery();
+
         }
+
+
     }
 }

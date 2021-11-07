@@ -10,16 +10,16 @@ using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.Authorize.Service
 {
-    public interface IRoleService
-    {
-        Task<bool> Add(AddRoleModel model);
+    //public interface IRoleService
+    //{
+    //    Task<bool> Add(AddRoleModel model);
 
-        Task<IEnumerable<RoleModel>> GetRoleByUserId(string userId);
-    }
+    //    Task<IEnumerable<RoleModel>> GetRoleByUserId(string userId);
+    //}
 
 
     [Injection]
-    public class RoleService : IRoleService
+    public class RoleService //: IRoleService
     {
         private readonly RoleRepository _roleRepository;
 
@@ -44,11 +44,13 @@ namespace XjjXmm.Authorize.Service
         }
 
 
-        public async Task<IEnumerable<RoleModel>> GetRoleByUserId(string userId)
+        public async Task<IEnumerable<RoleSmallDto>> FindByUserId(long userId)
         {
             //var results = await _roleRepository.GetRoleByUserId(userId);
             //return results.MapTo<RoleEntity, RoleModel>();
-            throw new NotImplementedException();
+            var roles = await _roleRepository.FindByUserId(userId);
+
+            return roles.MapTo<RoleEntity, RoleSmallDto>();
         }
     }
 }

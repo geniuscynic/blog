@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;
 using XjjXmm.Authorize.Service.Model;
+using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Common;
+using XjjXmm.FrameWork.Jwt;
 
 namespace XjjXmm.Authorize.Api.Controllers
 {
@@ -16,6 +18,20 @@ namespace XjjXmm.Authorize.Api.Controllers
         public UserController(UserService userService)
         {
             _userService = userService;
+        }
+
+        [HttpPost("/user/login")]
+        public string login()
+        {
+            var jwtTokenSetting = App.GetJwtConfig();
+            var jwtStr = JwtHelper.IssueToken(jwtTokenSetting, new TokenModelOptions()
+            {
+                AppId = "xjjxmm",
+                ClientId = "admin",
+                Id = "1"
+            });
+
+            return jwtStr;
         }
 
         [HttpPost("/user/Add")]

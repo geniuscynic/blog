@@ -10,9 +10,9 @@ namespace XjjXmm.Authorize.Api.Controllers
     [Route("[controller]")]
     public class RoleController : ControllerBase
     {
-        private readonly IRoleService _roleService;
+        private readonly RoleService _roleService;
 
-        public RoleController(IRoleService roleService)
+        public RoleController(RoleService roleService)
         {
             _roleService = roleService;
         }

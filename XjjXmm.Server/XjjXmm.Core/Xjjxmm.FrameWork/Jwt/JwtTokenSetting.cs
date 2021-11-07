@@ -1,4 +1,5 @@
 ﻿using System;
+using Microsoft.IdentityModel.Tokens;
 using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.FrameWork.Jwt
@@ -28,7 +29,18 @@ namespace XjjXmm.FrameWork.Jwt
         public string Expires { get; set; } = "2h";
 
 
-        public static JwtTokenSetting GetKey(string key)
+        public SymmetricSecurityKey IssuerSigningKey
+        {
+            get
+            {
+                var keyByteArray = System.Text.Encoding.ASCII.GetBytes(Secret);
+                var signingKey = new SymmetricSecurityKey(keyByteArray);
+
+                return signingKey;
+            }
+        }
+
+        internal static JwtTokenSetting GetKey(string key)
         {
             var jwtConfig = App.GetSection<JwtTokenSetting>(key);
 

@@ -29,18 +29,18 @@ namespace XjjXmm.Authorize.Repository.Entity
         ///  菜单组件名称
         /// </summary>
         [Column(ColumnName = "name")]
-        public string ComponentName { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         ///  排序
         /// </summary>
-        [Column(ColumnName = "menuSort")]
+        [Column(ColumnName = "menu_sort")]
         public int MenuSort { get; set; } = 999;
 
         /// <summary>
         ///  组件路径
         /// </summary>
-        [Column(ColumnName = "menuSort")]
+        [Column(ColumnName = "component")]
         public string Component { get; set; }
 
         /// <summary>
@@ -89,13 +89,13 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         ///  子节点数目
         /// </summary>
-        [Column(ColumnName = "subCount")]
+        [Column(ColumnName = "sub_count")]
         public int SubCount { get; set; }
 
         /// <summary>
         ///  外链菜单
         /// </summary>
-        [Column(ColumnName = "iFrame")]
+        [Column(ColumnName = "i_frame")]
         public bool Frame { get; set; }
 
 

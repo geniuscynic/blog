@@ -89,7 +89,6 @@ namespace XjjXmm.DataBase.Utility
 
         public static Field VisitMember(MemberExpression node)
         {
-
             var prefix = (node.Expression as ParameterExpression)?.Name ?? "";
             //var field = node.Member.Name;
 
@@ -231,9 +230,8 @@ namespace XjjXmm.DataBase.Utility
                     return m.Invoke(sqlFunc, parms.ToArray()).ToString();
                 case "Contain":
                     var c1 = Expression.Lambda(expression.Arguments[0]).Compile().DynamicInvoke();
-                    var c2 = ProviderHelper.VisitMember(expression.Arguments[1] as MemberExpression).Express;
-                   
-
+                     var c2 = ProviderHelper.VisitMember(expression.Arguments[1] as MemberExpression).Express;
+                    
                     return m.Invoke(sqlFunc, new[] { c1, c2 }).ToString();
 
                 case "FormatDate":

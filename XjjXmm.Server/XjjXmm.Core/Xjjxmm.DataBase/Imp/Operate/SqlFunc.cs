@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
+using System.Text;
 using XjjXmm.DataBase.Interface.Operate;
 using XjjXmm.DataBase.Utility;
 using XjjXmm.FrameWork.ToolKit;
@@ -43,6 +45,17 @@ namespace XjjXmm.DataBase.Imp.Operate
         /// <param name="p2"></param>
         /// <returns></returns>
         public static bool Contain(IEnumerable<string> p1, string p2)
+        {
+            return true;
+        }
+
+        /// <summary>
+        /// 相当于 in
+        /// </summary>
+        /// <param name="p1"></param>
+        /// <param name="p2"></param>
+        /// <returns></returns>
+        public static bool Contain(IEnumerable<long> p1, long p2)
         {
             return true;
         }
@@ -114,8 +127,39 @@ namespace XjjXmm.DataBase.Imp.Operate
 
         public string Contain(IEnumerable<string> p1, string p2)
         {
+            //var sb = new StringBuilder();
+            //sb.Append($"{p2} in (");
 
+            //foreach (var l in p1.ToList())
+            //{
+            //    sb.Append($"'{l}',");
+            //}
+
+            //sb.Remove(sb.Length - 1, 1);
+
+            //sb.Append(")");
+
+            //return sb.ToString();
+
+            //p1.Select(t => a.ToString());
             return $"{p2} in ({p1.Concat(closure: "'")})";
+        }
+
+        public string Contain(IEnumerable<long> p1, long p2)
+        {
+            var sb = new StringBuilder();
+            sb.Append($"{p2} in (");
+
+            foreach (var l in p1.ToList())
+            {
+                sb.Append($"{l},");
+            }
+
+            sb.Remove(sb.Length - 1, 1);
+
+            sb.Append(")");
+
+            return sb.ToString();
         }
 
         public string FormatDate(string date, string format)

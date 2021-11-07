@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using XjjXmm.FrameWork.Jwt;
 
 namespace XjjXmm.FrameWork
 {
@@ -17,6 +18,12 @@ namespace XjjXmm.FrameWork
         /// 服务提供其
         /// </summary>
         public static IServiceProvider ServiceProvider { get; set; }
+
+
+        public static JwtTokenSetting GetJwtConfig(string key = "JWT")
+        {
+            return JwtTokenSetting.GetKey(key);
+        }
 
 
         public static string GetConfig(params string[] sections)
