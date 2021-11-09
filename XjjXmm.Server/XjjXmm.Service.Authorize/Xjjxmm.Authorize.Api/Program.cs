@@ -40,6 +40,7 @@ namespace XjjXmm.Authorize.Api
                     .UseSerilogDefault();
 
 
-                });
+                })
+                .SetUp();
     }
 }

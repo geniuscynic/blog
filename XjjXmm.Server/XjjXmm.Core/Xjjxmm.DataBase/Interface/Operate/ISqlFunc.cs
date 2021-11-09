@@ -13,10 +13,12 @@ namespace XjjXmm.DataBase.Interface.Operate
 
         string Like(string p1, string p2);
 
-        string Contain(IEnumerable<string> p1, object p2);
-        
-        string Contain(IEnumerable<long> p1, long p2);
-        
+        string Contain(dynamic p1, dynamic p2);
+
+        //string Contain(IEnumerable<string> p1, object p2);
+
+        //string Contain(IEnumerable<long> p1, long p2);
+
         string FormatDate(string date, string format);
 
 

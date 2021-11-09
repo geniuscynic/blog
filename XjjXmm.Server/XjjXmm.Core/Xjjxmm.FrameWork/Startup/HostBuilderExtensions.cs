@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Hosting;
+﻿using AspectCore.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 using XjjXmm.FrameWork.ToolKit;
 
@@ -20,7 +21,7 @@ namespace XjjXmm.FrameWork.Startup
             var frameworkPackageName = assemblyName ?? ReflectKit.GetAssemblyName(typeof(HostBuilderExtensions));
             hostBuilder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, frameworkPackageName);
 
-            
+           
             return hostBuilder;
         }
 
@@ -33,6 +34,18 @@ namespace XjjXmm.FrameWork.Startup
         {
             App.ServiceProvider = host.Services;
             
+            return host;
+        }
+
+        /// <summary>
+        /// Web 主机注入
+        /// </summary>
+        /// <param name="host">Web主机构建器</param>
+        /// <returns>IWebHostBuilder</returns>
+        public static IHostBuilder SetUp(this IHostBuilder host)
+        {
+            host.UseServiceProviderFactory(new DynamicProxyServiceProviderFactory());
+
             return host;
         }
 

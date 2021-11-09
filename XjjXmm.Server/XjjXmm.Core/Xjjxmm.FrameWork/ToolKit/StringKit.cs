@@ -15,6 +15,11 @@ namespace XjjXmm.FrameWork.ToolKit
             return string.IsNullOrWhiteSpace(s);
         }
 
+        public static bool IsNullOrEmpty(this string s)
+        {
+            return string.IsNullOrEmpty(s);
+        }
+
         public static int ToInt(this string s)
         {
             try

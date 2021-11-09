@@ -77,14 +77,14 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         ///  是否隐藏
         /// </summary>
-        [Column(ColumnName = "cache")]
+        [Column(ColumnName = "hidden")]
         public bool Hidden { get; set; }
 
         /// <summary>
         ///  上级菜单
         /// </summary>
         [Column(ColumnName = "pid")]
-        public long Pid { get; set; }
+        public long? Pid { get; set; }
 
         /// <summary>
         ///  子节点数目

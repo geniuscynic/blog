@@ -125,34 +125,16 @@ namespace XjjXmm.DataBase.Imp.Operate
             return $"{p1} like '%{p2}%'";
         }
 
-        public string Contain(IEnumerable<string> p1, string p2)
-        {
-            //var sb = new StringBuilder();
-            //sb.Append($"{p2} in (");
+      
 
-            //foreach (var l in p1.ToList())
-            //{
-            //    sb.Append($"'{l}',");
-            //}
-
-            //sb.Remove(sb.Length - 1, 1);
-
-            //sb.Append(")");
-
-            //return sb.ToString();
-
-            //p1.Select(t => a.ToString());
-            return $"{p2} in ({p1.Concat(closure: "'")})";
-        }
-
-        public string Contain(IEnumerable<long> p1, long p2)
+        public string Contain(dynamic p1, dynamic p2)
         {
             var sb = new StringBuilder();
             sb.Append($"{p2} in (");
 
-            foreach (var l in p1.ToList())
+            foreach (var l in p1)
             {
-                sb.Append($"{l},");
+                sb.Append($"'{l}',");
             }
 
             sb.Remove(sb.Length - 1, 1);
@@ -161,6 +143,43 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             return sb.ToString();
         }
+
+        //public string Contain(IEnumerable<string> p1, string p2)
+        //{
+        //    //var sb = new StringBuilder();
+        //    //sb.Append($"{p2} in (");
+
+        //    //foreach (var l in p1.ToList())
+        //    //{
+        //    //    sb.Append($"'{l}',");
+        //    //}
+
+        //    //sb.Remove(sb.Length - 1, 1);
+
+        //    //sb.Append(")");
+
+        //    //return sb.ToString();
+
+        //    //p1.Select(t => a.ToString());
+        //    return $"{p2} in ({p1.Concat(closure: "'")})";
+        //}
+
+        //public string Contain(IEnumerable<long> p1, long p2)
+        //{
+        //    var sb = new StringBuilder();
+        //    sb.Append($"{p2} in (");
+
+        //    foreach (var l in p1.ToList())
+        //    {
+        //        sb.Append($"{l},");
+        //    }
+
+        //    sb.Remove(sb.Length - 1, 1);
+
+        //    sb.Append(")");
+
+        //    return sb.ToString();
+        //}
 
         public string FormatDate(string date, string format)
         {

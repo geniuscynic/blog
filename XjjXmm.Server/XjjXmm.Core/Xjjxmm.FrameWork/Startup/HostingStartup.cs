@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AspectCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -47,7 +48,7 @@ namespace XjjXmm.FrameWork.Startup
                     option.Filters.Add(typeof(GlobalExceptionsFilter));
                 });
 
-
+                services.ConfigureDynamicProxy();
                 //App.ServiceProvider = services.BuildServiceProvider();
             });
 

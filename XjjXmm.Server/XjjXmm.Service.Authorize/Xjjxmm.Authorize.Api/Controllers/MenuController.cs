@@ -34,7 +34,7 @@ namespace XjjXmm.Authorize.Api.Controllers
             var menuDtos = _menuService.BuildTree(menuDtoList);
             // List<MenuDto> menuDtos = menuService.buildTree(menuDtoList);
             //return menuDtoList;
-            return menuDtos;
+            return _menuService.buildMenus(menuDtos);
         }
 
 
