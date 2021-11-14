@@ -21,7 +21,7 @@ namespace XjjXmm.Authorize.Api.Controllers
     /// </summary>
     [ApiController]
     [Route("auth")]
-    public class AuthorizationController
+    public class AuthorizationController : ControllerBase
     {
         private readonly ICache _cache;
         private readonly UserService _userService;

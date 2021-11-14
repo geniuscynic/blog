@@ -20,6 +20,13 @@ namespace XjjXmm.Authorize.Repository.Entity
 
 
         /// <summary>
+        /// ID
+        /// </summary>
+        [Column(ColumnName = "dict_id")]
+        public long DictId { get; set; }
+
+
+        /// <summary>
         ///  字典标签
         /// </summary>
         [Column(ColumnName = "label")]
@@ -34,7 +41,7 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// <summary>
         ///  排序
         /// </summary>
-        [Column(ColumnName = "dictSort")]
+        [Column(ColumnName = "dict_sort")]
         public int DictSort { get; set; } = 999;
     }
 }

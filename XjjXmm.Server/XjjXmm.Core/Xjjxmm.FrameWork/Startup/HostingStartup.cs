@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using AspectCore.Configuration;
 using AspectCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -6,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
+using XjjXmm.FrameWork.Aop;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Filter;
 using XjjXmm.FrameWork.Startup;
@@ -48,7 +50,10 @@ namespace XjjXmm.FrameWork.Startup
                     option.Filters.Add(typeof(GlobalExceptionsFilter));
                 });
 
-                services.ConfigureDynamicProxy();
+                services.ConfigureDynamicProxy(config =>
+                {
+                    config.Interceptors.AddTyped<CustomInterceptor>();
+                });
                 //App.ServiceProvider = services.BuildServiceProvider();
             });
 

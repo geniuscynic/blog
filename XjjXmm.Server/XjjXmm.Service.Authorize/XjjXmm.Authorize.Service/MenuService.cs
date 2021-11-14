@@ -7,6 +7,7 @@ using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service.Model;
 using XjjXmm.Authorize.Service.Vo;
 using XjjXmm.FrameWork.Aop;
+using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Mapper;
@@ -28,8 +29,8 @@ namespace XjjXmm.Authorize.Service
             _roleRepository = roleRepository;
         }
 
-        [CustomInterceptor]
-        public async virtual Task<IEnumerable<MenuDto>> FindByUser(long userId)
+        [Caching]
+        public virtual async Task<IEnumerable<MenuDto>> FindByUser(long userId)
         {
             //var roles = await _roleRepository.FindByUserId(userId);
 
