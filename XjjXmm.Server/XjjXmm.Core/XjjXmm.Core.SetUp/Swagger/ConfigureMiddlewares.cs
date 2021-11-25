@@ -17,9 +17,10 @@ namespace XjjXmm.Core.SetUp.Swagger
 
                 var types = typeof(ConfigureMiddlewares);
 
-                var streamHtml = types.Assembly.GetManifestResourceStream($"{types.Namespace}.index.html");
-
-                c.IndexStream = () => streamHtml;
+               // var streamHtml = types.Assembly.GetManifestResourceStream($"{types.Namespace}.index.html");
+               
+                //c.IndexStream = () => streamHtml;
+                
             });
 
             return app;
