@@ -1,6 +1,7 @@
 ﻿using AspectCore.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
+using XjjXmm.FrameWork.LogExtension;
 using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.FrameWork.Startup
@@ -20,7 +21,7 @@ namespace XjjXmm.FrameWork.Startup
         {
             var frameworkPackageName = assemblyName ?? ReflectKit.GetAssemblyName(typeof(HostBuilderExtensions));
             hostBuilder.UseSetting(WebHostDefaults.HostingStartupAssembliesKey, frameworkPackageName);
-
+            hostBuilder.UseDefaultLog();
            
             return hostBuilder;
         }

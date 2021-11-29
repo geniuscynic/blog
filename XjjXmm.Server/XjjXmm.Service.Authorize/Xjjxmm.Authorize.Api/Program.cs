@@ -36,8 +36,8 @@ namespace XjjXmm.Authorize.Api
                 {
 
                     webBuilder.Inject()
-                        .UseStartup<Startup>()
-                        .UseDefaultLog();
+                        .UseStartup<Startup>();
+                    //.UseDefaultLog();
 
                     // .UseSerilogDefault();
 
