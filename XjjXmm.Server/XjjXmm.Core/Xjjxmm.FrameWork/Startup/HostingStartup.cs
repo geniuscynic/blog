@@ -8,8 +8,10 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
 using XjjXmm.FrameWork.Aop;
+using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Filter;
+using XjjXmm.FrameWork.LogExtension;
 using XjjXmm.FrameWork.Startup;
 using XjjXmm.FrameWork.Swagger;
 using XjjXmm.FrameWork.ToolKit;
@@ -42,6 +44,8 @@ namespace XjjXmm.FrameWork.Startup
 
                 services.AddDependencyInjection();
 
+                services.AddSingleton(typeof(ILog<>), typeof(MyLogger<>));
+
                // var a = DependencyContext.Default.RuntimeLibraries;
                 //var b = ReflectKit.AllAssemblies();
                 services.Configure<MvcOptions>(option =>
@@ -52,7 +56,11 @@ namespace XjjXmm.FrameWork.Startup
 
                 services.ConfigureDynamicProxy(config =>
                 {
-                    config.Interceptors.AddTyped<CustomInterceptor>();
+                   
+                    config.Interceptors.AddTyped<LogInterceptor>();
+                    config.NonAspectPredicates.AddService("ICache");
+
+                    config.Interceptors.AddTyped<CacheInterceptor>();
                 });
                 //App.ServiceProvider = services.BuildServiceProvider();
             });

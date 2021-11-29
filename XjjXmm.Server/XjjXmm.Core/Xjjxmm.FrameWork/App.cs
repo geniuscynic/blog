@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Linq;
+using log4net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using XjjXmm.FrameWork.Jwt;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace XjjXmm.FrameWork
 {
@@ -19,12 +21,17 @@ namespace XjjXmm.FrameWork
         /// </summary>
         public static IServiceProvider ServiceProvider { get; set; }
 
+        public static ILog<DefaultLogger> Logger => GetLog<DefaultLogger>();
+
+        public static ILog<T> GetLog<T>()
+        {
+            return ServiceProvider.GetService<ILog<T>>();
+        }
 
         public static JwtTokenSetting GetJwtConfig(string key = "JWT")
         {
             return JwtTokenSetting.GetKey(key);
         }
-
 
         public static string GetConfig(params string[] sections)
         {
@@ -37,7 +44,8 @@ namespace XjjXmm.FrameWork
             }
             catch (Exception ex)
             {
-                Serilog.Log.Error(ex, $"{ToKey(sections)} 不存在", null);
+                Logger.Error($"{ToKey(sections)} 不存在", ex);
+                //Serilog.Log.Error(ex, $"{ToKey(sections)} 不存在", null);
             }
 
             return "";
@@ -57,7 +65,7 @@ namespace XjjXmm.FrameWork
             }
             catch (Exception ex)
             {
-                Serilog.Log.Error(ex, $"{ToKey(keys)}: 不存在", null);
+                Logger.Error($"{ToKey(keys)}: 不存在", ex);
             }
 
             return null;

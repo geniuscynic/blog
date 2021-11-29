@@ -1,11 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;
 using XjjXmm.Authorize.Service.Model;
 using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.Jwt;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace XjjXmm.Authorize.Api.Controllers
 {
@@ -14,10 +16,12 @@ namespace XjjXmm.Authorize.Api.Controllers
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly ILog<UserController> _logger;
 
-        public UserController(UserService userService)
+        public UserController(UserService userService, ILog<UserController> _logger)
         {
             _userService = userService;
+            this._logger = _logger;
         }
 
         [HttpPost("/user/login")]
@@ -30,6 +34,8 @@ namespace XjjXmm.Authorize.Api.Controllers
                 ClientId = "admin",
                 Id = "1"
             });
+
+            _logger.Debug($"jwt:{jwtStr}");
 
             return jwtStr;
         }

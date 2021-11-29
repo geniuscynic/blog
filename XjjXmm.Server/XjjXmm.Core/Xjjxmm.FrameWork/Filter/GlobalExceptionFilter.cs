@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Serilog;
+using Microsoft.Extensions.Logging;
 using XjjXmm.FrameWork.Common;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace XjjXmm.FrameWork.Filter
 {
@@ -13,9 +14,9 @@ namespace XjjXmm.FrameWork.Filter
     public class GlobalExceptionsFilter : IExceptionFilter
     {
       //  private readonly IWebHostEnvironment _env;
-        private readonly ILogger _loggerHelper;
+        private readonly ILog<GlobalExceptionsFilter> _loggerHelper;
 
-        public GlobalExceptionsFilter(ILogger loggerHelper)
+        public GlobalExceptionsFilter(ILog<GlobalExceptionsFilter> loggerHelper)
         {
             //_env = env;
             _loggerHelper = loggerHelper;
@@ -32,7 +33,7 @@ namespace XjjXmm.FrameWork.Filter
                     Message = bussinessException.ExceptionModel.Message
                 });
 
-                _loggerHelper.Error(bussinessException, "GlobalExceptionsFilter");
+                _loggerHelper.Error("GlobalExceptionsFilter", bussinessException);
                 //context.Exception = null;
             }
             else
@@ -44,7 +45,7 @@ namespace XjjXmm.FrameWork.Filter
                     Message = context.Exception.Message
                 });
 
-                _loggerHelper.Error(context.Exception, "GlobalExceptionsFilter");
+                _loggerHelper.Error("GlobalExceptionsFilter", context.Exception);
             }
 
 

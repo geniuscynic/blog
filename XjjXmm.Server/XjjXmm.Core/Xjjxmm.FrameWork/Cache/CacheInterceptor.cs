@@ -10,11 +10,12 @@ using AspectCore.DynamicProxy.Parameters;
 using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using XjjXmm.FrameWork.Cache;
+using XjjXmm.FrameWork.ToolKit;
 using XjjXmm.FrameWork.ToolKit.DataEncryption.Extensions;
 
 namespace XjjXmm.FrameWork.Aop
 {
-    public class CustomInterceptor : AbstractInterceptor
+    public class CacheInterceptor : AbstractInterceptor
     {
         //通过注入的方式，把缓存操作接口通过构造函数注入
        // private readonly ICache _cache;
@@ -86,25 +87,26 @@ namespace XjjXmm.FrameWork.Aop
 
         protected string GetArgumentValue(object arg)
         {
-            if (arg is DateTime || arg is DateTime?)
-                return ((DateTime)arg).ToString("yyyyMMddHHmmss");
+            return arg.ToValue().ToMD5Encrypt();
+            //if (arg is DateTime || arg is DateTime?)
+            //    return ((DateTime)arg).ToString("yyyyMMddHHmmss");
 
-            if (arg is string || arg is ValueType || arg is Nullable)
-                return arg.ToString();
+            //if (arg is string || arg is ValueType || arg is Nullable)
+            //    return arg.ToString();
 
-            if (arg != null)
-            {
-                if (arg.GetType().IsClass)
-                {
-                    return JsonConvert.SerializeObject(arg).ToMD5Encrypt();
-                }
-                else
-                {
-                    var res = arg.GetHashCode() + arg.ToString();
-                    return res.ToMD5Encrypt();
-                }
-            }
-            return string.Empty;
+            //if (arg != null)
+            //{
+            //    if (arg.GetType().IsClass)
+            //    {
+            //        return JsonConvert.SerializeObject(arg).ToMD5Encrypt();
+            //    }
+            //    else
+            //    {
+            //        var res = arg.GetHashCode() + arg.ToString();
+            //        return res.ToMD5Encrypt();
+            //    }
+            //}
+            //return string.Empty;
         }
 
     }

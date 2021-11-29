@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>XjjXmm.Authorize.Api</name>
+    </assembly>
+    <members>
+        <member name="T:XjjXmm.Authorize.Api.Controllers.AuthorizationController">
+            <summary>
+            系统：系统授权接口
+            </summary>
+        </member>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.AuthorizationController.#ctor(XjjXmm.FrameWork.Cache.ICache,XjjXmm.Authorize.Service.UserService)">
+            <summary>
+            
+            </summary>
+            <param name="cache"></param>
+            <param name="userService"></param>
+        </member>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.AuthorizationController.Login(XjjXmm.Authorize.Service.Model.AuthUserDto)">
+            <summary>
+            登录授权
+            </summary>
+            <param name="authUser"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.AuthorizationController.GetCode">
+            <summary>
+             获取验证码
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:XjjXmm.Authorize.Api.Controllers.DictController">
+            <summary>
+            系统：字典管理
+            </summary>
+        </member>
+        <member name="T:XjjXmm.Authorize.Api.Controllers.DictDetailController">
+            <summary>
+            系统：字典详情管理
+            </summary>
+        </member>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.DictDetailController.Query(XjjXmm.Authorize.Repository.Entity.DictDetailQueryCriteria)">
+            <summary>
+            查询字典详情
+            </summary>
+            <param name="criteria"></param>
+            <returns></returns>
+        </member>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.MenuController.BuildMenus">
+            <summary>
+              获取前端所需菜单
+            </summary>
+            <param name=""></param>
+        </member>
+    </members>
+</doc>

@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json;
-using Serilog;
 using XjjXmm.Authorize.Repository;
 using XjjXmm.Authorize.Service;
 using XjjXmm.DataBase;
@@ -51,14 +50,14 @@ namespace XjjXmm.Authorize.Api
                 OnError = (sql, paramter, ex) =>
                 {
                         //Log.Information("Sql: \r\n{0}", sql);
-                        Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
-                    Log.Error(ex, "sqlerror");
+                      //  Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                   // Log.Error(ex, "sqlerror");
                         //Console.WriteLine(sql);
                     },
                 OnExecuting = (sql, paramter) =>
                 {
                         //Console.WriteLine(sql);
-                        Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                       // Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
 
                 },
 
@@ -68,6 +67,7 @@ namespace XjjXmm.Authorize.Api
             //App.GetSection<JWt>()
 
             services.AddSingleton<ICache, XjjxmmMemoryCache>();
+            //services.AddSingleton<ILogger, Logg>();
 
             services.AddAuthentication(options =>
             {

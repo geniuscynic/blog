@@ -4,17 +4,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using Serilog;
+using XjjXmm.FrameWork.LogExtension;
 
 
 namespace XjjXmm.FrameWork.Jwt
 {
     public class JwtHelper
     {
-        private static ILogger logger = Log.Logger;
+        private static ILog<JwtHelper> logger = App.GetLog<JwtHelper>();
 
-        
+                        
 
         public static string IssueToken(JwtTokenSetting jwtConfig, TokenModelOptions options)
         {
@@ -89,7 +90,7 @@ namespace XjjXmm.FrameWork.Jwt
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "jwt 解析错误");
+                logger.Error( "jwt 解析错误", ex);
             }
 
             return null;
@@ -152,7 +153,7 @@ namespace XjjXmm.FrameWork.Jwt
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "jwt 解析错误");
+                logger.Error("jwt 解析错误", ex);
             }
 
             return null;
