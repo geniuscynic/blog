@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging.Log4Net.AspNetCore.Extensions;
 
 namespace XjjXmm.FrameWork.LogExtension
 {
-    public class LoggerHelper<T> : ILog<T>
+    internal class LoggerHelper<T> : ILog<T>
     {
         private log4net.ILog _logger;
 

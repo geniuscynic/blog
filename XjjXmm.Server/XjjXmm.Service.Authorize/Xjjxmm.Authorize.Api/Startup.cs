@@ -22,6 +22,7 @@ using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Jwt;
 using XjjXmm.FrameWork.Swagger;
+using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.Authorize.Api
 {
@@ -38,7 +39,7 @@ namespace XjjXmm.Authorize.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddControllersAsServices();
 
             // services.AddSwaggerSetup();
 
@@ -50,15 +51,16 @@ namespace XjjXmm.Authorize.Api
                 OnError = (sql, paramter, ex) =>
                 {
                         //Log.Information("Sql: \r\n{0}", sql);
-                      //  Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                    //  Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
                    // Log.Error(ex, "sqlerror");
                         //Console.WriteLine(sql);
+                        App.GetLog<DbClient>().Error("sqlerror", ex);
                     },
                 OnExecuting = (sql, paramter) =>
                 {
-                        //Console.WriteLine(sql);
-                       // Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
-
+                    //Console.WriteLine(sql);
+                    // Log.Debug($"Sql:  {sql}, \r\n paramter: {JsonConvert.SerializeObject(paramter)}");
+                    App.GetLog<DbClient>().Debug($"Sql:  {sql}, \r\n paramter: {paramter.ToValue()}");
                 },
 
             })
