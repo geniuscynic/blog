@@ -242,6 +242,7 @@ export default {
         this.form.cover = this.form.cover.toString()
       })
       getDicts().then(data => {
+        debugger
         this.dicts = data
       })
     })

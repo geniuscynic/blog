@@ -14,5 +14,10 @@ namespace XjjXmm.Authorize.Repository.Entity
         public string DictName { get; set; }
 
         public new string[] Sort { get; set; } = new[] {"dictSort"};
+
+
+        public int Size { get; set; }
+
+
     }
 }
