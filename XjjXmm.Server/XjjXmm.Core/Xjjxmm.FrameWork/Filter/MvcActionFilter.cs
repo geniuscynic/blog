@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Logging;
 using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DataValidation;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace XjjXmm.FrameWork.Filter
 {
@@ -11,9 +12,9 @@ namespace XjjXmm.FrameWork.Filter
     public class MvcActionFilter : IAsyncActionFilter
     {
         //  private readonly IWebHostEnvironment _env;
-        private readonly ILogger<MvcActionFilter> _loggerHelper;
+        private readonly ILog<MvcActionFilter> _loggerHelper;
 
-        public MvcActionFilter(ILogger<MvcActionFilter> loggerHelper)
+        public MvcActionFilter(ILog<MvcActionFilter> loggerHelper)
         {
             //_env = env;
             _loggerHelper = loggerHelper;
@@ -43,7 +44,7 @@ namespace XjjXmm.FrameWork.Filter
         {
             if (context.Exception != null)
             {
-                //_loggerHelper.Error(context.Exception, "MVC Error");
+                _loggerHelper.Error("MVC Error", context.Exception);
 
                 //if (context.Exception is BussinessException bussinessException)
                 //{
