@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using XjjXmm.FrameWork.LogExtension;
+using XjjXmm.FrameWork.ToolKit;
 
 
 namespace XjjXmm.FrameWork.Jwt
@@ -26,6 +27,7 @@ namespace XjjXmm.FrameWork.Jwt
                 //下边为Claim的默认配置
                // new Claim(JwtRegisteredClaimNames.Name, options.Id),
                new Claim(ClaimTypes.Name, options.Id),
+              
                 new Claim("AppId", options.AppId),
                 new Claim("ClientId", options.ClientId),
                 new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
@@ -43,7 +45,7 @@ namespace XjjXmm.FrameWork.Jwt
             };
 
 
-            //claims.AddRange(tokenModel.Role.Select(s => new Claim(ClaimTypes.Role, s.Trim())));
+            claims.AddRange(options.Roles.Select(s => new Claim(ClaimTypes.Role, s.Trim())));
 
             //秘钥 (SymmetricSecurityKey 对安全性的要求，密钥的长度太短会报出异常)
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtConfig.Secret));

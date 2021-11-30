@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using XjjXmm.FrameWork.Authorization;
 
 namespace XjjXmm.Authorize.Api.Controllers
 {
@@ -24,6 +26,7 @@ namespace XjjXmm.Authorize.Api.Controllers
         }
 
         [HttpGet]
+        [XjjXmmAuthorize]
         public IEnumerable<WeatherForecast> Get()
         {
             var rng = new Random();

@@ -1,4 +1,6 @@
-﻿namespace XjjXmm.FrameWork.Jwt
+﻿using System.Collections.Generic;
+
+namespace XjjXmm.FrameWork.Jwt
 {
 
     /// <summary>
@@ -7,9 +9,14 @@
     public class TokenModelOptions
     {
         /// <summary>
-        /// Id
+        /// 用户ID Id
         /// </summary>
         public string Id { get; set; }
+
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public List<string> Roles { get; set; } 
 
 
         public string ClientId { get; set; }

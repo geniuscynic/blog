@@ -8,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyModel;
 using Microsoft.Extensions.Hosting;
 using XjjXmm.FrameWork.Aop;
+using XjjXmm.FrameWork.Authorization;
 using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Filter;
@@ -62,6 +63,9 @@ namespace XjjXmm.FrameWork.Startup
 
                     config.Interceptors.AddTyped<CacheInterceptor>();
                 });
+
+
+                services.ConfigAuthentication().ConfigAuthorization();
                 //App.ServiceProvider = services.BuildServiceProvider();
             });
 

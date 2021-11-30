@@ -24,7 +24,8 @@ namespace XjjXmm.Authorize.Api.Controllers
         /// </summary>
         /// <param name=""></param>
         [HttpGet("build")]
-        [Authorize]
+        [Authorize(Policy = "p1")]
+        //[Authorize(Roles = "test")]
         public async Task<dynamic> BuildMenus()
         {
             var id = HttpContext?.User?.Identity?.Name ?? "0";

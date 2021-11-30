@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using XjjXmm.Authorize.Repository.Entity;
@@ -32,7 +33,8 @@ namespace XjjXmm.Authorize.Api.Controllers
             {
                 AppId = "xjjxmm",
                 ClientId = "admin",
-                Id = "1"
+                Id = "1",
+                Roles = new List<string>() {"admin", "a2"}
             });
 
             _logger.Debug($"jwt:{jwtStr}");

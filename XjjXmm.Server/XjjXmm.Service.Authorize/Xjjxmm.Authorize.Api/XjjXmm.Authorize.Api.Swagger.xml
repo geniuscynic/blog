@@ -4,6 +4,11 @@
         <name>XjjXmm.Authorize.Api</name>
     </assembly>
     <members>
+        <member name="T:XjjXmm.Authorize.Api.Authorization.PermissionAuthorizationHandler">
+            <summary>
+            
+            </summary>
+        </member>
         <member name="T:XjjXmm.Authorize.Api.Controllers.AuthorizationController">
             <summary>
             系统：系统授权接口
