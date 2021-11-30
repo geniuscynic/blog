@@ -43,5 +43,9 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// </summary>
         [Column(ColumnName = "dict_sort")]
         public int DictSort { get; set; } = 999;
+
+
+        [Column(Ignore = true)]
+        public DictEntity Dict { get; set; }
     }
 }

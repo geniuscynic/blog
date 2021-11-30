@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using log4net;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using XjjXmm.FrameWork.Jwt;
@@ -27,6 +28,14 @@ namespace XjjXmm.FrameWork
         {
             return ServiceProvider.GetService<ILog<T>>();
         }
+
+        public static string? UserId {
+            get
+            {
+                var context = ServiceProvider.GetService<IHttpContextAccessor>();
+                return context?.HttpContext?.User?.Identity?.Name;
+            }
+        } 
 
         public static JwtTokenSetting GetJwtConfig(string key = "JWT")
         {

@@ -115,18 +115,18 @@ namespace XjjXmm.Authorize.Service
 
         }
 
-        public async Task<UserDetailModel> FindUser(string id)
+        public async Task<UserDto> FindUser(string id)
         {
 
 
-            //var user = _userRepository.FirstOrDefault(t => t.Id == id).Result;
+            var user = await _userRepository.FirstOrDefault(t => t.Id == int.Parse(id));
 
-            //if (user == null)
-            //{
-            //    throw BussinessException.CreateException(ExceptionCode.CustomException, "找不到用户");
-            //}
+            if (user == null)
+            {
+                throw BussinessException.CreateException(ExceptionCode.CustomException, "找不到用户");
+            }
 
-            //var userModel = user.MapTo<UserEntity, UserDetailModel>();
+            var userModel = user.MapTo<UserEntity, UserDto>();
 
 
 
@@ -134,8 +134,8 @@ namespace XjjXmm.Authorize.Service
 
             //userModel.Roles = roles.Select(t => t.Id);
 
-            //return userModel;
-            throw new NotImplementedException();
+            return userModel;
+           
         }
 
 

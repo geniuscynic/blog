@@ -1,7 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using XjjXmm.Authorize.Repository.Criteria;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;
 using XjjXmm.Authorize.Service.Model;
@@ -13,17 +15,60 @@ using XjjXmm.FrameWork.LogExtension;
 namespace XjjXmm.Authorize.Api.Controllers
 {
     [ApiController]
-    [Route("[controller]")]
+    [Route("api/users")]
     public class UserController : ControllerBase
     {
         private readonly UserService _userService;
+        private readonly DeptService _deptService;
         private readonly ILog<UserController> _logger;
 
-        public UserController(UserService userService, ILog<UserController> _logger)
+        public UserController(UserService userService, DeptService deptService, ILog<UserController> _logger)
         {
             _userService = userService;
+            _deptService = deptService;
             this._logger = _logger;
         }
+
+
+        /// <summary>
+        ///  查询用户
+        /// </summary>
+        /// <param name="criteria"></param>
+        /// <param name="pageable"></param>
+        /// <returns></returns>
+        public async Task<PageModel<UserDto>> query(UserQueryCriteria criteria, Pageable pageable)
+        {
+            
+            if (criteria.DeptId.HasValue)
+            {
+                criteria.DeptIds.Add(criteria.DeptId.Value);
+                // 先查找是否存在子节点
+                var data = await _deptService.FindByPid(criteria.Id);
+                // 然后把子节点的ID都加入到集合中
+                criteria.DeptIds.AddRange(await _deptService.GetDeptChildren(data));
+            }
+            // 数据权限
+            List<Long> dataScopes = dataService.getDeptIds(_userService.FindUser(App.UserId));
+            // criteria.getDeptIds() 不为空并且数据权限不为空则取交集
+            if (!CollectionUtils.isEmpty(criteria.getDeptIds()) && !CollectionUtils.isEmpty(dataScopes))
+            {
+                // 取交集
+                criteria.getDeptIds().retainAll(dataScopes);
+                if (!CollectionUtil.isEmpty(criteria.getDeptIds()))
+                {
+                    return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
+                }
+            }
+            else
+            {
+                // 否则取并集
+                criteria.getDeptIds().addAll(dataScopes);
+                return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
+            }
+            return new ResponseEntity<>(PageUtil.toPage(null, 0), HttpStatus.OK);
+        }
+
+
 
         [HttpPost("/user/login")]
         public string login()

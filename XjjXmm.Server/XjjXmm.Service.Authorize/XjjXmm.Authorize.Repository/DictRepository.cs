@@ -5,9 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.DataBase;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Repository
 {
+    [Injection]
     public class DictRepository : Repository<DictEntity>
     {
         /**

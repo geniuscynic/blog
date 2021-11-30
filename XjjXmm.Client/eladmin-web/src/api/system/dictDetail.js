@@ -4,7 +4,7 @@ export function get(dictName) {
   const params = {
     dictName,
     page: 0,
-    size: 9999
+    pageSize: 9999
   }
   return request({
     url: 'api/dictDetail',
@@ -17,7 +17,7 @@ export function getDictMap(dictName) {
   const params = {
     dictName,
     page: 0,
-    size: 9999
+    pageSize: 9999
   }
   return request({
     url: 'api/dictDetail/map',

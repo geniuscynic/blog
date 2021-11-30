@@ -66,7 +66,7 @@ namespace XjjXmm.Authorize.Service.Model
 
         public List<RoleSmallDto> Roles { get; set; } = new List<RoleSmallDto>();
 
-        public List<DeptSmallModel> Dept { get; set; } = new List<DeptSmallModel>();
+        public DeptSmallModel Dept { get; set; } = new DeptSmallModel();
 
         public List<JobSmallDto> Jobs { get; set; } = new List<JobSmallDto>();
         

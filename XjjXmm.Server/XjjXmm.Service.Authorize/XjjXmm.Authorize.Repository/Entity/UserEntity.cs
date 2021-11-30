@@ -96,7 +96,7 @@ namespace XjjXmm.Authorize.Repository.Entity
         /// 对应的部门
         /// </summary>
         [Column(Ignore = true)]
-        public List<DeptEntity> Dept { get; set; }
+        public DeptEntity Dept { get; set; }
 
         /// <summary>
         /// 对应的角色

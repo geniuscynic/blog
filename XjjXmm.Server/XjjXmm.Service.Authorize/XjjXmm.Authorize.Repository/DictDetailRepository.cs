@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XjjXmm.Authorize.Repository.Criteria;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.DataBase;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Repository
 {
+    [Injection]
     public class DictDetailRepository : Repository<DictDetailEntity>
     {
 
@@ -31,6 +34,7 @@ namespace XjjXmm.Authorize.Repository
         public async Task<(IEnumerable<DictDetailEntity> data, int total)> FindAll(DictDetailQueryCriteria criteria)
         {
             return await _dbclient.ComplexQueryable<DictDetailEntity>("dd")
+                .Include<DictEntity>(dd=>dd.Dict, dd=>dd.DictId, d=>d.Id)
                 .Join<DictEntity>("d", (dd, d) => dd.DictId == d.Id)
                 .Where((dd, d) => d.Name == criteria.DictName)
                 .ToPageList(criteria.PageNumber, criteria.PageSize);

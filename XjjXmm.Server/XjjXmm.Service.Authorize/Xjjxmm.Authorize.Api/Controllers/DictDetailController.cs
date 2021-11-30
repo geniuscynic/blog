@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using XjjXmm.Authorize.Repository;
+using XjjXmm.Authorize.Repository.Criteria;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;
 using XjjXmm.Authorize.Service.Model;
@@ -15,7 +16,7 @@ namespace XjjXmm.Authorize.Api.Controllers
     /// 系统：字典详情管理
     /// </summary>
     [ApiController]
-    [Route("dictDetail")]
+    [Route("api/dictDetail")]
     public class DictDetailController : ControllerBase
     {
         private readonly DictDetailService _dictDetailService;
@@ -32,7 +33,7 @@ namespace XjjXmm.Authorize.Api.Controllers
         /// <param name="criteria"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<PageModel<DictDetailDto>> Query(DictDetailQueryCriteria criteria)
+        public async Task<PageModel<DictDetailDto>> Query([FromQuery] DictDetailQueryCriteria criteria)
         {
             return await _dictDetailService.QueryAll(criteria);
         }

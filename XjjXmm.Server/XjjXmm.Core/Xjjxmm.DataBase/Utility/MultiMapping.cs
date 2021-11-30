@@ -286,7 +286,7 @@ namespace Xjjxmm.DataBase.Utility
         }
 
 
-        public void Exec2(List<T> res)
+        public void ExecuteQuery(List<T> res)
         {
             actions.ForEach(t =>
             {

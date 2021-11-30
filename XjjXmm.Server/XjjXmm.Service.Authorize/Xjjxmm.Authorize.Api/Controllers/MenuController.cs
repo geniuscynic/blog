@@ -4,12 +4,14 @@ using Microsoft.AspNetCore.Mvc;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service;
 using XjjXmm.Authorize.Service.Model;
+using XjjXmm.FrameWork.Authorization;
 using XjjXmm.FrameWork.Common;
 
 namespace XjjXmm.Authorize.Api.Controllers
 {
     [ApiController]
     [Route("api/menus")]
+    [XjjXmmAuthorize]
     public class MenuController : ControllerBase
     {
         private readonly MenuService _menuService;
@@ -24,7 +26,7 @@ namespace XjjXmm.Authorize.Api.Controllers
         /// </summary>
         /// <param name=""></param>
         [HttpGet("build")]
-        [Authorize(Policy = "p1")]
+        
         //[Authorize(Roles = "test")]
         public async Task<dynamic> BuildMenus()
         {

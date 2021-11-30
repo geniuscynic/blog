@@ -44,7 +44,7 @@
             系统：字典详情管理
             </summary>
         </member>
-        <member name="M:XjjXmm.Authorize.Api.Controllers.DictDetailController.Query(XjjXmm.Authorize.Repository.Entity.DictDetailQueryCriteria)">
+        <member name="M:XjjXmm.Authorize.Api.Controllers.DictDetailController.Query(XjjXmm.Authorize.Repository.Criteria.DictDetailQueryCriteria)">
             <summary>
             查询字典详情
             </summary>

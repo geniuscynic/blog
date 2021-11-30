@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository;
+using XjjXmm.Authorize.Repository.Criteria;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service.Model;
 using XjjXmm.FrameWork.Common;
+using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Mapper;
 
 namespace XjjXmm.Authorize.Service
 {
+    [Injection]
     public class DictDetailService
     {
         private readonly DictDetailRepository _dictDetailRepository;
@@ -20,7 +23,7 @@ namespace XjjXmm.Authorize.Service
             _dictDetailRepository = dictDetailRepository;
         }
 
-        public async Task<PageModel<DictDetailDto>> QueryAll(DictDetailQueryCriteria criteria)
+        public virtual async  Task<PageModel<DictDetailDto>> QueryAll(DictDetailQueryCriteria criteria)
         {
             var model = await _dictDetailRepository.FindAll(criteria);
             var data = model.data.MapTo<DictDetailEntity, DictDetailDto>();

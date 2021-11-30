@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository;
 using XjjXmm.Authorize.Service.Model;
 using XjjXmm.FrameWork.Cache;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace XjjXmm.Authorize.Service
 {
+    [Injection]
     public class DictService
     {
         private readonly DictRepository _dictRepository;

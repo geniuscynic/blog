@@ -17,15 +17,21 @@ namespace XjjXmm.DataBase.Imp.Operate
 {
     internal class ComplexQueryable<T> : IComplexQueryable<T>
     {
-        private readonly IQueryableProvider _provider;
+        protected readonly IQueryableProvider _provider;
 
-        private MappingHelper<T> _mapHelper;
+        protected MappingHelper<T> _mapHelper;
         //private readonly  StringBuilder _sortSql = new StringBuilder();
 
-        public ComplexQueryable(IQueryableProvider provider)
+        public ComplexQueryable(IQueryableProvider provider) : this(provider, new MappingHelper<T>(provider))
+        {
+           // _provider = provider;
+            //_mapHelper = new MappingHelper<T>(_provider);
+        }
+
+        public ComplexQueryable(IQueryableProvider provider, MappingHelper<T> mapHelper)
         {
             _provider = provider;
-            _mapHelper = new MappingHelper<T>(_provider);
+            _mapHelper = mapHelper;
         }
 
 
@@ -33,14 +39,14 @@ namespace XjjXmm.DataBase.Imp.Operate
         {
             _provider.Join(alias, predicate);
 
-            return new ComplexQueryable<T, T2>(_provider);
+            return new ComplexQueryable<T, T2>(_provider, _mapHelper);
         }
 
         public IComplexQueryable<T, T2> LeftJoin<T2>(string alias, Expression<Func<T, T2, bool>> predicate)
         {
             _provider.LeftJoin(alias, predicate);
 
-            return new ComplexQueryable<T, T2>(_provider);
+            return new ComplexQueryable<T, T2>(_provider, _mapHelper);
         }
 
         public IComplexQueryable<T> Where(Expression<Func<T, bool>> predicate)
@@ -292,7 +298,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var tmp = results.ToList();
           
-            _mapHelper.Exec2(tmp);
+            _mapHelper.ExecuteQuery(tmp);
 
             return tmp;
           
@@ -304,7 +310,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var tmp = new List<T>() {results};
 
-            _mapHelper.Exec2(tmp);
+            _mapHelper.ExecuteQuery(tmp);
 
             return results;
 
@@ -317,7 +323,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var tmp = new List<T>() { results };
 
-            _mapHelper.Exec2(tmp);
+            _mapHelper.ExecuteQuery(tmp);
 
             return results;
 
@@ -330,7 +336,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var tmp = new List<T>() { results };
 
-            _mapHelper.Exec2(tmp);
+            _mapHelper.ExecuteQuery(tmp);
 
             return results;
             // return await _provider.CreateReaderableCommand<T>().ExecuteSingle();
@@ -343,7 +349,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var tmp = new List<T>() { results };
 
-            _mapHelper.Exec2(tmp);
+            _mapHelper.ExecuteQuery(tmp);
 
             return results;
 
@@ -359,7 +365,7 @@ namespace XjjXmm.DataBase.Imp.Operate
 
             var tmp = results.data.ToList();
 
-            _mapHelper.Exec2(tmp);
+            _mapHelper.ExecuteQuery(tmp);
 
             return (tmp, results.total);
 
@@ -373,11 +379,12 @@ namespace XjjXmm.DataBase.Imp.Operate
 
     internal class ComplexQueryable<T1, T2> : ComplexQueryable<T1>, IComplexQueryable<T1, T2>
     {
-        private readonly IQueryableProvider _provider;
-
-        public ComplexQueryable(IQueryableProvider provider) : base(provider)
+        //private readonly IQueryableProvider _provider;
+       // private MappingHelper<T1> _mapHelper;
+        public ComplexQueryable(IQueryableProvider provider, MappingHelper<T1> mapHelper) : base(provider, mapHelper)
         {
-            _provider = provider;
+           // _provider = provider;
+           // _mapHelper = mapHelper;
         }
 
 
@@ -388,7 +395,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.Join(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3>(_provider);
+            return new ComplexQueryable<T1, T2, T3>(_provider, _mapHelper);
         }
 
         public IComplexQueryable<T1, T2, T3> LeftJoin<T3>(string alias, Expression<Func<T1, T2, T3, bool>> predicate)
@@ -397,7 +404,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.LeftJoin(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3>(_provider);
+            return new ComplexQueryable<T1, T2, T3>(_provider, _mapHelper);
         }
 
         public new IComplexQueryable<T1, T2> Where(string whereExpression)
@@ -471,11 +478,13 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         //private readonly StringBuilder _join;
 
-        private readonly IQueryableProvider _provider;
+       // private readonly IQueryableProvider _provider;
+        //private readonly MappingHelper<T1> _mapHelper;
 
-        public ComplexQueryable(IQueryableProvider provider) : base(provider)
+        public ComplexQueryable(IQueryableProvider provider, MappingHelper<T1> mapHelper) : base(provider, mapHelper)
         {
-            _provider = provider;
+           // _provider = provider;
+           // _mapHelper = mapHelper;
         }
 
 
@@ -486,7 +495,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.Join(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4>(_provider, _mapHelper);
         }
 
         public IComplexQueryable<T1, T2, T3, T4> LeftJoin<T4>(string alias,
@@ -496,7 +505,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.LeftJoin(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4>(_provider, _mapHelper);
         }
 
         public new IComplexQueryable<T1, T2, T3> Where(string whereExpression)
@@ -554,11 +563,11 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         //private readonly StringBuilder _join;
 
-        private readonly IQueryableProvider _provider;
+        //private readonly IQueryableProvider _provider;
 
-        public ComplexQueryable(IQueryableProvider provider) : base(provider)
+        public ComplexQueryable(IQueryableProvider provider,MappingHelper<T1> mapHelper) : base(provider, mapHelper)
         {
-            _provider = provider;
+            //_provider = provider;
         }
 
         public IComplexQueryable<T1, T2, T3, T4, T5> Join<T5>(string alias, Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
@@ -566,7 +575,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.Join(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4, T5>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4, T5>(_provider, _mapHelper);
         }
 
         public IComplexQueryable<T1, T2, T3, T4, T5> LeftJoin<T5>(string alias, Expression<Func<T1, T2, T3, T4, T5, bool>> predicate)
@@ -574,7 +583,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.LeftJoin(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4, T5>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4, T5>(_provider, _mapHelper);
         }
 
         public new IComplexQueryable<T1, T2, T3, T4> Where(string whereExpression)
@@ -631,11 +640,11 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         //private readonly StringBuilder _join;
 
-        private readonly IQueryableProvider _provider;
+        //private readonly IQueryableProvider _provider;
 
-        public ComplexQueryable(IQueryableProvider provider) : base(provider)
+        public ComplexQueryable(IQueryableProvider provider, MappingHelper<T1> mapHelper) : base(provider, mapHelper)
         {
-            _provider = provider;
+            //_provider = provider;
         }
 
         public IComplexQueryable<T1, T2, T3, T4, T5, T6> Join<T6>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
@@ -643,7 +652,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.Join(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4, T5, T6>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4, T5, T6>(_provider,_mapHelper);
         }
 
         public IComplexQueryable<T1, T2, T3, T4, T5, T6> LeftJoin<T6>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, bool>> predicate)
@@ -651,7 +660,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.LeftJoin(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4, T5, T6>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4, T5, T6>(_provider,_mapHelper);
         }
 
         public new IComplexQueryable<T1, T2, T3, T4, T5> Where(string whereExpression)
@@ -708,11 +717,11 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         //private readonly StringBuilder _join;
 
-        private readonly IQueryableProvider _provider;
+        //private readonly IQueryableProvider _provider;
 
-        public ComplexQueryable(IQueryableProvider provider) : base(provider)
+        public ComplexQueryable(IQueryableProvider provider, MappingHelper<T1> mapHelper) : base(provider, mapHelper)
         {
-            _provider = provider;
+            //_provider = provider;
         }
 
         public IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> Join<T7>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
@@ -720,7 +729,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.Join(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4, T5, T6, T7>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4, T5, T6, T7>(_provider,_mapHelper);
         }
 
         public IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> LeftJoin<T7>(string alias, Expression<Func<T1, T2, T3, T4, T5, T6, T7, bool>> predicate)
@@ -728,7 +737,7 @@ namespace XjjXmm.DataBase.Imp.Operate
             _provider.LeftJoin(alias, predicate);
 
 
-            return new ComplexQueryable<T1, T2, T3, T4, T5, T6, T7>(_provider);
+            return new ComplexQueryable<T1, T2, T3, T4, T5, T6, T7>(_provider,_mapHelper);
         }
 
 
@@ -786,11 +795,11 @@ namespace XjjXmm.DataBase.Imp.Operate
     {
         //private readonly StringBuilder _join;
 
-        private readonly IQueryableProvider _provider;
+        //private readonly IQueryableProvider _provider;
 
-        public ComplexQueryable(IQueryableProvider provider) : base(provider)
+        public ComplexQueryable(IQueryableProvider provider, MappingHelper<T1> mapHelper) : base(provider, mapHelper)
         {
-            _provider = provider;
+           // _provider = provider;
         }
 
         public new IComplexQueryable<T1, T2, T3, T4, T5, T6, T7> Where(string whereExpression)
