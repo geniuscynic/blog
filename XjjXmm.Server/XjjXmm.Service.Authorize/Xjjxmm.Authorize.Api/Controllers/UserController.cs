@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -20,12 +21,14 @@ namespace XjjXmm.Authorize.Api.Controllers
     {
         private readonly UserService _userService;
         private readonly DeptService _deptService;
+        private readonly DataService _dataService;
         private readonly ILog<UserController> _logger;
 
-        public UserController(UserService userService, DeptService deptService, ILog<UserController> _logger)
+        public UserController(UserService userService, DeptService deptService, DataService dataService, ILog<UserController> _logger)
         {
             _userService = userService;
             _deptService = deptService;
+            _dataService = dataService;
             this._logger = _logger;
         }
 
@@ -48,15 +51,15 @@ namespace XjjXmm.Authorize.Api.Controllers
                 criteria.DeptIds.AddRange(await _deptService.GetDeptChildren(data));
             }
             // 数据权限
-            List<Long> dataScopes = dataService.getDeptIds(_userService.FindUser(App.UserId));
+            List<long> dataScopes = await _dataService.GetDeptIds(await _userService.FindUser(App.UserId));
             // criteria.getDeptIds() 不为空并且数据权限不为空则取交集
-            if (!CollectionUtils.isEmpty(criteria.getDeptIds()) && !CollectionUtils.isEmpty(dataScopes))
+            if (criteria.DeptIds.Count > 0 && dataScopes.Count > 0)
             {
                 // 取交集
-                criteria.getDeptIds().retainAll(dataScopes);
-                if (!CollectionUtil.isEmpty(criteria.getDeptIds()))
+                var res = criteria.DeptIds.Intersect(dataScopes);
+                if (res.Any())
                 {
-                    return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
+                    return new ResponseEntity<>(_userService.queryAll(criteria, pageable), HttpStatus.OK);
                 }
             }
             else

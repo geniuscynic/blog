@@ -42,7 +42,7 @@ namespace XjjXmm.FrameWork.Jwt
 
         internal static JwtTokenSetting GetKey(string key)
         {
-            var jwtConfig = App.GetSection<JwtTokenSetting>(key);
+            var jwtConfig = App.Configuration.GetSection<JwtTokenSetting>(key);
 
             if (jwtConfig == null)
             {

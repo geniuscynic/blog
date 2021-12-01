@@ -10,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using XjjXmm.FrameWork.Aop;
 using XjjXmm.FrameWork.Authorization;
 using XjjXmm.FrameWork.Cache;
+using XjjXmm.FrameWork.Configuration;
 using XjjXmm.FrameWork.DependencyInjection;
 using XjjXmm.FrameWork.Filter;
 using XjjXmm.FrameWork.LogExtension;
@@ -38,7 +39,7 @@ namespace XjjXmm.FrameWork.Startup
                 services.AddSwaggerSetup();
 
                 // 存储配置对象
-                App.Configuration = hostContext.Configuration;
+                //XjjXmmConfiguration.Configuration = hostContext.Configuration;
 
                 // 注册 HttpContextAccessor 服务
                 services.AddHttpContextAccessor();
@@ -47,12 +48,12 @@ namespace XjjXmm.FrameWork.Startup
 
                 services.AddSingleton(typeof(ILog<>), typeof(MyLogger<>));
 
-               // var a = DependencyContext.Default.RuntimeLibraries;
+                // var a = DependencyContext.Default.RuntimeLibraries;
                 //var b = ReflectKit.AllAssemblies();
                 services.Configure<MvcOptions>(option =>
                 {
-                    option.Filters.Add(typeof(MvcActionFilter));
-                    option.Filters.Add(typeof(GlobalExceptionsFilter));
+                    //option.Filters.Add(typeof(MvcActionFilter));
+                    //option.Filters.Add(typeof(GlobalExceptionsFilter));
                 });
 
                 services.ConfigureDynamicProxy(config =>
@@ -65,7 +66,7 @@ namespace XjjXmm.FrameWork.Startup
                 });
 
 
-                services.ConfigAuthentication().ConfigAuthorization();
+                //services.ConfigAuthentication().ConfigAuthorization();
                 //App.ServiceProvider = services.BuildServiceProvider();
             });
 

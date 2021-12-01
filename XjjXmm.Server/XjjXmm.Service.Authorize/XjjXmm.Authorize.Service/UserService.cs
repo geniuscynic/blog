@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using XjjXmm.Authorize.Repository;
+using XjjXmm.Authorize.Repository.Criteria;
 using XjjXmm.Authorize.Repository.Entity;
 using XjjXmm.Authorize.Service.Model;
 using XjjXmm.FrameWork.Common;
@@ -138,8 +139,12 @@ namespace XjjXmm.Authorize.Service
            
         }
 
+        public async Task<PageModel<UserDto>> QueryAll(UserQueryCriteria criteria)
+        {
+            Page<User> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder)->QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+            return PageUtil.toPage(page.map(userMapper::toDto));
+        }
 
-       
 
         public async Task<bool> SetUserStatus(string id, UserStatus status)
         {
