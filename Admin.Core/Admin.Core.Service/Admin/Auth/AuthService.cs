@@ -10,6 +10,7 @@ using Admin.Tools.Captcha;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 
 namespace Admin.Core.Service.Admin.Auth
 {
@@ -39,7 +40,7 @@ namespace Admin.Core.Service.Admin.Auth
             _captcha = captcha;
         }
 
-        public async Task<IResponseOutput> GetPassWordEncryptKeyAsync()
+        public async Task<object> GetPassWordEncryptKeyAsync()
         {
             //写入Redis
             var guid = Guid.NewGuid().ToString("N");
@@ -48,14 +49,15 @@ namespace Admin.Core.Service.Admin.Auth
             await Cache.SetAsync(key, encyptKey, TimeSpan.FromMinutes(5));
             var data = new { key = guid, encyptKey };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> GetUserInfoAsync()
+        public async Task<AuthUserInfoOutput> GetUserInfoAsync()
         {
             if (!(User?.Id > 0))
             {
-                return ResponseOutput.NotOk("未登录！");
+                //return ResponseOutput.NotOk("未登录！");
+                throw BussinessException.CreateException(ExceptionCode.CustomException, "未登录！");
             }
 
             var authUserInfoOutput = new AuthUserInfoOutput { };
@@ -86,10 +88,10 @@ namespace Admin.Core.Service.Admin.Auth
                 )
                 .ToListAsync(a => a.Code);
 
-            return ResponseOutput.Ok(authUserInfoOutput);
+            return authUserInfoOutput;
         }
 
-        public async Task<IResponseOutput> GetVerifyCodeAsync(string lastKey)
+        public async Task<AuthGetVerifyCodeOutput> GetVerifyCodeAsync(string lastKey)
         {
             var img = _verifyCodeHelper.GetBase64String(out string code);
 
@@ -105,10 +107,10 @@ namespace Admin.Core.Service.Admin.Auth
             await Cache.SetAsync(key, code, TimeSpan.FromMinutes(5));
 
             var data = new AuthGetVerifyCodeOutput { Key = guid, Img = img };
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> LoginAsync(AuthLoginInput input)
+        public async Task<AuthLoginOutput> LoginAsync(AuthLoginInput input)
         {
             #region 验证码校验
 
@@ -139,7 +141,8 @@ namespace Admin.Core.Service.Admin.Auth
                 var isOk = await _captcha.CheckAsync(input.Captcha);
                 if (!isOk)
                 {
-                    return ResponseOutput.NotOk("安全验证不通过，请重新登录！");
+                    //return ResponseOutput.NotOk("安全验证不通过，请重新登录！");
+                    throw BussinessException.CreateException(ExceptionCode.CustomException, "安全验证不通过，请重新登录！");
                 }
             }
 
@@ -152,7 +155,8 @@ namespace Admin.Core.Service.Admin.Auth
 
             if (!(user?.Id > 0))
             {
-                return ResponseOutput.NotOk("账号输入有误!", 3);
+                //return ResponseOutput.NotOk("账号输入有误!", 3);
+                throw BussinessException.CreateException(ExceptionCode.CustomException, "账号输入有误！");
             }
 
             #region 解密
@@ -166,14 +170,16 @@ namespace Admin.Core.Service.Admin.Auth
                     var secretKey = await Cache.GetAsync(passwordEncryptKey);
                     if (secretKey.IsNull())
                     {
-                        return ResponseOutput.NotOk("解密失败！", 1);
+                        //return ResponseOutput.NotOk("解密失败！", 1);
+                        throw BussinessException.CreateException(ExceptionCode.CustomException, "解密失败！");
                     }
                     input.Password = DesEncrypt.Decrypt(input.Password, secretKey);
                     await Cache.DelAsync(passwordEncryptKey);
                 }
                 else
                 {
-                    return ResponseOutput.NotOk("解密失败！", 1);
+                    // return ResponseOutput.NotOk("解密失败！", 1);
+                    throw BussinessException.CreateException(ExceptionCode.CustomException, "解密失败！");
                 }
             }
 
@@ -182,7 +188,8 @@ namespace Admin.Core.Service.Admin.Auth
             var password = MD5Encrypt.Encrypt32(input.Password);
             if (user.Password != password)
             {
-                return ResponseOutput.NotOk("密码输入有误！", 4);
+                //return ResponseOutput.NotOk("密码输入有误！", 4);
+                throw BussinessException.CreateException(ExceptionCode.CustomException, "密码输入有误！");
             }
 
             var authLoginOutput = Mapper.Map<AuthLoginOutput>(user);
@@ -194,7 +201,7 @@ namespace Admin.Core.Service.Admin.Auth
                 authLoginOutput.DataIsolationType = tenant.DataIsolationType;
             }
 
-            return ResponseOutput.Ok(authLoginOutput);
+            return authLoginOutput;
         }
     }
 }

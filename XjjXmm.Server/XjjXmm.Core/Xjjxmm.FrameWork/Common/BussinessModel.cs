@@ -9,7 +9,7 @@
 
         public BussinessModel(T response)
         {
-            this.Response = response;
+            this.Data = response;
         }
         /// <summary>
         /// 状态码
@@ -26,7 +26,7 @@
         /// <summary>
         /// 返回数据集合
         /// </summary>
-        public T Response { get; set; }
+        public T Data { get; set; }
 
     }
 }

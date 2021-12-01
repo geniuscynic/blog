@@ -1,6 +1,7 @@
 using Admin.Core.Common.Output;
 using Admin.Core.Service.Admin.Auth.Input;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.Auth.Output;
 
 namespace Admin.Core.Service.Admin.Auth
 {
@@ -9,12 +10,12 @@ namespace Admin.Core.Service.Admin.Auth
     /// </summary>
     public interface IAuthService
     {
-        Task<IResponseOutput> LoginAsync(AuthLoginInput input);
+        Task<object> GetPassWordEncryptKeyAsync();
 
-        Task<IResponseOutput> GetUserInfoAsync();
+        Task<AuthUserInfoOutput> GetUserInfoAsync();
 
-        Task<IResponseOutput> GetVerifyCodeAsync(string lastKey);
+        Task<AuthGetVerifyCodeOutput> GetVerifyCodeAsync(string lastKey);
 
-        Task<IResponseOutput> GetPassWordEncryptKeyAsync();
+        Task<AuthLoginOutput> LoginAsync(AuthLoginInput input);
     }
 }

@@ -14,7 +14,7 @@ namespace Admin.Core.Service.Admin.User
     /// </summary>
     public interface IUserService
     {
-        Task<ResponseOutput<AuthLoginOutput>> GetLoginUserAsync(long id);
+        Task<AuthLoginOutput> GetLoginUserAsync(long id);
 
         Task<IResponseOutput> GetAsync(long id);
 

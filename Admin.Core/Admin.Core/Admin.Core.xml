@@ -146,7 +146,7 @@
             授权管理
             </summary>
         </member>
-        <member name="M:Admin.Core.Controllers.Admin.AuthController.GetToken(Admin.Core.Common.Output.ResponseOutput{Admin.Core.Service.Admin.Auth.Output.AuthLoginOutput})">
+        <member name="M:Admin.Core.Controllers.Admin.AuthController.GetToken(Admin.Core.Service.Admin.Auth.Output.AuthLoginOutput)">
             <summary>
             获得token
             </summary>

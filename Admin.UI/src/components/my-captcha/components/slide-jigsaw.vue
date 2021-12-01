@@ -367,6 +367,7 @@ export default {
         ts: Date.now() // 现在的时间戳
       }
       reqGet(data).then(res => {
+        //debugger
         if (res.success) {
           this.backImgBase = res.data.data.baseImage
           this.blockBackImgBase = res.data.data.blockImage

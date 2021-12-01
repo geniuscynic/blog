@@ -44,9 +44,9 @@ namespace Admin.Core.Service.Admin.User
             _apiRepository = apiRepository;
         }
 
-        public async Task<ResponseOutput<AuthLoginOutput>> GetLoginUserAsync(long id)
+        public async Task<AuthLoginOutput> GetLoginUserAsync(long id)
         {
-            var output = new ResponseOutput<AuthLoginOutput>();
+            var output = new AuthLoginOutput();
             var entityDto = await _userRepository.Select.DisableGlobalFilter("Tenant").WhereDynamic(id).ToOneAsync<AuthLoginOutput>();
             if (_appConfig.Tenant && entityDto?.TenantId.Value > 0)
             {
@@ -57,7 +57,7 @@ namespace Admin.Core.Service.Admin.User
                     entityDto.DataIsolationType = tenant.DataIsolationType;
                 }
             }
-            return output.Ok(entityDto);
+            return entityDto;
         }
 
         public async Task<IResponseOutput> GetAsync(long id)

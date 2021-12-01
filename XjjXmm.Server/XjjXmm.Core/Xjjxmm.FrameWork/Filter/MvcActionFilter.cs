@@ -44,7 +44,7 @@ namespace XjjXmm.FrameWork.Filter
         {
             if (context.Exception != null)
             {
-                _loggerHelper.Error("MVC Error", context.Exception);
+                 _loggerHelper.Error("MVC Error", context.Exception);
 
                 //if (context.Exception is BussinessException bussinessException)
                 //{

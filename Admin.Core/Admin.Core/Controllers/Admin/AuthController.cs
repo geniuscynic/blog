@@ -54,19 +54,12 @@ namespace Admin.Core.Controllers.Admin
         /// </summary>
         /// <param name="output"></param>
         /// <returns></returns>
-        private IResponseOutput GetToken(ResponseOutput<AuthLoginOutput> output)
+        private object GetToken(AuthLoginOutput user)
         {
-            if (!output.Success)
-            {
-                return ResponseOutput.NotOk(output.Msg);
-            }
-
-            var user = output.Data;
-
-            if (user == null)
-            {
-                return ResponseOutput.NotOk();
-            }
+            //if (user == null)
+            //{
+            //    return ResponseOutput.NotOk();
+            //}
 
             var token = _userToken.Create(new[]
             {
@@ -78,7 +71,7 @@ namespace Admin.Core.Controllers.Admin
                 new Claim(ClaimAttributes.DataIsolationType, user.DataIsolationType.ToString())
             });
 
-            return ResponseOutput.Ok(new { token });
+            return new { token };
         }
 
         /// <summary>
@@ -89,7 +82,7 @@ namespace Admin.Core.Controllers.Admin
         [HttpGet]
         [AllowAnonymous]
         [NoOprationLog]
-        public async Task<IResponseOutput> GetVerifyCode(string lastKey)
+        public async Task<AuthGetVerifyCodeOutput> GetVerifyCode(string lastKey)
         {
             return await _authService.GetVerifyCodeAsync(lastKey);
         }
@@ -102,10 +95,10 @@ namespace Admin.Core.Controllers.Admin
         [AllowAnonymous]
         [NoOprationLog]
         [EnableCors(AdminConsts.AllowAnyPolicyName)]
-        public async Task<IResponseOutput> GetCaptcha()
+        public async Task<CaptchaOutput> GetCaptcha()
         {
             var data = await _captcha.GetAsync();
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
         /// <summary>
@@ -116,10 +109,10 @@ namespace Admin.Core.Controllers.Admin
         [AllowAnonymous]
         [NoOprationLog]
         [EnableCors(AdminConsts.AllowAnyPolicyName)]
-        public async Task<IResponseOutput> CheckCaptcha([FromQuery] CaptchaInput input)
+        public async Task<bool> CheckCaptcha([FromQuery] CaptchaInput input)
         {
             var result = await _captcha.CheckAsync(input);
-            return ResponseOutput.Result(result);
+            return result;
         }
 
         /// <summary>
@@ -129,7 +122,7 @@ namespace Admin.Core.Controllers.Admin
         [HttpGet]
         [AllowAnonymous]
         [NoOprationLog]
-        public async Task<IResponseOutput> GetPassWordEncryptKey()
+        public async Task<object> GetPassWordEncryptKey()
         {
             return await _authService.GetPassWordEncryptKeyAsync();
         }
@@ -140,7 +133,7 @@ namespace Admin.Core.Controllers.Admin
         /// <returns></returns>
         [HttpGet]
         [Login]
-        public async Task<IResponseOutput> GetUserInfo()
+        public async Task<AuthUserInfoOutput> GetUserInfo()
         {
             return await _authService.GetUserInfoAsync();
         }
@@ -154,14 +147,14 @@ namespace Admin.Core.Controllers.Admin
         [HttpPost]
         [AllowAnonymous]
         [NoOprationLog]
-        public async Task<IResponseOutput> Login(AuthLoginInput input)
+        public async Task<object> Login(AuthLoginInput input)
         {
             var sw = new Stopwatch();
             sw.Start();
             var res = await _authService.LoginAsync(input);
             sw.Stop();
 
-            #region 添加登录日志
+          /*  #region 添加登录日志
 
             var loginLogAddInput = new LoginLogAddInput()
             {
@@ -189,8 +182,8 @@ namespace Admin.Core.Controllers.Admin
             {
                 return res;
             }
-
-            return GetToken(output);
+*/
+            return GetToken(res);
         }
 
         /// <summary>
@@ -201,7 +194,7 @@ namespace Admin.Core.Controllers.Admin
         /// <returns></returns>
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IResponseOutput> Refresh([BindRequired] string token)
+        public async Task<object> Refresh([BindRequired] string token)
         {
             var userClaims = _userToken.Decode(token);
             if (userClaims == null || userClaims.Length == 0)

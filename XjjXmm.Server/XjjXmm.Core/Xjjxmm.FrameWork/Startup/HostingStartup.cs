@@ -52,8 +52,8 @@ namespace XjjXmm.FrameWork.Startup
                 //var b = ReflectKit.AllAssemblies();
                 services.Configure<MvcOptions>(option =>
                 {
-                    //option.Filters.Add(typeof(MvcActionFilter));
-                    //option.Filters.Add(typeof(GlobalExceptionsFilter));
+                    option.Filters.Add(typeof(MvcActionFilter));
+                    option.Filters.Add(typeof(GlobalExceptionsFilter));
                 });
 
                 services.ConfigureDynamicProxy(config =>
