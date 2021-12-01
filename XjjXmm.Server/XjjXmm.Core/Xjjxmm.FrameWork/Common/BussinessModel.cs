@@ -4,17 +4,17 @@
     /// <summary>
     /// 通用返回信息类
     /// </summary>
-    public class BussinessModel<T>
+    public class ResponseModel<T>
     {
 
-        public BussinessModel(T response)
+        public ResponseModel(T response)
         {
             this.Data = response;
         }
         /// <summary>
         /// 状态码
         /// </summary>
-        public int strStatus { get; set; } = 200;
+        public long Code { get; set; }
         /// <summary>
         /// 操作是否成功
         /// </summary>

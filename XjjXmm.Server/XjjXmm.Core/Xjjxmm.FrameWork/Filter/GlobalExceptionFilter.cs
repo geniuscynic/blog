@@ -1,24 +1,29 @@
 ﻿using System;
-using Microsoft.AspNetCore.Http;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.LogExtension;
+using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.FrameWork.Filter
 {
     /// <summary>
     /// 全局异常错误日志
     /// </summary>
-    public class GlobalExceptionsFilter : IExceptionFilter
+    public class GlobalExceptionsFilter : IExceptionFilter, IAsyncExceptionFilter
     {
       //  private readonly IWebHostEnvironment _env;
-        private readonly ILog<GlobalExceptionsFilter> _loggerHelper;
+      private readonly IWebHostEnvironment _env;
+      private readonly ILog<GlobalExceptionsFilter> _loggerHelper;
 
-        public GlobalExceptionsFilter(ILog<GlobalExceptionsFilter> loggerHelper)
+        public GlobalExceptionsFilter(IWebHostEnvironment env, ILog<GlobalExceptionsFilter> loggerHelper)
         {
             //_env = env;
+            _env = env;
             _loggerHelper = loggerHelper;
         }
 
@@ -26,10 +31,10 @@ namespace XjjXmm.FrameWork.Filter
         {
             if (context.Exception is BussinessException bussinessException)
             {
-                context.Result = new JsonResult(new BussinessModel<string>(bussinessException.ExceptionModel.Name)
+                context.Result = new JsonResult(new ResponseModel<string>("")
                 {
                     Success = false,
-                    Status = bussinessException.ExceptionModel.Code,
+                    Code = bussinessException.ExceptionModel.Code,
                     Message = bussinessException.ExceptionModel.Message
                 });
 
@@ -38,11 +43,17 @@ namespace XjjXmm.FrameWork.Filter
             }
             else
             {
-                context.Result = new JsonResult(new BussinessModel<string>("Unable to resolve service for")
+                var message = context.Exception.Message;
+                if (_env.IsProduction())
+                {
+                    message = StatusCodes.Status500InternalServerError.ToDescription();
+                }
+
+                context.Result = new InternalServerErrorObjectResult(new ResponseModel<string>(StatusCodes.Status500InternalServerError.ToDescription())
                 {
                     Success = false,
-                    //Status = (int)bussinessException.ExceptionModel.Code,
-                    Message = context.Exception.Message
+                    Code = StatusCodes.Status500InternalServerError.ToInt(),
+                    Message = message
                 });
 
                 _loggerHelper.Error("GlobalExceptionsFilter", context.Exception);
@@ -84,12 +95,17 @@ namespace XjjXmm.FrameWork.Filter
                 ex.GetType().Name, ex.Message, ex.StackTrace });
         }
 
+        public Task OnExceptionAsync(ExceptionContext context)
+        {
+            OnException(context);
+            return Task.CompletedTask;
+        }
     }
     public class InternalServerErrorObjectResult : ObjectResult
     {
         public InternalServerErrorObjectResult(object value) : base(value)
         {
-            StatusCode = StatusCodes.Status500InternalServerError;
+            StatusCode = StatusCodes.Status500InternalServerError.ToInt();
         }
     }
     //返回错误信息

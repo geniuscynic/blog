@@ -1,6 +1,31 @@
-﻿namespace XjjXmm.FrameWork.ToolKit
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.Reflection;
+
+namespace XjjXmm.FrameWork.ToolKit
 {
-  
+    public static class EnumExtensions
+    {
+        public static string ToDescription(this Enum item)
+        {
+            string name = item.ToString();
+            var desc = item.GetType().GetField(name)?.GetCustomAttribute<DescriptionAttribute>();
+            return desc?.Description ?? name;
+        }
+
+        public static long ToInt64(this Enum item)
+        {
+            return Convert.ToInt64(item);
+        }
+
+        public static int ToInt(this Enum item)
+        {
+            return Convert.ToInt32(item);
+        }
+
+    }
 
     //public static class EnumExtension
     //{

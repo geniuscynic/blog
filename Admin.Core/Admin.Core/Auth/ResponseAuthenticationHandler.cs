@@ -8,7 +8,7 @@ using Newtonsoft.Json.Serialization;
 using System;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
-using StatusCodes = Admin.Core.Enums.StatusCodes;
+using StatusCodes = XjjXmm.FrameWork.Common.StatusCodes;
 
 namespace Admin.Core.Auth
 {
@@ -68,7 +68,7 @@ namespace Admin.Core.Auth
 
     public class ResponseStatusData
     {
-        public StatusCodes Code { get; set; } = StatusCodes.Status1Ok;
+        public StatusCodes Code { get; set; } = StatusCodes.Status200Ok;
         public string Msg { get; set; }
     }
 }

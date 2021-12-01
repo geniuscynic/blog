@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using XjjXmm.FrameWork.ToolKit;
 
 namespace XjjXmm.FrameWork.Common
 {
+
 
     //public enum ExceptionCode
     //{
@@ -13,25 +15,62 @@ namespace XjjXmm.FrameWork.Common
 
     public class ExceptionModel
     {
-        public string Code { get; }
-       // public string Name { get; }
+        public long Code { get; }
+        public string CodeDesc { get; set; }
         public string Message { get; set; }
 
-        public ExceptionModel(string code,  string message)
+        //public ExceptionModel(string code, string message)
+        //{
+        //    Code = code;
+        //    // Name = name;
+        //    Message = message;
+
+        //}
+
+        public ExceptionModel(long code, string codeDesc)
         {
             Code = code;
-           // Name = name;
-            Message = message;
+            // Name = name;
+            this.CodeDesc = codeDesc;
+
+            this.Message = codeDesc;
+
         }
+
+        
+        //public static ExceptionModel ValidationError  = new ExceptionModel("X0001", "验证失败");
+        //public static ExceptionModel GloblError = new ExceptionModel("X9999", "未捕获的异常");
     }
 
     public class BussinessException : Exception
     {
+        //public string Code { get; set; }
+        //public string Message { get; set; }
+
+        //private BussinessException(string code, string message, Exception innerException = null) : base(message, innerException)
+        //{
+        //    this.Code = code;
+        //    this.Message = message;
+        //}
         public ExceptionModel ExceptionModel { get; set; }
 
-        private BussinessException(ExceptionModel exceptionModel, Exception innerException = null) : base(exceptionModel.Message, innerException)
+        public BussinessException(ExceptionModel exceptionModel, Exception innerException = null) : base(exceptionModel.Message, innerException)
         {
             this.ExceptionModel = exceptionModel;
+        }
+
+        public BussinessException(ExceptionModel exceptionModel, string errorMessage, Exception innerException = null) : base(errorMessage, innerException)
+        {
+            this.ExceptionModel = exceptionModel;
+            this.ExceptionModel.Message = errorMessage;
+        }
+
+        public BussinessException(StatusCodes status, string errorMessage, Exception innerException = null) : base(errorMessage, innerException)
+        {
+            this.ExceptionModel = new ExceptionModel(status.ToInt64(), status.ToDescription())
+            {
+                Message = errorMessage
+            };
         }
 
         //private static Dictionary<ExceptionCode, ExceptionModel> errCodes = new Dictionary<ExceptionCode, ExceptionModel>()
@@ -46,22 +85,22 @@ namespace XjjXmm.FrameWork.Common
         //    return CreateException(code, "", innerException);
         //}
 
-        public static BussinessException CreateException(string code, string errorMessage,
-            Exception innerException = null)
-        {
-            //if (!errCodes.ContainsKey(code))
-            //{
-            //    throw BussinessException.CreateException(ExceptionCode.KeyNotExist);
-            //}
+        //public static BussinessException CreateException(string code, string errorMessage,
+        // Exception innerException = null)
+        //{
+        //if (!errCodes.ContainsKey(code))
+        //{
+        //    throw BussinessException.CreateException(ExceptionCode.KeyNotExist);
+        //}
 
-            //var errorCode = errCodes[code];
-           // if (!string.IsNullOrWhiteSpace(errorMessage))
-           // {
-               // errorCode.Message = errorMessage;
-            //}
+        //var errorCode = errCodes[code];
+        // if (!string.IsNullOrWhiteSpace(errorMessage))
+        // {
+        // errorCode.Message = errorMessage;
+        //}
 
-            return new BussinessException(new ExceptionModel(code,errorMessage), innerException);
+        //return new BussinessException(new ExceptionModel(code,errorMessage), innerException);
 
-        }
+        //}
     }
 }

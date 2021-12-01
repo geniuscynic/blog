@@ -28,7 +28,7 @@ namespace XjjXmm.FrameWork.Filter
                 var validator = new XjjxmmValidator(actionArgumentsValue);
                 if (!validator.Validate(validateType:ValidateType.AutoValdate))
                 {
-                    throw BussinessException.CreateException(ExceptionCode.CustomException,
+                    throw new BussinessException(StatusCodes.Status998ValidationFalid,
                         validator.FirstValidationResult.ErrorMessage);
 
                 }
@@ -65,7 +65,7 @@ namespace XjjXmm.FrameWork.Filter
             else
             {
                 var result = (ObjectResult)context.Result;
-                context.Result = new JsonResult(new BussinessModel<object>(result.Value));
+                context.Result = new JsonResult(new ResponseModel<object>(result.Value));
             }
 
             //throw new NotImplementedException();

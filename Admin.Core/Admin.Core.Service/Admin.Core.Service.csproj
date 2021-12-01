@@ -16,7 +16,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath></OutputPath>
-    <DocumentationFile>..\Admin.Core\Admin.Core.Service.xml</DocumentationFile>
+    <DocumentationFile>..\Admin.Core\Admin.Core.Service.Swagger.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 

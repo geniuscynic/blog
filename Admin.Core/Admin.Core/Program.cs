@@ -27,7 +27,7 @@ namespace Admin.Core
             try
             {
                 Console.WriteLine(" launching...");
-                var host = CreateHostBuilder(args).Build();
+                var host = CreateHostBuilder(args).Build().SetUp();
                 
                 Console.WriteLine($"\r\n {string.Join("\r\n ", appConfig.Urls)}\r\n");
                 await host.RunAsync();

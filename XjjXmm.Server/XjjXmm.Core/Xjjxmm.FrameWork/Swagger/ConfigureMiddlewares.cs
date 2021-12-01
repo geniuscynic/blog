@@ -11,15 +11,18 @@ namespace XjjXmm.FrameWork.Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                c.SwaggerEndpoint($"/swagger/{swaggerConfig.Version}/swagger.json", swaggerConfig.Title);
-
+                //c.SwaggerEndpoint($"/swagger/{swaggerConfig.Version}/swagger.json", swaggerConfig.Title);
+                c.SwaggerEndpoint($"/swagger/V1/swagger.json", swaggerConfig.Title);
+                c.SwaggerEndpoint($"/swagger/V2/swagger.json", swaggerConfig.Title);
                 c.RoutePrefix = "";
 
-                var types = typeof(ConfigureMiddlewares);
+                c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);//折叠Api
 
-                var streamHtml = types.Assembly.GetManifestResourceStream($"{types.Namespace}.index.html");
+                                                                                   // var types = typeof(ConfigureMiddlewares);
 
-                c.IndexStream = () => streamHtml;
+                // var streamHtml = types.Assembly.GetManifestResourceStream($"{types.Namespace}.index.html");
+
+                //c.IndexStream = () => streamHtml;
             });
 
             return app;

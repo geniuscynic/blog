@@ -40,6 +40,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.Swagger;
 using Yitter.IdGenerator;
 
 namespace Admin.Core
@@ -209,7 +210,7 @@ namespace Admin.Core
             #endregion 身份认证授权
 
             #region Swagger Api文档
-
+/*
             if (_env.IsDevelopment() || _appConfig.Swagger)
             {
                 services.AddSwaggerGen(options =>
@@ -227,16 +228,16 @@ namespace Admin.Core
                     options.ResolveConflictingActions(apiDescription => apiDescription.First());
                     options.CustomSchemaIds(x => x.FullName);
 
-                    var xmlPath = Path.Combine(basePath, "Admin.Core.xml");
+                    var xmlPath = Path.Combine(basePath, "Admin.Core.Swagger.xml");
                     options.IncludeXmlComments(xmlPath, true);
 
-                    var xmlCommonPath = Path.Combine(basePath, "Admin.Core.Common.xml");
+                    var xmlCommonPath = Path.Combine(basePath, "Admin.Core.Common.Swagger.xml");
                     options.IncludeXmlComments(xmlCommonPath, true);
 
-                    var xmlModelPath = Path.Combine(basePath, "Admin.Core.Model.xml");
+                    var xmlModelPath = Path.Combine(basePath, "Admin.Core.Model.Swagger.xml");
                     options.IncludeXmlComments(xmlModelPath);
 
-                    var xmlServicesPath = Path.Combine(basePath, "Admin.Core.Service.xml");
+                    var xmlServicesPath = Path.Combine(basePath, "Admin.Core.Service.Swagger.xml");
                     options.IncludeXmlComments(xmlServicesPath);
 
                     #region 添加设置Token的按钮
@@ -307,7 +308,7 @@ namespace Admin.Core
                     #endregion 添加设置Token的按钮
                 });
             }
-
+*/
             #endregion Swagger Api文档
 
             #region 操作日志
@@ -324,7 +325,7 @@ namespace Admin.Core
 
             services.AddControllers(options =>
             {
-                options.Filters.Add<AdminExceptionFilter>();
+               // options.Filters.Add<AdminExceptionFilter>();
                 if (_appConfig.Log.Operation)
                 {
                     options.Filters.Add<LogActionFilter>();
@@ -446,20 +447,21 @@ namespace Admin.Core
 
             #region Swagger Api文档
 
-            if (_env.IsDevelopment() || _appConfig.Swagger)
-            {
-                app.UseSwagger();
-                app.UseSwaggerUI(c =>
-                {
-                    typeof(ApiVersion).GetEnumNames().OrderByDescending(e => e).ToList().ForEach(version =>
-                    {
-                        c.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"Admin.Core {version}");
-                    });
-                    c.RoutePrefix = "";//直接根目录访问，如果是IIS发布可以注释该语句，并打开launchSettings.launchUrl
-                    c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);//折叠Api
-                    //c.DefaultModelsExpandDepth(-1);//不显示Models
-                });
-            }
+            app.UseSwaggerMiddlewares();
+            //if (_env.IsDevelopment() || _appConfig.Swagger)
+            //{
+            //    app.UseSwagger();
+            //    app.UseSwaggerUI(c =>
+            //    {
+            //        typeof(ApiVersion).GetEnumNames().OrderByDescending(e => e).ToList().ForEach(version =>
+            //        {
+            //            c.SwaggerEndpoint($"/swagger/{version}/swagger.json", $"Admin.Core {version}");
+            //        });
+            //        c.RoutePrefix = "";//直接根目录访问，如果是IIS发布可以注释该语句，并打开launchSettings.launchUrl
+            //        c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);//折叠Api
+            //        //c.DefaultModelsExpandDepth(-1);//不显示Models
+            //    });
+            //}
 
             #endregion Swagger Api文档
         }

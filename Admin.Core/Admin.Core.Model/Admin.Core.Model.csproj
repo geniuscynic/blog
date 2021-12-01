@@ -15,11 +15,12 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>..\Admin.Core\Admin.Core.Model.xml</DocumentationFile>
+    <DocumentationFile>..\Admin.Core\Admin.Core.Model.Swagger.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\XjjXmm.Server\XjjXmm.Core\Xjjxmm.FrameWork\XjjXmm.FrameWork.csproj" />
     <ProjectReference Include="..\Admin.Core.Common\Admin.Core.Common.csproj" />
   </ItemGroup>
 

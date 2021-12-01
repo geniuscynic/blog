@@ -1005,41 +1005,6 @@
             V2 版本
             </summary>
         </member>
-        <member name="T:Admin.Core.Enums.StatusCodes">
-            <summary>
-            状态码枚举
-            </summary>
-        </member>
-        <member name="F:Admin.Core.Enums.StatusCodes.Status0NotOk">
-            <summary>
-            操作失败
-            </summary>
-        </member>
-        <member name="F:Admin.Core.Enums.StatusCodes.Status1Ok">
-            <summary>
-            操作成功
-            </summary>
-        </member>
-        <member name="F:Admin.Core.Enums.StatusCodes.Status401Unauthorized">
-            <summary>
-            未登录（需要重新登录）
-            </summary>
-        </member>
-        <member name="F:Admin.Core.Enums.StatusCodes.Status403Forbidden">
-            <summary>
-            权限不足
-            </summary>
-        </member>
-        <member name="F:Admin.Core.Enums.StatusCodes.Status404NotFound">
-            <summary>
-            资源不存在
-            </summary>
-        </member>
-        <member name="F:Admin.Core.Enums.StatusCodes.Status500InternalServerError">
-            <summary>
-            系统内部错误（非业务代码里显式抛出的异常，例如由于数据不正确导致空指针异常、数据库异常等等）
-            </summary>
-        </member>
         <member name="M:Admin.Core.Extensions.RateLimitServiceCollectionExtensions.AddIpRateLimit(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.Extensions.Configuration.IConfiguration,Admin.Core.Common.Configs.CacheConfig)">
             <summary>
             添加Ip限流
@@ -1047,11 +1012,6 @@
             <param name="services"></param>
             <param name="configuration"></param>
             <param name="cacheConfig"></param>
-        </member>
-        <member name="T:Admin.Core.Filters.AdminExceptionFilter">
-            <summary>
-            Admin异常错误过滤
-            </summary>
         </member>
         <member name="T:Admin.Core.Logs.ApiHelper">
             <summary>

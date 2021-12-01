@@ -5,7 +5,7 @@ namespace XjjXmm.FrameWork.ToolKit
 {
     class StringKit
     {
-         
+
     }
 
     public static class StringExtension
@@ -22,17 +22,9 @@ namespace XjjXmm.FrameWork.ToolKit
 
         public static int ToInt(this string s)
         {
-            try
-            {
-                return int.Parse(s);
-            }
-            catch (Exception e)
-            {
-                
-                throw BussinessException.CreateException(ExceptionCode.EmptyOrNullString, e);
-            }
+            return int.Parse(s);
         }
 
-       
+
     }
 }

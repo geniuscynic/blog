@@ -20,7 +20,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <DocumentationFile>..\Admin.Core\Admin.Core.xml</DocumentationFile>
+    <DocumentationFile>..\Admin.Core\Admin.Core.Swagger.xml</DocumentationFile>
     <NoWarn>1701;1702;1591</NoWarn>
   </PropertyGroup>
 
@@ -33,6 +33,11 @@
     <EmbeddedResource Remove="Hubs\**" />
     <None Remove="AutoMapper\**" />
     <None Remove="Hubs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="Enums\StatusCodes.cs" />
+    <Compile Remove="Filters\AdminExceptionFilter.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -59,20 +64,7 @@
     <ProjectReference Include="..\Admin.Tools\Admin.Tools.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <None Update="Admin.Core.Common.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Admin.Core.Model.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Admin.Core.Service.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-    <None Update="Admin.Core.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  
 
   <ItemGroup>
     <Folder Include="Properties\PublishProfiles\" />
@@ -106,6 +98,21 @@
     <Content Update="wwwroot\captcha\jigsaw\templates\6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Admin.Core.Common.Swagger.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Admin.Core.Model.Swagger.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Admin.Core.Service.Swagger.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Admin.Core.Swagger.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

@@ -10,6 +10,7 @@ using Admin.Tools.Captcha;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.Core.Model;
 using XjjXmm.FrameWork.Common;
 
 namespace Admin.Core.Service.Admin.Auth
@@ -57,7 +58,7 @@ namespace Admin.Core.Service.Admin.Auth
             if (!(User?.Id > 0))
             {
                 //return ResponseOutput.NotOk("未登录！");
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "未登录！");
+                throw new BussinessException(StatusCodes.Status999Falid, "未登录！");
             }
 
             var authUserInfoOutput = new AuthUserInfoOutput { };
@@ -142,7 +143,7 @@ namespace Admin.Core.Service.Admin.Auth
                 if (!isOk)
                 {
                     //return ResponseOutput.NotOk("安全验证不通过，请重新登录！");
-                    throw BussinessException.CreateException(ExceptionCode.CustomException, "安全验证不通过，请重新登录！");
+                    throw new BussinessException(StatusCodes.Status999Falid, "安全验证不通过，请重新登录！");
                 }
             }
 
@@ -156,7 +157,7 @@ namespace Admin.Core.Service.Admin.Auth
             if (!(user?.Id > 0))
             {
                 //return ResponseOutput.NotOk("账号输入有误!", 3);
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "账号输入有误！");
+                throw new BussinessException(StatusCodes.Status999Falid, "账号输入有误！");
             }
 
             #region 解密
@@ -171,7 +172,7 @@ namespace Admin.Core.Service.Admin.Auth
                     if (secretKey.IsNull())
                     {
                         //return ResponseOutput.NotOk("解密失败！", 1);
-                        throw BussinessException.CreateException(ExceptionCode.CustomException, "解密失败！");
+                        throw new BussinessException(StatusCodes.Status999Falid, "解密失败！");
                     }
                     input.Password = DesEncrypt.Decrypt(input.Password, secretKey);
                     await Cache.DelAsync(passwordEncryptKey);
@@ -179,7 +180,7 @@ namespace Admin.Core.Service.Admin.Auth
                 else
                 {
                     // return ResponseOutput.NotOk("解密失败！", 1);
-                    throw BussinessException.CreateException(ExceptionCode.CustomException, "解密失败！");
+                    throw new BussinessException(StatusCodes.Status999Falid, "解密失败！");
                 }
             }
 
@@ -189,7 +190,7 @@ namespace Admin.Core.Service.Admin.Auth
             if (user.Password != password)
             {
                 //return ResponseOutput.NotOk("密码输入有误！", 4);
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "密码输入有误！");
+                throw new BussinessException(StatusCodes.Status999Falid, "密码输入有误！");
             }
 
             var authLoginOutput = Mapper.Map<AuthLoginOutput>(user);
