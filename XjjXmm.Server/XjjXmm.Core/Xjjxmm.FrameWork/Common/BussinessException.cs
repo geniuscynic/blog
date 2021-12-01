@@ -4,23 +4,23 @@ using System.Collections.Generic;
 namespace XjjXmm.FrameWork.Common
 {
 
-    public enum ExceptionCode
-    {
-        EmptyOrNullString = 1,
-        KeyNotExist = 2,
-        CustomException = 99
-    }
+    //public enum ExceptionCode
+    //{
+    //    EmptyOrNullString = 1,
+    //    KeyNotExist = 2,
+    //    CustomException = 99
+    //}
 
     public class ExceptionModel
     {
-        public ExceptionCode Code { get; }
-        public string Name { get; }
+        public string Code { get; }
+       // public string Name { get; }
         public string Message { get; set; }
 
-        public ExceptionModel(ExceptionCode code, string name, string message)
+        public ExceptionModel(string code,  string message)
         {
             Code = code;
-            Name = name;
+           // Name = name;
             Message = message;
         }
     }
@@ -34,33 +34,33 @@ namespace XjjXmm.FrameWork.Common
             this.ExceptionModel = exceptionModel;
         }
 
-        private static Dictionary<ExceptionCode, ExceptionModel> errCodes = new Dictionary<ExceptionCode, ExceptionModel>()
-        {
-            { ExceptionCode.EmptyOrNullString, new ExceptionModel(ExceptionCode.EmptyOrNullString, "字符串不能为空", "空字符串异常")},
-            { ExceptionCode.KeyNotExist, new ExceptionModel(ExceptionCode.KeyNotExist, "key不存在", "key不存在异常")},
-            { ExceptionCode.CustomException, new ExceptionModel(ExceptionCode.CustomException, "自定义异常", "")},
-        };
+        //private static Dictionary<ExceptionCode, ExceptionModel> errCodes = new Dictionary<ExceptionCode, ExceptionModel>()
+        //{
+        //    { ExceptionCode.EmptyOrNullString, new ExceptionModel(ExceptionCode.EmptyOrNullString, "字符串不能为空", "空字符串异常")},
+        //    { ExceptionCode.KeyNotExist, new ExceptionModel(ExceptionCode.KeyNotExist, "key不存在", "key不存在异常")},
+        //    { ExceptionCode.CustomException, new ExceptionModel(ExceptionCode.CustomException, "自定义异常", "")},
+        //};
 
-        public static BussinessException CreateException(ExceptionCode code, Exception innerException)
-        {
-            return CreateException(code, "", innerException);
-        }
+        //public static BussinessException CreateException(ExceptionCode code, Exception innerException)
+        //{
+        //    return CreateException(code, "", innerException);
+        //}
 
-        public static BussinessException CreateException(ExceptionCode code, string errorMessage = "",
+        public static BussinessException CreateException(string code, string errorMessage,
             Exception innerException = null)
         {
-            if (!errCodes.ContainsKey(code))
-            {
-                throw BussinessException.CreateException(ExceptionCode.KeyNotExist);
-            }
+            //if (!errCodes.ContainsKey(code))
+            //{
+            //    throw BussinessException.CreateException(ExceptionCode.KeyNotExist);
+            //}
 
-            var errorCode = errCodes[code];
-            if (!string.IsNullOrWhiteSpace(errorMessage))
-            {
-                errorCode.Message = errorMessage;
-            }
+            //var errorCode = errCodes[code];
+           // if (!string.IsNullOrWhiteSpace(errorMessage))
+           // {
+               // errorCode.Message = errorMessage;
+            //}
 
-            return new BussinessException(errorCode);
+            return new BussinessException(new ExceptionModel(code,errorMessage), innerException);
 
         }
     }

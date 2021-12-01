@@ -29,7 +29,7 @@ namespace XjjXmm.FrameWork.Filter
                 context.Result = new JsonResult(new BussinessModel<string>(bussinessException.ExceptionModel.Name)
                 {
                     Success = false,
-                    Status = (int)bussinessException.ExceptionModel.Code,
+                    Status = bussinessException.ExceptionModel.Code,
                     Message = bussinessException.ExceptionModel.Message
                 });
 
