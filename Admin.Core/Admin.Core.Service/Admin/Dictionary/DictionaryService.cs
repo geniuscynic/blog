@@ -5,9 +5,11 @@ using Admin.Core.Repository.Admin;
 using Admin.Core.Service.Admin.Dictionary.Input;
 using Admin.Core.Service.Admin.Dictionary.Output;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Dictionary
 {
+    [Injection]
     public class DictionaryService : BaseService, IDictionaryService
     {
         private readonly IDictionaryRepository _dictionaryRepository;

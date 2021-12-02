@@ -13,9 +13,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Permission
 {
+    [Injection]
     public class PermissionService : BaseService, IPermissionService
     {
         private readonly AppConfig _appConfig;

@@ -7,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 using FileInfo = Admin.Core.Common.Files.FileInfo;
 
 namespace Admin.Core.Common.Helpers
@@ -14,7 +15,7 @@ namespace Admin.Core.Common.Helpers
     /// <summary>
     /// 文件上传帮助类
     /// </summary>
-    [SingleInstance]
+    [Injection(Type = InjectionType.Singleton)]
     public class UploadHelper
     {
         /// <summary>

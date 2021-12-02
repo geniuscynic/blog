@@ -6,9 +6,11 @@ using Admin.Core.Service.Admin.Document.Output;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Document
 {
+    [Injection]
     public class DocumentService : BaseService, IDocumentService
     {
         private readonly IDocumentRepository _documentRepository;

@@ -1,6 +1,5 @@
 ﻿using Admin.Core.Common.Configs;
 using Admin.Core.Common.Helpers;
-using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -51,26 +50,31 @@ namespace Admin.Core
             //LogManager.Configuration = new NLogLoggingConfiguration(logConfig);
 
             return Host.CreateDefaultBuilder(args)
-            .UseServiceProviderFactory(new AutofacServiceProviderFactory())
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                //Environments.Development
-                //webBuilder.UseEnvironment(Ev)
-                webBuilder.Inject();
-
-                appConfig = App.Configuration.GetSection<AppConfig>("app") ?? new AppConfig();
-                //.UseEnvironment(Environments.Production)
-                webBuilder.UseStartup<Startup>()
-                .ConfigureAppConfiguration((host, config) =>
+                //.UseServiceProviderFactory(new AutofacServiceProviderFactory())
+                //.SetUp()
+                .ConfigureWebHostDefaults(webBuilder =>
                 {
-                    if (appConfig.RateLimit)
-                    {
-                        config.AddJsonFile("./configs/ratelimitconfig.json", optional: false, reloadOnChange: true)
-                        .AddJsonFile($"./configs/ratelimitconfig.{host.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-                    }
+                    //Environments.Development
+                    //webBuilder.UseEnvironment(Ev)
+                    webBuilder.Inject();
+
+                    appConfig = App.Configuration.GetSection<AppConfig>("app") ?? new AppConfig();
+                    //.UseEnvironment(Environments.Production)
+                    webBuilder.UseStartup<Startup>()
+                        .ConfigureAppConfiguration((host, config) =>
+                        {
+                            if (appConfig.RateLimit)
+                            {
+                                config.AddJsonFile("./configs/ratelimitconfig.json", optional: false,
+                                        reloadOnChange: true)
+                                    .AddJsonFile(
+                                        $"./configs/ratelimitconfig.{host.HostingEnvironment.EnvironmentName}.json",
+                                        optional: true, reloadOnChange: true);
+                            }
+                        })
+                        .UseUrls(appConfig.Urls);
                 })
-                .UseUrls(appConfig.Urls);
-            })
+                //.SetUp()
             .ConfigureLogging(logging =>
             {
                 logging.ClearProviders();

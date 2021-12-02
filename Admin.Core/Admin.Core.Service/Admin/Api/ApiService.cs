@@ -8,9 +8,11 @@ using Admin.Core.Service.Admin.Api.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Api
 {
+    [Injection]
     public class ApiService : BaseService, IApiService
     {
         private readonly IApiRepository _apiRepository;

@@ -39,7 +39,8 @@ namespace XjjXmm.Authorize.Api.Controllers
         /// <param name="criteria"></param>
         /// <param name="pageable"></param>
         /// <returns></returns>
-        public async Task<PageModel<UserDto>> query(UserQueryCriteria criteria, Pageable pageable)
+        /*[HttpGet]
+        public async Task<PageModel<UserDto>> query([FromQuery]UserQueryCriteria criteria)
         {
             
             if (criteria.DeptId.HasValue)
@@ -59,17 +60,18 @@ namespace XjjXmm.Authorize.Api.Controllers
                 var res = criteria.DeptIds.Intersect(dataScopes);
                 if (res.Any())
                 {
-                    return new ResponseEntity<>(_userService.queryAll(criteria, pageable), HttpStatus.OK);
+                    //return new ResponseEntity<>(_userService.queryAll(criteria, pageable), HttpStatus.OK);
                 }
             }
             else
             {
                 // 否则取并集
-                criteria.getDeptIds().addAll(dataScopes);
-                return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
+                //criteria.getDeptIds().addAll(dataScopes);
+                //return new ResponseEntity<>(userService.queryAll(criteria, pageable), HttpStatus.OK);
             }
-            return new ResponseEntity<>(PageUtil.toPage(null, 0), HttpStatus.OK);
-        }
+            //return new ResponseEntity<>(PageUtil.toPage(null, 0), HttpStatus.OK);
+            return null;
+        }*/
 
 
 
@@ -118,7 +120,8 @@ namespace XjjXmm.Authorize.Api.Controllers
         [HttpGet("/user/detail")]
         public async Task<UserDetailModel> GetUserById(string id)
         {
-            return await _userService.FindUser(id);
+           // return await _userService.FindUser(id);
+           return null;
         }
 
         [HttpPost("/user/delete")]

@@ -59,7 +59,7 @@ namespace XjjXmm.Authorize.Api.Controllers
 
             _cache.Remove(authUser.UUID);
 
-            var rsaKey = App.GetConfig("rsa:private_key");
+            var rsaKey = App.Configuration.GetConfig("rsa:private_key");
             var password = authUser.Password.ToRSADecrypt(rsaKey);
             authUser.Password = password;
 

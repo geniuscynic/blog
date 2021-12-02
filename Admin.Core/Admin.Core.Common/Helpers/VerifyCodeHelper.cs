@@ -5,10 +5,11 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Text;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Common.Helpers
 {
-    [SingleInstance]
+    [Injection(Type = InjectionType.Singleton)]
     public class VerifyCodeHelper
     {
         private readonly AppConfig _appConfig;

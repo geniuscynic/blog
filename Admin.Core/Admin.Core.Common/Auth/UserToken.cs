@@ -7,10 +7,11 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using System.Text;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Common.Auth
 {
-    [SingleInstance]
+    [Injection(Type = InjectionType.Singleton)]
     public class UserToken : IUserToken
     {
         private readonly JwtConfig _jwtConfig;

@@ -7,9 +7,11 @@ using Admin.Core.Service.Admin.DictionaryType.Input;
 using Admin.Core.Service.Admin.DictionaryType.Output;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.DictionaryType
 {
+    [Injection]
     public class DictionaryTypeService : BaseService, IDictionaryTypeService
     {
         private readonly IDictionaryTypeRepository _DictionaryTypeRepository;

@@ -24,68 +24,78 @@ namespace XjjXmm.FrameWork.Configuration
         /// <returns></returns>
         internal void Scan(string environmentName = "", bool reloadOnChange = false)
         {
-            var filePath = Path.Combine(AppContext.BaseDirectory, "configs");
-            if (!Directory.Exists(filePath))
-                return;
+            //var filePath = Path.Combine(AppContext.BaseDirectory, "configs");
+            //if (!Directory.Exists(filePath))
+            //    return;
+
+            var filePath = AppContext.BaseDirectory;
 
             var config = new ConfigurationBuilder()
                 .SetBasePath(filePath);
 
-            //var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            //var environment = config["Environment"];
-            foreach (var enumerateFile in Directory.EnumerateFiles(filePath,"*.json"))
+            var configFilePath = Path.Combine(AppContext.BaseDirectory, "configs");
+            if (Directory.Exists(configFilePath))
             {
-                //if(enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() != "development")
-                //{
-                //      continue;
-                //}
-                //else if (!enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() == "development")
-                //{
-                //    continue;
-                //}
-                //else  if (!enumerateFile.ToLower().EndsWith(".json"))
-                //{
-                //    continue;
-                //}
 
-                var file = new FileInfo(enumerateFile);
-                //if (!file.Name.ToLower().EndsWith(".json"))
-                //{
-                //     continue;
-                //}
 
-                var files = file.Name.Split(".");
-                if (files.Length == 2)
+                //var config = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+                //var environment = config["Environment"];
+                foreach (var enumerateFile in Directory.EnumerateFiles(configFilePath, "*.json"))
                 {
-                    config.AddJsonFile(file.Name, true, reloadOnChange);
+                    //if(enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() != "development")
+                    //{
+                    //      continue;
+                    //}
+                    //else if (!enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() == "development")
+                    //{
+                    //    continue;
+                    //}
+                    //else  if (!enumerateFile.ToLower().EndsWith(".json"))
+                    //{
+                    //    continue;
+                    //}
+
+                    var file = new FileInfo(enumerateFile);
+                    //if (!file.Name.ToLower().EndsWith(".json"))
+                    //{
+                    //     continue;
+                    //}
+
+                    var files = file.Name.Split(".");
+                    if (files.Length == 2)
+                    {
+                        config.AddJsonFile("configs/" + file.Name, true, reloadOnChange);
+                    }
+                }
+
+
+                foreach (var enumerateFile in Directory.EnumerateFiles(configFilePath, "*.json"))
+                {
+                    //if(enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() != "development")
+                    //{
+                    //      continue;
+                    //}
+                    //else if (!enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() == "development")
+                    //{
+                    //    continue;
+                    //}
+                    //else  if (!enumerateFile.ToLower().EndsWith(".json"))
+                    //{
+                    //    continue;
+                    //}
+
+                    var file = new FileInfo(enumerateFile);
+
+
+                    var files = file.Name.Split(".");
+                    if (files.Length == 3 && files[1] == environmentName)
+                    {
+                        config.AddJsonFile("configs/" + file.Name, true, reloadOnChange);
+                    }
                 }
             }
 
-
-            foreach (var enumerateFile in Directory.EnumerateFiles(filePath, "*.json"))
-            {
-                //if(enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() != "development")
-                //{
-                //      continue;
-                //}
-                //else if (!enumerateFile.ToLower().Contains(".development.") && environment?.ToLower() == "development")
-                //{
-                //    continue;
-                //}
-                //else  if (!enumerateFile.ToLower().EndsWith(".json"))
-                //{
-                //    continue;
-                //}
-
-                var file = new FileInfo(enumerateFile);
-               
-
-                var files = file.Name.Split(".");
-                if (files.Length == 3 && files[1] == environmentName)
-                {
-                    config.AddJsonFile(file.Name, true, reloadOnChange);
-                }
-            }
+            config.AddJsonFile("appsettings.json", true, reloadOnChange);
 
             Configuration = config.Build();
 

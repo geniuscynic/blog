@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using System;
 using System.Collections.Generic;
+using XjjXmm.FrameWork;
 
 namespace Admin.Core.Service
 {
@@ -34,7 +35,7 @@ namespace Admin.Core.Service
         /// </summary>
         public IMapper Mapper => LazyGetRequiredService(ref _mapper);
 
-        public IServiceProvider ServiceProvider { get; set; }
+        public IServiceProvider ServiceProvider { get; set; } = App.ServiceProvider;
 
         /// <summary>
         /// 用户信息

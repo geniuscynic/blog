@@ -6,13 +6,15 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Logs
 {
     /// <summary>
     /// Api帮助类
     /// </summary>
-    [SingleInstance]
+    //[Injection(Type = InjectionType.Singleton)]
+    [Injection(Type = InjectionType.Singleton)]
     public class ApiHelper
     {
         private List<ApiHelperDto> _apis;

@@ -11,9 +11,11 @@ using Admin.Core.Service.Personnel.Employee.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Personnel.Employee
 {
+    [Injection]
     /// <summary>
     /// 员工服务
     /// </summary>

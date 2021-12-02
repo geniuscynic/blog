@@ -7,9 +7,11 @@ using Admin.Core.Service.Admin.LoginLog.Input;
 using Admin.Core.Service.Admin.LoginLog.Output;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.LoginLog
 {
+    [Injection]
     public class LoginLogService : BaseService, ILoginLogService
     {
         private readonly IHttpContextAccessor _context;

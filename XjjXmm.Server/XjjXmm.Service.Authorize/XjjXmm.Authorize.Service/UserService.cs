@@ -95,12 +95,12 @@ namespace XjjXmm.Authorize.Service
 
             if (user == null)
             {
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "用户名错误");
+                //throw BussinessException.CreateException(ExceptionCode.CustomException, "用户名错误");
             }
 
             if (BCryptPasswordEncoder.Compare(user.Password , model.Password))
             {
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "密码错误");
+                //throw BussinessException.CreateException(ExceptionCode.CustomException, "密码错误");
             }
 
             var jwtUserDto = new JwtUserDto();
@@ -124,7 +124,7 @@ namespace XjjXmm.Authorize.Service
 
             if (user == null)
             {
-                throw BussinessException.CreateException(ExceptionCode.CustomException, "找不到用户");
+               // throw BussinessException.CreateException(ExceptionCode.CustomException, "找不到用户");
             }
 
             var userModel = user.MapTo<UserEntity, UserDto>();
@@ -141,8 +141,9 @@ namespace XjjXmm.Authorize.Service
 
         public async Task<PageModel<UserDto>> QueryAll(UserQueryCriteria criteria)
         {
-            Page<User> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder)->QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
-            return PageUtil.toPage(page.map(userMapper::toDto));
+            //Page<User> page = userRepository.findAll((root, criteriaQuery, criteriaBuilder)->QueryHelp.getPredicate(root, criteria, criteriaBuilder), pageable);
+           // return PageUtil.toPage(page.map(userMapper::toDto));
+           return null;
         }
 
 

@@ -8,9 +8,11 @@ using Admin.Core.Service.Admin.View.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.View
 {
+    [Injection]
     public class ViewService : BaseService, IViewService
     {
         private readonly IViewRepository _viewRepository;

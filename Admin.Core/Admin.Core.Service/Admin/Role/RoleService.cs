@@ -7,9 +7,11 @@ using Admin.Core.Service.Admin.Role.Input;
 using Admin.Core.Service.Admin.Role.Output;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Role
 {
+    [Injection]
     public class RoleService : BaseService, IRoleService
     {
         private readonly IRoleRepository _roleRepository;

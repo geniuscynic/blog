@@ -5,9 +5,11 @@ using Admin.Core.Repository.Personnel;
 using Admin.Core.Service.Personnel.Position.Input;
 using Admin.Core.Service.Personnel.Position.Output;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Personnel.Position
 {
+    [Injection]
     public class PositionService : BaseService, IPositionService
     {
         private readonly IPositionRepository _positionRepository;

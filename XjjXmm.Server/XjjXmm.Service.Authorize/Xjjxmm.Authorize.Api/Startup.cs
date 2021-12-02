@@ -45,8 +45,8 @@ namespace XjjXmm.Authorize.Api
 
             // services.AddSwaggerSetup();
 
-            var connectionString = App.GetConfig("ConnectionString:connectionString");
-            var providerName = App.GetConfig("ConnectionString:dbType");
+            var connectionString = App.Configuration.GetConfig("ConnectionString:connectionString");
+            var providerName = App.Configuration.GetConfig("ConnectionString:dbType");
 
             services.AddScoped(_ => new DbClient(connectionString, providerName, new Aop()
             {

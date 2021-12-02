@@ -5,13 +5,14 @@ using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Common.Helpers
 {
     /// <summary>
     /// Html操作相关类
     /// </summary>
-    [SingleInstance]
+    [Injection(Type = InjectionType.Singleton)]
     public class HtmlHelper
     {
         #region 私有字段

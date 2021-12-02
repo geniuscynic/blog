@@ -7,9 +7,11 @@ using Admin.Core.Service.Admin.OprationLog.Input;
 using Admin.Core.Service.Admin.OprationLog.Output;
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.OprationLog
 {
+    [Injection]
     public class OprationLogService : BaseService, IOprationLogService
     {
         private readonly IHttpContextAccessor _context;

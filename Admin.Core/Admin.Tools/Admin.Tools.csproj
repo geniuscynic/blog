@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\XjjXmm.Server\XjjXmm.Core\Xjjxmm.FrameWork\XjjXmm.FrameWork.csproj" />
     <ProjectReference Include="..\Admin.Core.Common\Admin.Core.Common.csproj" />
   </ItemGroup>
 

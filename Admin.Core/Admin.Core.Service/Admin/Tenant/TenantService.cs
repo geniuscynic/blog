@@ -9,9 +9,11 @@ using Admin.Core.Service.Admin.Tenant.Input;
 using Admin.Core.Service.Admin.Tenant.Output;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Tenant
 {
+    [Injection]
     public class TenantService : BaseService, ITenantService
     {
         private readonly ITenantRepository _tenantRepository;

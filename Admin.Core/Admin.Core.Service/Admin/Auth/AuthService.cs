@@ -12,9 +12,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using Admin.Core.Model;
 using XjjXmm.FrameWork.Common;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Auth
 {
+    [Injection]
     public class AuthService : BaseService, IAuthService
     {
         private readonly AppConfig _appConfig;

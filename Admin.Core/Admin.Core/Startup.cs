@@ -13,11 +13,10 @@ using Admin.Core.Enums;
 using Admin.Core.Extensions;
 using Admin.Core.Filters;
 using Admin.Core.Logs;
-using Admin.Core.RegisterModules;
+
 using Admin.Core.Repository;
 using AspNetCoreRateLimit;
-using Autofac;
-using Autofac.Extras.DynamicProxy;
+
 using IdentityServer4.AccessTokenValidation;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -381,33 +380,15 @@ namespace Admin.Core
             services.Configure<ConsoleLifetimeOptions>(opts => opts.SuppressStatusMessages = true);
 
             //services.Configure<IConfiguration>()
+
+            services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+            services.AddScoped(typeof(IRepositoryBase<,>), typeof(RepositoryBase<,>));
+
+            //builder.RegisterGeneric().As().InstancePerLifetimeScope();
+            //builder.RegisterGeneric(typeof(RepositoryBase<,>)).As(typeof(IRepositoryBase<,>)).InstancePerLifetimeScope();
         }
 
-        public void ConfigureContainer(ContainerBuilder builder)
-        {
-            #region AutoFac IOC容器
-
-            try
-            {
-                // 控制器注入
-                builder.RegisterModule(new ControllerModule());
-
-                // 单例注入
-                builder.RegisterModule(new SingleInstanceModule());
-
-                // 仓储注入
-                builder.RegisterModule(new RepositoryModule());
-
-                // 服务注入
-                builder.RegisterModule(new ServiceModule(_appConfig));
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message + "\n" + ex.InnerException);
-            }
-
-            #endregion AutoFac IOC容器
-        }
+       
 
         public void Configure(IApplicationBuilder app)
         {

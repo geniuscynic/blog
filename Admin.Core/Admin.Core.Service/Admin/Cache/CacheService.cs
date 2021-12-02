@@ -6,9 +6,11 @@ using System.ComponentModel;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Cache
 {
+    [Injection]
     public class CacheService : BaseService, ICacheService
     {
         public CacheService()

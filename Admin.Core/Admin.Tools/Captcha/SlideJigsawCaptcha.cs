@@ -8,6 +8,7 @@ using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 /*
 Linux下Ubuntu如果报Gdip错误，需要按照以下步骤操作
@@ -20,7 +21,8 @@ namespace Admin.Tools.Captcha
     /// <summary>
     /// 滑块拼图验证
     /// </summary>
-    [SingleInstance]
+    [Injection(Type = InjectionType.Singleton)]
+    //[Injection(Type = InjectionType.Singleton)]
     public class SlideJigsawCaptcha : ICaptcha
     {
         private readonly ICache _cache;

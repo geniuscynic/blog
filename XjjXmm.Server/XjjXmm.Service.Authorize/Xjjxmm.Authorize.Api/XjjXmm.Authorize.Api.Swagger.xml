@@ -57,5 +57,13 @@
             </summary>
             <param name=""></param>
         </member>
+        <member name="M:XjjXmm.Authorize.Api.Controllers.UserController.login">
+            <summary>
+             查询用户
+            </summary>
+            <param name="criteria"></param>
+            <param name="pageable"></param>
+            <returns></returns>
+        </member>
     </members>
 </doc>

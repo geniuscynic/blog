@@ -13,12 +13,14 @@ using Admin.Core.Service.Admin.User.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.User
 {
     /// <summary>
     /// 用户服务
     /// </summary>
+    [Injection]
     public class UserService : BaseService, IUserService
     {
         private readonly AppConfig _appConfig;

@@ -28,6 +28,11 @@ namespace Admin.Core.RegisterModules
                 .Where(a => a.Name.StartsWith(_prefixName))
                 .Select(o => Assembly.Load(new AssemblyName(o.Name))).ToArray();
 
+            //var test = 
+            //       assemblies
+            //    .Where(t => t.GetType().GetCustomAttribute<SingleInstanceAttribute>() != null)
+            //    .ToList();
+
             //无接口注入单例
             builder.RegisterAssemblyTypes(assemblies)
             .Where(t => t.GetCustomAttribute<SingleInstanceAttribute>() != null)
