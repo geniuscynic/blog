@@ -1,37 +1,48 @@
-﻿using Admin.Core.Repository;
-using System;
+﻿using System;
 using System.Linq.Expressions;
 
-public static class FreeSqlDbContextExtensions
+namespace Admin.Core.Repository.Base
 {
-
-    /// <summary>
-    /// 返回默认仓库类
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <typeparam name="TKey"></typeparam>
-    /// <param name="that"></param>
-    /// <param name="filter">数据过滤 + 验证</param>
-    /// <returns></returns>
-    public static IRepositoryBase<TEntity, TKey> GetRepositoryBase<TEntity, TKey>(this IFreeSql that, Expression<Func<TEntity, bool>> filter = null) where TEntity : class, new()
+    public class MyIFreeSql
     {
-        return new DefaultRepositoryBase<TEntity, TKey>(that, filter);
+        public IFreeSql orm { get; set; }
+
+        public MyIFreeSql(IFreeSql orm)
+        {
+            this.orm = orm;
+        }
     }
-
-    /// <summary>
-    /// 返回默认仓库类，适用联合主键的仓储类
-    /// </summary>
-    /// <typeparam name="TEntity"></typeparam>
-    /// <param name="that"></param>
-    /// <param name="filter">数据过滤 + 验证</param>
-    /// <returns></returns>
-    public static IRepositoryBase<TEntity, long> GetRepositoryBase<TEntity>(this IFreeSql that, Expression<Func<TEntity, bool>> filter = null) where TEntity : class, new()
+    public static class FreeSqlDbContextExtensions
     {
-        return new DefaultRepositoryBase<TEntity, long>(that, filter);
-    }
 
-    public static IRepositoryBase<TEntity, long> GetRepositoryBase<TEntity>(this IFreeSql that, MyUnitOfWorkManager muowManger) where TEntity : class, new()
-    {
-        return new DefaultRepositoryBase<TEntity, long>(that, muowManger);
+        /// <summary>
+        /// 返回默认仓库类
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <typeparam name="TKey"></typeparam>
+        /// <param name="that"></param>
+        /// <param name="filter">数据过滤 + 验证</param>
+        /// <returns></returns>
+        public static IRepositoryBase<TEntity, TKey> GetRepositoryBase<TEntity, TKey>(this IFreeSql that, Expression<Func<TEntity, bool>> filter = null) where TEntity : class, new()
+        {
+            return new DefaultRepositoryBase<TEntity, TKey>(that, filter);
+        }
+
+        /// <summary>
+        /// 返回默认仓库类，适用联合主键的仓储类
+        /// </summary>
+        /// <typeparam name="TEntity"></typeparam>
+        /// <param name="that"></param>
+        /// <param name="filter">数据过滤 + 验证</param>
+        /// <returns></returns>
+        public static IRepositoryBase<TEntity, long> GetRepositoryBase<TEntity>(this IFreeSql that, Expression<Func<TEntity, bool>> filter = null) where TEntity : class, new()
+        {
+            return new DefaultRepositoryBase<TEntity, long>(that, filter);
+        }
+
+        public static IRepositoryBase<TEntity, long> GetRepositoryBase<TEntity>(this IFreeSql that, MyUnitOfWorkManager muowManger) where TEntity : class, new()
+        {
+            return new DefaultRepositoryBase<TEntity, long>(that, muowManger);
+        }
     }
 }

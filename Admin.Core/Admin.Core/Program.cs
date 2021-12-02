@@ -74,7 +74,7 @@ namespace Admin.Core
                         })
                         .UseUrls(appConfig.Urls);
                 })
-                //.SetUp()
+                .SetUp()
             .ConfigureLogging(logging =>
             {
                 logging.ClearProviders();

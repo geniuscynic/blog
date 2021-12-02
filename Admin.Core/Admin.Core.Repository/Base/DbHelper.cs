@@ -21,6 +21,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Admin.Core.Repository.Base;
 using Yitter.IdGenerator;
 
 namespace Admin.Core.Repository

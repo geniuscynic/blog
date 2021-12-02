@@ -13,6 +13,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.Core.Repository.Base;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Permission

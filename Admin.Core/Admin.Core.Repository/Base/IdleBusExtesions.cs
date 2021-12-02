@@ -6,6 +6,7 @@ using Admin.Core.Repository.Admin.Tenant.Dto;
 using FreeSql;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using Admin.Core.Repository.Base;
 
 namespace Admin.Core.Repository
 {

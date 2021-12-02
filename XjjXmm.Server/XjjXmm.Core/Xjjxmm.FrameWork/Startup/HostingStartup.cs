@@ -58,8 +58,8 @@ namespace XjjXmm.FrameWork.Startup
 
                 services.ConfigureDynamicProxy(config =>
                 {
-                   
-                   // config.Interceptors.AddTyped<LogInterceptor>();
+
+                    // config.Interceptors.AddTyped<LogInterceptor>();
                     //config.NonAspectPredicates.AddService("ICache");
 
                    // config.Interceptors.AddTyped<CacheInterceptor>();

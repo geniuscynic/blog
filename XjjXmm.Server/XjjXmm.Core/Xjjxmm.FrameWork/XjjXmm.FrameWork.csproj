@@ -19,7 +19,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="AspectCore.Extensions.DependencyInjection" Version="2.2.0" />
     <PackageReference Include="BCrypt.Net-Next" Version="4.0.2" />
     <PackageReference Include="BouncyCastle.NetCore" Version="1.8.8" />
     <PackageReference Include="EmitMapper.Core" Version="1.0.2" />
@@ -35,6 +34,21 @@
   <ItemGroup>
     <Folder Include="Aop\" />
     <Folder Include="Middleware\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="AspectCore.Abstractions">
+      <HintPath>..\..\..\Admin.Core\lib\AspectCore.Abstractions.dll</HintPath>
+    </Reference>
+    <Reference Include="AspectCore.Core">
+      <HintPath>..\..\..\Admin.Core\lib\AspectCore.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="AspectCore.Extensions.DependencyInjection">
+      <HintPath>..\..\..\Admin.Core\lib\AspectCore.Extensions.DependencyInjection.dll</HintPath>
+    </Reference>
+    <Reference Include="AspectCore.Extensions.Reflection">
+      <HintPath>..\..\..\Admin.Core\lib\AspectCore.Extensions.Reflection.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -21,6 +21,14 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmm.FrameWork", "..\XjjX
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Xjjxmm.DataBase", "..\XjjXmm.Server\XjjXmm.Core\Xjjxmm.DataBase\Xjjxmm.DataBase.csproj", "{F4842B13-E572-4716-8081-2D673F27495E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.Extensions.DependencyInjection", "..\..\AspectCore-Framework\src\AspectCore.Extensions.DependencyInjection\AspectCore.Extensions.DependencyInjection.csproj", "{ED5FFE64-E5D8-4A5D-BB89-59D2FCC30782}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.Core", "..\..\AspectCore-Framework\src\AspectCore.Core\AspectCore.Core.csproj", "{C4FC5DEF-048B-4807-99EB-0F5D743FBADE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.Abstractions", "..\..\AspectCore-Framework\src\AspectCore.Abstractions\AspectCore.Abstractions.csproj", "{9F37DA27-312E-4E0D-9011-BB574652DFA3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AspectCore.Extensions.Reflection", "..\..\AspectCore-Framework\src\AspectCore.Extensions.Reflection\AspectCore.Extensions.Reflection.csproj", "{8F8BDD57-13F4-467B-99F8-69E856620D8E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -63,6 +71,22 @@ Global
 		{F4842B13-E572-4716-8081-2D673F27495E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4842B13-E572-4716-8081-2D673F27495E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4842B13-E572-4716-8081-2D673F27495E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED5FFE64-E5D8-4A5D-BB89-59D2FCC30782}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED5FFE64-E5D8-4A5D-BB89-59D2FCC30782}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED5FFE64-E5D8-4A5D-BB89-59D2FCC30782}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED5FFE64-E5D8-4A5D-BB89-59D2FCC30782}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4FC5DEF-048B-4807-99EB-0F5D743FBADE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4FC5DEF-048B-4807-99EB-0F5D743FBADE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4FC5DEF-048B-4807-99EB-0F5D743FBADE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4FC5DEF-048B-4807-99EB-0F5D743FBADE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F37DA27-312E-4E0D-9011-BB574652DFA3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F37DA27-312E-4E0D-9011-BB574652DFA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F37DA27-312E-4E0D-9011-BB574652DFA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F37DA27-312E-4E0D-9011-BB574652DFA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F8BDD57-13F4-467B-99F8-69E856620D8E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F8BDD57-13F4-467B-99F8-69E856620D8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F8BDD57-13F4-467B-99F8-69E856620D8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F8BDD57-13F4-467B-99F8-69E856620D8E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
