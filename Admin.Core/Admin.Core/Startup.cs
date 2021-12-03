@@ -376,7 +376,7 @@ namespace Admin.Core
             #endregion IP限流
 
             //阻止NLog接收状态消息
-            services.Configure<ConsoleLifetimeOptions>(opts => opts.SuppressStatusMessages = true);
+            //services.Configure<ConsoleLifetimeOptions>(opts => opts.SuppressStatusMessages = true);
 
             //services.Configure<IConfiguration>()
 
