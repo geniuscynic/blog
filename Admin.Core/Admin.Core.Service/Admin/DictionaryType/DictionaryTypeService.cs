@@ -7,6 +7,7 @@ using Admin.Core.Service.Admin.DictionaryType.Input;
 using Admin.Core.Service.Admin.DictionaryType.Output;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.DictionaryType
@@ -22,13 +23,13 @@ namespace Admin.Core.Service.Admin.DictionaryType
             _dictionaryRepository = dictionaryRepository;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<DictionaryTypeGetOutput> GetAsync(long id)
         {
             var result = await _DictionaryTypeRepository.GetAsync<DictionaryTypeGetOutput>(id);
-            return ResponseOutput.Ok(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<DictionaryTypeEntity> input)
+        public async Task<PageOutput<DictionaryTypeListOutput>> PageAsync(PageInput<DictionaryTypeEntity> input)
         {
             var key = input.Filter?.Name;
 
@@ -45,36 +46,38 @@ namespace Admin.Core.Service.Admin.DictionaryType
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> AddAsync(DictionaryTypeAddInput input)
+        public async Task<bool> AddAsync(DictionaryTypeAddInput input)
         {
             var DictionaryType = Mapper.Map<DictionaryTypeEntity>(input);
             var id = (await _DictionaryTypeRepository.InsertAsync(DictionaryType)).Id;
-            return ResponseOutput.Result(id > 0);
+            return id > 0;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(DictionaryTypeUpdateInput input)
+        public async Task<bool> UpdateAsync(DictionaryTypeUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var entity = await _DictionaryTypeRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("数据字典不存在！");
+                //return ResponseOutput.NotOk("数据字典不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid, "数据字典不存在！");
             }
 
             Mapper.Map(input, entity);
             await _DictionaryTypeRepository.UpdateAsync(entity);
-            return ResponseOutput.Ok();
+            //return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             //删除字典数据
             await _dictionaryRepository.DeleteAsync(a => a.DictionaryTypeId == id);
@@ -82,25 +85,25 @@ namespace Admin.Core.Service.Admin.DictionaryType
             //删除字典类型
             await _DictionaryTypeRepository.DeleteAsync(a => a.Id == id);
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             await _dictionaryRepository.SoftDeleteAsync(a => a.DictionaryTypeId == id);
             await _DictionaryTypeRepository.SoftDeleteAsync(id);
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             await _dictionaryRepository.SoftDeleteAsync(a => ids.Contains(a.DictionaryTypeId));
             await _DictionaryTypeRepository.SoftDeleteAsync(ids);
 
-            return ResponseOutput.Ok();
+            return true;
         }
     }
 }

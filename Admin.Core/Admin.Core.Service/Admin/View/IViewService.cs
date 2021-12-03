@@ -1,14 +1,18 @@
+using System.Collections.Generic;
 using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.View.Input;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.View.Output;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.View
 {
     /// <summary>
     /// ÊÓÍ¼·þÎñ
     /// </summary>
+    [ProcessLog]
     public interface IViewService
     {
         /// <summary>
@@ -16,22 +20,22 @@ namespace Admin.Core.Service.Admin.View
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<IResponseOutput> GetAsync(long id);
+        Task<ViewGetOutput> GetAsync(long id);
 
-        Task<IResponseOutput> ListAsync(string key);
+        Task<List<ViewListOutput>> ListAsync(string key);
 
-        Task<IResponseOutput> PageAsync(PageInput<ViewEntity> model);
+        Task<PageOutput<ViewEntity>> PageAsync(PageInput<ViewEntity> model);
 
-        Task<IResponseOutput> AddAsync(ViewAddInput input);
+        Task<bool> AddAsync(ViewAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(ViewUpdateInput input);
+        Task<bool> UpdateAsync(ViewUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDeleteAsync(long[] ids);
 
-        Task<IResponseOutput> SyncAsync(ViewSyncInput input);
+        Task<bool> SyncAsync(ViewSyncInput input);
     }
 }

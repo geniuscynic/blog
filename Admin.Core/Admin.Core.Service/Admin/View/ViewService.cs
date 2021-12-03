@@ -1,3 +1,4 @@
+using System;
 using Admin.Core.Common.Attributes;
 using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
@@ -8,6 +9,7 @@ using Admin.Core.Service.Admin.View.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.View
@@ -22,13 +24,13 @@ namespace Admin.Core.Service.Admin.View
             _viewRepository = moduleRepository;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<ViewGetOutput> GetAsync(long id)
         {
             var result = await _viewRepository.GetAsync<ViewGetOutput>(id);
-            return ResponseOutput.Ok(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> ListAsync(string key)
+        public async Task<List<ViewListOutput>> ListAsync(string key)
         {
             var data = await _viewRepository
                 .WhereIf(key.NotNull(), a => a.Path.Contains(key) || a.Label.Contains(key))
@@ -36,10 +38,10 @@ namespace Admin.Core.Service.Admin.View
                 .OrderBy(a => a.Sort)
                 .ToListAsync<ViewListOutput>();
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<ViewEntity> input)
+        public async Task<PageOutput<ViewEntity>> PageAsync(PageInput<ViewEntity> input)
         {
             var key = input.Filter?.Label;
 
@@ -57,36 +59,37 @@ namespace Admin.Core.Service.Admin.View
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> AddAsync(ViewAddInput input)
+        public async Task<bool> AddAsync(ViewAddInput input)
         {
             var entity = Mapper.Map<ViewEntity>(input);
             var id = (await _viewRepository.InsertAsync(entity)).Id;
 
-            return ResponseOutput.Result(id > 0);
+            return id > 0;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(ViewUpdateInput input)
+        public async Task<bool> UpdateAsync(ViewUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var entity = await _viewRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("视图不存在！");
+                //return ResponseOutput.NotOk("视图不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid,"视图不存在！");
             }
 
             Mapper.Map(input, entity);
             await _viewRepository.UpdateAsync(entity);
-            return ResponseOutput.Ok();
+            return true;
         }
 
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var result = false;
             if (id > 0)
@@ -94,25 +97,25 @@ namespace Admin.Core.Service.Admin.View
                 result = (await _viewRepository.DeleteAsync(m => m.Id == id)) > 0;
             }
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             var result = await _viewRepository.SoftDeleteAsync(id);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             var result = await _viewRepository.SoftDeleteAsync(ids);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> SyncAsync(ViewSyncInput input)
+        public async Task<bool> SyncAsync(ViewSyncInput input)
         {
             //查询所有视图
             var views = await _viewRepository.Select.ToListAsync();
@@ -186,7 +189,7 @@ namespace Admin.Core.Service.Admin.View
             }
             
 
-            return ResponseOutput.Ok();
+            return true;
         }
     }
 }

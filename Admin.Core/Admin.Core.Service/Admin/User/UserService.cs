@@ -13,6 +13,7 @@ using Admin.Core.Service.Admin.User.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.User
@@ -62,7 +63,7 @@ namespace Admin.Core.Service.Admin.User
             return entityDto;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<object> GetAsync(long id)
         {
             var entity = await _userRepository.Select
             .WhereDynamic(id)
@@ -73,25 +74,25 @@ namespace Admin.Core.Service.Admin.User
 
             var roles = await _roleRepository.Select.ToListAsync(a => new { a.Id, a.Name });
 
-            return ResponseOutput.Ok(new { Form = entityDto, Select = new { roles } });
+            return new { Form = entityDto, Select = new { roles } };
         }
 
-        public async Task<IResponseOutput> GetSelectAsync()
+        public async Task<object> GetSelectAsync()
         {
             var roles = await _roleRepository.Select.ToListAsync(a => new { a.Id, a.Name });
 
-            return ResponseOutput.Ok(new { Select = new { roles } });
+            return new { Select = new { roles } };
         }
 
-        public async Task<IResponseOutput> GetBasicAsync()
+        public async Task<UserUpdateBasicInput> GetBasicAsync()
         {
             if (!(User?.Id > 0))
             {
-                return ResponseOutput.NotOk("未登录！");
+                throw new BussinessException(StatusCodes.Status999Falid, "未登录！");
             }
 
             var data = await _userRepository.GetAsync<UserUpdateBasicInput>(User.Id);
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
         public async Task<IList<UserPermissionsOutput>> GetPermissionsAsync()
@@ -109,7 +110,7 @@ namespace Admin.Core.Service.Admin.User
             return result;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<UserEntity> input)
+        public async Task<PageOutput<UserListOutput>> PageAsync(PageInput<UserEntity> input)
         {
             var list = await _userRepository.Select
             .WhereDynamicFilter(input.DynamicFilter)
@@ -125,11 +126,11 @@ namespace Admin.Core.Service.Admin.User
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> AddAsync(UserAddInput input)
+        public async Task<bool> AddAsync(UserAddInput input)
         {
             if (input.Password.IsNull())
             {
@@ -143,7 +144,7 @@ namespace Admin.Core.Service.Admin.User
 
             if (!(user?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             if (input.RoleIds != null && input.RoleIds.Any())
@@ -152,21 +153,22 @@ namespace Admin.Core.Service.Admin.User
                 await _userRoleRepository.InsertAsync(roles);
             }
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> UpdateAsync(UserUpdateInput input)
+        public async Task<bool> UpdateAsync(UserUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var user = await _userRepository.GetAsync(input.Id);
             if (!(user?.Id > 0))
             {
-                return ResponseOutput.NotOk("用户不存在！");
+                //return ResponseOutput.NotOk("用户不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid, "用户不存在！");
             }
 
             Mapper.Map(input, user);
@@ -180,10 +182,11 @@ namespace Admin.Core.Service.Admin.User
                 await _userRoleRepository.InsertAsync(roles);
             }
 
-            return ResponseOutput.Ok();
+            return true;
+            //return ResponseOutput.Ok();
         }
 
-        public async Task<IResponseOutput> UpdateBasicAsync(UserUpdateBasicInput input)
+        public async Task<bool> UpdateBasicAsync(UserUpdateBasicInput input)
         {
             var entity = await _userRepository.GetAsync(input.Id);
             entity = Mapper.Map(input, entity);
@@ -192,21 +195,23 @@ namespace Admin.Core.Service.Admin.User
             //清除用户缓存
             await Cache.DelAsync(string.Format(CacheKey.UserInfo, input.Id));
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> ChangePasswordAsync(UserChangePasswordInput input)
+        public async Task<bool> ChangePasswordAsync(UserChangePasswordInput input)
         {
             if (input.ConfirmPassword != input.NewPassword)
             {
-                return ResponseOutput.NotOk("新密码和确认密码不一致！");
+                //return ResponseOutput.NotOk("新密码和确认密码不一致！");
+                throw new BussinessException(StatusCodes.Status999Falid, "新密码和确认密码不一致！");
             }
 
             var entity = await _userRepository.GetAsync(input.Id);
             var oldPassword = MD5Encrypt.Encrypt32(input.OldPassword);
             if (oldPassword != entity.Password)
             {
-                return ResponseOutput.NotOk("旧密码不正确！");
+                throw new BussinessException(StatusCodes.Status999Falid, "旧密码不正确！");
+                //return ResponseOutput.NotOk("旧密码不正确！");
             }
 
             input.Password = MD5Encrypt.Encrypt32(input.NewPassword);
@@ -214,10 +219,10 @@ namespace Admin.Core.Service.Admin.User
             entity = Mapper.Map(input, entity);
             var result = (await _userRepository.UpdateAsync(entity)) > 0;
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var result = false;
             if (id > 0)
@@ -225,25 +230,25 @@ namespace Admin.Core.Service.Admin.User
                 result = (await _userRepository.DeleteAsync(m => m.Id == id)) > 0;
             }
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             var result = await _userRepository.SoftDeleteAsync(id);
             await _userRoleRepository.DeleteAsync(a => a.UserId == id);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             var result = await _userRepository.SoftDeleteAsync(ids);
             await _userRoleRepository.DeleteAsync(a => ids.Contains(a.UserId));
 
-            return ResponseOutput.Result(result);
+            return result;
         }
     }
 }

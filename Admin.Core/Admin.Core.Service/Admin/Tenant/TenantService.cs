@@ -9,6 +9,7 @@ using Admin.Core.Service.Admin.Tenant.Input;
 using Admin.Core.Service.Admin.Tenant.Output;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Tenant
@@ -37,13 +38,13 @@ namespace Admin.Core.Service.Admin.Tenant
             _rolePermissionRepository = rolePermissionRepository;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<TenantGetOutput> GetAsync(long id)
         {
             var result = await _tenantRepository.GetAsync<TenantGetOutput>(id);
-            return ResponseOutput.Ok(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<TenantEntity> input)
+        public async Task<PageOutput<TenantListOutput>> PageAsync(PageInput<TenantEntity> input)
         {
             var key = input.Filter?.Name;
 
@@ -60,11 +61,11 @@ namespace Admin.Core.Service.Admin.Tenant
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> AddAsync(TenantAddInput input)
+        public async Task<bool> AddAsync(TenantAddInput input)
         {
             var entity = Mapper.Map<TenantEntity>(input);
             var tenant = await _tenantRepository.InsertAsync(entity);
@@ -89,29 +90,30 @@ namespace Admin.Core.Service.Admin.Tenant
             tenant.RoleId = role.Id;
             await _tenantRepository.UpdateAsync(tenant);
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(TenantUpdateInput input)
+        public async Task<bool> UpdateAsync(TenantUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var entity = await _tenantRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("租户不存在！");
+                //return ResponseOutput.NotOk("租户不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid, "租户不存在！");
             }
 
             Mapper.Map(input, entity);
             await _tenantRepository.UpdateAsync(entity);
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             //删除角色权限
             await _rolePermissionRepository.Where(a => a.Role.TenantId == id).DisableGlobalFilter("Tenant").ToDelete().ExecuteAffrowsAsync();
@@ -128,11 +130,11 @@ namespace Admin.Core.Service.Admin.Tenant
             //删除租户
             await _tenantRepository.DeleteAsync(id);
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             //删除用户
             await _userRepository.SoftDeleteAsync(a => a.TenantId == id, "Tenant");
@@ -143,11 +145,11 @@ namespace Admin.Core.Service.Admin.Tenant
             //删除租户
             var result = await _tenantRepository.SoftDeleteAsync(id);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             //删除用户
             await _userRepository.SoftDeleteAsync(a => ids.Contains(a.TenantId.Value), "Tenant");
@@ -158,7 +160,7 @@ namespace Admin.Core.Service.Admin.Tenant
             //删除租户
             var result = await _tenantRepository.SoftDeleteAsync(ids);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
     }
 }

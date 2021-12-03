@@ -3,23 +3,26 @@ using Admin.Core.Common.Output;
 using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.DictionaryType.Input;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.DictionaryType.Output;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.DictionaryType
 {
+    [ProcessLog]
     public partial interface IDictionaryTypeService
     {
-        Task<IResponseOutput> GetAsync(long id);
+        Task<DictionaryTypeGetOutput> GetAsync(long id);
 
-        Task<IResponseOutput> PageAsync(PageInput<DictionaryTypeEntity> model);
+        Task<PageOutput<DictionaryTypeListOutput>> PageAsync(PageInput<DictionaryTypeEntity> model);
 
-        Task<IResponseOutput> AddAsync(DictionaryTypeAddInput input);
+        Task<bool> AddAsync(DictionaryTypeAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(DictionaryTypeUpdateInput input);
+        Task<bool> UpdateAsync(DictionaryTypeUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDeleteAsync(long[] ids);
     }
 }

@@ -25,6 +25,11 @@ namespace XjjXmm.FrameWork.Filter
         {
             foreach (var actionArgumentsValue in context.ActionArguments.Values)
             {
+                if (actionArgumentsValue == null)
+                {
+                    continue;
+                }
+
                 var validator = new XjjxmmValidator(actionArgumentsValue);
                 if (!validator.Validate(validateType:ValidateType.AutoValdate))
                 {

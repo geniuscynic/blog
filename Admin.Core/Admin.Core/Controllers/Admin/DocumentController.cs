@@ -6,7 +6,10 @@ using Admin.Core.Service.Admin.Document.Input;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.Document.Output;
+using XjjXmm.FrameWork.Common;
 
 namespace Admin.Core.Controllers.Admin
 {
@@ -38,7 +41,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="end"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetList(string key, DateTime? start, DateTime? end)
+        public async Task<List<DocumentListOutput>> GetList(string key, DateTime? start, DateTime? end)
         {
             return await _documentService.GetListAsync(key, start, end);
         }
@@ -49,7 +52,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetImageList(long id)
+        public async Task<List<string>> GetImageList(long id)
         {
             return await _documentService.GetImageListAsync(id);
         }
@@ -60,7 +63,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetGroup(long id)
+        public async Task<DocumentGetGroupOutput> GetGroup(long id)
         {
             return await _documentService.GetGroupAsync(id);
         }
@@ -71,7 +74,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetMenu(long id)
+        public async Task<DocumentGetMenuOutput> GetMenu(long id)
         {
             return await _documentService.GetMenuAsync(id);
         }
@@ -82,7 +85,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetContent(long id)
+        public async Task<DocumentGetContentOutput> GetContent(long id)
         {
             return await _documentService.GetContentAsync(id);
         }
@@ -92,7 +95,7 @@ namespace Admin.Core.Controllers.Admin
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetPlainList()
+        public async Task<object> GetPlainList()
         {
             return await _documentService.GetPlainListAsync();
         }
@@ -103,7 +106,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddGroup(DocumentAddGroupInput input)
+        public async Task<bool> AddGroup(DocumentAddGroupInput input)
         {
             return await _documentService.AddGroupAsync(input);
         }
@@ -114,7 +117,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> AddMenu(DocumentAddMenuInput input)
+        public async Task<bool> AddMenu(DocumentAddMenuInput input)
         {
             return await _documentService.AddMenuAsync(input);
         }
@@ -125,7 +128,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateGroup(DocumentUpdateGroupInput input)
+        public async Task<bool> UpdateGroup(DocumentUpdateGroupInput input)
         {
             return await _documentService.UpdateGroupAsync(input);
         }
@@ -136,7 +139,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateMenu(DocumentUpdateMenuInput input)
+        public async Task<bool> UpdateMenu(DocumentUpdateMenuInput input)
         {
             return await _documentService.UpdateMenuAsync(input);
         }
@@ -147,7 +150,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> UpdateContent(DocumentUpdateContentInput input)
+        public async Task<bool> UpdateContent(DocumentUpdateContentInput input)
         {
             return await _documentService.UpdateContentAsync(input);
         }
@@ -158,7 +161,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(long id)
+        public async Task<bool> SoftDelete(long id)
         {
             return await _documentService.SoftDeleteAsync(id);
         }
@@ -170,7 +173,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="url"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> DeleteImage(long documentId, string url)
+        public async Task<bool> DeleteImage(long documentId, string url)
         {
             return await _documentService.DeleteImageAsync(documentId, url);
         }
@@ -181,26 +184,28 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> UploadImage([FromForm] DocumentUploadImageInput input)
+        public async Task<string> UploadImage([FromForm] DocumentUploadImageInput input)
         {
             var config = _uploadConfig.Document;
             var res = await _uploadHelper.UploadAsync(input.File, config, new { input.Id });
-            if (res.Success)
-            {
+            //if (res.Success)
+            //{
                 //保存文档图片
                 var r = await _documentService.AddImageAsync(
                 new DocumentAddImageInput
                 {
                     DocumentId = input.Id,
-                    Url = res.Data.FileRequestPath
+                    Url = res.FileRequestPath
                 });
-                if (r.Success)
+                if (r)
                 {
-                    return ResponseOutput.Ok(res.Data.FileRequestPath);
+                    return res.FileRequestPath;
                 }
-            }
+            //}
 
-            return ResponseOutput.NotOk("上传失败！");
+            throw new BussinessException(StatusCodes.Status999Falid, "上传失败！");
+            //return "";
+            //return ResponseOutput.NotOk("上传失败！");
         }
     }
 }

@@ -3,23 +3,26 @@ using Admin.Core.Common.Output;
 using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.Role.Input;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.Role.Output;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.Role
 {
+    [ProcessLog]
     public interface IRoleService
     {
-        Task<IResponseOutput> GetAsync(long id);
+        Task<RoleGetOutput> GetAsync(long id);
 
-        Task<IResponseOutput> PageAsync(PageInput<RoleEntity> input);
+        Task<PageOutput<RoleListOutput>> PageAsync(PageInput<RoleEntity> input);
 
-        Task<IResponseOutput> AddAsync(RoleAddInput input);
+        Task<bool> AddAsync(RoleAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(RoleUpdateInput input);
+        Task<bool> UpdateAsync(RoleUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDeleteAsync(long[] ids);
     }
 }

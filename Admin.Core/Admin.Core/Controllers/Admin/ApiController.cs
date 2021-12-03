@@ -1,10 +1,12 @@
-﻿using Admin.Core.Common.Input;
+﻿using System.Collections.Generic;
+using Admin.Core.Common.Input;
 using Admin.Core.Common.Output;
 using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.Api;
 using Admin.Core.Service.Admin.Api.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.Api.Output;
 
 namespace Admin.Core.Controllers.Admin
 {
@@ -26,7 +28,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> Get(long id)
+        public async Task<ApiGetOutput> Get(long id)
         {
             return await _apiService.GetAsync(id);
         }
@@ -37,7 +39,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> GetList(string key)
+        public async Task<List<ApiListOutput>> GetList(string key)
         {
             return await _apiService.ListAsync(key);
         }
@@ -48,7 +50,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="model">分页模型</param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> GetPage(PageInput<ApiEntity> model)
+        public async Task<PageOutput<ApiEntity>> GetPage(PageInput<ApiEntity> model)
         {
             return await _apiService.PageAsync(model);
         }
@@ -59,7 +61,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add(ApiAddInput input)
+        public async Task<bool> Add(ApiAddInput input)
         {
             return await _apiService.AddAsync(input);
         }
@@ -70,7 +72,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update(ApiUpdateInput input)
+        public async Task<bool> Update(ApiUpdateInput input)
         {
             return await _apiService.UpdateAsync(input);
         }
@@ -81,7 +83,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(long id)
+        public async Task<bool> SoftDelete(long id)
         {
             return await _apiService.SoftDeleteAsync(id);
         }
@@ -92,7 +94,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> BatchSoftDelete(long[] ids)
+        public async Task<bool> BatchSoftDelete(long[] ids)
         {
             return await _apiService.BatchSoftDeleteAsync(ids);
         }
@@ -105,7 +107,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Sync(ApiSyncInput input)
+        public async Task<bool> Sync(ApiSyncInput input)
         {
             return await _apiService.SyncAsync(input);
         }

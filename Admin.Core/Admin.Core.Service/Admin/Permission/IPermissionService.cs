@@ -1,53 +1,58 @@
 ﻿using Admin.Core.Common.Output;
 using Admin.Core.Service.Admin.Permission.Input;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Admin.Core.Model.Admin;
+using Admin.Core.Service.Admin.Permission.Output;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.Permission
 {
-    public partial interface IPermissionService
+    [ProcessLog]
+    public  interface IPermissionService
     {
-        Task<IResponseOutput> GetAsync(long id);
+        Task<PermissionEntity> GetAsync(long id);
 
-        Task<IResponseOutput> GetGroupAsync(long id);
+        Task<PermissionGetGroupOutput> GetGroupAsync(long id);
 
-        Task<IResponseOutput> GetMenuAsync(long id);
+        Task<PermissionGetMenuOutput> GetMenuAsync(long id);
 
-        Task<IResponseOutput> GetApiAsync(long id);
+        Task<PermissionGetApiOutput> GetApiAsync(long id);
 
-        Task<IResponseOutput> GetDotAsync(long id);
+        Task<PermissionGetDotOutput> GetDotAsync(long id);
 
-        Task<IResponseOutput> GetPermissionList();
+        Task<object> GetPermissionList();
 
-        Task<IResponseOutput> GetRolePermissionList(long roleId);
+        Task<List<long>> GetRolePermissionList(long roleId);
 
 
-        Task<IResponseOutput> GetTenantPermissionList(long tenantId);
+        Task<List<long>> GetTenantPermissionList(long tenantId);
 
-        Task<IResponseOutput> GetListAsync(string key, DateTime? start, DateTime? end);
+        Task<List<PermissionListOutput>> GetListAsync(string key, DateTime? start, DateTime? end);
 
-        Task<IResponseOutput> AddGroupAsync(PermissionAddGroupInput input);
+        Task<bool> AddGroupAsync(PermissionAddGroupInput input);
 
-        Task<IResponseOutput> AddMenuAsync(PermissionAddMenuInput input);
+        Task<bool> AddMenuAsync(PermissionAddMenuInput input);
 
-        Task<IResponseOutput> AddApiAsync(PermissionAddApiInput input);
+        Task<bool> AddApiAsync(PermissionAddApiInput input);
 
-        Task<IResponseOutput> AddDotAsync(PermissionAddDotInput input);
+        Task<bool> AddDotAsync(PermissionAddDotInput input);
 
-        Task<IResponseOutput> UpdateGroupAsync(PermissionUpdateGroupInput input);
+        Task<bool> UpdateGroupAsync(PermissionUpdateGroupInput input);
 
-        Task<IResponseOutput> UpdateMenuAsync(PermissionUpdateMenuInput input);
+        Task<bool> UpdateMenuAsync(PermissionUpdateMenuInput input);
 
-        Task<IResponseOutput> UpdateApiAsync(PermissionUpdateApiInput input);
+        Task<bool> UpdateApiAsync(PermissionUpdateApiInput input);
 
-        Task<IResponseOutput> UpdateDotAsync(PermissionUpdateDotInput input);
+        Task<bool> UpdateDotAsync(PermissionUpdateDotInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
 
-        Task<IResponseOutput> AssignAsync(PermissionAssignInput input);
+        Task<bool> AssignAsync(PermissionAssignInput input);
 
-        Task<IResponseOutput> SaveTenantPermissionsAsync(PermissionSaveTenantPermissionsInput input);
+        Task<bool> SaveTenantPermissionsAsync(PermissionSaveTenantPermissionsInput input);
     }
 }

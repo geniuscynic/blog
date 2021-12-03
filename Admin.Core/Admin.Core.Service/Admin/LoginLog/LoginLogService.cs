@@ -26,7 +26,7 @@ namespace Admin.Core.Service.Admin.LoginLog
             _loginLogRepository = loginLogRepository;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<LoginLogEntity> input)
+        public async Task<PageOutput<LoginLogListOutput>> PageAsync(PageInput<LoginLogEntity> input)
         {
             var userName = input.Filter?.CreatedUserName;
 
@@ -43,10 +43,10 @@ namespace Admin.Core.Service.Admin.LoginLog
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput<long>> AddAsync(LoginLogAddInput input)
+        public async Task<long> AddAsync(LoginLogAddInput input)
         {
             var res = new ResponseOutput<long>();
 
@@ -66,7 +66,7 @@ namespace Admin.Core.Service.Admin.LoginLog
             var entity = Mapper.Map<LoginLogEntity>(input);
             var id = (await _loginLogRepository.InsertAsync(entity)).Id;
 
-            return id > 0 ? res.Ok(id) : res;
+            return id;
         }
     }
 }

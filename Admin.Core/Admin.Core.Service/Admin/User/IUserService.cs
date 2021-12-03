@@ -6,37 +6,39 @@ using Admin.Core.Service.Admin.User.Input;
 using Admin.Core.Service.Admin.User.Output;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.User
 {
     /// <summary>
     /// 用户服务
     /// </summary>
+    [ProcessLog]
     public interface IUserService
     {
         Task<AuthLoginOutput> GetLoginUserAsync(long id);
 
-        Task<IResponseOutput> GetAsync(long id);
+        Task<object> GetAsync(long id);
 
-        Task<IResponseOutput> GetSelectAsync();
+        Task<object> GetSelectAsync();
 
-        Task<IResponseOutput> PageAsync(PageInput<UserEntity> input);
+        Task<PageOutput<UserListOutput>> PageAsync(PageInput<UserEntity> input);
 
-        Task<IResponseOutput> AddAsync(UserAddInput input);
+        Task<bool> AddAsync(UserAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(UserUpdateInput input);
+        Task<bool> UpdateAsync(UserUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDeleteAsync(long[] ids);
 
-        Task<IResponseOutput> ChangePasswordAsync(UserChangePasswordInput input);
+        Task<bool> ChangePasswordAsync(UserChangePasswordInput input);
 
-        Task<IResponseOutput> UpdateBasicAsync(UserUpdateBasicInput input);
+        Task<bool> UpdateBasicAsync(UserUpdateBasicInput input);
 
-        Task<IResponseOutput> GetBasicAsync();
+        Task<UserUpdateBasicInput> GetBasicAsync();
 
         Task<IList<UserPermissionsOutput>> GetPermissionsAsync();
     }

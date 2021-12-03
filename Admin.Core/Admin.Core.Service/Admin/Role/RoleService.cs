@@ -7,6 +7,7 @@ using Admin.Core.Service.Admin.Role.Input;
 using Admin.Core.Service.Admin.Role.Output;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Role
@@ -26,13 +27,13 @@ namespace Admin.Core.Service.Admin.Role
             _rolePermissionRepository = rolePermissionRepository;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<RoleGetOutput> GetAsync(long id)
         {
             var result = await _roleRepository.GetAsync<RoleGetOutput>(id);
-            return ResponseOutput.Ok(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<RoleEntity> input)
+        public async Task<PageOutput<RoleListOutput>> PageAsync(PageInput<RoleEntity> input)
         {
             var key = input.Filter?.Name;
 
@@ -49,36 +50,37 @@ namespace Admin.Core.Service.Admin.Role
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> AddAsync(RoleAddInput input)
+        public async Task<bool> AddAsync(RoleAddInput input)
         {
             var entity = Mapper.Map<RoleEntity>(input);
             var id = (await _roleRepository.InsertAsync(entity)).Id;
 
-            return ResponseOutput.Result(id > 0);
+            return id > 0;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(RoleUpdateInput input)
+        public async Task<bool> UpdateAsync(RoleUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var entity = await _roleRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("角色不存在！");
+                //return ResponseOutput.NotOk("角色不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid, "角色不存在！");
             }
 
             Mapper.Map(input, entity);
             await _roleRepository.UpdateAsync(entity);
-            return ResponseOutput.Ok();
+            return true;
         }
 
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var result = false;
             if (id > 0)
@@ -86,23 +88,23 @@ namespace Admin.Core.Service.Admin.Role
                 result = (await _roleRepository.DeleteAsync(m => m.Id == id)) > 0;
             }
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             var result = await _roleRepository.SoftDeleteAsync(id);
             await _rolePermissionRepository.DeleteAsync(a => a.RoleId == id);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             var result = await _roleRepository.SoftDeleteAsync(ids);
             await _rolePermissionRepository.DeleteAsync(a => ids.Contains(a.RoleId));
 
-            return ResponseOutput.Result(result);
+            return result;
         }
     }
 }

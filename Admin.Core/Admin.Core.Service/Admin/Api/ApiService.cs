@@ -8,6 +8,7 @@ using Admin.Core.Service.Admin.Api.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Admin.Api
@@ -22,22 +23,22 @@ namespace Admin.Core.Service.Admin.Api
             _apiRepository = moduleRepository;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<ApiGetOutput> GetAsync(long id)
         {
             var result = await _apiRepository.GetAsync<ApiGetOutput>(id);
-            return ResponseOutput.Ok(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> ListAsync(string key)
+        public async Task<List<ApiListOutput>> ListAsync(string key)
         {
             var data = await _apiRepository
                 .WhereIf(key.NotNull(), a => a.Path.Contains(key) || a.Label.Contains(key))
                 .ToListAsync<ApiListOutput>();
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<ApiEntity> input)
+        public async Task<PageOutput<ApiEntity>> PageAsync(PageInput<ApiEntity> input)
         {
             var key = input.Filter?.Label;
 
@@ -54,36 +55,37 @@ namespace Admin.Core.Service.Admin.Api
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
-        public async Task<IResponseOutput> AddAsync(ApiAddInput input)
+        public async Task<bool> AddAsync(ApiAddInput input)
         {
             var entity = Mapper.Map<ApiEntity>(input);
             var id = (await _apiRepository.InsertAsync(entity)).Id;
 
-            return ResponseOutput.Result(id > 0);
+            return id > 0;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(ApiUpdateInput input)
+        public async Task<bool> UpdateAsync(ApiUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var entity = await _apiRepository.GetAsync(input.Id);
             if (!(entity?.Id > 0))
             {
-                return ResponseOutput.NotOk("接口不存在！");
+                //return ResponseOutput.NotOk("接口不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid, "接口不存在！");
             }
 
             Mapper.Map(input, entity);
             await _apiRepository.UpdateAsync(entity);
-            return ResponseOutput.Ok();
+            return true;
         }
 
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             var result = false;
             if (id > 0)
@@ -91,24 +93,24 @@ namespace Admin.Core.Service.Admin.Api
                 result = (await _apiRepository.DeleteAsync(m => m.Id == id)) > 0;
             }
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             var result = await _apiRepository.SoftDeleteAsync(id);
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             var result = await _apiRepository.SoftDeleteAsync(ids);
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> SyncAsync(ApiSyncInput input)
+        public async Task<bool> SyncAsync(ApiSyncInput input)
         {
             //查询所有api
             var apis = await _apiRepository.Select.ToListAsync();
@@ -215,7 +217,7 @@ namespace Admin.Core.Service.Admin.Api
             .UpdateColumns(a => new { a.ParentId, a.Label, a.HttpMethods, a.Description, a.Enabled })
             .ExecuteAffrowsAsync();
 
-            return ResponseOutput.Ok();
+            return true;
         }
     }
 }

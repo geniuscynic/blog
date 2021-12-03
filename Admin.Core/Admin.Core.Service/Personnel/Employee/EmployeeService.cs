@@ -11,6 +11,7 @@ using Admin.Core.Service.Personnel.Employee.Output;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Core.Service.Personnel.Employee
@@ -33,7 +34,7 @@ namespace Admin.Core.Service.Personnel.Employee
             _employeeOrganizationRepository = employeeOrganizationRepository;
         }
 
-        public async Task<ResponseOutput<EmployeeGetOutput>> GetAsync(long id)
+        public async Task<EmployeeGetOutput> GetAsync(long id)
         {
             var res = new ResponseOutput<EmployeeGetOutput>();
 
@@ -46,10 +47,10 @@ namespace Admin.Core.Service.Personnel.Employee
                 PositionName = a.Position.Name
             });
 
-            return res.Ok(dto);
+            return dto;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<EmployeeEntity> input)
+        public async Task<PageOutput<EmployeeListOutput>> PageAsync(PageInput<EmployeeEntity> input)
         {
             var list = await _employeeRepository.Select
             .WhereDynamicFilter(input.DynamicFilter)
@@ -69,18 +70,18 @@ namespace Admin.Core.Service.Personnel.Employee
                 Total = total
             };
 
-            return ResponseOutput.Ok(data);
+            return data;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> AddAsync(EmployeeAddInput input)
+        public async Task<bool> AddAsync(EmployeeAddInput input)
         {
             var entity = Mapper.Map<EmployeeEntity>(input);
             var employeeId = (await _employeeRepository.InsertAsync(entity))?.Id;
 
             if (!(employeeId > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             //附属部门
@@ -90,21 +91,22 @@ namespace Admin.Core.Service.Personnel.Employee
                 await _employeeOrganizationRepository.InsertAsync(organizations);
             }
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> UpdateAsync(EmployeeUpdateInput input)
+        public async Task<bool> UpdateAsync(EmployeeUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
             var employee = await _employeeRepository.GetAsync(input.Id);
             if (!(employee?.Id > 0))
             {
-                return ResponseOutput.NotOk("用户不存在！");
+                //return ResponseOutput.NotOk("用户不存在！");
+                throw new BussinessException(StatusCodes.Status999Falid, "用户不存在！");
             }
 
             Mapper.Map(input, employee);
@@ -119,11 +121,11 @@ namespace Admin.Core.Service.Personnel.Employee
                 await _employeeOrganizationRepository.InsertAsync(organizations);
             }
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
         [Transaction]
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> DeleteAsync(long id)
         {
             //删除员工附属部门
             await _employeeOrganizationRepository.DeleteAsync(a => a.EmployeeId == id);
@@ -131,21 +133,21 @@ namespace Admin.Core.Service.Personnel.Employee
             //删除员工
             await _employeeRepository.DeleteAsync(m => m.Id == id);
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDeleteAsync(long id)
         {
             await _employeeRepository.SoftDeleteAsync(id);
 
-            return ResponseOutput.Ok();
+            return true;
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
         {
             await _employeeRepository.SoftDeleteAsync(ids);
 
-            return ResponseOutput.Ok();
+            return true;
         }
     }
 }

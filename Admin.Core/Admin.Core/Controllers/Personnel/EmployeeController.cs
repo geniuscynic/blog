@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using Admin.Core.Model.Personnel;
 using Admin.Core.Service.Personnel.Employee.Input;
+using Admin.Core.Service.Personnel.Employee.Output;
 
 namespace Admin.Core.Controllers.Personnel
 {
@@ -26,7 +27,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> Get(long id)
+        public async Task<EmployeeGetOutput> Get(long id)
         {
             return await _employeeService.GetAsync(id);
         }
@@ -38,7 +39,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <returns></returns>
         [HttpPost]
         //[ResponseCache(Duration = 60)]
-        public async Task<IResponseOutput> GetPage(PageInput<EmployeeEntity> input)
+        public async Task<PageOutput<EmployeeListOutput>> GetPage(PageInput<EmployeeEntity> input)
         {
             return await _employeeService.PageAsync(input);
         }
@@ -49,7 +50,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add(EmployeeAddInput input)
+        public async Task<bool> Add(EmployeeAddInput input)
         {
             return await _employeeService.AddAsync(input);
         }
@@ -60,7 +61,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update(EmployeeUpdateInput input)
+        public async Task<bool> Update(EmployeeUpdateInput input)
         {
             return await _employeeService.UpdateAsync(input);
         }
@@ -71,7 +72,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(long id)
+        public async Task<bool> SoftDelete(long id)
         {
             return await _employeeService.SoftDeleteAsync(id);
         }
@@ -82,7 +83,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> BatchSoftDelete(long[] ids)
+        public async Task<bool> BatchSoftDelete(long[] ids)
         {
             return await _employeeService.BatchSoftDeleteAsync(ids);
         }

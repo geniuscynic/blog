@@ -4,6 +4,7 @@ using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.OprationLog;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.OprationLog.Output;
 
 namespace Admin.Core.Controllers.Admin
 {
@@ -25,7 +26,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> GetPage(PageInput<OprationLogEntity> model)
+        public async Task<PageOutput<OprationLogListOutput>> GetPage(PageInput<OprationLogEntity> model)
         {
             return await _oprationLogService.PageAsync(model);
         }

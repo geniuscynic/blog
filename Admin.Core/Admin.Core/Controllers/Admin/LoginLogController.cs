@@ -4,6 +4,7 @@ using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.LoginLog;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.LoginLog.Output;
 
 namespace Admin.Core.Controllers.Admin
 {
@@ -25,7 +26,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> GetPage(PageInput<LoginLogEntity> model)
+        public async Task<PageOutput<LoginLogListOutput>> GetPage(PageInput<LoginLogEntity> model)
         {
             return await _loginLogService.PageAsync(model);
         }

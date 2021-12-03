@@ -12,18 +12,18 @@ namespace Admin.Core.Service.Personnel.Employee
     /// </summary>
     public interface IEmployeeService
     {
-        Task<ResponseOutput<EmployeeGetOutput>> GetAsync(long id);
+        Task<EmployeeGetOutput> GetAsync(long id);
 
-        Task<IResponseOutput> PageAsync(PageInput<EmployeeEntity> input);
+        Task<PageOutput<EmployeeListOutput>> PageAsync(PageInput<EmployeeEntity> input);
 
-        Task<IResponseOutput> AddAsync(EmployeeAddInput input);
+        Task<bool> AddAsync(EmployeeAddInput input);
 
-        Task<IResponseOutput> UpdateAsync(EmployeeUpdateInput input);
+        Task<bool> UpdateAsync(EmployeeUpdateInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
 
-        Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDeleteAsync(long[] ids);
     }
 }

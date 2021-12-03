@@ -5,6 +5,7 @@ using Admin.Core.Service.Admin.Role;
 using Admin.Core.Service.Admin.Role.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Admin.Core.Service.Admin.Role.Output;
 
 namespace Admin.Core.Controllers.Admin
 {
@@ -26,7 +27,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> Get(long id)
+        public async Task<RoleGetOutput> Get(long id)
         {
             return await _roleService.GetAsync(id);
         }
@@ -37,7 +38,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> GetPage(PageInput<RoleEntity> model)
+        public async Task<PageOutput<RoleListOutput>> GetPage(PageInput<RoleEntity> model)
         {
             return await _roleService.PageAsync(model);
         }
@@ -48,7 +49,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add(RoleAddInput input)
+        public async Task<bool> Add(RoleAddInput input)
         {
             return await _roleService.AddAsync(input);
         }
@@ -59,7 +60,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update(RoleUpdateInput input)
+        public async Task<bool> Update(RoleUpdateInput input)
         {
             return await _roleService.UpdateAsync(input);
         }
@@ -70,7 +71,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(long id)
+        public async Task<bool> SoftDelete(long id)
         {
             return await _roleService.SoftDeleteAsync(id);
         }
@@ -81,7 +82,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="ids"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> BatchSoftDelete(long[] ids)
+        public async Task<bool> BatchSoftDelete(long[] ids)
         {
             return await _roleService.BatchSoftDeleteAsync(ids);
         }

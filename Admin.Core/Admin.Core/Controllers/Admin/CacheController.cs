@@ -1,4 +1,5 @@
-﻿using Admin.Core.Common.Output;
+﻿using System.Collections.Generic;
+using Admin.Core.Common.Output;
 using Admin.Core.Service.Admin.Cache;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ namespace Admin.Core.Controllers.Admin
         /// </summary>
         /// <returns></returns>
         [HttpGet]
-        public IResponseOutput List()
+        public List<object> List()
         {
             return _cacheService.List();
         }
@@ -33,7 +34,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="cacheKey"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> Clear(string cacheKey)
+        public async Task<bool> Clear(string cacheKey)
         {
             return await _cacheService.ClearAsync(cacheKey);
         }

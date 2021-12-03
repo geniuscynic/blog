@@ -7,8 +7,10 @@ using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 using FileInfo = Admin.Core.Common.Files.FileInfo;
+using StatusCodes = XjjXmm.FrameWork.Common.StatusCodes;
 
 namespace Admin.Core.Common.Helpers
 {
@@ -26,25 +28,28 @@ namespace Admin.Core.Common.Helpers
         /// <param name="args"></param>
         /// <param name="cancellationToken"></param>
         /// <returns></returns>
-        public async Task<IResponseOutput<FileInfo>> UploadAsync(IFormFile file, FileUploadConfig config, object args, CancellationToken cancellationToken = default)
+        public async Task<FileInfo> UploadAsync(IFormFile file, FileUploadConfig config, object args, CancellationToken cancellationToken = default)
         {
             var res = new ResponseOutput<FileInfo>();
 
             if (file == null || file.Length < 1)
             {
-                return res.NotOk("请上传文件！");
+                //return res.NotOk("请上传文件！");
+                throw new BussinessException(StatusCodes.Status999Falid, "请上传文件！");
             }
 
             //格式限制
             if (!config.ContentType.Contains(file.ContentType))
             {
-                return res.NotOk("文件格式错误");
+                //return res.NotOk("文件格式错误");
+                throw new BussinessException(StatusCodes.Status999Falid, "文件格式错误！");
             }
 
             //大小限制
             if (!(file.Length <= config.MaxSize))
             {
-                return res.NotOk("文件过大");
+                //return res.NotOk("文件过大");
+                throw new BussinessException(StatusCodes.Status999Falid, "文件过大！");
             }
 
             var fileInfo = new FileInfo(file.FileName, file.Length)
@@ -66,7 +71,7 @@ namespace Admin.Core.Common.Helpers
 
             await SaveAsync(file, fileInfo.FilePath, cancellationToken);
 
-            return res.Ok(fileInfo);
+            return fileInfo;
         }
 
         /// <summary>

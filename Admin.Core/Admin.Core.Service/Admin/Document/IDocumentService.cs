@@ -1,42 +1,47 @@
 ﻿using Admin.Core.Common.Output;
 using Admin.Core.Service.Admin.Document.Input;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Admin.Core.Model.Admin;
+using Admin.Core.Service.Admin.Document.Output;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.Document
 {
-    public partial interface IDocumentService
+    [ProcessLog]
+    public interface IDocumentService
     {
-        Task<IResponseOutput> GetAsync(long id);
+        Task<DocumentEntity> GetAsync(long id);
 
-        Task<IResponseOutput> GetImageListAsync(long id);
+        Task<List<string>> GetImageListAsync(long id);
 
-        Task<IResponseOutput> GetGroupAsync(long id);
+        Task<DocumentGetGroupOutput> GetGroupAsync(long id);
 
-        Task<IResponseOutput> GetMenuAsync(long id);
+        Task<DocumentGetMenuOutput> GetMenuAsync(long id);
 
-        Task<IResponseOutput> GetContentAsync(long id);
+        Task<DocumentGetContentOutput> GetContentAsync(long id);
 
-        Task<IResponseOutput> GetPlainListAsync();
+        Task<object> GetPlainListAsync();
 
-        Task<IResponseOutput> GetListAsync(string key, DateTime? start, DateTime? end);
+        Task<List<DocumentListOutput>> GetListAsync(string key, DateTime? start, DateTime? end);
 
-        Task<IResponseOutput> AddGroupAsync(DocumentAddGroupInput input);
+        Task<bool> AddGroupAsync(DocumentAddGroupInput input);
 
-        Task<IResponseOutput> AddMenuAsync(DocumentAddMenuInput input);
+        Task<bool> AddMenuAsync(DocumentAddMenuInput input);
 
-        Task<IResponseOutput> AddImageAsync(DocumentAddImageInput input);
+        Task<bool> AddImageAsync(DocumentAddImageInput input);
 
-        Task<IResponseOutput> UpdateGroupAsync(DocumentUpdateGroupInput input);
+        Task<bool> UpdateGroupAsync(DocumentUpdateGroupInput input);
 
-        Task<IResponseOutput> UpdateMenuAsync(DocumentUpdateMenuInput input);
+        Task<bool> UpdateMenuAsync(DocumentUpdateMenuInput input);
 
-        Task<IResponseOutput> UpdateContentAsync(DocumentUpdateContentInput input);
+        Task<bool> UpdateContentAsync(DocumentUpdateContentInput input);
 
-        Task<IResponseOutput> DeleteAsync(long id);
+        Task<bool> DeleteAsync(long id);
 
-        Task<IResponseOutput> DeleteImageAsync(long documentId, string url);
+        Task<bool> DeleteImageAsync(long documentId, string url);
 
-        Task<IResponseOutput> SoftDeleteAsync(long id);
+        Task<bool> SoftDeleteAsync(long id);
     }
 }

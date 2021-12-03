@@ -1,4 +1,6 @@
-﻿namespace XjjXmm.FrameWork.Common
+﻿using XjjXmm.FrameWork.ToolKit;
+
+namespace XjjXmm.FrameWork.Common
 {
    
     /// <summary>
@@ -11,10 +13,11 @@
         {
             this.Data = response;
         }
+
         /// <summary>
         /// 状态码
         /// </summary>
-        public long Code { get; set; }
+        public long Code { get; set; } = StatusCodes.Status200Ok.ToInt();
         /// <summary>
         /// 操作是否成功
         /// </summary>

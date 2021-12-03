@@ -17,7 +17,7 @@ namespace Admin.Core.Service.Admin.Cache
         {
         }
 
-        public IResponseOutput List()
+        public List<object> List()
         {
             var list = new List<object>();
             var cacheKey = typeof(CacheKey);
@@ -34,14 +34,14 @@ namespace Admin.Core.Service.Admin.Cache
                 });
             }
 
-            return ResponseOutput.Ok(list);
+            return list;
         }
 
-        public async Task<IResponseOutput> ClearAsync(string cacheKey)
+        public async Task<bool> ClearAsync(string cacheKey)
         {
             Logger.LogWarning($"{User.Id}.{User.Name}清除缓存[{cacheKey}]");
             await Cache.DelByPatternAsync(cacheKey);
-            return ResponseOutput.Ok();
+            return true;
         }
     }
 }

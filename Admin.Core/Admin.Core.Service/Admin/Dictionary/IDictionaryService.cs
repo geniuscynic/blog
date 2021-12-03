@@ -3,10 +3,12 @@ using Admin.Core.Common.Output;
 using Admin.Core.Model.Admin;
 using Admin.Core.Service.Admin.Dictionary.Input;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Core.Service.Admin.Dictionary
 {
-    public partial interface IDictionaryService
+    [ProcessLog]
+    public interface IDictionaryService
     {
         Task<IResponseOutput> GetAsync(long id);
 

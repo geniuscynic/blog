@@ -3,6 +3,8 @@ using Admin.Core.Service.Personnel.Organization;
 using Admin.Core.Service.Personnel.Organization.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using Admin.Core.Service.Personnel.Organization.Output;
+using System.Collections.Generic;
 
 namespace Admin.Core.Controllers.Personnel
 {
@@ -24,7 +26,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
-        public async Task<IResponseOutput> Get(long id)
+        public async Task<OrganizationGetOutput> Get(long id)
         {
             return await _organizationService.GetAsync(id);
         }
@@ -35,7 +37,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> GetList(string key)
+        public async Task<List<OrganizationListOutput>> GetList(string key)
         {
             return await _organizationService.GetListAsync(key);
         }
@@ -46,7 +48,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IResponseOutput> Add(OrganizationAddInput input)
+        public async Task<bool> Add(OrganizationAddInput input)
         {
             return await _organizationService.AddAsync(input);
         }
@@ -57,7 +59,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="input"></param>
         /// <returns></returns>
         [HttpPut]
-        public async Task<IResponseOutput> Update(OrganizationUpdateInput input)
+        public async Task<bool> Update(OrganizationUpdateInput input)
         {
             return await _organizationService.UpdateAsync(input);
         }
@@ -68,7 +70,7 @@ namespace Admin.Core.Controllers.Personnel
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpDelete]
-        public async Task<IResponseOutput> SoftDelete(long id)
+        public async Task<bool> SoftDelete(long id)
         {
             return await _organizationService.SoftDeleteAsync(id);
         }
