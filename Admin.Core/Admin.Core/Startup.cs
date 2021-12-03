@@ -330,7 +330,7 @@ namespace Admin.Core
                     options.Filters.Add<LogActionFilter>();
                 }
                 //禁止去除ActionAsync后缀
-                options.SuppressAsyncSuffixInActionNames = false;
+                //options.SuppressAsyncSuffixInActionNames = false;
             })
             //.AddFluentValidation(config =>
             //{

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -28,7 +29,11 @@ namespace XjjXmm.FrameWork.Aop
 
         public override async Task Invoke(AspectContext context, AspectDelegate next)
         {
-            if (context.ImplementationMethod.DeclaringType.FullName.Contains("Swashbuckle"))
+            if(context.ImplementationMethod.GetCustomAttribute<ProcessLogAttribute>()  == null &&
+               context.ImplementationMethod?.DeclaringType?.GetCustomAttribute<ProcessLogAttribute>() == null &&
+               context.ServiceMethod.GetCustomAttribute<ProcessLogAttribute>() == null &&
+               context.ServiceMethod?.DeclaringType?.GetCustomAttribute<ProcessLogAttribute>() == null )
+            //if (context.ImplementationMethod.DeclaringType.FullName.Contains("Swashbuckle"))
             {
                 await next(context);
                 return;
@@ -50,7 +55,7 @@ namespace XjjXmm.FrameWork.Aop
             var returnParams = context.GetReturnParameter();
             if (returnParams.Type != typeof(void))
             {
-                _logger.Debug($"返回值:{context.GetReturnParameter().Value.ToValue()}");
+                _logger.Debug($"返回值:{context.GetReturnParameter()?.Value?.ToValue()}");
             }
         }
 

@@ -59,10 +59,10 @@ namespace XjjXmm.FrameWork.Startup
                 services.ConfigureDynamicProxy(config =>
                 {
 
-                    // config.Interceptors.AddTyped<LogInterceptor>();
-                    //config.NonAspectPredicates.AddService("ICache");
-
-                   // config.Interceptors.AddTyped<CacheInterceptor>();
+                    config.Interceptors.AddTyped<LogInterceptor>();
+                    config.NonAspectPredicates.AddService("ICache");
+                   // config.NonAspectPredicates.Add(new AspectPredicate())
+                    config.Interceptors.AddTyped<CacheInterceptor>();
                 });
 
 

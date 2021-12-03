@@ -3,15 +3,6 @@ using System.Linq.Expressions;
 
 namespace Admin.Core.Repository.Base
 {
-    public class MyIFreeSql
-    {
-        public IFreeSql orm { get; set; }
-
-        public MyIFreeSql(IFreeSql orm)
-        {
-            this.orm = orm;
-        }
-    }
     public static class FreeSqlDbContextExtensions
     {
 

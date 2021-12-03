@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using NLog;
-using NLog.Web;
 using System;
 using System.Threading.Tasks;
 using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.LogExtension;
 using XjjXmm.FrameWork.Startup;
 using LogLevel = Microsoft.Extensions.Logging.LogLevel;
 
@@ -22,24 +21,25 @@ namespace Admin.Core
 
         public static async Task<int> Main(string[] args)
         {
-            var logger = LogManager.GetCurrentClassLogger();
+           var logger = LoggerHelper<Program>.GetLogger();
+           // var logger = LogManager.GetCurrentClassLogger();
             try
             {
-                Console.WriteLine(" launching...");
+                //Console.WriteLine(" launching...");
                 var host = CreateHostBuilder(args).Build().SetUp();
                 
-                Console.WriteLine($"\r\n {string.Join("\r\n ", appConfig.Urls)}\r\n");
+               // Console.WriteLine($"\r\n {string.Join("\r\n ", appConfig.Urls)}\r\n");
                 await host.RunAsync();
                 return 0;
             }
             catch (Exception ex)
             {
-                logger.Error(ex, "Stopped program because of exception");
+                logger.Error("Stopped program because of exception",ex);
                 return 1;
             }
             finally
             {
-                LogManager.Shutdown();
+                //LogManager.Shutdown();
             }
         }
 
@@ -74,13 +74,13 @@ namespace Admin.Core
                         })
                         .UseUrls(appConfig.Urls);
                 })
-                .SetUp()
-            .ConfigureLogging(logging =>
-            {
-                logging.ClearProviders();
-                logging.SetMinimumLevel(LogLevel.Trace);
-            })
-            .UseNLog();
+                .SetUp();
+            //.ConfigureLogging(logging =>
+            //{
+            //    logging.ClearProviders();
+            //    logging.SetMinimumLevel(LogLevel.Trace);
+            //})
+            //.UseNLog();
         }
     }
 }

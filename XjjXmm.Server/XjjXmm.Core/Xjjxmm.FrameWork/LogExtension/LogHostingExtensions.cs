@@ -24,6 +24,7 @@ namespace XjjXmm.FrameWork.LogExtension
             hostBuilder.ConfigureLogging((hostingContext, builder) =>
             {
 
+                builder.ClearProviders();
                 //该方法需要引入Microsoft.Extensions.Logging名称空间
                 builder.AddFilter("System", LogLevel.Error); //过滤掉系统默认的一些日志
                 builder.AddFilter("Microsoft", LogLevel.Error);//过滤掉系统默认的一些日志

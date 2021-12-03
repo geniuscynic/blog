@@ -1,11 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Cache;
+using XjjXmm.FrameWork.LogExtension;
 
 namespace Admin.Tools.Captcha
 {
     /// <summary>
     /// 验证接口
     /// </summary>
+    [ProcessLog]
     public interface ICaptcha
     {
         /// <summary>
