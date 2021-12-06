@@ -11,9 +11,9 @@ namespace XjjXmm.FrameWork.Swagger
             app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
-                //c.SwaggerEndpoint($"/swagger/{swaggerConfig.Version}/swagger.json", swaggerConfig.Title);
-                c.SwaggerEndpoint($"/swagger/V1/swagger.json", swaggerConfig.Title);
-                c.SwaggerEndpoint($"/swagger/V2/swagger.json", swaggerConfig.Title);
+                c.SwaggerEndpoint($"/swagger/{swaggerConfig.Version}/swagger.json", swaggerConfig.Title);
+                //c.SwaggerEndpoint($"/swagger/V1/swagger.json", swaggerConfig.Title);
+                //c.SwaggerEndpoint($"/swagger/V2/swagger.json", swaggerConfig.Title);
                 c.RoutePrefix = "";
 
                 c.DocExpansion(Swashbuckle.AspNetCore.SwaggerUI.DocExpansion.None);//折叠Api

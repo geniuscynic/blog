@@ -16,7 +16,7 @@ namespace XjjXmm.FrameWork.Swagger
 
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("V1", new OpenApiInfo
+                c.SwaggerDoc(swaggerConfig.Version, new OpenApiInfo
                 {
                     Version = swaggerConfig.Version,
                     Title = swaggerConfig.Title,
@@ -31,21 +31,21 @@ namespace XjjXmm.FrameWork.Swagger
 
                 });
 
-                c.SwaggerDoc("V2", new OpenApiInfo
-                {
-                    Version = swaggerConfig.Version,
-                    Title = swaggerConfig.Title,
-                    Description = swaggerConfig.Description,
-                    Contact = new OpenApiContact
-                    {
-                        Name = swaggerConfig.ContactName,
-                        Email = swaggerConfig.ContactEmail,
-                        Url = new Uri(swaggerConfig.ContactUrl)
-                    },
-                    License = new OpenApiLicense
-                        { Name = swaggerConfig.LicenseName, Url = new Uri(swaggerConfig.LicenseUrl) }
+                //c.SwaggerDoc("V2", new OpenApiInfo
+                //{
+                //    Version = swaggerConfig.Version,
+                //    Title = swaggerConfig.Title,
+                //    Description = swaggerConfig.Description,
+                //    Contact = new OpenApiContact
+                //    {
+                //        Name = swaggerConfig.ContactName,
+                //        Email = swaggerConfig.ContactEmail,
+                //        Url = new Uri(swaggerConfig.ContactUrl)
+                //    },
+                //    License = new OpenApiLicense
+                //        { Name = swaggerConfig.LicenseName, Url = new Uri(swaggerConfig.LicenseUrl) }
 
-                });
+                //});
 
                 //c.CustomSchemaIds(t=>t.FullName);
 

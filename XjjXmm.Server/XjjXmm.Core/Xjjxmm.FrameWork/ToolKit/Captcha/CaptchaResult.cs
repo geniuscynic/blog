@@ -7,23 +7,29 @@ using System.Threading.Tasks;
 
 namespace XjjXmm.FrameWork.ToolKit.Captcha
 {
-    public class CaptchaResult
+    public class CaptchaInput
     {
         /// <summary>
-        /// CaptchaCode
+        /// 校验唯一标识
         /// </summary>
-        public string CaptchaCode { get; set; }
+        public string Token { get; set; }
 
         /// <summary>
-        /// CaptchaMemoryStream
+        /// 数据
         /// </summary>
-        public MemoryStream CaptchaMemoryStream { get; set; }
+        public string Data { get; set; }
+    }
+
+    public class CaptchaOutput
+    {
+        /// <summary>
+        /// 校验唯一标识
+        /// </summary>
+        public string Token { get; set; }
 
         /// <summary>
-        /// Timestamp
+        /// 数据
         /// </summary>
-        public DateTime Timestamp { get; set; }
-
-        public string Base64 => "data:image/png;base64," + Convert.ToBase64String(CaptchaMemoryStream.GetBuffer());
+        public object Data { get; set; }
     }
 }

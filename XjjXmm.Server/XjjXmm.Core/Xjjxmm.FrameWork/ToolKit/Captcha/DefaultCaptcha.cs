@@ -6,15 +6,24 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Cache;
+using XjjXmm.FrameWork.Common;
 
 namespace XjjXmm.FrameWork.ToolKit.Captcha
 {
-    internal class DefaultCaptcha : ICaptcha
+    public class DefaultCaptcha : ICaptcha
     {
+        private readonly ICache _cache;
         private const string Letters = "1,2,3,4,5,6,7,8,9,A,B,C,D,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,U,V,W,X,Y,Z";
-
-        public Task<CaptchaResult> GenerateCaptchaImageAsync(string captchaCode, int width = 0, int height = 30)
+        private const string CaptchaKey = "Captcha_";
+        public DefaultCaptcha(ICache cache)
         {
+            _cache = cache;
+        }
+
+        private Task<CaptchaOutput> GenerateCaptchaImageAsync(string captchaCode, int width = 0, int height = 30)
+        {
+            
             //验证码颜色集合
             Color[] c = { Color.Black, Color.Red, Color.DarkBlue, Color.Green, Color.Orange, Color.Brown, Color.DarkCyan, Color.Purple };
 
@@ -68,15 +77,16 @@ namespace XjjXmm.FrameWork.ToolKit.Captcha
             g.Dispose();
             image.Dispose();
 
-            return Task.FromResult(new CaptchaResult
+            var id = GuidKit.Get();
+            _cache.Set($"{CaptchaKey}id", captchaCode);
+            return Task.FromResult(new CaptchaOutput()
             {
-                CaptchaCode = captchaCode,
-                CaptchaMemoryStream = ms,
-                Timestamp = DateTime.Now
+               Token = id,                  
+               Data = "data:image/png;base64," + Convert.ToBase64String(ms.GetBuffer())
             });
         }
 
-        public Task<string> GenerateRandomCaptchaAsync(int codeLength = 4)
+        private Task<string> GenerateRandomCaptchaAsync(int codeLength = 4)
         {
             var array = Letters.Split(new[] { ',' });
 
@@ -102,6 +112,25 @@ namespace XjjXmm.FrameWork.ToolKit.Captcha
             }
 
             return Task.FromResult(captcheCode);
+        }
+
+        public async Task<CaptchaOutput> Get()
+        {
+            var captcha = await GenerateRandomCaptchaAsync();
+
+            return await GenerateCaptchaImageAsync(captcha);
+        }
+
+        public Task<bool> Check(CaptchaInput input)
+        {
+            //_cache.Set($"{CaptchaKey}id", captchaCode);
+            var val = _cache.Get<string>($"{CaptchaKey}{input.Token}");
+            if (string.IsNullOrEmpty(val))
+            {
+                throw new BussinessException(StatusCodes.Status999Falid, "验证码已失效,请刷新重试");
+            }
+
+            return Task.FromResult<bool>(val == input.Data);
         }
     }
 }

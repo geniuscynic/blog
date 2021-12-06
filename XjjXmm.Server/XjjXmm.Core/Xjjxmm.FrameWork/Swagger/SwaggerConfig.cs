@@ -2,7 +2,7 @@
 {
     public class SwaggerConfig
     {
-        public string Version { get; set; } = "v1";
+        public string Version { get; set; } = "V1";
         public string Title { get; set; } = "XjjXmm API 文档";
         public string Description  {get; set;} = "XjjXmm API";
 

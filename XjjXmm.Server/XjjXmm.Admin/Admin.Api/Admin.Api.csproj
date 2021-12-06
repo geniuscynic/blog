@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Captcha\**" />
+    <Content Remove="Captcha\**" />
+    <EmbeddedResource Remove="Captcha\**" />
+    <None Remove="Captcha\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SqlSugarCore" Version="5.0.4.6" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\XjjXmm.Core\Xjjxmm.FrameWork\XjjXmm.FrameWork.csproj" />
+  </ItemGroup>
+
+</Project>
