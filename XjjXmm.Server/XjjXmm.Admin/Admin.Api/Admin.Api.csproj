@@ -17,6 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\XjjXmm.Core\Xjjxmm.FrameWork\XjjXmm.FrameWork.csproj" />
+    <ProjectReference Include="..\Admin.Service\Admin.Service.csproj" />
   </ItemGroup>
 
 </Project>

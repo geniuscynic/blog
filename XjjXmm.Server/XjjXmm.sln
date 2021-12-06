@@ -87,6 +87,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{FDB3631B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Api", "XjjXmm.Admin\Admin.Api\Admin.Api.csproj", "{262FB026-EE8D-4786-9868-89672C435CAE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Service", "XjjXmm.Admin\Admin.Service\Admin.Service.csproj", "{31630686-A37F-48DA-8478-CB3369EE596B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -213,6 +215,10 @@ Global
 		{262FB026-EE8D-4786-9868-89672C435CAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{262FB026-EE8D-4786-9868-89672C435CAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{262FB026-EE8D-4786-9868-89672C435CAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{31630686-A37F-48DA-8478-CB3369EE596B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31630686-A37F-48DA-8478-CB3369EE596B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31630686-A37F-48DA-8478-CB3369EE596B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31630686-A37F-48DA-8478-CB3369EE596B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -251,6 +257,7 @@ Global
 		{E8FDCD15-147A-4BF2-B077-B839068E034B} = {EB681905-6B4A-44B1-BE6F-0036FF73C94A}
 		{86E6E661-95B7-4422-9211-80F3149FF47D} = {32EBDE9E-754D-4002-9BB2-53343797DB96}
 		{262FB026-EE8D-4786-9868-89672C435CAE} = {FDB3631B-697E-4211-A8A8-20BB61B1EE9E}
+		{31630686-A37F-48DA-8478-CB3369EE596B} = {FDB3631B-697E-4211-A8A8-20BB61B1EE9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1D0CB36-013F-45C6-B2EF-B6E5906F8114}

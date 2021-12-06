@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using SqlSugar;
 using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Swagger;
 using XjjXmm.FrameWork.ToolKit.Captcha;
 
@@ -57,6 +58,7 @@ namespace Admin.Api
 
 
             services.AddScoped<ICaptcha, DefaultCaptcha>();
+            services.AddScoped<ICache, XjjxmmMemoryCache>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

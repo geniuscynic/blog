@@ -35,7 +35,7 @@
               </template>
             </el-input>
           </el-form-item>
-          <!-- <el-form-item prop="verifyCode">
+          <el-form-item prop="verifyCode">
             <el-input
               ref="verifyCode"
               v-model="form.verifyCode"
@@ -58,13 +58,13 @@
               style="width:33%;cursor: pointer;vertical-align: middle;"
               @click="getLoginVerifyCode"
             >
-          </el-form-item> -->
-          <my-captcha
+          </el-form-item>
+          <!-- <my-captcha
             ref="captcha"
             :img-size="{ width: '330px', height: '155px' }"
             :mode="'popup'"
             @success="onCaptchaSuccess"
-          />
+          /> -->
 
           <el-checkbox v-model="checked" checked class="remember">记住密码</el-checkbox>
           <el-form-item style="width:100%;">
@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import { getVerifyCode } from '@/api/admin/auth'
+import { getCaptcha } from '@/api/admin/auth'
 import MyCaptcha from '@/components/my-captcha'
 
 export default {
@@ -111,7 +111,7 @@ export default {
     }
   },
   created() {
-    // this.getLoginVerifyCode()
+     this.getLoginVerifyCode()
   },
   mounted() {
     // this.$refs.verifyCode.focus()
@@ -127,55 +127,12 @@ export default {
     },
 
     async onLogin() {
-      this.$refs.captcha.show()
-    },
-    async getLoginInfo() {
-      const res = await this.$store.dispatch('user/getLoginInfo')
-      this.loginLoading = false
-
-      if (!res?.success) {
-        this.loginLoading = false
-        this.loginText = '重新登录'
-        this.$refs.captcha.refresh()
-        return
-      }
-
-      if (!(res.data?.menus?.length > 0)) {
-        this.loginLoading = false
-        this.loginText = '重新登录'
-        this.$message({
-          message: '该账号未分配权限，请联系管理员！',
-          type: 'error'
-        })
-        // this.getLoginVerifyCode()
-        // this.$refs.verifyCode.focus()
-        this.$refs.captcha.refresh()
-        return
-      }
-
-      const redirect = this.$route.query ? this.$route.query.redirect : ''
-      this.$router.push({ path: redirect || '/' })
-    },
-
-    // 获取验证码
-    async getLoginVerifyCode() {
-      this.form.verifyCode = ''
-      const res = await getVerifyCode({ lastKey: this.form.verifyCodeKey })
-      if (res && res.success) {
-        this.verifyCodeUrl = 'data:image/png;base64,' + res.data.img
-        this.form.verifyCodeKey = res.data.key
-      }
-    },
-    async onCaptchaSuccess(captchaData) {
-      // 登录获取Token
-      if (!this.loginValidate()) {
-        return
-      }
-
+      
+//debugger
       this.loginLoading = true
       this.loginText = '登录中...'
 
-      const paras = { ...this.form, captcha: captchaData }
+      const paras = { ...this.form}
       const res = await this.$store.dispatch('user/login', paras)
       if (!res) {
         this.loginLoading = false
@@ -210,7 +167,45 @@ export default {
       }
 
       this.getLoginInfo()
-    }
+    },
+    async getLoginInfo() {
+      const res = await this.$store.dispatch('user/getLoginInfo')
+      this.loginLoading = false
+
+      if (!res?.success) {
+        this.loginLoading = false
+        this.loginText = '重新登录'
+        this.$refs.captcha.refresh()
+        return
+      }
+
+      if (!(res.data?.menus?.length > 0)) {
+        this.loginLoading = false
+        this.loginText = '重新登录'
+        this.$message({
+          message: '该账号未分配权限，请联系管理员！',
+          type: 'error'
+        })
+        // this.getLoginVerifyCode()
+        // this.$refs.verifyCode.focus()
+        this.$refs.captcha.refresh()
+        return
+      }
+
+      const redirect = this.$route.query ? this.$route.query.redirect : ''
+      this.$router.push({ path: redirect || '/' })
+    },
+
+    // 获取验证码
+    async getLoginVerifyCode() {
+      this.form.verifyCode = ''
+      const res = await getCaptcha({ lastKey: this.form.verifyCodeKey })
+      if (res && res.success) {
+        this.verifyCodeUrl =  res.data.data
+        this.form.verifyCodeKey = res.data.token;
+      }
+    },
+   
   }
 }
 </script>
