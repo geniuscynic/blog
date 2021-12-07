@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Admin.Service.Auth;
 using Admin.Service.Auth.Input;
 using XjjXmm.FrameWork.ToolKit.Captcha;
 
@@ -13,10 +14,12 @@ namespace Admin.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly ICaptcha _captcha;
+        private readonly IAuthService _authService;
 
-        public AuthController(ICaptcha captcha)
+        public AuthController(ICaptcha captcha, IAuthService authService)
         {
             _captcha = captcha;
+            _authService = authService;
         }
 
        
@@ -31,6 +34,15 @@ namespace Admin.Api.Controllers
         {
             var data = await _captcha.Get();
             return data;
+        }
+
+        /// 获取密钥
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<object> GetPassWordEncryptKey()
+        {
+            return await _authService.GetPassWordEncryptKey();
         }
 
         /// <summary>

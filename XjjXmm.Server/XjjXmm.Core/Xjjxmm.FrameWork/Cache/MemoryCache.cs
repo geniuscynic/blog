@@ -66,7 +66,7 @@ namespace XjjXmm.FrameWork.Cache
                 throw new ArgumentNullException(nameof(key));
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-
+            
             Cache.Set(key, value,
                 isSliding
                     ? new MemoryCacheEntryOptions().SetSlidingExpiration(expiresIn)

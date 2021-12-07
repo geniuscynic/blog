@@ -28,7 +28,7 @@ namespace Admin.Service.Auth.Input
         /// <summary>
         /// 验证码
         /// </summary>
-        //[Required(ErrorMessage = "验证码不能为空！")]
+        [Required(ErrorMessage = "验证码不能为空！")]
         public string VerifyCode { get; set; }
 
         /// <summary>
@@ -39,6 +39,11 @@ namespace Admin.Service.Auth.Input
         /// <summary>
         /// 验证数据
         /// </summary>
-        public CaptchaInput Captcha { get; set; }
+        public CaptchaInput Captcha =>
+            new CaptchaInput()
+            {
+                Data = VerifyCode,
+                Token = VerifyCodeKey
+            };
     }
 }

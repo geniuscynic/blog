@@ -12,6 +12,8 @@ namespace Admin.Service.Auth
     public interface IAuthService
     {
 
-        Task<AuthLoginOutput> LoginAsync(AuthLoginInput input);
+        Task<object> GetPassWordEncryptKey();
+
+        Task<AuthLoginOutput> Login(AuthLoginInput input);
     }
 }
