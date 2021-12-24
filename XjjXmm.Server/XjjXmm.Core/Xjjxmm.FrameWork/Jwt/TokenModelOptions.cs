@@ -16,10 +16,10 @@ namespace XjjXmm.FrameWork.Jwt
         /// <summary>
         /// 角色
         /// </summary>
-        public List<string> Roles { get; set; } 
+        public List<string> Roles { get; set; }   = new List<string>();
 
 
-        public string ClientId { get; set; }
+        public string ClientId { get; set; } = "";
 
         /// <summary>
         /// 模块

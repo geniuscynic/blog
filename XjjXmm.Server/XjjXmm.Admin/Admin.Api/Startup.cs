@@ -16,6 +16,7 @@ using XjjXmm.FrameWork;
 using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Swagger;
 using XjjXmm.FrameWork.ToolKit.Captcha;
+using Admin.Repository;
 
 namespace Admin.Api
 {
@@ -38,6 +39,7 @@ namespace Admin.Api
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Admin.Api", Version = "v1" });
             //});
 
+            var c = App.Configuration.GetConfig("db:connectionString");
             var sqlSugar = new SqlSugarScope(new ConnectionConfig()
                 {
                     DbType = SqlSugar.DbType.MySql,
@@ -59,6 +61,7 @@ namespace Admin.Api
 
             services.AddScoped<ICaptcha, DefaultCaptcha>();
             services.AddScoped<ICache, XjjxmmMemoryCache>();
+            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

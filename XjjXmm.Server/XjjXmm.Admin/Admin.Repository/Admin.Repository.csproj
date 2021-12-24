@@ -1,12 +1,17 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="SqlSugarCore" Version="5.0.4.9" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\..\XjjXmm.Core\Xjjxmm.FrameWork\XjjXmm.FrameWork.csproj" />
-    <ProjectReference Include="..\Admin.Repository\Admin.Repository.csproj" />
   </ItemGroup>
 
 </Project>

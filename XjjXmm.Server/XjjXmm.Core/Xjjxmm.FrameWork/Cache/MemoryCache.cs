@@ -163,6 +163,22 @@ namespace XjjXmm.FrameWork.Cache
         /// </summary>
         /// <param name="key">缓存Key</param>
         /// <returns></returns>
+        public T GetOnce<T>(string key)
+        {
+            if (key == null)
+                throw new ArgumentNullException(nameof(key));
+
+            var tmp = Cache.Get<T>(key);
+            Remove(key);
+
+            return tmp;
+        }
+
+        /// <summary>
+        /// 获取缓存
+        /// </summary>
+        /// <param name="key">缓存Key</param>
+        /// <returns></returns>
         //public object Get(string key)
         //{
         //    if (key == null)

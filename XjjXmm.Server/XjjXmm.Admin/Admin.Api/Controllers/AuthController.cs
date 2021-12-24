@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Admin.Service.Auth;
+﻿using Admin.Service.Auth;
 using Admin.Service.Auth.Input;
+using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 using XjjXmm.FrameWork.ToolKit.Captcha;
+using XjjXmm.FrameWork;
+using XjjXmm.FrameWork.Jwt;
 
 namespace Admin.Api.Controllers
 {
@@ -55,11 +54,20 @@ namespace Admin.Api.Controllers
         public async Task<object> Login(AuthLoginInput input)
         {
           
-            //var res = await _authService.LoginAsync(input);
-            
+            var user = await _authService.Login(input);
+
+            var jwtSetting = App.Configuration.GetSection<JwtTokenSetting>("jwt");
+
+            var token = JwtHelper.IssueToken(jwtSetting, new TokenModelOptions
+            {
+                Id = user.Id.ToString(),
+            });
+            //App.Configuration.Get
+
+            //JwtHelper.IssueToken()
             //return GetToken(res);
 
-            return null;
+            return token;
         }
     }
 }

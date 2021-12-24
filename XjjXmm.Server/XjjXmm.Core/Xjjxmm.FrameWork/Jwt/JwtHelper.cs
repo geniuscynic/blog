@@ -28,9 +28,9 @@ namespace XjjXmm.FrameWork.Jwt
                // new Claim(JwtRegisteredClaimNames.Name, options.Id),
                new Claim(ClaimTypes.Name, options.Id),
               
-                new Claim("AppId", options.AppId),
-                new Claim("ClientId", options.ClientId),
-                new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
+                //new Claim("AppId", options.AppId),
+                //new Claim("ClientId", options.ClientId),
+                //new Claim(JwtRegisteredClaimNames.Iat, $"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}"),
                 //new Claim(JwtRegisteredClaimNames.Nbf,$"{new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds()}") ,
                 //这个就是过期时间，目前是过期100秒，可自定义，注意JWT有自己的缓冲过期时间
                 // new Claim (JwtRegisteredClaimNames.Exp,$"{new DateTimeOffset(DateTime.Now.Add(expires)).ToUnixTimeSeconds()}"),
@@ -57,6 +57,7 @@ namespace XjjXmm.FrameWork.Jwt
                 audience: jwtConfig.Aud,
                 expires: DateTime.Now.Add(expires),
                 claims: claims,
+                notBefore: DateTime.Now,
                 signingCredentials: creds
 
             );

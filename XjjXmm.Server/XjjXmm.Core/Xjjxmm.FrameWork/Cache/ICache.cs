@@ -13,6 +13,13 @@ namespace XjjXmm.FrameWork.Cache
         /// <returns>缓存对象</returns>
         T Get<T>(string key);
 
+        /// <summary>
+        /// 从缓存中获取对象
+        /// </summary>
+        /// <typeparam name="T">对象类型</typeparam>
+        /// <param name="key">键</param>
+        /// <returns>缓存对象</returns>
+        T GetOnce<T>(string key);
 
         /// <summary>
         /// 数据对象装箱缓存

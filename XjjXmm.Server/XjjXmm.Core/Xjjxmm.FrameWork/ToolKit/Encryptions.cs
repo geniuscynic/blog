@@ -49,7 +49,7 @@ namespace XjjXmm.FrameWork.ToolKit {
             //    }
             //    return sb.ToString();
             //}
-            return MD5(Encoding.ASCII.GetBytes(str));
+            return MD5(Encoding.UTF8.GetBytes(str));
         }
 
         /// <summary>

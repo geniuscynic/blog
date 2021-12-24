@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30523.141
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Blog.API", "blog.api\Blog.Admin\Blog.API.csproj", "{83940F24-4770-46BD-B890-89D3A9E5EAC5}"
 EndProject
@@ -85,9 +85,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XjjXmmTest", "..\Test\XjjXm
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Admin", "Admin", "{FDB3631B-697E-4211-A8A8-20BB61B1EE9E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Api", "XjjXmm.Admin\Admin.Api\Admin.Api.csproj", "{262FB026-EE8D-4786-9868-89672C435CAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Api", "XjjXmm.Admin\Admin.Api\Admin.Api.csproj", "{262FB026-EE8D-4786-9868-89672C435CAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Service", "XjjXmm.Admin\Admin.Service\Admin.Service.csproj", "{31630686-A37F-48DA-8478-CB3369EE596B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Admin.Service", "XjjXmm.Admin\Admin.Service\Admin.Service.csproj", "{31630686-A37F-48DA-8478-CB3369EE596B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Admin.Repository", "XjjXmm.Admin\Admin.Repository\Admin.Repository.csproj", "{72BE296A-50D7-4B44-8782-82DBE775F440}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -219,6 +221,10 @@ Global
 		{31630686-A37F-48DA-8478-CB3369EE596B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{31630686-A37F-48DA-8478-CB3369EE596B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{31630686-A37F-48DA-8478-CB3369EE596B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72BE296A-50D7-4B44-8782-82DBE775F440}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72BE296A-50D7-4B44-8782-82DBE775F440}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72BE296A-50D7-4B44-8782-82DBE775F440}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72BE296A-50D7-4B44-8782-82DBE775F440}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -258,6 +264,7 @@ Global
 		{86E6E661-95B7-4422-9211-80F3149FF47D} = {32EBDE9E-754D-4002-9BB2-53343797DB96}
 		{262FB026-EE8D-4786-9868-89672C435CAE} = {FDB3631B-697E-4211-A8A8-20BB61B1EE9E}
 		{31630686-A37F-48DA-8478-CB3369EE596B} = {FDB3631B-697E-4211-A8A8-20BB61B1EE9E}
+		{72BE296A-50D7-4B44-8782-82DBE775F440} = {FDB3631B-697E-4211-A8A8-20BB61B1EE9E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {B1D0CB36-013F-45C6-B2EF-B6E5906F8114}

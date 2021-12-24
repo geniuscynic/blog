@@ -1,11 +1,15 @@
 using System;
 using System.Threading.Tasks;
+using Admin.Repository.User;
 using Admin.Service.Auth.Input;
 using Admin.Service.Auth.Output;
 using Admin.Service.Common;
 using XjjXmm.FrameWork.Cache;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
+using XjjXmm.FrameWork.Mapper;
 using XjjXmm.FrameWork.ToolKit;
+using XjjXmm.FrameWork.ToolKit.Captcha;
 
 namespace Admin.Service.Auth
 {
@@ -13,13 +17,18 @@ namespace Admin.Service.Auth
     public class AuthService : IAuthService
     {
         private readonly ICache _cache;
+        private readonly ICaptcha _captcha;
+        private readonly IUserRepository _userRepository;
 
+        public AuthService( ICache cache ,
+            ICaptcha captcha ,
+            IUserRepository userRepository
 
-        public AuthService( ICache cache
-          
         )
         {
             _cache = cache;
+            _captcha = captcha;
+            _userRepository = userRepository;
         }
 
         public Task<object> GetPassWordEncryptKey()
@@ -36,7 +45,46 @@ namespace Admin.Service.Auth
 
         public async Task<AuthLoginOutput> Login(AuthLoginInput input)
         {
-            return null;
+            var isOK = await _captcha.Check(input.Captcha);
+
+            if (!isOK)
+            {
+               // throw new BussinessException(StatusCodes.Status999Falid, "验证码输入有误");
+            }
+
+            if (!input.PasswordKey.IsNullOrEmpty())
+            {
+                var passwordEncryptKey = string.Format(CacheKey.PassWordEncryptKey, input.PasswordKey);
+                var secretKey = _cache.Get<string>(passwordEncryptKey);
+                if (!secretKey.IsNullOrEmpty())
+                {
+                    
+                    input.Password = Encryptions.DesDecrypt(secretKey, input.Password);
+                    //await Cache.DelAsync(passwordEncryptKey);
+                    _cache.Remove(passwordEncryptKey);
+                }
+                else
+                {
+                    // return ResponseOutput.NotOk("解密失败！", 1);
+                    throw new BussinessException(StatusCodes.Status999Falid, "解密失败！");
+                }
+            }
+
+            var user = await _userRepository.GetFirst(t=>t.UserName == input.UserName);
+
+            if (!(user?.Id > 0))
+            {
+              
+                throw new BussinessException(StatusCodes.Status999Falid, "账号输入有误!");
+            }
+
+            var password = Encryptions.MD5(input.Password);
+            if (user.Password != password)
+            {
+                throw new BussinessException(StatusCodes.Status999Falid, "密码输入有误!");
+            }
+
+            return user.MapTo<UserEntity, AuthLoginOutput>();
         }
     }
 }

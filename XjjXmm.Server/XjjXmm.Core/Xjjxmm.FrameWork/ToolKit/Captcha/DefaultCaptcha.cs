@@ -78,7 +78,7 @@ namespace XjjXmm.FrameWork.ToolKit.Captcha
             image.Dispose();
 
             var id = GuidKit.Get();
-            _cache.Set($"{CaptchaKey}id", captchaCode);
+            _cache.Set($"{CaptchaKey}{id}", captchaCode);
             return Task.FromResult(new CaptchaOutput()
             {
                Token = id,                  
@@ -129,8 +129,9 @@ namespace XjjXmm.FrameWork.ToolKit.Captcha
             {
                 throw new BussinessException(StatusCodes.Status999Falid, "验证码已失效,请刷新重试");
             }
+            _cache.Remove($"{CaptchaKey}{input.Token}");
 
-            return Task.FromResult<bool>(val == input.Data);
+            return Task.FromResult<bool>(val.ToLower() == input.Data.ToLower());
         }
     }
 }
