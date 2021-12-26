@@ -37,9 +37,32 @@ namespace XjjXmm.FrameWork.ToolKit
             return string.IsNullOrEmpty(s);
         }
 
-        public static int ToInt(this string s)
+        public static int? ToInt(this string s)
         {
-            return int.Parse(s);
+            try
+            {
+                return int.Parse(s);
+            }
+            catch(Exception ex)
+            {
+                App.Logger.Error($"input: {s}", ex);
+                return null;
+            }
+            
+        }
+
+        public static long? ToLong(this string s)
+        {
+            try
+            {
+                return long.Parse(s);
+            }
+            catch (Exception ex)
+            {
+                App.Logger.Error($"input: {s}", ex);
+                return null;
+            }
+
         }
 
 

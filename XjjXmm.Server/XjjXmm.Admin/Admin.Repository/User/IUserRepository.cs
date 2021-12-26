@@ -2,7 +2,7 @@ using Admin.Repository;
 
 namespace Admin.Repository.User
 {
-    public interface IUserRepository : IBaseRepository<UserEntity>
+    public interface IUserRepository : IRepositoryBase<UserEntity>
     {
     }
 }

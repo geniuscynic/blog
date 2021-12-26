@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using XjjXmm.FrameWork.ToolKit.Captcha;
 
-namespace Admin.Service.Auth.Input
+namespace Admin.Service.Auth
 {
     /// <summary>
     /// 登录信息

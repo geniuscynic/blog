@@ -1,38 +1,41 @@
-﻿namespace Admin.Repository.User
+using SqlSugar;
+using System;
+using System.Collections.Generic;
+
+namespace Admin.Repository.User
 {
     /// <summary>
-    /// 用户导出
+    /// 用户
     /// </summary>
-    public partial class UserDataOutput
+	[SugarTable("ad_user")]
+    public class UserEntity  : EntityFull
     {
-        /// <summary>
-        /// 租户Id
-        /// </summary>
-        public long? TenantId { get; set; }
 
-        /// <summary>
-        /// 用户Id
-        /// </summary>
+        [SugarColumn(IsPrimaryKey = true)]
         public long Id { get; set; }
 
         /// <summary>
         /// 账号
         /// </summary>
+
         public string UserName { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
+       
         public string Password { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
+        
         public string NickName { get; set; }
 
         /// <summary>
         /// 头像
         /// </summary>
+        
         public string Avatar { get; set; }
 
         /// <summary>
@@ -43,6 +46,10 @@
         /// <summary>
         /// 备注
         /// </summary>
+        
         public string Remark { get; set; }
+
+
+        
     }
 }

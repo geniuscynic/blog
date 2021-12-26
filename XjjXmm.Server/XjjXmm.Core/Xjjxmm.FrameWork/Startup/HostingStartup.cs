@@ -66,7 +66,7 @@ namespace XjjXmm.FrameWork.Startup
                 });
 
 
-                //services.ConfigAuthentication().ConfigAuthorization();
+                services.ConfigAuthentication().ConfigAuthorization();
                 //App.ServiceProvider = services.BuildServiceProvider();
             });
 

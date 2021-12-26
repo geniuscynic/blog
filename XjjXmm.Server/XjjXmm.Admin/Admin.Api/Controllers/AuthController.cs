@@ -1,5 +1,4 @@
 ﻿using Admin.Service.Auth;
-using Admin.Service.Auth.Input;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using XjjXmm.FrameWork.ToolKit.Captcha;
@@ -20,9 +19,6 @@ namespace Admin.Api.Controllers
             _captcha = captcha;
             _authService = authService;
         }
-
-       
-
 
         /// <summary>
         /// 获取验证数据
@@ -56,7 +52,7 @@ namespace Admin.Api.Controllers
           
             var user = await _authService.Login(input);
 
-            var jwtSetting = App.Configuration.GetSection<JwtTokenSetting>("jwt");
+            var jwtSetting = App.GetJwtConfig();
 
             var token = JwtHelper.IssueToken(jwtSetting, new TokenModelOptions
             {
@@ -68,6 +64,16 @@ namespace Admin.Api.Controllers
             //return GetToken(res);
 
             return token;
+        }
+
+        /// <summary>
+        /// 查询用户信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<AuthUserInfoOutput> GetUserInfo()
+        {
+            return await _authService.GetUserInfo();
         }
     }
 }

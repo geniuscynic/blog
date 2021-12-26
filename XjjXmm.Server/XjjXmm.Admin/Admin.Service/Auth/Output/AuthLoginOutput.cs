@@ -1,4 +1,4 @@
-﻿namespace Admin.Service.Auth.Output
+﻿namespace Admin.Service.Auth
 {
     public class AuthLoginOutput
     {
@@ -21,6 +21,12 @@
         /// 租户Id
         /// </summary>
         public long? TenantId { get; set; }
+
+        /// <summary>
+        /// 头像
+        /// </summary>
+
+        public string Avatar { get; set; }
 
         /// <summary>
         /// 租户类型

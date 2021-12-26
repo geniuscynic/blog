@@ -44,8 +44,9 @@ const actions = {
     }
 
     const res = await login(paras)
+    //debugger
     if (res && res.success) {
-      const token = res.data.token
+      const token = res.data
       commit('setToken', token)
     }
 

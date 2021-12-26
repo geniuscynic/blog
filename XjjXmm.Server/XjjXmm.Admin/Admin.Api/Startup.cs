@@ -17,6 +17,7 @@ using XjjXmm.FrameWork.Cache;
 using XjjXmm.FrameWork.Swagger;
 using XjjXmm.FrameWork.ToolKit.Captcha;
 using Admin.Repository;
+using Admin.Api.tool;
 
 namespace Admin.Api
 {
@@ -33,7 +34,12 @@ namespace Admin.Api
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers().AddNewtonsoftJson(options =>
+            {
+                options.SerializerSettings.Converters.Add(new LongJsonConverter());
+               // options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
+               // options.SerializerSettings.DateFormatString = "yyyy-MM-dd HH:mm";
+            });
             //services.AddSwaggerGen(c =>
             //{
             //    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Admin.Api", Version = "v1" });
@@ -61,7 +67,7 @@ namespace Admin.Api
 
             services.AddScoped<ICaptcha, DefaultCaptcha>();
             services.AddScoped<ICache, XjjxmmMemoryCache>();
-            services.AddScoped(typeof(IBaseRepository<>), typeof(BaseRepository<>));
+            services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
