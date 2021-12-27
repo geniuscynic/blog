@@ -1,9 +1,11 @@
 
 using SqlSugar;
 using XjjXmm.FrameWork.Common;
+using XjjXmm.FrameWork.DependencyInjection;
 
 namespace Admin.Repository.Employee
 {
+    [Injection]
     public class EmployeeRepository : RepositoryBase<EmployeeEntity>, IEmployeeRepository
     {
         public EmployeeRepository(ISqlSugarClient context) : base(context)
@@ -43,7 +45,7 @@ namespace Admin.Repository.Employee
             return new PageOutput<EmployeeEntity>
             {
                 CurrentPage = input.CurrentPage,
-                Total = total,
+                Total = total.Value,
                 PageSize = input.PageSize,
                 Data = res
             };

@@ -22,9 +22,9 @@ namespace Admin.Service.Organization
             return result.MapTo<OrganizationEntity, OrganizationGetOutput>();
         }
 
-        public async Task<IEnumerable<OrganizationListOutput>> GetList(string key)
+        public async Task<IEnumerable<OrganizationListOutput>> GetList(OrganizationListInput input)
         {
-            var dto = await _organizationRepository.GetList(key);
+            var dto = await _organizationRepository.GetList(input.Key);
              return dto.MapTo<OrganizationEntity, OrganizationListOutput>();
         }
                                                                                                                   
@@ -56,8 +56,16 @@ namespace Admin.Service.Organization
             
         }
 
+        
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public async Task<bool> Delete(long id)
         {
+            //todo
+
             //var result = await _organizationRepository.DeleteRecursiveAsync(a => a.Id == id);
 
             //return ResponseOutput.Result(result);

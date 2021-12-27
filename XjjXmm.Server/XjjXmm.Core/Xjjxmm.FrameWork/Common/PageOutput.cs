@@ -15,7 +15,7 @@ namespace XjjXmm.FrameWork.Common
         /// <summary>
         /// 数据总数
         /// </summary>
-        public long Total { get; set; } = 0;
+        public int Total { get; set; } = 0;
         /// <summary>
         /// 每页大小
         /// </summary>
@@ -28,7 +28,7 @@ namespace XjjXmm.FrameWork.Common
         /// <summary>
         /// 总页数
         /// </summary>
-        public long PageCount => Total / PageSize + 1;
+        public int PageCount => Total / PageSize + 1;
         //public int PageCount { get; set; } = 6;
 
     }

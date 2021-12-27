@@ -36,7 +36,7 @@ namespace Admin.Api.Controllers
         /// <param name="key"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IEnumerable<OrganizationListOutput>> GetList(string key)
+        public async Task<IEnumerable<OrganizationListOutput>> GetList(OrganizationListInput key)
         {
             return await _organizationService.GetList(key);
         }

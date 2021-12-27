@@ -9,7 +9,7 @@ namespace Admin.Service.Organization
     {
         Task<OrganizationGetOutput> Get(long id);
 
-        Task<IEnumerable<OrganizationListOutput>> GetList(string key);
+        Task<IEnumerable<OrganizationListOutput>> GetList(OrganizationListInput key);
 
         Task<bool> Add(OrganizationAddInput input);
 

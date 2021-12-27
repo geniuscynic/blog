@@ -22,14 +22,14 @@ namespace Admin.Repository
 
         Task<bool> Delete(Expression<Func<T, bool>> whereExpression);
 
-        Task<bool> DeleteRecursive(Expression<Func<T, bool>> whereExpression);
+       
 
 
         Task<bool> SoftDelete(dynamic id);
 
         Task<bool> SoftDelete(dynamic[] id);
 
-        Task<bool> SoftDeleteRecursive(Expression<Func<T,bool>> whereExpression);;
+       
 
         Task<T> GetById(dynamic id);
 

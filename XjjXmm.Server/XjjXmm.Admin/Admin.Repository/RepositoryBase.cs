@@ -41,13 +41,10 @@ namespace Admin.Repository
 
         public async Task<bool> Delete(Expression<Func<T, bool>> whereExpression)
         {
-            return await _context.Deleteable<T>().(whereExpression).ExecuteCommandAsync() > 0;
+            return await _context.Deleteable<T>(whereExpression).ExecuteCommandAsync() > 0;
         }
 
-        public async Task<bool> DeleteRecursive(Expression<Func<T, bool>> whereExpression)
-        {
-            return await _context.Deleteable<T>().Where(whereExpression).ExecuteCommandAsync() > 0;
-        }
+      
 
         public async Task<bool> SoftDelete(dynamic id)
         {
@@ -59,10 +56,7 @@ namespace Admin.Repository
             return await _context.Deleteable<T>().In(id).IsLogic().ExecuteCommandAsync() > 0;
         }
 
-        public async Task<bool> SoftDeleteRecursive(Expression<Func<T, bool>> whereExpression)
-        {
-            return await _context.Deleteable<T>().Where(whereExpression).ExecuteCommandAsync() > 0;
-        }
+       
 
         public async Task<T> GetById(dynamic id)
         {
