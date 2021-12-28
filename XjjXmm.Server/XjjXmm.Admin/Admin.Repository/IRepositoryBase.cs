@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 
 namespace Admin.Repository
 {
@@ -35,6 +36,13 @@ namespace Admin.Repository
 
         Task<T> GetFirst(Expression<Func<T, bool>> whereExpression);
 
-        
+
+        Task<List<T>> Query();
+
+        Task<List<T>> Query(Expression<Func<T, bool>> whereExpression);
+
+        Task<List<T>> Query(bool whereIf, Expression<Func<T, bool>> whereExpression);
+
+      
     }
 }
