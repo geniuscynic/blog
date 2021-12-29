@@ -13,36 +13,36 @@ namespace Admin.Service.Document
     [ProcessLog]
     public interface IDocumentService
     {
-        Task<DocumentEntity> GetAsync(long id);
+        Task<DocumentEntity> Get(long id);
 
-        Task<List<string>> GetImageListAsync(long id);
+        Task<List<string>> GetImageList(long id);
 
-        Task<DocumentGetGroupOutput> GetGroupAsync(long id);
+        Task<DocumentGetGroupOutput> GetGroup(long id);
 
-        Task<DocumentGetMenuOutput> GetMenuAsync(long id);
+        Task<DocumentGetMenuOutput> GetMenu(long id);
 
-        Task<DocumentGetContentOutput> GetContentAsync(long id);
+        Task<DocumentGetContentOutput> GetContent(long id);
 
-        Task<object> GetPlainListAsync();
+        Task<object> GetPlainList();
 
-        Task<List<DocumentListOutput>> GetListAsync(string key, DateTime? start, DateTime? end);
+        Task<List<DocumentListOutput>> GetList(string key, DateTime? start, DateTime? end);
 
-        Task<bool> AddGroupAsync(DocumentAddGroupInput input);
+        Task<bool> AddGroup(DocumentAddGroupInput input);
 
-        Task<bool> AddMenuAsync(DocumentAddMenuInput input);
+        Task<bool> AddMenu(DocumentAddMenuInput input);
 
-        Task<bool> AddImageAsync(DocumentAddImageInput input);
+        Task<bool> AddImage(DocumentAddImageInput input);
 
-        Task<bool> UpdateGroupAsync(DocumentUpdateGroupInput input);
+        Task<bool> UpdateGroup(DocumentUpdateGroupInput input);
 
-        Task<bool> UpdateMenuAsync(DocumentUpdateMenuInput input);
+        Task<bool> UpdateMenu(DocumentUpdateMenuInput input);
 
-        Task<bool> UpdateContentAsync(DocumentUpdateContentInput input);
+        Task<bool> UpdateContent(DocumentUpdateContentInput input);
 
-        Task<bool> DeleteAsync(long id);
+        Task<bool> Delete(long id);
 
-        Task<bool> DeleteImageAsync(long documentId, string url);
+        Task<bool> DeleteImage(long documentId, string url);
 
-        Task<bool> SoftDeleteAsync(long id);
+        Task<bool> SoftDelete(long id);
     }
 }

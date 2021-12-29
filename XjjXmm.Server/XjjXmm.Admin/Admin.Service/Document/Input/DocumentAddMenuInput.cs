@@ -1,4 +1,3 @@
-using Admin.Core.Model.Admin;
 using Admin.Repository.Document;
 
 namespace Admin.Service.Document.Input

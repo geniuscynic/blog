@@ -30,7 +30,7 @@ namespace Admin.Repository
 
         Task<bool> SoftDelete(dynamic[] id);
 
-       
+        Task<bool> SoftDelete(Expression<Func<T, bool>> whereExpression);
 
         Task<T> GetById(dynamic id);
 

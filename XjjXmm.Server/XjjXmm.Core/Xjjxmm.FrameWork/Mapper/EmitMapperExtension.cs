@@ -5,6 +5,7 @@ namespace XjjXmm.FrameWork.Mapper
 {
     public static class EmitMapperExtension
     {
+
         /// <summary>
         /// 对象映射
         /// </summary>

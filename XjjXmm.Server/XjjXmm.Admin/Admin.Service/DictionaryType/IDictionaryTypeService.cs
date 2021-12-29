@@ -10,18 +10,18 @@ namespace Admin.Service.DictionaryType
     [ProcessLog]
     public partial interface IDictionaryTypeService
     {
-        Task<DictionaryTypeGetOutput> GetAsync(long id);
+        Task<DictionaryTypeGetOutput> Get(long id);
 
-        Task<PageOutput<DictionaryTypeListOutput>> PageAsync(PageInput<DictionaryTypeEntity> model);
+        Task<PageOutput<DictionaryTypeListOutput>> Page(PageInput<DictionaryTypeEntity> model);
 
-        Task<bool> AddAsync(DictionaryTypeAddInput input);
+        Task<bool> Add(DictionaryTypeAddInput input);
 
-        Task<bool> UpdateAsync(DictionaryTypeUpdateInput input);
+        Task<bool> Update(DictionaryTypeUpdateInput input);
 
-        Task<bool> DeleteAsync(long id);
+        Task<bool> Delete(long id);
 
-        Task<bool> SoftDeleteAsync(long id);
+        Task<bool> SoftDelete(long id);
 
-        Task<bool> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDelete(long[] ids);
     }
 }

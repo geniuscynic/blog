@@ -31,6 +31,7 @@ namespace XjjXmm.FrameWork.Common
         public int PageCount => Total / PageSize + 1;
         //public int PageCount { get; set; } = 6;
 
+       
     }
 
 }

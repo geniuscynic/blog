@@ -57,6 +57,10 @@ namespace Admin.Repository
             return await _context.Deleteable<T>().In(id).IsLogic().ExecuteCommandAsync() > 0;
         }
 
+        public async Task<bool> SoftDelete(Expression<Func<T, bool>> whereExpression)
+        {
+            return await _context.Deleteable<T>(whereExpression).IsLogic().ExecuteCommandAsync() > 0;
+        }
 
 
         public async Task<T> GetById(dynamic id)
@@ -89,6 +93,6 @@ namespace Admin.Repository
 
         }
 
-       
+      
     }
 }

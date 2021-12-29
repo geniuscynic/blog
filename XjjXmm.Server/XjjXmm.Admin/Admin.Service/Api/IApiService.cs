@@ -52,21 +52,21 @@ namespace Admin.Service.Api
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<bool> DeleteAsync(long id);
+        Task<bool> Delete(long id);
 
         /// <summary>
         /// 软删除
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<bool> SoftDeleteAsync(long id);
+        Task<bool> SoftDelete(long id);
 
         /// <summary>
         /// 批量软删除
         /// </summary>
         /// <param name="ids"></param>
         /// <returns></returns>
-        Task<bool> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDelete(long[] ids);
 
         /// <summary>
         /// 同步

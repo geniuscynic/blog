@@ -3,24 +3,25 @@ using XjjXmm.FrameWork.LogExtension;
 using Admin.Service.Role.Input;
 using Admin.Service.Role.Output;
 using XjjXmm.FrameWork.Common;
+using Admin.Repository.Role;
 
 namespace Admin.Service.Role
 {
     [ProcessLog]
     public interface IRoleService
     {
-        Task<RoleGetOutput> GetAsync(long id);
+        Task<RoleGetOutput> Get(long id);
 
-        Task<PageOutput<RoleListOutput>> PageAsync(PageInput<RoleEntity> input);
+        Task<PageOutput<RoleListOutput>> Page(PageInput<RoleEntity> input);
 
-        Task<bool> AddAsync(RoleAddInput input);
+        Task<bool> Add(RoleAddInput input);
 
-        Task<bool> UpdateAsync(RoleUpdateInput input);
+        Task<bool> Update(RoleUpdateInput input);
 
-        Task<bool> DeleteAsync(long id);
+        Task<bool> Delete(long id);
 
-        Task<bool> SoftDeleteAsync(long id);
+        Task<bool> SoftDelete(long id);
 
-        Task<bool> BatchSoftDeleteAsync(long[] ids);
+        Task<bool> BatchSoftDelete(long[] ids);
     }
 }

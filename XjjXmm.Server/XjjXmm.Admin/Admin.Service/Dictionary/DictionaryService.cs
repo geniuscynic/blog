@@ -1,11 +1,11 @@
-﻿using Admin.Core.Common.Input;
-using Admin.Core.Common.Output;
-using Admin.Core.Model.Admin;
-using Admin.Core.Repository.Admin;
+﻿
+using Admin.Repository.Dictionary;
 using Admin.Service.Dictionary.Input;
 using Admin.Service.Dictionary.Output;
 using System.Threading.Tasks;
+using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
+using XjjXmm.FrameWork.Mapper;
 
 namespace Admin.Service.Dictionary
 {
@@ -19,81 +19,83 @@ namespace Admin.Service.Dictionary
             _dictionaryRepository = dictionaryRepository;
         }
 
-        public async Task<IResponseOutput> GetAsync(long id)
+        public async Task<DictionaryGetOutput> Get(long id)
         {
-            var result = await _dictionaryRepository.GetAsync<DictionaryGetOutput>(id);
-            return ResponseOutput.Ok(result);
+            var result = await _dictionaryRepository.GetById(id);
+            var entity = result.MapTo< DictionaryEntity,DictionaryGetOutput>();
+            return entity;
         }
 
-        public async Task<IResponseOutput> PageAsync(PageInput<DictionaryEntity> input)
+        public async Task<PageOutput<DictionaryListOutput>> Page(PageInput<DictionaryEntity> input)
         {
-            var key = input.Filter?.Name;
-            var dictionaryTypeId = input.Filter?.DictionaryTypeId;
-            var list = await _dictionaryRepository.Select
-            .WhereIf(dictionaryTypeId.HasValue && dictionaryTypeId.Value > 0, a => a.DictionaryTypeId == dictionaryTypeId)
-            .WhereIf(key.NotNull(), a => a.Name.Contains(key) || a.Code.Contains(key))
-            .Count(out var total)
-            .OrderByDescending(true, c => c.Id)
-            .Page(input.CurrentPage, input.PageSize)
-            .ToListAsync<DictionaryListOutput>();
+            //var key = input.Filter?.Name;
+            //var dictionaryTypeId = input.Filter?.DictionaryTypeId;
+            //var list = await _dictionaryRepository.Select
+            //.WhereIf(dictionaryTypeId.HasValue && dictionaryTypeId.Value > 0, a => a.DictionaryTypeId == dictionaryTypeId)
+            //.WhereIf(key.NotNull(), a => a.Name.Contains(key) || a.Code.Contains(key))
+            //.Count(out var total)
+            //.OrderByDescending(true, c => c.Id)
+            //.Page(input.CurrentPage, input.PageSize)
+            //.ToListAsync<DictionaryListOutput>();
 
-            var data = new PageOutput<DictionaryListOutput>()
-            {
-                List = list,
-                Total = total
-            };
+            //var data = new PageOutput<DictionaryListOutput>()
+            //{
+            //    List = list,
+            //    Total = total
+            //};
 
-            return ResponseOutput.Ok(data);
+            //return ResponseOutput.Ok(data);
+
+            return null;
         }
 
-        public async Task<IResponseOutput> AddAsync(DictionaryAddInput input)
+        public async Task<bool> Add(DictionaryAddInput input)
         {
-            var dictionary = Mapper.Map<DictionaryEntity>(input);
-            var id = (await _dictionaryRepository.InsertAsync(dictionary)).Id;
-            return ResponseOutput.Result(id > 0);
+            var dictionary = input.MapTo<DictionaryAddInput, DictionaryEntity>();
+            var id = await _dictionaryRepository.Add(dictionary);
+            return id > 0;
         }
 
-        public async Task<IResponseOutput> UpdateAsync(DictionaryUpdateInput input)
+        public async Task<bool> Update(DictionaryUpdateInput input)
         {
             if (!(input?.Id > 0))
             {
-                return ResponseOutput.NotOk();
+                return false;
             }
 
-            var entity = await _dictionaryRepository.GetAsync(input.Id);
-            if (!(entity?.Id > 0))
-            {
-                return ResponseOutput.NotOk("数据字典不存在！");
-            }
+            //var entity = await _dictionaryRepository.GetAsync(input.Id);
+            //if (!(entity?.Id > 0))
+            //{
+            //    return ResponseOutput.NotOk("数据字典不存在！");
+            //}
 
-            Mapper.Map(input, entity);
-            await _dictionaryRepository.UpdateAsync(entity);
-            return ResponseOutput.Ok();
+            var dictionary = input.MapTo<DictionaryUpdateInput, DictionaryEntity>();
+
+           return await _dictionaryRepository.Update(dictionary);
+           
         }
 
-        public async Task<IResponseOutput> DeleteAsync(long id)
+        public async Task<bool> Delete(long id)
         {
             var result = false;
             if (id > 0)
             {
-                result = await _dictionaryRepository.DeleteAsync(m => m.Id == id) > 0;
+                result = await _dictionaryRepository.Delete(id);
             }
 
-            return ResponseOutput.Result(result);
+            return result;
         }
 
-        public async Task<IResponseOutput> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDelete(long id)
         {
-            var result = await _dictionaryRepository.SoftDeleteAsync(id);
-
-            return ResponseOutput.Result(result);
+            return await _dictionaryRepository.SoftDelete(id);
         }
 
-        public async Task<IResponseOutput> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDelete(long[] ids)
         {
-            var result = await _dictionaryRepository.SoftDeleteAsync(ids);
+           return await _dictionaryRepository.SoftDelete(ids);
 
-            return ResponseOutput.Result(result);
+           
         }
     }
 }

@@ -67,16 +67,17 @@ namespace Admin.Service.Api
             //var id = (await _apiRepository.InsertAsync(entity)).Id;
 
             //return id > 0;
-
+                                                          
             var entity = input.MapTo<ApiAddInput, ApiEntity>();
+            return await _apiRepository.Add(entity) > 0;
         }
 
         public async Task<bool> UpdateAsync(ApiUpdateInput input)
         {
-            //if (!(input?.Id > 0))
-            //{
-            //    return false;
-            //}
+            if (!(input?.Id > 0))
+            {
+                return false;
+            }
 
             //var entity = await _apiRepository.GetAsync(input.Id);
             //if (!(entity?.Id > 0))
@@ -86,40 +87,42 @@ namespace Admin.Service.Api
             //}
 
             //Mapper.Map(input, entity);
-            //await _apiRepository.UpdateAsync(entity);
+            var entity = input.MapTo<ApiUpdateInput, ApiEntity>();
+
+            return await _apiRepository.Update(entity);
             //return true;
 
             throw new System.Exception();
         }
 
-        public async Task<bool> DeleteAsync(long id)
+        public async Task<bool> Delete(long id)
         {
-            //var result = false;
-            //if (id > 0)
-            //{
-            //    result = await _apiRepository.DeleteAsync(m => m.Id == id) > 0;
-            //}
+            var result = false;
+            if (id > 0)
+            {
+                result = await _apiRepository.Delete(id);
+            }
 
-            //return result;
+            return result;
 
-            throw new System.Exception();
+           
         }
 
-        public async Task<bool> SoftDeleteAsync(long id)
+        public async Task<bool> SoftDelete(long id)
         {
-            //var result = await _apiRepository.SoftDeleteAsync(id);
-            //return result;
+            var result = await _apiRepository.SoftDelete(id);
+            return result;
 
-            throw new System.Exception();
+
         }
 
-        public async Task<bool> BatchSoftDeleteAsync(long[] ids)
+        public async Task<bool> BatchSoftDelete(long[] ids)
         {
-            //var result = await _apiRepository.SoftDeleteAsync(ids);
+            var result = await _apiRepository.SoftDelete(ids);
 
-            //return result;
+            return result;
 
-            throw new System.Exception();
+          
         }
 
         //[Transaction]
