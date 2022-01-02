@@ -1,4 +1,4 @@
-using Admin.Repository.ApiEntity;
+using Admin.Repository.Api.Entity;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using XjjXmm.FrameWork.Common;

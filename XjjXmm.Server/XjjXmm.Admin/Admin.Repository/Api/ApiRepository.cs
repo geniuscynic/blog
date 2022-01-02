@@ -1,8 +1,9 @@
-﻿using SqlSugar;
+﻿using Admin.Repository.Api.Entity;
+using SqlSugar;
 using XjjXmm.FrameWork.Common;
 using XjjXmm.FrameWork.DependencyInjection;
 
-namespace Admin.Repository.ApiEntity
+namespace Admin.Repository.Api
 {
     [Injection]
     public class ApiRepository : RepositoryBase<ApiEntity>, IApiRepository

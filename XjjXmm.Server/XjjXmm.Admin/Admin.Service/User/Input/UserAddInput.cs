@@ -1,43 +1,28 @@
-using Admin.Repository.Role;
-using SqlSugar;
-using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Admin.Repository.User
+namespace Admin.Service.User.Input
 {
     /// <summary>
-    /// 用户
+    /// 添加
     /// </summary>
-	[SugarTable("ad_user")]
-    public class UserEntity  : EntityFull
+    public class UserAddInput
     {
-
-        [SugarColumn(IsPrimaryKey = true)]
-        public long Id { get; set; }
-
         /// <summary>
         /// 账号
         /// </summary>
-
+        [Required(ErrorMessage = "请输入账号")]
         public string UserName { get; set; }
 
         /// <summary>
         /// 密码
         /// </summary>
-       
+        [Required(ErrorMessage = "请输入密码")]
         public string Password { get; set; }
 
         /// <summary>
         /// 昵称
         /// </summary>
-        
         public string NickName { get; set; }
-
-        /// <summary>
-        /// 头像
-        /// </summary>
-        
-        public string Avatar { get; set; }
 
         /// <summary>
         /// 状态
@@ -47,11 +32,11 @@ namespace Admin.Repository.User
         /// <summary>
         /// 备注
         /// </summary>
-        
         public string Remark { get; set; }
 
-
-          [SugarColumn(IsIgnore =true)]
-        public List<RoleEntity> Roles { get; set; }
+        /// <summary>
+        /// 角色
+        /// </summary>
+        public long[] RoleIds { get; set; }
     }
 }

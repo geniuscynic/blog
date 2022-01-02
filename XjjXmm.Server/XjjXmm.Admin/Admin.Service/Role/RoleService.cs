@@ -37,7 +37,7 @@ namespace Admin.Service.Role
             return dto;
         }
 
-        public async Task<PageOutput<RoleListOutput>> Page(PageInput<RoleEntity> input)
+        public async Task<PageOutput<RoleListOutput>> Page(PageInput<RoleListInput> input)
         {
             //var key = input.Filter?.Name;
 
@@ -55,7 +55,8 @@ namespace Admin.Service.Role
             //};
 
             //return data;
-            var result = await _roleRepository.Page(input);
+            var entity = input.MapTo<PageInput<RoleListInput>, PageInput<RoleEntity>>();
+            var result = await _roleRepository.Page(entity);
 
             var dto = result.Data.MapTo<RoleEntity, RoleListOutput>();
 
@@ -70,13 +71,14 @@ namespace Admin.Service.Role
 
         public async Task<bool> Add(RoleAddInput input)
         {
-            var entity = input.MapTo<RoleAddInput,RoleEntity>();
+            var entity = input.MapTo<RoleAddInput, RoleEntity>();
+            base.Fill(entity,FillStatus.Add);
             var result = await _roleRepository.Add(entity);
+            
             return result > 0;
             //var id = (await _roleRepository.Insert(entity)).Id;
 
             //return id > 0;
-          
         }
 
         public async Task<bool> Update(RoleUpdateInput input)
@@ -94,9 +96,9 @@ namespace Admin.Service.Role
             //}
 
             var entity = input.MapTo<RoleUpdateInput, RoleEntity>();
-
+            base.Fill(entity, FillStatus.Update);
             return await _roleRepository.Update(entity);
-            
+
         }
 
         public async Task<bool> Delete(long id)
@@ -115,7 +117,6 @@ namespace Admin.Service.Role
         {
             var result = await _roleRepository.SoftDelete(id);
             await _rolePermissionRepository.Delete(a => a.RoleId == id);
-
             return result;
         }
 

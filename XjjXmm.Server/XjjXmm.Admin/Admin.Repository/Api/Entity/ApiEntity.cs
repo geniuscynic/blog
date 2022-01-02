@@ -2,7 +2,7 @@ using SqlSugar;
 using System;
 using System.Collections.Generic;
 
-namespace Admin.Repository.ApiEntity
+namespace Admin.Repository.Api.Entity
 {
     /// <summary>
     /// 接口管理

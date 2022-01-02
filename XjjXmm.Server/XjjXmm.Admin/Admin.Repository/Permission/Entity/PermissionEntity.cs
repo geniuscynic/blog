@@ -1,3 +1,4 @@
+using Admin.Repository.Api.Entity;
 using Admin.Repository.View;
 using SqlSugar;
 using System.Collections.Generic;
@@ -103,7 +104,10 @@ namespace Admin.Repository.Permission
         public string? Description { get; set; }
 
         //[Navigate(ManyToMany = typeof(PermissionApiEntity))]
-        //public ICollection<ApiEntity> Apis { get; set; }
+        
+
+        [SugarColumn(IsIgnore = true)]
+        public List<ApiEntity> Apis { get; set; }
 
 
        

@@ -321,7 +321,8 @@ export default {
       }
 
       this.total = res.data.total
-      const data = res.data.list
+      const data = res.data.data
+      //debugger
       data.forEach(d => {
         d._loading = false
       })

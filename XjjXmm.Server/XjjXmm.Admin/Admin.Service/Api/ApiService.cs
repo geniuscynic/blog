@@ -1,4 +1,5 @@
-using Admin.Repository.ApiEntity;
+using Admin.Repository.Api;
+using Admin.Repository.Api.Entity;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

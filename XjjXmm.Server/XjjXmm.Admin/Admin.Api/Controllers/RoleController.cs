@@ -40,7 +40,7 @@ namespace Admin.Core.Controllers.Admin
         /// <param name="model"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<PageOutput<RoleListOutput>> GetPage(PageInput<RoleEntity> model)
+        public async Task<PageOutput<RoleListOutput>> GetPage(PageInput<RoleListInput> model)
         {
             return await _roleService.Page(model);
         }

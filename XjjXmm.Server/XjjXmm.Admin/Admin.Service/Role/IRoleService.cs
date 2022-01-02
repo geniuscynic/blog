@@ -12,7 +12,7 @@ namespace Admin.Service.Role
     {
         Task<RoleGetOutput> Get(long id);
 
-        Task<PageOutput<RoleListOutput>> Page(PageInput<RoleEntity> input);
+        Task<PageOutput<RoleListOutput>> Page(PageInput<RoleListInput> input);
 
         Task<bool> Add(RoleAddInput input);
 

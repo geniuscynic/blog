@@ -49,12 +49,12 @@ namespace Admin.Repository
 
         public async Task<bool> SoftDelete(dynamic id)
         {
-            return await _context.Deleteable<T>().In(id).IsLogic().ExecuteCommandAsync() > 0;
+            return await _context.Deleteable<T>().In(id).IsLogic().ExecuteCommandAsync("Enabled") > 0;
         }
 
         public async Task<bool> SoftDelete(dynamic[] id)
         {
-            return await _context.Deleteable<T>().In(id).IsLogic().ExecuteCommandAsync() > 0;
+            return await _context.Deleteable<T>().In(id).IsLogic().ExecuteCommandAsync("Enabled") > 0;
         }
 
         public async Task<bool> SoftDelete(Expression<Func<T, bool>> whereExpression)
